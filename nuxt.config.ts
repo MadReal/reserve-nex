@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
+	css: ["~/assets/css/main.sass"],
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+			autoprefixer: {},
+		},
+	},
 	modules: [
 		"@nuxt/image",
 		[
@@ -14,6 +21,5 @@ export default defineNuxtConfig({
 			},
 		],
 	],
-	css: ["~/assets/css/main.sass"],
 	image: { provider: "netlify", format: ["webp", "jpg"] },
 });
