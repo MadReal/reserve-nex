@@ -24,4 +24,5 @@ export default defineNuxtConfig({
 		],
 	],
 	image: { provider: "netlify", format: ["webp", "jpg"] },
+	vite: { plugins: [svgLoader()] },
 });
