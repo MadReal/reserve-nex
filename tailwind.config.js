@@ -10,6 +10,9 @@ module.exports = {
 		"./app.vue",
 	],
 	theme: {
+		container: {
+			center: true,
+		},
 		fontFamily: {
 			sans: ["Poppins", "sans-serif"],
 		},

@@ -1,3 +1,5 @@
+import svgLoader from "vite-svg-loader";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
@@ -22,4 +24,7 @@ export default defineNuxtConfig({
 		],
 	],
 	image: { provider: "netlify", format: ["webp", "jpg"] },
+	vite: {
+		plugins: [svgLoader()],
+	},
 });
