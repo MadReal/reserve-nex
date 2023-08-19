@@ -1,25 +1,8 @@
 <script setup lang="ts">
 import reservations from "@/data/reservations.json";
-
-const formatDateAndTime = (isoTimestamp: string) => {
-    const dateObject = new Date(isoTimestamp);
-
-    // Format the date and time
-    const formattedDate = dateObject.toLocaleString("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    });
-
-    const formattedTime = dateObject.toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false // Use 24-hour format
-    });
-
-    return { formattedDate, formattedTime };
-};
+const formatDateAndTime = (isoTimestamp: string) => useDateTimeFormatting(isoTimestamp);
 </script>
+
 
 <template lang="pug">
 .page
