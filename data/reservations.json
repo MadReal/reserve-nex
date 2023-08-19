@@ -1,0 +1,23 @@
+[
+	{
+		"id": 1,
+		"name": "Sivlia",
+		"date": "2023-08-19T14:30:00.000Z",
+		"people": 2,
+		"accepted": true
+	},
+	{
+		"id": 2,
+		"name": "Marco Luigi",
+		"date": "2023-08-16T12:00:00.000Z",
+		"people": 4,
+		"accepted": null
+	},
+	{
+		"id": 3,
+		"name": "Marco Luigi",
+		"date": "2023-08-18T19:30:00.000Z",
+		"people": 4,
+		"accepted": null
+	}
+]

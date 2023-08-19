@@ -1,13 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
-console.log(route.name);
+
 
 </script>
 
 
 <template lang="pug">
 .min-h-screen.basis-60(class="bg-[#F1F2F7]")
-
     //- SIDEBAR MENU - Restaurant Profile
     .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6
         div.mr-1(class="basis-1/5")

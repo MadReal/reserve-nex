@@ -2,7 +2,7 @@
 .view.grid(class="grid-cols-[250px_1fr]")
     Sidebar
     div
-        Nav
+        Navbar
         <slot />
 </template>
 
