@@ -5,4 +5,5 @@
 
 <template lang="pug">
 .page
+    p Index
 </template>

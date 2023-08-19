@@ -1,8 +1,9 @@
 <template lang="pug">
-.view
+.view.grid(class="grid-cols-[250px_1fr]")
     Sidebar
-    //- Navbar
-    <slot />
+    div
+        Nav
+        <slot />
 </template>
 
 <script setup lang="ts">

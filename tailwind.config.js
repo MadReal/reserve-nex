@@ -10,6 +10,9 @@ module.exports = {
 		"./app.vue",
 	],
 	theme: {
+		// transitionDuration: {
+		// 	DEFAULT: "250ms",
+		// },
 		container: {
 			center: true,
 		},
