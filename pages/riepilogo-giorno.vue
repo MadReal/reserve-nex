@@ -19,11 +19,11 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
         div
             p.mb-4 Pranzo
             .grid.grid-cols-4.gap-2.pb-6
-                .rounded.p-4.border.border-gray-100(v-for="time in workHours.pranzo", key="time")
-                    .flex.items-center.justify-center.text-grey-200.mb-2
+                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHours.pranzo", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                    .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.-mt-1.mr-1(svg="clock", :size="15")
                         p {{ time }}
-                    .flex.items-center.justify-center.text-grey-200
+                    .flex.items-center.justify-center(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-2(svg="users", :size="30")
                         p.text-xl {{ peopleAtThisTime(time) }}
 
@@ -34,11 +34,11 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
         div
             p.mb-4 Cena
             .grid.grid-cols-4.gap-2.pb-6
-                .rounded.p-4.border.border-gray-100(v-for="time in workHours.cena", key="time")
-                    .flex.items-center.justify-center.text-grey-200.mb-2
+                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHours.cena", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                    .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.-mt-1.mr-1(svg="clock", :size="15")
                         p {{ time }}
-                    .flex.items-center.justify-center.text-grey-200
+                    .flex.items-center.justify-center(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-2(svg="users", :size="30")
                         p.text-xl {{ peopleAtThisTime(time) }}
 </template>
