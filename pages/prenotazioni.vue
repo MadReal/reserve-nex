@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import reservations from "@/data/reservations.json";
-const formatDateAndTime = (isoTimestamp: string) => useDateTimeFormatting(isoTimestamp);
 </script>
 
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import workHours from "@/data/work-hours.json";
+import workHoursRestaurant from "@/data/work-hours-restaurant.json";
 import reservations from "@/data/reservations.json";
 
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
@@ -19,7 +19,7 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
         div.mb-6
             p.mb-4 Pranzo
             .grid.grid-cols-4.gap-2
-                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHours.pranzo", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.pranzo", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
                     .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-1(svg="clock", :size="15")
                         p {{ time }}
@@ -34,7 +34,7 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
         div.mb-6
             p.mb-4 Cena
             .grid.grid-cols-4.gap-2
-                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHours.cena", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.cena", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
                     .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-1(svg="clock", :size="15")
                         p {{ time }}
