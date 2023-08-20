@@ -12,13 +12,13 @@ const formatDateAndTime = (isoTimestamp: string) => useDateTimeFormatting(isoTim
         p.inline
             span.pr-1.text-black.font-semibold {{ item.name }}
             span.text-grey-200 {{ `[#${item.id}]` }}
-        p.antialiased {{ formatDateAndTime(item.date).formattedDate }}
+        p.antialiased {{ item.date }}
         .flex.items-center.text-primary-100.antialiased
             SVGIcon.pr-1(svg="users-filled", :size="20")
             p {{ item.people }}
         .flex.items-center.text-grey-100.antialiased
             SVGIcon.pr-1(svg="clock", :size="20")
-            p {{ formatDateAndTime(item.date).formattedTime }}
+            p {{ item.time }}
 
         .ml-auto.flex.gap-2
             a.py-1.px-3.rounded.bg-success-100.text-success-300(v-if="item.accepted === true") Accettata
