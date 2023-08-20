@@ -15,5 +15,5 @@ nav.grow.h-16.border-b.border-grey-100.py-4.px-6.flex.justify-between
         SVGIcon.mr-2(svg="user-filled", :size="30")
         a.flex.items-center.cursor-pointer
             p.text-sm Admin
-            SVGIcon.text-grey-200(svg="arrow-down", :size="24")
+            SVGIcon.text-grey-200(svg="arrow-down", :size="20")
 </template>

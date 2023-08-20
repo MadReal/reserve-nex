@@ -11,7 +11,7 @@
         div.mr-1(class="basis-1/5")
             .w-8.h-8.bg-red-300.rounded-full
         p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
-        SVGIcon.text-grey-200(svg="arrow-down", :size="24")
+        SVGIcon.text-grey-200(svg="arrow-down", :size="20")
 
     //- SIDEBAR MENU - Items
     .py-6.px-4
