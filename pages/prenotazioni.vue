@@ -14,7 +14,7 @@ const updateAcceptance = (itemId: number, accepted: boolean) => {
 .page
     PageTitle(title="Prenotazioni")
 
-    .flex.items-center.gap-5.py-4.border-b.font-medium(v-for="item in reservations", :key="item.id")
+    .flex.items-center.gap-5.mb-8.py-4.border-b.font-medium(v-for="item in reservations", :key="item.id")
         p.inline
             span.pr-1.text-black.font-semibold {{ item.name }}
             span.text-grey-200 {{ `[#${item.id}]` }}

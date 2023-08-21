@@ -14,12 +14,12 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
 .page
     PageTitle(title="Riepilogo Giorno", :date="todaysDate")
 
-    .grid(class="grid-cols-[1fr_1px_1fr]").gap-6.border-b
+    .grid.gap-6.border-b.mb-8(class="grid-cols-[1fr_1px_1fr]")
         //- Lunch
         div.mb-6
             p.mb-4 Lunch
             .grid.grid-cols-4.gap-2
-                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.lunch", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                .rounded-lg.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.lunch", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
                     .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-1(svg="clock", :size="15")
                         p {{ time }}
@@ -34,7 +34,7 @@ const peopleAtThisTime = (time: string) => todaysReservations.reduce((total, ite
         div.mb-6
             p.mb-4 Dinner
             .grid.grid-cols-4.gap-2
-                .rounded.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.dinner", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
+                .rounded-lg.p-4.border.border-gray-100.text-grey-200(v-for="time in workHoursRestaurant.dinner", key="time", :class="{'border-primary-100' : peopleAtThisTime(time) > 0 }")
                     .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime(time) > 0 }")
                         SVGIcon.mr-1(svg="clock", :size="15")
                         p {{ time }}

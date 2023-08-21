@@ -9,7 +9,7 @@
     //- SIDEBAR MENU - Restaurant Profile
     .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6
         div.mr-1(class="basis-1/5")
-            .w-8.h-8.bg-red-300.rounded-full
+            .w-8.h-8.bg-red-300.rounded-lg-full
         p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
         SVGIcon.text-grey-200(svg="arrow-down", :size="20")
 
@@ -34,7 +34,7 @@
             NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/blocco-giorni")
                 SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="block", :size="20")
                 p.text-sm.text-grey-200.tracking-wide Blocco Giorni
-            NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/")
+            NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/blocco-orari")
                 SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="block", :size="20")
                 p.text-sm.text-grey-200.tracking-wide Blocco Orari
 </template>

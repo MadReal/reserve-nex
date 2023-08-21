@@ -20,6 +20,9 @@ module.exports = {
 			sans: ["Poppins", "sans-serif"],
 		},
 		extend: {
+			fontSize: {
+				xxs: "0.6rem",
+			},
 			colors: {
 				black: "#1F384C",
 				white: "#fff",

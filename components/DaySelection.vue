@@ -19,11 +19,11 @@ const isDayBlocked = (day: string) => props.restaurantWeekDaysBlocked.some((e) =
 
 <template lang="pug">
 .flex.items-center.justify-between.mb-2.relative.gap-3
-    .flex.items-center.justify-between.grow.py-2.px-3.border.rounded.cursor-pointer.hover_bg-slate-50(@click="toggleDropdown")
+    .flex.items-center.justify-between.grow.py-2.px-3.border.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="toggleDropdown")
         p.leading-normal.text-grey-200.text-sm {{ props.blockedDay?.day_name || 'Seleziona giorno' }}
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         //- Dropdown
-        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
+        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
             p.py-2.px-3(v-for="day in weekDaysAvailable", :key="day", @click="$emit('addOrUpdateDay', props.blockedDay?.day_name, day, isUpdate)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isDayBlocked(day), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isDayBlocked(day) }") {{ day }}
 
