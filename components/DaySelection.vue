@@ -1,0 +1,22 @@
+<script setup lang="ts">
+import weekDaysAvailable from "@/data/week-days-available.json";
+
+export interface DaySelctionProps { restaurantWeekDaysBlocked: string[], blockedDay?: string, }
+const props = defineProps<DaySelctionProps>()
+
+const isDropdownOpen = ref(false);
+const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
+
+const isDayBlocked = (day: string) => props.restaurantWeekDaysBlocked.includes(day);
+</script>
+
+
+<template lang="pug">
+.flex.items-center.justify-between.border.rounded.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(@click="toggleDropdown")
+    p.leading-normal.text-grey-200.text-sm {{ props.blockedDay || 'Seleziona giorno' }}
+    SVGIcon.text-primary-100(svg="arrow-down", :size="15")
+    //- Dropdown
+    .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
+        p.py-2.px-3(v-for="day in weekDaysAvailable", :key="day", @click="$emit('selectDay', day)",
+            :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isDayBlocked(day), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isDayBlocked(day) }") {{ day }}        
+</template>

@@ -47,9 +47,8 @@ const isTimeUsed = (time: string) => restaurantWorkHours.pranzo.includes(time);
                 p.leading-normal.text-primary-100 Seleziona Orario
                 SVGIcon.text-primary-100(svg="arrow-down", :size="15")
                 .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll(v-show="isPranzoDropdownOpen")
-                    p.text-grey-300.py-2.px-3.cursor-pointer(v-for="time in workHoursAvailable.pranzo", :key="time", 
-                        :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'hover_bg-gray-100' : !isTimeUsed(time) }", 
-                        @click="addTimeSetPranzo(time)") {{ time }}
+                    p.py-2.px-3(v-for="time in workHoursAvailable.pranzo", :key="time", @click="addTimeSetPranzo(time)",
+                        :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
 
         //- Divider
         .h-full.border-r
