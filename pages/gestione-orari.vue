@@ -3,24 +3,23 @@ import restaurantWorkHours from "@/data/db-work-hours.json";
 import workHoursAvailable from "@/data/work-hours-available.json";
 
 // Define a constant for the imported data
-const restaurantPranzoHours = ref(restaurantWorkHours.pranzo);
-// pranzo
-let showPranzoAddTime = ref(true)
-let showPranzoSelect = ref(false)
-let isPranzoDropdownOpen = ref(true)
-const togglePranzoSelect = () => { showPranzoAddTime.value = false; showPranzoSelect.value = true }
-const togglePranzoDropdown = () => isPranzoDropdownOpen.value = !isPranzoDropdownOpen.value;
-const addTimeSetPranzo = (newTime: string) => {
-    restaurantPranzoHours.value.push(newTime)
-    restaurantPranzoHours.value.sort((a, b) => parseInt(a) - parseInt(b));
-    showPranzoAddTime.value = true
-    showPranzoSelect.value = false
-    isPranzoDropdownOpen.value = false
+const restaurantLunchHours = ref(restaurantWorkHours.lunch);
+// lunch
+let showSelectLunch = ref(false)
+const isHoursLunchAvailable = computed(() => restaurantLunchHours.value.length !== workHoursAvailable.lunch.length)
+let isDropdownOpenLunch = ref(true)
+const toggleSelectLunch = () => { showSelectLunch.value = true }
+const toggleDropdownLunch = () => isDropdownOpenLunch.value = !isDropdownOpenLunch.value;
+const addTimeSetLunch = (newTime: string) => {
+    restaurantLunchHours.value.push(newTime)
+    restaurantLunchHours.value.sort((a, b) => parseInt(a) - parseInt(b));
+    showSelectLunch.value = false
+    isDropdownOpenLunch.value = false
 }
-const removeTimeSetPranzo = (index: number) => restaurantPranzoHours.value.splice(index, 1);
-const isTimeUsed = (time: string) => restaurantWorkHours.pranzo.includes(time);
+const removeTimeSetLunch = (index: number) => restaurantLunchHours.value.splice(index, 1);
+const isTimeUsed = (time: string): boolean => restaurantWorkHours.lunch.includes(time);
 
-// cena
+// dinner
 </script>
 
 
@@ -29,31 +28,31 @@ const isTimeUsed = (time: string) => restaurantWorkHours.pranzo.includes(time);
     PageTitle(title="Gestione Orari")
 
     .grid(class="grid-cols-[1fr_1px_1fr]").gap-6.border-b
-        //- Pranzo
+        //- Lunch
         div.mb-6
-            p.mb-4 Pranzo
+            p.mb-4 Lunch
             //- TIME LIST
-            .flex.items-center.justify-between.border.rounded.py-2.px-3.mb-2(v-for="(time, index) in restaurantPranzoHours", :key="time")
+            .flex.items-center.justify-between.border.rounded.py-2.px-3.mb-2(v-for="(time, index) in restaurantLunchHours", :key="time")
                 p.leading-normal.text-grey-300 {{ time }}
-                SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSetPranzo(index)")
+                SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSetLunch(index)")
             //- AGGIUNGI ORARIO
             .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
-                v-if="showPranzoAddTime", @click="togglePranzoSelect")
+                v-if="!showSelectLunch && isHoursLunchAvailable", @click="toggleSelectLunch")
                 p.leading-normal.text-primary-100 Aggiungi Orario
                 SVGIcon.text-primary-100(svg="plus", :size="15")
             //- SELECT TIME
             .flex.items-center.justify-between.border.border-primary-100.rounded.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
-                v-if="showPranzoSelect", @click="togglePranzoDropdown")
+                v-if="showSelectLunch && isHoursLunchAvailable", @click="toggleDropdownLunch")
                 p.leading-normal.text-primary-100 Seleziona Orario
                 SVGIcon.text-primary-100(svg="arrow-down", :size="15")
-                .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll(v-show="isPranzoDropdownOpen")
-                    p.py-2.px-3(v-for="time in workHoursAvailable.pranzo", :key="time", @click="addTimeSetPranzo(time)",
+                .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpenLunch")
+                    p.py-2.px-3(v-for="time in workHoursAvailable.lunch", :key="time", @click="addTimeSetLunch(time)",
                         :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
 
         //- Divider
         .h-full.border-r
 
-        //- Cena
+        //- Dinner
         div
 
 </template>
