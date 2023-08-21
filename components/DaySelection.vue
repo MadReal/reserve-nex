@@ -22,9 +22,9 @@ const isDayBlocked = (day: string) => props.restaurantWeekDaysBlocked.some((e) =
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         //- Dropdown
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="(day, index) in weekDaysAvailable", :key="day", @click="$emit('selectDay', day)",
+            p.py-2.px-3(v-for="day in weekDaysAvailable", :key="day", @click="$emit('addDay', day)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isDayBlocked(day), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isDayBlocked(day) }") {{ day }}
 
     .w-4
-        SVGIcon.text-grey-200.cursor-pointer.hover_text-error-200(svg="trash", :size="15", v-if="showTrash", @click="$emit('removeDay', blockedDay.id)")
+        SVGIcon.text-grey-200.cursor-pointer.hover_text-error-200(svg="trash", :size="15", v-if="showTrash", @click="$emit('removeDay', blockedDay.day_name)")
 </template>

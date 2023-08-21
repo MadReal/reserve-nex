@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import restaurantWeekDaysBlocked from "@/data/db-week-days-blocked.json";
+import weekDaysAvailable from "@/data/week-days-available.json";
 
 // Define a constant for the imported data
 const blockedDaysWeekly = ref(restaurantWeekDaysBlocked);
+// Sort the array of objects based on the desired order (take it from my default at week-days-available.json)
+const blockedDaysWeeklySorted = computed(() => blockedDaysWeekly.value.sort((a, b) => weekDaysAvailable.indexOf(a.day_name) - weekDaysAvailable.indexOf(b.day_name)))
+
 // handle $emit
-const selectDay = (day: string) => {
-    blockedDaysWeekly.value.push({ id: Math.floor(Date.now() / 1000), day_name: day })
-};
-const removeDay = (dayId: number) => {
-    const dayToRemoveIndex = blockedDaysWeekly.value.findIndex(e => e.id !== dayId)
+const addDay = (day: string) => blockedDaysWeekly.value.push({ id: 0, day_name: day });
+const removeDay = (dayName: string) => {
+    const dayToRemoveIndex = blockedDaysWeekly.value.findIndex(e => e.day_name === dayName)
     blockedDaysWeekly.value.splice(dayToRemoveIndex, 1)
 }
 // used to dynamically set class
@@ -33,7 +35,9 @@ const blockedDaysArrayFull = computed(() => blockedDaysWeekly.value.length > 6)
 
         div.mt-2.mb-8
             //- Display for each day already "blocked"
-            DaySelection(v-for="blockedDay in blockedDaysWeekly" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeekly", :blockedDay="blockedDay" @selectDay="selectDay", @removeDay="removeDay", :showTrash="!blockedDaysArrayShort")
+            DaySelection(v-for="blockedDay in blockedDaysWeeklySorted" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", :blockedDay="blockedDay",
+                @addDay="addDay", @removeDay="removeDay", :showTrash="!blockedDaysArrayShort")
             //- Display the "empty" one, to add a new day
-            DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeekly", @selectDay="selectDay", @removeDay="removeDay", :showTrash="false")
+            DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", 
+                @addDay="addDay", @removeDay="removeDay", :showTrash="false")
 </template>
