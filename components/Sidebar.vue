@@ -9,7 +9,7 @@
     //- SIDEBAR MENU - Restaurant Profile
     .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6
         div.mr-1(class="basis-1/5")
-            .w-8.h-8.bg-red-300.rounded-lg-full
+            .w-8.h-8.bg-red-300.rounded-full
         p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
         SVGIcon.text-grey-200(svg="arrow-down", :size="20")
 
