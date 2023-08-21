@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import restaurantWeekDaysBlocked from "@/data/db-week-days-blocked.json";
 import weekDaysAvailable from "@/data/week-days-available.json";
+// https://github.com/fullcalendar/fullcalendar-vue
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
@@ -28,12 +29,8 @@ const blockedDaysArrayFull = computed(() => blockedDaysWeekly.value.length > 6)
 // CALENDAR
 //************
 const handleEventClick = (clickInfo: any) => {
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //     clickInfo.event.remove()
-    // }
-    if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
-        clickInfo.event.remove()
-    }
+    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) clickInfo.event.remove()
+    if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) clickInfo.event.remove()
 }
 const handleDateSelect = (selectInfo: any) => {
     // let title = prompt('Please enter a new title for your event')
@@ -64,7 +61,6 @@ const calendarOptions = {
     selectable: true,
     // selectMirror: true,
     dayMaxEvents: true,
-    // weekends: true, // default
     select: handleDateSelect,
     eventClick: handleEventClick,
     eventsSet: handleEvents
