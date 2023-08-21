@@ -5,7 +5,9 @@
 		"date": "2023-08-20",
 		"time": "14:30",
 		"people": 2,
-		"accepted": true
+		"accepted": true,
+		"phone": 3480000000,
+		"email": "email@gmail.com"
 	},
 	{
 		"id": 2,
@@ -13,7 +15,9 @@
 		"date": "2023-08-16",
 		"time": "12:00",
 		"people": 4,
-		"accepted": null
+		"accepted": null,
+		"phone": 3480000000,
+		"email": "email@gmail.com"
 	},
 	{
 		"id": 3,
@@ -21,6 +25,8 @@
 		"date": "2023-08-18",
 		"time": "19:30",
 		"people": 4,
-		"accepted": null
+		"accepted": null,
+		"phone": 3480000000,
+		"email": "email@gmail.com"
 	}
 ]

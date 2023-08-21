@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import workHoursRestaurant from "@/data/work-hours-restaurant.json";
+import restaurantWorkHours from "@/data/db-work-hours.json";
 import workHoursAvailable from "@/data/work-hours-available.json";
 
 // Define a constant for the imported data
-const restaurantPranzoHours = ref(workHoursRestaurant.pranzo);
+const restaurantPranzoHours = ref(restaurantWorkHours.pranzo);
 // pranzo
 let showPranzoAddTime = ref(true)
 let showPranzoSelect = ref(false)
@@ -18,10 +18,9 @@ const addTimeSetPranzo = (newTime: string) => {
     isPranzoDropdownOpen.value = false
 }
 const removeTimeSetPranzo = (index: number) => restaurantPranzoHours.value.splice(index, 1);
-const isTimeUsed = (time: string) => workHoursRestaurant.pranzo.includes(time);
+const isTimeUsed = (time: string) => restaurantWorkHours.pranzo.includes(time);
 
 // cena
-let isOpenCenaDropdown = ref(false)
 </script>
 
 

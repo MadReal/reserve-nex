@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import reservations from "@/data/reservations.json";
+import restaurantReservations from "@/data/db-reservations.json";
+
+const reservations = ref(restaurantReservations)
+
+const updateAcceptance = (itemId: number, accepted: boolean) => {
+    const found = reservations.value.find(e => e.id === itemId);
+    if (found) found.accepted = accepted;
+};
 </script>
 
 
@@ -20,8 +27,8 @@ import reservations from "@/data/reservations.json";
             p {{ item.time }}
 
         .ml-auto.flex.gap-2
-            a.py-1.px-3.rounded.bg-success-100.text-success-300(v-if="item.accepted === true") Accettata
-            a.py-1.px-3.rounded.bg-error-100.text-error-300(v-if="item.accepted === false") Rifiutata
-            a.py-1.px-3.rounded.bg-success-200.text-white(v-if="item.accepted === null") Accetta
-            a.py-1.px-3.rounded.bg-error-200.text-white(v-if="item.accepted === null") Rifiuta
+            a.py-1.px-3.rounded.bg-success-100.text-success-300.cursor-not-allowed(v-if="item.accepted === true") Accettata
+            a.py-1.px-3.rounded.bg-error-100.text-error-300.cursor-not-allowed(v-if="item.accepted === false") Rifiutata
+            a.py-1.px-3.rounded.bg-success-200.text-white.cursor-pointer(class="hover_bg-success-200/80", v-if="item.accepted === null" @click="updateAcceptance(item.id, true)") Accetta
+            a.py-1.px-3.rounded.bg-error-200.text-white.cursor-pointer(class="hover_bg-error-200/80", v-if="item.accepted === null" @click="updateAcceptance(item.id, false)") Rifiuta
 </template>

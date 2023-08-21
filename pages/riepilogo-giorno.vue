@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import workHoursRestaurant from "@/data/work-hours-restaurant.json";
-import reservations from "@/data/reservations.json";
+import workHoursRestaurant from "@/data/db-work-hours.json";
+import reservations from "@/data/db-reservations.json";
 
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
 const todaysReservations = reservations.filter(item => useDateTimeFormatting(item.date).formattedDate == todaysDate)
