@@ -19,7 +19,7 @@ const workHoursList = restaurantWorkHours.lunch.concat(restaurantWorkHours.dinne
 
 
 <template lang="pug">
-.flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdown")
+.flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdown()")
     p.pr-1.leading-normal.text-xxs.text-grey-200 {{ name }}
     p.leading-normal.text-grey-300 {{ time }}
     SVGIcon.text-grey-300(svg="arrow-down", :size="15")

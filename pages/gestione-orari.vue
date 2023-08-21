@@ -37,12 +37,12 @@ const isTimeUsed = (time: string): boolean => restaurantWorkHours.lunch.includes
                 SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSetLunch(index)")
             //- AGGIUNGI ORARIO
             .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
-                v-if="!showSelectLunch && isHoursLunchAvailable", @click="toggleSelectLunch")
+                v-if="!showSelectLunch && isHoursLunchAvailable", @click="toggleSelectLunch()")
                 p.leading-normal.text-primary-100 Aggiungi Orario
                 SVGIcon.text-primary-100(svg="plus", :size="15")
             //- SELECT TIME
             .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
-                v-if="showSelectLunch && isHoursLunchAvailable", @click="toggleDropdownLunch")
+                v-if="showSelectLunch && isHoursLunchAvailable", @click="toggleDropdownLunch()")
                 p.leading-normal.text-primary-100 Seleziona Orario
                 SVGIcon.text-primary-100(svg="arrow-down", :size="15")
                 .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpenLunch")
