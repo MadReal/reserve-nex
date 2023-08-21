@@ -1,0 +1,37 @@
+.fc .fc-toolbar {
+	@apply justify-center gap-5 #{!important};
+}
+
+.fc-toolbar-title {
+	@apply text-black text-xl #{!important};
+}
+
+.fc-button-primary,
+.fc-next-button,
+.fc-prev-button,
+.fc-button {
+	@apply bg-transparent text-black border-0 focus_shadow-none #{!important};
+}
+
+.fc-h-event {
+	@apply bg-error-200 border-error-200 px-2 #{!important};
+	// @apply bg-error-200 border-error-200 px-3 rounded-full #{!important};
+}
+
+.fc-theme-standard .fc-scrollgrid {
+	// @apply border-0 #{!important};
+}
+.fc-theme-standard th {
+	// @apply border-0 #{!important};
+}
+
+.fc-theme-standard .fc-scrollgrid,
+.fc-theme-standard th,
+.fc-theme-standard td {
+	// @apply border-0 #{!important};
+	@apply border-gray-100 #{!important};
+}
+
+.fc-daygrid-day-top {
+	@apply p-2 #{!important};
+}
