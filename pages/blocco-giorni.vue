@@ -2,13 +2,19 @@
 import restaurantWeekDaysBlocked from "@/data/db-week-days-blocked.json";
 
 // Define a constant for the imported data
-const blockedDays = ref(restaurantWeekDaysBlocked);
+const blockedDaysWeekly = ref(restaurantWeekDaysBlocked);
 // handle $emit
-const selectDay = (day: string) => blockedDays.value.push(day);
+const selectDay = (day: string) => {
+    blockedDaysWeekly.value.push({ id: Math.floor(Date.now() / 1000), day_name: day })
+};
+const removeDay = (dayId: number) => {
+    const dayToRemoveIndex = blockedDaysWeekly.value.findIndex(e => e.id !== dayId)
+    blockedDaysWeekly.value.splice(dayToRemoveIndex, 1)
+}
 // used to dynamically set class
-const blockedDaysArrayShort = blockedDays.value.length < 1 ? true : false;
+const blockedDaysArrayShort = computed(() => blockedDaysWeekly.value.length < 1 ? true : false)
 // if all days are added
-const blockedDaysArrayFull = computed(() => blockedDays.value.length > 6)
+const blockedDaysArrayFull = computed(() => blockedDaysWeekly.value.length > 6)
 </script>
 
 
@@ -27,7 +33,7 @@ const blockedDaysArrayFull = computed(() => blockedDays.value.length > 6)
 
         div.mt-2.mb-8
             //- Display for each day already "blocked"
-            DaySelection(v-for="blockedDay in blockedDays" :key="blockedDay" :restaurantWeekDaysBlocked="blockedDays", :blockedDay="blockedDay" @selectDay="selectDay")
+            DaySelection(v-for="blockedDay in blockedDaysWeekly" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeekly", :blockedDay="blockedDay" @selectDay="selectDay", @removeDay="removeDay", :showTrash="!blockedDaysArrayShort")
             //- Display the "empty" one, to add a new day
-            DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDays", @selectDay="selectDay")
+            DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeekly", @selectDay="selectDay", @removeDay="removeDay", :showTrash="false")
 </template>
