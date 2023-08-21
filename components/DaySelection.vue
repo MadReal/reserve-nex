@@ -4,8 +4,10 @@ import weekDaysAvailable from "@/data/week-days-available.json";
 export interface DaySelctionProps {
     restaurantWeekDaysBlocked: { id: number, day_name: string }[],
     showTrash: boolean,
+    isUpdate: boolean // true: add new day - false: update day
     blockedDay?: { id: number, day_name: string },
 }
+
 const props = defineProps<DaySelctionProps>()
 
 const isDropdownOpen = ref(false);
@@ -22,9 +24,9 @@ const isDayBlocked = (day: string) => props.restaurantWeekDaysBlocked.some((e) =
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         //- Dropdown
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="day in weekDaysAvailable", :key="day", @click="$emit('addDay', day)",
+            p.py-2.px-3(v-for="day in weekDaysAvailable", :key="day", @click="$emit('addOrUpdateDay', props.blockedDay?.day_name, day, isUpdate)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isDayBlocked(day), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isDayBlocked(day) }") {{ day }}
 
     .w-4
-        SVGIcon.text-grey-200.cursor-pointer.hover_text-error-200(svg="trash", :size="15", v-if="showTrash", @click="$emit('removeDay', blockedDay.day_name)")
+        SVGIcon.text-grey-200.cursor-pointer.hover_text-error-200(svg="trash", :size="15", v-if="showTrash", @click="$emit('removeDay', props.blockedDay?.day_name)")
 </template>

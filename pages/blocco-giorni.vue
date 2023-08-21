@@ -8,11 +8,14 @@ const blockedDaysWeekly = ref(restaurantWeekDaysBlocked);
 const blockedDaysWeeklySorted = computed(() => blockedDaysWeekly.value.sort((a, b) => weekDaysAvailable.indexOf(a.day_name) - weekDaysAvailable.indexOf(b.day_name)))
 
 // handle $emit
-const addDay = (day: string) => blockedDaysWeekly.value.push({ id: 0, day_name: day });
 const removeDay = (dayName: string) => {
     const dayToRemoveIndex = blockedDaysWeekly.value.findIndex(e => e.day_name === dayName)
     blockedDaysWeekly.value.splice(dayToRemoveIndex, 1)
 }
+const addOrUpdateDay = (oldDayName: string, newDayName: string, isUpdate: boolean) => {
+    if (isUpdate) removeDay(oldDayName)
+    blockedDaysWeekly.value.push({ id: 0, day_name: newDayName });
+};
 // used to dynamically set class
 const blockedDaysArrayShort = computed(() => blockedDaysWeekly.value.length < 1 ? true : false)
 // if all days are added
@@ -36,8 +39,8 @@ const blockedDaysArrayFull = computed(() => blockedDaysWeekly.value.length > 6)
         div.mt-2.mb-8
             //- Display for each day already "blocked"
             DaySelection(v-for="blockedDay in blockedDaysWeeklySorted" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", :blockedDay="blockedDay",
-                @addDay="addDay", @removeDay="removeDay", :showTrash="!blockedDaysArrayShort")
+                @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="true", :showTrash="!blockedDaysArrayShort")
             //- Display the "empty" one, to add a new day
             DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", 
-                @addDay="addDay", @removeDay="removeDay", :showTrash="false")
+                @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="false", :showTrash="false")
 </template>
