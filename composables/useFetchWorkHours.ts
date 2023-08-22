@@ -1,4 +1,4 @@
-export default async () => {
+export default async function useFetchWorkHours() {
 	const { data, error } = await useFetch("/api/work-hours");
 
 	if (error.value) {
@@ -9,4 +9,4 @@ export default async () => {
 	}
 
 	return data.value ?? [];
-};
+}

@@ -37,6 +37,4 @@ const removeTimeSlot = async (timeSlotId: WorkHour['id'], isLunch: boolean) => {
         div.mb-6
             p.mb-4 Cena
             SelectWorkHour(:workHours="dinnerWorkHours", :isLunch="false", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
-
-
 </template>
