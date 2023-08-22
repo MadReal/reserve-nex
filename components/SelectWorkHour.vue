@@ -9,10 +9,10 @@ export interface SelectWorkHourProps {
 const props = defineProps<SelectWorkHourProps>()
 const emit = defineEmits(['addNewTimeSlot', 'removeTimeSlot'])
 
-// put time in order from smallest to highest, except for 00:00, put that last
+// put time in order from smallest to highest, except for 00:00 and 00:30, put those last
 const workHoursSorted = props.workHours.sort((a, b) => {
-    if (a.timeSlot === "00:00") return 1; // "00:00" should come last
-    if (b.timeSlot === "00:00") return -1; // "00:00" should come last
+    if (a.timeSlot === "00:00" || a.timeSlot === "00:30") return 1; // "00:00" and "00:30" should come last
+    if (b.timeSlot === "00:00" || b.timeSlot === "00:30") return -1; // "00:00" and "00:30" should come last
     return parseInt(a.timeSlot) - parseInt(b.timeSlot);
 });
 
