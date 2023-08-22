@@ -8,5 +8,5 @@ export default async () => {
 		});
 	}
 
-	return data.value;
+	return data.value ?? [];
 };

@@ -1,29 +1,25 @@
 <script setup lang="ts">
-import restaurantWorkHours from "@/data/db-work-hours.json";
-import workHoursAvailable from "@/data/work-hours-available.json";
-
 // @ts-ignore
-const workHours: WorkHour[] = await useFetchWorkHours()
-const lunchWorkHours = workHours.filter((item: WorkHour) => item.mealType === "lunch");
+const workHours: WorkHour[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
+const lunchWorkHours = workHours.filter((item: WorkHour) => item.mealType === "LUNCH");
+const dinnerWorkHours = workHours.filter((item: WorkHour) => item.mealType === "DINNER");
 
-// Define a constant for the imported data
-const restaurantLunchHours = ref(restaurantWorkHours.lunch);
-// lunch
-let showSelectLunch = ref(false)
-const isHoursLunchAvailable = computed(() => restaurantLunchHours.value.length !== workHoursAvailable.lunch.length)
-let isDropdownOpenLunch = ref(true)
-const toggleSelectLunch = () => { showSelectLunch.value = true }
-const toggleDropdownLunch = () => isDropdownOpenLunch.value = !isDropdownOpenLunch.value;
-const addTimeSetLunch = (newTime: string) => {
-    restaurantLunchHours.value.push(newTime)
-    restaurantLunchHours.value.sort((a, b) => parseInt(a) - parseInt(b));
-    showSelectLunch.value = false
-    isDropdownOpenLunch.value = false
+const addNewTimeSlot = async (newTimeSlot: WorkHour['timeSlot'], isLunch: boolean) => {
+    try {
+        const response = await $fetch('/api/work-hours', {
+            method: 'post',
+            body: { mealType: isLunch ? 'LUNCH' : 'DINNER', timeSlot: newTimeSlot }
+        })
+        // workHours.push(response)
+    } catch (error) { console.error(error); }
 }
-const removeTimeSetLunch = (index: number) => restaurantLunchHours.value.splice(index, 1);
-const isTimeUsed = (time: string): boolean => restaurantWorkHours.lunch.includes(time);
-
-// dinner
+const removeTimeSlot = async (timeSlotId: WorkHour['id'], isLunch: boolean) => {
+    try {
+        await $fetch(`/api/work-hours/${timeSlotId}`, { method: 'delete', })
+        // const workHourIndex = workHours.findIndex(e => e.id === timeSlotId)
+        // workHours.splice(workHourIndex, 1)
+    } catch (error) { console.error(error); }
+}
 </script>
 
 
@@ -32,31 +28,16 @@ const isTimeUsed = (time: string): boolean => restaurantWorkHours.lunch.includes
     PageTitle(title="Gestione Orari")
 
     .grid.gap-6.border-b(class="grid-cols-[1fr_1px_1fr]")
-        //- Lunch
+
         div.mb-6
             p.mb-4 Lunch
-            //- TIME LIST
-            .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="(time, index) in workHours", :key="time")
-                p.leading-normal.text-grey-300 {{ time.timeSlot }}
-                SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSetLunch(index)")
-            //- AGGIUNGI ORARIO
-            .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
-                v-if="!showSelectLunch && isHoursLunchAvailable", @click="toggleSelectLunch()")
-                p.leading-normal.text-primary-100 Aggiungi Orario
-                SVGIcon.text-primary-100(svg="plus", :size="15")
-            //- SELECT TIME
-            .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
-                v-if="showSelectLunch && isHoursLunchAvailable", @click="toggleDropdownLunch()")
-                p.leading-normal.text-primary-100 Seleziona Orario
-                SVGIcon.text-primary-100(svg="arrow-down", :size="15")
-                .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpenLunch")
-                    p.py-2.px-3(v-for="time in workHoursAvailable.lunch", :key="time", @click="addTimeSetLunch(time)",
-                        :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
-
+            SelectWorkHour(:workHours="lunchWorkHours", :isLunch="true", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
         //- Divider
         .h-full.border-r
 
-        //- Dinner
-        div
+        div.mb-6
+            p.mb-4 Dinner
+            SelectWorkHour(:workHours="dinnerWorkHours", :isLunch="false", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
+
 
 </template>

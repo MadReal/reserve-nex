@@ -3,9 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+	const { workHourId } = event.context.params as { workHourId: string };
+
 	try {
-		const workHours = await prisma.workHour.findMany(); // Replace this with your actual query
-		return workHours;
+		const workHourDelete = await prisma.workHour.delete({
+			where: {
+				id: parseInt(workHourId),
+			},
+		});
+		return workHourDelete;
 	} catch (error) {
 		console.error(error);
 		return createError({ statusMessage: "An error occurred" });
