@@ -29,7 +29,7 @@ model BlockedDayEveryWeek {
 }
 
 // day(s) in which the restaurant is closed - vacation, holidays
-model BlockedDays {
+model BlockedDaysPeriod {
   id        Int        @id @default(autoincrement())
   dateFrom  DateTime
   dateTo    DateTime
