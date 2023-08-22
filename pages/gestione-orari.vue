@@ -2,6 +2,7 @@
 import restaurantWorkHours from "@/data/db-work-hours.json";
 import workHoursAvailable from "@/data/work-hours-available.json";
 
+const workHours = await useFetchWorkHours()
 // Define a constant for the imported data
 const restaurantLunchHours = ref(restaurantWorkHours.lunch);
 // lunch

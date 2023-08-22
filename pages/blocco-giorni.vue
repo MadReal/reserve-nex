@@ -61,9 +61,11 @@ const calendarOptions = {
     selectable: true,
     // selectMirror: true,
     dayMaxEvents: true,
+    contentHeight: 500,
     select: handleDateSelect,
     eventClick: handleEventClick,
-    eventsSet: handleEvents
+    eventsSet: handleEvents,
+
 }
 </script>
 
