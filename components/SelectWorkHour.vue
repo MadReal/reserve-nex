@@ -1,0 +1,50 @@
+<script setup lang="ts">
+import _default_workHoursAvailable from "@/data/work-hours-available.json";
+
+export interface SelectWorkHourProps {
+    workHours: WorkHour[],
+    isLunch: boolean
+}
+
+const props = defineProps<SelectWorkHourProps>()
+const emit = defineEmits(['addNewTimeSlot', 'removeTimeSlot'])
+
+const workHoursAvailable = _default_workHoursAvailable[props.isLunch ? 'lunch' : 'dinner']
+const isHoursStillAvailableToFill = computed(() => props.workHours.length !== workHoursAvailable.length)
+
+let isSelectVisible = ref(false)
+let isDropdownOpen = ref(true)
+const toggleSelect = () => { isSelectVisible.value = true }
+const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
+
+const addTimeSlot = (newTime: string) => {
+    emit('addNewTimeSlot', newTime, props.isLunch)
+    isSelectVisible.value = false
+    isDropdownOpen.value = false
+}
+const removeTimeSlot = (timeSlotId: number) => emit('removeTimeSlot', timeSlotId, props.isLunch)
+const isTimeUsed = (time: string): boolean => workHoursAvailable.includes(time);
+</script>
+
+
+<template lang="pug">
+div
+    //- TIME LIST
+    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="(time, index) in workHours", :key="time.id")
+        p.leading-normal.text-grey-300 {{ time.timeSlot }}
+        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSlot(time.id)")
+    //- AGGIUNGI ORARIO
+    .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
+        v-if="!isSelectVisible && isHoursStillAvailableToFill", @click="toggleSelect()")
+        p.leading-normal.text-primary-100 Aggiungi Orario
+        SVGIcon.text-primary-100(svg="plus", :size="15")
+    //- SELECT TIME
+    .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
+        v-if="isSelectVisible && isHoursStillAvailableToFill", @click="toggleDropdown()")
+        p.leading-normal.text-primary-100 Seleziona Orario
+        SVGIcon.text-primary-100(svg="arrow-down", :size="15")
+        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
+            p.py-2.px-3(v-for="time in workHoursAvailable", :key="time", @click="addTimeSlot(time)",
+                :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
+
+</template>

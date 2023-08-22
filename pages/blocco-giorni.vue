@@ -84,10 +84,10 @@ const calendarOptions = {
 
         div.mt-2.mb-8
             //- Display for each day already "blocked"
-            DaySelection(v-for="blockedDay in blockedDaysWeeklySorted" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", :blockedDay="blockedDay",
+            SelectDay(v-for="blockedDay in blockedDaysWeeklySorted" :key="blockedDay.id" :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", :blockedDay="blockedDay",
                 @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="true", :showTrash="!blockedDaysArrayShort")
             //- Display the "empty" one, to add a new day
-            DaySelection(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", 
+            SelectDay(v-if="!blockedDaysArrayFull", :restaurantWeekDaysBlocked="blockedDaysWeeklySorted", 
                 @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options='calendarOptions')

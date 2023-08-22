@@ -8,5 +8,5 @@ export default async () => {
 		});
 	}
 
-	return data;
+	return data.value;
 };

@@ -2,7 +2,10 @@
 import restaurantWorkHours from "@/data/db-work-hours.json";
 import workHoursAvailable from "@/data/work-hours-available.json";
 
-const workHours = await useFetchWorkHours()
+// @ts-ignore
+const workHours: WorkHour[] = await useFetchWorkHours()
+const lunchWorkHours = workHours.filter((item: WorkHour) => item.mealType === "lunch");
+
 // Define a constant for the imported data
 const restaurantLunchHours = ref(restaurantWorkHours.lunch);
 // lunch
@@ -33,8 +36,8 @@ const isTimeUsed = (time: string): boolean => restaurantWorkHours.lunch.includes
         div.mb-6
             p.mb-4 Lunch
             //- TIME LIST
-            .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="(time, index) in restaurantLunchHours", :key="time")
-                p.leading-normal.text-grey-300 {{ time }}
+            .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="(time, index) in workHours", :key="time")
+                p.leading-normal.text-grey-300 {{ time.timeSlot }}
                 SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSetLunch(index)")
             //- AGGIUNGI ORARIO
             .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(

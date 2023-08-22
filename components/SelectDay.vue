@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import weekDaysAvailable from "@/data/week-days-available.json";
 
-export interface DaySelctionProps {
+export interface SelectDayProps {
     restaurantWeekDaysBlocked: { id: number, day_name: string }[],
     showTrash: boolean,
     isUpdate: boolean // true: add new day - false: update day
     blockedDay?: { id: number, day_name: string },
 }
 
-const props = defineProps<DaySelctionProps>()
+const props = defineProps<SelectDayProps>()
 
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
