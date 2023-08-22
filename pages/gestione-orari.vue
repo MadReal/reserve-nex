@@ -30,13 +30,13 @@ const removeTimeSlot = async (timeSlotId: WorkHour['id'], isLunch: boolean) => {
     .grid.gap-6.border-b(class="grid-cols-[1fr_1px_1fr]")
 
         div.mb-6
-            p.mb-4 Lunch
+            p.mb-4 Pranzo
             SelectWorkHour(:workHours="lunchWorkHours", :isLunch="true", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
         //- Divider
         .h-full.border-r
 
         div.mb-6
-            p.mb-4 Dinner
+            p.mb-4 Cena
             SelectWorkHour(:workHours="dinnerWorkHours", :isLunch="false", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
 
 
