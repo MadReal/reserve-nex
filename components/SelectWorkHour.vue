@@ -5,16 +5,8 @@ export interface SelectWorkHourProps {
     workHours: WorkHour[],
     isLunch: boolean
 }
-
 const props = defineProps<SelectWorkHourProps>()
 const emit = defineEmits(['addNewTimeSlot', 'removeTimeSlot'])
-
-// put time in order from smallest to highest, except for 00:00 and 00:30, put those last
-const workHoursSorted = props.workHours.sort((a, b) => {
-    if (a.timeSlot === "00:00" || a.timeSlot === "00:30") return 1; // "00:00" and "00:30" should come last
-    if (b.timeSlot === "00:00" || b.timeSlot === "00:30") return -1; // "00:00" and "00:30" should come last
-    return parseInt(a.timeSlot) - parseInt(b.timeSlot);
-});
 
 const workHoursAvailable = _default_workHoursAvailable[props.isLunch ? 'lunch' : 'dinner']
 const isHoursStillAvailableToFill = computed(() => props.workHours.length !== workHoursAvailable.length)
@@ -37,7 +29,7 @@ const isTimeUsed = (time: string): boolean => props.workHours.some(workHour => w
 <template lang="pug">
 div
     //- list of all the workHours
-    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workHoursSorted", :key="time.id")
+    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workHours", :key="time.id")
         p.leading-normal.text-grey-300 {{ time.timeSlot }}
         SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSlot(time.id)")
     //- ADD

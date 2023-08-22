@@ -8,7 +8,6 @@ export interface SelectTimeProps {
     time: string,
     index: number,
 }
-
 const props = defineProps<SelectTimeProps>()
 
 const isDropdownOpen = ref(false);

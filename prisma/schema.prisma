@@ -15,18 +15,30 @@ enum MealType {
   DINNER
 }
 
+// hours in which the restaurant is open during the day, repeats every day
 model WorkHour {
-  id        Int        @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   mealType  MealType
-  timeSlot  String     @unique
+  timeSlot  String    @unique
 }
 
-// model BlockedWeekDay {
-//   id        Int        @id @default(autoincrement())
-//   dayOfWeek String     @unique
-// }
+// day during the week (every week) in which the restaurant is closed
+model BlockedDayEveryWeek {
+  id         Int        @id @default(autoincrement())
+  dayOfWeek  String     @unique
+}
 
-// model BlockedTime {
-//   id        Int        @id @default(autoincrement())
-//   date      DateTime
-// }
+// day(s) in which the restaurant is closed - vacation, holidays
+model BlockedDays {
+  id        Int        @id @default(autoincrement())
+  dateFrom  DateTime
+  dateTo    DateTime
+}
+
+// if the resturant needs to adjust their open-time on a certain day
+model BlockedWorkHourOnDate {
+  id        Int        @id @default(autoincrement())
+  hourFrom  String
+  hourTo    String
+  date      DateTime
+}

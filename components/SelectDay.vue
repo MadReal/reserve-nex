@@ -7,7 +7,6 @@ export interface SelectDayProps {
     isUpdate: boolean // true: add new day - false: update day
     blockedDay?: { id: number, day_name: string },
 }
-
 const props = defineProps<SelectDayProps>()
 
 const isDropdownOpen = ref(false);
