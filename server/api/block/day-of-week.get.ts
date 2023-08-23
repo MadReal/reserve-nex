@@ -4,8 +4,12 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
 	try {
-		const workTimes = await prisma.workTime.findMany();
-		return workTimes;
+		const block = await prisma.block.findMany({
+			where: {
+				dayOfWeek: { not: null },
+			},
+		});
+		return block;
 	} catch (err) {
 		console.error(err);
 		return createError({ statusMessage: "An error occurred" });
