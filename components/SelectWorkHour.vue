@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import _default_workHoursAvailable from "@/data/work-hours-available.json";
+import _default_workTimesAvailable from "@/data/work-hours-available.json";
 
 export interface SelectWorkHourProps {
-    workHours: WorkHour[],
+    workTimes: WorkTime[],
     isLunch: boolean
 }
 const props = defineProps<SelectWorkHourProps>()
-const emit = defineEmits(['addNewTimeSlot', 'removeTimeSlot'])
+const emit = defineEmits(['addNewTime', 'removeTime'])
 
-const workHoursAvailable = _default_workHoursAvailable[props.isLunch ? 'lunch' : 'dinner']
-const isHoursStillAvailableToFill = computed(() => props.workHours.length !== workHoursAvailable.length)
+const workTimesAvailable = _default_workTimesAvailable[props.isLunch ? 'lunch' : 'dinner']
+const isHoursStillAvailableToFill = computed(() => props.workTimes.length !== workTimesAvailable.length)
 
 let isSelectVisible = ref(false)
 let isDropdownOpen = ref(true)
 const toggleSelect = () => isSelectVisible.value = true
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 
-const addTimeSlot = (newTimeSlot: WorkHour['timeSlot']) => {
-    emit('addNewTimeSlot', newTimeSlot, props.isLunch)
+const addTime = (newTime: WorkTime['time']) => {
+    emit('addNewTime', newTime, props.isLunch)
     isSelectVisible.value = false
     isDropdownOpen.value = false
 }
-const removeTimeSlot = (timeSlotId: number) => emit('removeTimeSlot', timeSlotId, props.isLunch)
-const isTimeUsed = (time: string): boolean => props.workHours.some(workHour => workHour.timeSlot === time)
+const removeTimeSlot = (timeId: number) => emit('removeTime', timeId, props.isLunch)
+const isTimeUsed = (time: string): boolean => props.workTimes.some(workTime => workTime.time === time)
 </script>
 
 
 <template lang="pug">
 div
-    //- list of all the workHours
-    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workHours", :key="time.id")
-        p.leading-normal.text-grey-300 {{ time.timeSlot }}
+    //- list of all the workTimes
+    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workTimes", :key="time.id")
+        p.leading-normal.text-grey-300 {{ time.time }}
         SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSlot(time.id)")
     //- ADD
     .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
@@ -43,6 +43,6 @@ div
         p.leading-normal.text-primary-100 Seleziona Orario
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="time in workHoursAvailable", :key="time", @click="addTimeSlot(time)",
+            p.py-2.px-3(v-for="time in workTimesAvailable", :key="time", @click="addTime(time)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
 </template>

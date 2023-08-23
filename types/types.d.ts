@@ -1,5 +1,5 @@
-declare interface WorkHour {
+declare interface WorkTime {
 	id: number;
 	mealType: string;
-	timeSlot: string;
+	time: string;
 }

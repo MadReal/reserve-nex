@@ -1,23 +1,23 @@
 <script setup lang="ts">
 // @ts-ignore
-const workHours: WorkHour[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
-const lunchWorkHours = useSortWorkHours(workHours.filter((item: WorkHour) => item.mealType === "LUNCH"));
-const dinnerWorkHours = useSortWorkHours(workHours.filter((item: WorkHour) => item.mealType === "DINNER"));
+const workTimes: WorkTime[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
+const lunchWorkHours = useSortWorkHours(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
+const dinnerWorkHours = useSortWorkHours(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
 
-const addNewTimeSlot = async (newTimeSlot: WorkHour['timeSlot'], isLunch: boolean) => {
+const addNewTime = async (newTime: WorkTime['time'], isLunch: boolean) => {
     try {
         const response = await $fetch('/api/work-hours', {
             method: 'post',
-            body: { mealType: isLunch ? 'LUNCH' : 'DINNER', timeSlot: newTimeSlot }
+            body: { mealType: isLunch ? 'LUNCH' : 'DINNER', time: newTime }
         })
-        // workHours.push(response)
+        // workTimes.push(response)
     } catch (error) { console.error(error); }
 }
-const removeTimeSlot = async (timeSlotId: WorkHour['id'], isLunch: boolean) => {
+const removeTime = async (timeId: WorkTime['id'], isLunch: boolean) => {
     try {
-        await $fetch(`/api/work-hours/${timeSlotId}`, { method: 'delete', })
-        // const workHourIndex = workHours.findIndex(e => e.id === timeSlotId)
-        // workHours.splice(workHourIndex, 1)
+        await $fetch(`/api/work-hours/${timeId}`, { method: 'delete', })
+        // const workTimeIndex = workTimes.findIndex(e => e.id === timeId)
+        // workTimes.splice(workTimeIndex, 1)
     } catch (error) { console.error(error); }
 }
 </script>
@@ -30,11 +30,11 @@ const removeTimeSlot = async (timeSlotId: WorkHour['id'], isLunch: boolean) => {
     .grid.gap-6.border-b(class="grid-cols-[1fr_1px_1fr]")
         div.mb-6
             p.mb-4 Pranzo
-            SelectWorkHour(:workHours="lunchWorkHours", :isLunch="true", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
+            SelectWorkHour(:workTimes="lunchWorkHours", :isLunch="true", @addNewTime="addNewTime", @removeTime="removeTime")
 
         .h-full.border-r
 
         div.mb-6
             p.mb-4 Cena
-            SelectWorkHour(:workHours="dinnerWorkHours", :isLunch="false", @addNewTimeSlot="addNewTimeSlot", @removeTimeSlot="removeTimeSlot")
+            SelectWorkHour(:workTimes="dinnerWorkHours", :isLunch="false", @addNewTime="addNewTime", @removeTime="removeTime")
 </template>

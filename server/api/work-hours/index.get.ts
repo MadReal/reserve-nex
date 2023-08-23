@@ -4,8 +4,8 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
 	try {
-		const workHours = await prisma.workHour.findMany();
-		return workHours;
+		const workTimes = await prisma.workTime.findMany();
+		return workTimes;
 	} catch (error) {
 		console.error(error);
 		return createError({ statusMessage: "An error occurred" });

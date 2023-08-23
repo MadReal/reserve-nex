@@ -16,10 +16,10 @@ enum MealType {
 }
 
 // hours in which the restaurant is open during the day, repeats every day
-model WorkHour {
+model WorkTime {
   id        Int       @id @default(autoincrement())
   mealType  MealType
-  timeSlot  String    @unique
+  time      String    @unique
 }
 
 // day during the week (every week) in which the restaurant is closed

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import restaurantWorkHours from "@/data/db-work-hours.json";
 import restaurantHoursBlock from "@/data/db-hours-blocked.json";
-import workHoursAvailable from "@/data/work-hours-available.json";
+import workTimesAvailable from "@/data/work-hours-available.json";
 
 export interface SelectTimeProps {
     name: 'From' | 'To',
@@ -13,7 +13,7 @@ const props = defineProps<SelectTimeProps>()
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
 
-const workHoursList = restaurantWorkHours.lunch.concat(restaurantWorkHours.dinner)
+const workTimesList = restaurantWorkHours.lunch.concat(restaurantWorkHours.dinner)
 </script>
 
 
@@ -25,6 +25,6 @@ const workHoursList = restaurantWorkHours.lunch.concat(restaurantWorkHours.dinne
 
     //- Dropdown
     .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-        p.py-2.px-3(v-for="t in workHoursList", :key="t", @click="$emit('updateTime', name, t, index)",
+        p.py-2.px-3(v-for="t in workTimesList", :key="t", @click="$emit('updateTime', name, t, index)",
             :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : t === time, 'cursor-pointer text-grey-300 hover_bg-gray-100' : t !== time }") {{ t }}
 </template>
