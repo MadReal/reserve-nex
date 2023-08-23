@@ -14,7 +14,8 @@ export default defineEventHandler(async (event) => {
 		return workTimeDelete;
 	} catch (err) {
 		console.error(err);
-		return createError({ statusMessage: "An error occurred" });
+		throw err;
+		// return createError({ statusMessage: "An error occurred" });
 	} finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use
 	}

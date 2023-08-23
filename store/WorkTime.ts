@@ -29,14 +29,18 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		try {
 			const { data, error } = await useFetch("/api/work-times", {
 				method: "post",
-				body: { mealType: isLunch ? "LUNCH" : "DINNER", time: newTime },
+				body: {
+					mealType: isLunch ? "LUNCH" : "DINNER",
+					time: newTime,
+					restaurantId: 1,
+				},
 			});
 			if (data && data.value) workTimesList.value.push(data.value);
 		} catch (error) {
 			console.error(error);
 		}
 	};
-	const removeWorkTime = async (timeId: WorkTime["id"]) => {
+	async function removeWorkTime(timeId: WorkTime["id"]) {
 		try {
 			await useFetch(`/api/work-times/${timeId}`, { method: "delete" });
 			const workTimeIndex = workTimesList.value.findIndex(
@@ -46,7 +50,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		} catch (error) {
 			console.error(error);
 		}
-	};
+	}
 
 	return {
 		workTimesList,

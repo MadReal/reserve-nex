@@ -4,8 +4,7 @@ import { PrismaClient, MealType } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const schema = Joi.object({
-	mealType: Joi.string().valid("LUNCH", "DINNER").required(),
-	time: Joi.string().required(),
+	dayOfWeek: Joi.number().valid(1, 2, 3, 4, 5, 6, 7).required(),
 	restaurantId: Joi.number().required(),
 });
 
@@ -15,17 +14,14 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 
-	const { mealType, time, restaurantId } = value;
-	// convert mealType to the enum
-	let mealTypeValidated: MealType =
-		mealType === "LUNCH" ? MealType.LUNCH : MealType.DINNER;
+	const { dayOfWeek, restaurantId } = value;
 	// add to Database
-	const workTime = await prisma.workTime.create({
-		data: { restaurantId, mealType: mealTypeValidated, time },
+	const block = await prisma.block.create({
+		data: { dayOfWeek, restaurantId },
 	});
 
 	// Disconnect the Prisma client after use
 	await prisma.$disconnect();
 
-	return workTime;
+	return block;
 });

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useWorkTimesStore } from '~/store/WorkTime'
 import { storeToRefs } from 'pinia'
+import { useWorkTimesStore } from '~/store/WorkTime'
 
-const workTimeStore = useWorkTimesStore();
-const { lunchWorkTimesList } = storeToRefs(workTimeStore)
-const { dinnerWorkTimesList } = storeToRefs(workTimeStore)
+const workTimesStore = useWorkTimesStore();
+const { lunchWorkTimesList } = storeToRefs(workTimesStore)
+const { dinnerWorkTimesList } = storeToRefs(workTimesStore)
 
 const isLoading = ref(true)
 
 onMounted(async () => {
-    await workTimeStore.fetchWorkTimes()
+    await workTimesStore.fetchWorkTimes()
     isLoading.value = false
 });
 </script>
@@ -24,11 +24,11 @@ onMounted(async () => {
     .grid.gap-6.border-b(class="grid-cols-[1fr_1px_1fr]", v-else)
         div.mb-6
             p.mb-4 Pranzo
-            SelectWorkHour(:workTimes="lunchWorkTimesList", :isLunch="true", @addNewTime="workTimeStore.addNewWorkTime", @removeTime="workTimeStore.removeWorkTime")
+            SelectWorkHour(:workTimes="lunchWorkTimesList", :isLunch="true", @addNewTime="workTimesStore.addNewWorkTime", @removeTime="workTimesStore.removeWorkTime")
 
         .h-full.border-r
 
         div.mb-6
             p.mb-4 Cena
-            SelectWorkHour(:workTimes="dinnerWorkTimesList", :isLunch="false", @addNewTime="workTimeStore.addNewWorkTime", @removeTime="workTimeStore.removeWorkTime")
+            SelectWorkHour(:workTimes="dinnerWorkTimesList", :isLunch="false", @addNewTime="workTimesStore.addNewWorkTime", @removeTime="workTimesStore.removeWorkTime")
 </template>
