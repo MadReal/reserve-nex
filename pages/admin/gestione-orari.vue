@@ -9,7 +9,7 @@ const { dinnerWorkTimesList } = storeToRefs(workTimeStore)
 const isLoading = ref(true)
 
 onMounted(async () => {
-    await workTimeStore.fetchWorkHours()
+    await workTimeStore.fetchWorkTimes()
     isLoading.value = false
 });
 </script>

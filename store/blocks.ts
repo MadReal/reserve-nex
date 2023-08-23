@@ -1,7 +1,7 @@
 // store/filters.ts
 import { defineStore } from "pinia";
 
-export const useBlocksStore = defineStore("blocksStore", () => {
+export const useBlocksStore = defineStore("BlocksStore", () => {
 	const blocksDayOfWeekList = ref<Block[]>([]);
 
 	function addValueToBlocksList(value: Block) {

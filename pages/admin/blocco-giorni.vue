@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import weekDaysAvailable from "@/data/week-days-available.json";
 // https://github.com/fullcalendar/fullcalendar-vue
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 
-import { useBlocksStore } from '~/store/blocks'
+import { useBlocksStore } from '~/store/Blocks'
 import { storeToRefs } from 'pinia'
 
 
@@ -100,3 +99,4 @@ const calendarOptions = {
 
     FullCalendar.mt-8(:options='calendarOptions')
 </template>
+store/Blocks

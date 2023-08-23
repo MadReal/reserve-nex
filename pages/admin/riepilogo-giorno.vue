@@ -1,10 +1,16 @@
 <script setup lang="ts">
-// @ts-ignore
-const workTimes: WorkTime[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
-const lunchWorkTimesList = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
-const dinnerWorkTimesList = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
+import { useWorkTimesStore } from '~/store/WorkTime'
+import { storeToRefs } from 'pinia'
+
+const workTimeStore = useWorkTimesStore();
+const { lunchWorkTimesList } = storeToRefs(workTimeStore)
+const { dinnerWorkTimesList } = storeToRefs(workTimeStore)
 
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
+
+onMounted(async () => {
+    await workTimeStore.fetchWorkTimes()
+});
 </script>
 
 

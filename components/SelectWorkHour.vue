@@ -16,12 +16,12 @@ let isDropdownOpen = ref(true)
 const toggleSelect = () => isSelectVisible.value = true
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 
-const addTime = (newTime: WorkTime['time']) => {
+const addNewTime = (newTime: WorkTime['time']) => {
     emit('addNewTime', newTime, props.isLunch)
     isSelectVisible.value = false
     isDropdownOpen.value = false
 }
-const removeTimeSlot = (timeId: number) => emit('removeTime', timeId, props.isLunch)
+const removeTime = (timeId: number) => emit('removeTime', timeId)
 const isTimeUsed = (time: string): boolean => props.workTimes.some(workTime => workTime.time === time)
 </script>
 
@@ -31,7 +31,7 @@ div
     //- list of all the workTimes
     .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workTimes", :key="time.id")
         p.leading-normal.text-grey-300 {{ time.time }}
-        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTimeSlot(time.id)")
+        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTime(time.id)")
     //- ADD
     .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
         v-if="!isSelectVisible && isHoursStillAvailableToFill", @click="toggleSelect()")
@@ -43,6 +43,6 @@ div
         p.leading-normal.text-primary-100 Seleziona Orario
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="time in workTimesAvailable", :key="time", @click="addTime(time)",
+            p.py-2.px-3(v-for="time in workTimesAvailable", :key="time", @click="addNewTime(time)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
 </template>

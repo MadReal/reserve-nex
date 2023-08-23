@@ -14,11 +14,13 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	);
 
 	// ACTIONS
-	const fetchWorkHours = async () => {
-		const { data, error, execute }: any = await useFetch("/api/work-times");
-		if (data.value) {
-			workTimesList.value = data.value;
-		} else if (error) console.error(error);
+	const fetchWorkTimes = async () => {
+		try {
+			const { data, error }: any = await useFetch("/api/work-times");
+			if (data.value) workTimesList.value = data.value;
+		} catch (error) {
+			console.error(error);
+		}
 	};
 	const addNewWorkTime = async (
 		newTime: WorkTime["time"],
@@ -34,7 +36,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			console.error(error);
 		}
 	};
-	const removeWorkTime = async (timeId: WorkTime["id"], isLunch: boolean) => {
+	const removeWorkTime = async (timeId: WorkTime["id"]) => {
 		try {
 			await useFetch(`/api/work-times/${timeId}`, { method: "delete" });
 			const workTimeIndex = workTimesList.value.findIndex(
@@ -50,9 +52,9 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		workTimesList,
 		lunchWorkTimesList,
 		dinnerWorkTimesList,
-		fetchWorkHours,
-		addNewTime,
-		removeTime,
+		fetchWorkTimes,
+		addNewWorkTime,
+		removeWorkTime,
 	};
 });
 
