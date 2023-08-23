@@ -3,12 +3,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-	const { workTimeId } = event.context.params as { workTimeId: string };
+	const { blockId } = event.context.params as { blockId: string };
 
 	try {
 		const blockDayOfWeekDelete = await prisma.block.delete({
 			where: {
-				id: parseInt(workTimeId),
+				id: parseInt(blockId),
 			},
 		});
 		return blockDayOfWeekDelete;

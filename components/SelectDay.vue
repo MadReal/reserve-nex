@@ -2,8 +2,8 @@
 export interface SelectDayProps {
     showTrash: boolean,
     isUpdate: boolean // true: add new day - false: update day
-    blockedDaysOfWeekList: BlockDayOfWeek[]
-    blockedDay?: BlockDayOfWeek,
+    blockedDaysOfWeekList: Block[]
+    blockedDay?: Block,
 }
 const props = defineProps<SelectDayProps>()
 

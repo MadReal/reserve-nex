@@ -1,17 +1,23 @@
-const apiUrl = "/api/block/days-of-week";
+const blocksDayOfWeekApiUrl = "/api/block/days-of-week";
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
-	const blocksDaysOfWeekList = ref<BlockDayOfWeek[]>([]);
+	const blocksDaysOfWeekList = ref<Block[]>([]);
 
 	// ACTIONS
-	const fetchBlocksDayOfWeek = async () => {
+	async function fetchBlocksDayOfWeek() {
 		try {
-			const { data, error }: any = await useFetch(apiUrl);
+			const { data, error }: any = await useFetch(blocksDayOfWeekApiUrl);
 			if (data.value) {
-				// red- order week days = lunedi, martedi, etc. etc.
-				data.value?.sort((a: number, b: number) => a - b);
+				// Sort by dayOfWeek
+				const sortedBlocks = data.value.slice().sort((a: Block, b: Block) => {
+					if (a.dayOfWeek === null && b.dayOfWeek === null) return 0;
+					if (a.dayOfWeek === null) return 1;
+					if (b.dayOfWeek === null) return -1;
+					return a.dayOfWeek - b.dayOfWeek;
+				});
 
-				const blockDayOfWeek = data.value.map((block: Block) => {
+				// Create the BlockDayOfWeek array
+				const blockDayOfWeek = sortedBlocks.map((block: Block) => {
 					return {
 						id: block.id,
 						restaurantId: block.restaurantId,
@@ -24,19 +30,17 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		} catch (error) {
 			console.error(error);
 		}
-	};
+	}
 
 	async function addOrUpdateBlockDayOfWeek(
-		oldDayOfWeekId: BlockDayOfWeek["id"],
-		newDayOfWeek: BlockDayOfWeek["dayOfWeek"],
+		oldDayOfWeekId: Block["id"],
+		newDayOfWeek: Block["dayOfWeek"],
 		isUpdate: boolean
 	) {
-		console.log(isUpdate);
-
 		if (isUpdate) removeBlockDayOfWeek(oldDayOfWeekId);
 		else {
 			try {
-				const { data, error } = await useFetch(apiUrl, {
+				const { data, error } = await useFetch(blocksDayOfWeekApiUrl, {
 					method: "post",
 					body: {
 						dayOfWeek: newDayOfWeek,
@@ -50,10 +54,10 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		}
 	}
 
-	async function removeBlockDayOfWeek(dayOfWeekId: BlockDayOfWeek["id"]) {
-		await useFetch(apiUrl + "/" + dayOfWeekId, { method: "delete" });
+	async function removeBlockDayOfWeek(blockId: Block["id"]) {
+		await useFetch(`${blocksDayOfWeekApiUrl}/${blockId}`, { method: "delete" });
 		const dayOfWeekToRemoveIndex = blocksDaysOfWeekList.value.findIndex(
-			(e) => e.id === dayOfWeekId
+			(e) => e.id === blockId
 		);
 		blocksDaysOfWeekList.value.splice(dayOfWeekToRemoveIndex, 1);
 	}

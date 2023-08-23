@@ -1,3 +1,5 @@
+const workTimesApiUrl = "/api/work-times";
+
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	const workTimesList = ref<WorkTime[]>([]);
 
@@ -16,7 +18,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	// ACTIONS
 	const fetchWorkTimes = async () => {
 		try {
-			const { data, error }: any = await useFetch("/api/work-times");
+			const { data, error }: any = await useFetch(workTimesApiUrl);
 			if (data.value) workTimesList.value = data.value;
 		} catch (error) {
 			console.error(error);
@@ -27,7 +29,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		isLunch: boolean
 	) => {
 		try {
-			const { data, error } = await useFetch("/api/work-times", {
+			const { data, error } = await useFetch(workTimesApiUrl, {
 				method: "post",
 				body: {
 					mealType: isLunch ? "LUNCH" : "DINNER",
@@ -41,15 +43,9 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		}
 	};
 	async function removeWorkTime(timeId: WorkTime["id"]) {
-		try {
-			await useFetch(`/api/work-times/${timeId}`, { method: "delete" });
-			const workTimeIndex = workTimesList.value.findIndex(
-				(e) => e.id === timeId
-			);
-			workTimesList.value.splice(workTimeIndex, 1);
-		} catch (error) {
-			console.error(error);
-		}
+		await useFetch(`${workTimesApiUrl}/${timeId}`, { method: "delete" });
+		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
+		workTimesList.value.splice(workTimeIndex, 1);
 	}
 
 	return {

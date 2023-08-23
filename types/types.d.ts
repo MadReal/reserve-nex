@@ -5,7 +5,15 @@ declare interface WorkTime {
 	restaurantId: number;
 }
 
-type DayOfWeek = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+enum DayOfWeek {
+	MONDAY = 1,
+	TUESDAY = 2,
+	WEDNESDAY = 3,
+	THURSDAY = 4,
+	FRIDAY = 5,
+	SATURDAY = 6,
+	SUNDAY = 7,
+}
 
 declare interface Block {
 	id: number;
@@ -16,15 +24,4 @@ declare interface Block {
 	dateFrom: Date | null;
 	dateTo: Date | null;
 	restaurantId: number | null;
-}
-
-declare interface BlockDayOfWeek {
-	id: number;
-	dayOfWeek: DayOfWeek;
-	timeFrom: null;
-	timeTo: null;
-	date: null;
-	dateFrom: null;
-	dateTo: null;
-	restaurantId: number;
 }
