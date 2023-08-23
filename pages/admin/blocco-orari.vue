@@ -6,8 +6,8 @@ import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 
 // @ts-ignore
 const workTimes: WorkTime[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
-const lunchWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
-const dinnerWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
+const lunchWorkTimesList = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
+const dinnerWorkTimesList = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
 
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 // Logics for setting up time
@@ -29,8 +29,8 @@ const toggleDropdownCalendar = (index: number | null) => dropdownCalendarOpen.va
 const addHourBlock = () => restaurantHoursBlock.value.push({
     "id": Math.random(),
     "date": new Date().toDateString(),
-    "time_start": lunchWorkTimes[0].time,
-    "time_end": dinnerWorkTimes[dinnerWorkTimes.length - 1].time,
+    "time_start": lunchWorkTimesList[0].time,
+    "time_end": dinnerWorkTimesList[dinnerWorkTimesList.length - 1].time,
 });
 const removeHourBlock = (index: number) => restaurantHoursBlock.value.splice(index, 1)
 </script>

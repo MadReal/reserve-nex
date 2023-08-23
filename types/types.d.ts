@@ -2,6 +2,7 @@ declare interface WorkTime {
 	id: number;
 	mealType: string;
 	time: string;
+	restaurantId: number;
 }
 
 type DayOfWeek = 1 | 2 | 3 | 4 | 5 | 6 | 7;

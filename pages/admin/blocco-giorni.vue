@@ -5,23 +5,33 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 
+import { useBlocksStore } from '~/store/blocks'
+import { storeToRefs } from 'pinia'
+
+
+const blocksStore = useBlocksStore()
+const { blocksDayOfWeekList } = storeToRefs(blocksStore)
+const { addValueToBlocksList } = blocksStore
+
+
+
 // Define a constant for the imported data
 // @ts-ignore
-const blockedDaysOfWeek: Block[] = await useFetchBlockDayOfWeek();
+// const blockedDaysOfWeek: Block[] = await useFetchBlockDayOfWeek();
 
 // handle $emit
 const removeDay = (dayName: string) => {
-    const dayToRemoveIndex = blockedDaysOfWeek.findIndex(e => e.dayOfWeek === dayName)
-    blockedDaysOfWeek.splice(dayToRemoveIndex, 1)
+    const dayToRemoveIndex = blocksDayOfWeekList.findIndex(e => e.dayOfWeek === dayName)
+    blocksDayOfWeekList.splice(dayToRemoveIndex, 1)
 }
 const addOrUpdateDay = (oldDayName: string, newDayName: string, isUpdate: boolean) => {
     if (isUpdate) removeDay(oldDayName)
-    blockedDaysOfWeek.push({ id: 0, dayOfWeek: newDayName });
+    blocksDayOfWeekList.push({ id: 0, dayOfWeek: newDayName });
 };
 // used to dynamically set class
-const blockedDaysArrayShort = computed(() => blockedDaysOfWeek.length < 1 ? true : false)
+const blockedDaysArrayShort = computed(() => blocksDayOfWeekList.length < 1 ? true : false)
 // if all days are added
-const blockedDaysArrayFull = computed(() => blockedDaysOfWeek.length > 6)
+const blockedDaysArrayFull = computed(() => blocksDayOfWeekList.length > 6)
 
 //************
 // CALENDAR
@@ -82,10 +92,10 @@ const calendarOptions = {
 
         div.mt-2.mb-8
             //- Display for each day already "blocked"
-            SelectDay(v-for="day in blockedDaysOfWeek" :key="day.id" :blockedDaysOfWeek="blockedDaysOfWeek", :blockedDay="day",
+            SelectDay(v-for="day in blocksDayOfWeekList" :key="day.id" :blockedDaysOfWeek="blocksDayOfWeekList", :blockedDay="day",
                 @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="true", :showTrash="!blockedDaysArrayShort")
             //- Display the "empty" one, to add a new day
-            SelectDay(v-if="!blockedDaysArrayFull", :blockedDaysOfWeek="blockedDaysOfWeek", 
+            SelectDay(v-if="!blockedDaysArrayFull", :blockedDaysOfWeek="blocksDayOfWeekList", 
                 @addOrUpdateDay="addOrUpdateDay", @removeDay="removeDay", :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options='calendarOptions')

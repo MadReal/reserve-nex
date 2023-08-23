@@ -2,3 +2,4 @@
 NuxtLayout
   NuxtPage
 </template>
+

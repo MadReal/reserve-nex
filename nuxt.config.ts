@@ -5,6 +5,9 @@ export default defineNuxtConfig({
 	build: {
 		transpile: ["@vuepic/vue-datepicker"],
 	},
+	imports: {
+		dirs: ["stores"],
+	},
 	devtools: { enabled: true },
 	css: ["~/assets/css/main.sass"],
 	postcss: {
@@ -14,6 +17,12 @@ export default defineNuxtConfig({
 		},
 	},
 	modules: [
+		[
+			"@pinia/nuxt",
+			{
+				autoImports: ["defineStore", "acceptHMRUpdate"],
+			},
+		],
 		"@nuxt/image",
 		[
 			"@nuxtjs/google-fonts",
