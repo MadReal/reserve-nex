@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import dbRestaurantHoursBlock from "@/data/db-hours-blocked.json";
-import dBRestaurantWorkHours from "@/data/db-work-hours.json";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
+
+// @ts-ignore
+const workTimes: WorkTime[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
+const lunchWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
+const dinnerWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
 
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 // Logics for setting up time
@@ -25,8 +29,8 @@ const toggleDropdownCalendar = (index: number | null) => dropdownCalendarOpen.va
 const addHourBlock = () => restaurantHoursBlock.value.push({
     "id": Math.random(),
     "date": new Date().toDateString(),
-    "time_start": dBRestaurantWorkHours.lunch[0],
-    "time_end": dBRestaurantWorkHours.dinner[dBRestaurantWorkHours.dinner.length - 1],
+    "time_start": lunchWorkTimes[0].time,
+    "time_end": dinnerWorkTimes[dinnerWorkTimes.length - 1].time,
 });
 const removeHourBlock = (index: number) => restaurantHoursBlock.value.splice(index, 1)
 </script>
@@ -40,8 +44,8 @@ const removeHourBlock = (index: number) => restaurantHoursBlock.value.splice(ind
         div.mb-8
             .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]" v-for="(item, index) in restaurantHoursBlock", :key="item.id")
                 //- TIME From / To
-                SelectTime(name="From", :time="item.time_start", :index="index", @updateTime="updateTime")
-                SelectTime(name="To", :time="item.time_end", :index="index", @updateTime="updateTime")
+                SelectTime(slot="From", :time="item.time_start", :index="index", @updateTime="updateTime")
+                SelectTime(slot="To", :time="item.time_end", :index="index", @updateTime="updateTime")
                 //- Divider
                 .h-full.border-r
                 //- DATE

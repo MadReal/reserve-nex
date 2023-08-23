@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import _default_workTimesAvailable from "@/data/work-hours-available.json";
+import _default_workTimesAvailable from "@/data/work-times-available.json";
 
 export interface SelectWorkHourProps {
     workTimes: WorkTime[],

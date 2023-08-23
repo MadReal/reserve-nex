@@ -16,29 +16,75 @@ enum MealType {
 }
 
 // hours in which the restaurant is open during the day, repeats every day
+model Restaurant {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  // relations
+  Reservation  Reservation[]
+  WorkTime     WorkTime[]
+  Block        Block[]
+}
+
+// hours in w  hich the restaurant is open during the day, repeats every day
 model WorkTime {
-  id        Int       @id @default(autoincrement())
-  mealType  MealType
-  time      String    @unique
+  id            Int          @id @default(autoincrement())
+  time          String       @unique
+  mealType      MealType
+  // relations
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId  Int
 }
 
-// day during the week (every week) in which the restaurant is closed
-model BlockedDayEveryWeek {
-  id         Int        @id @default(autoincrement())
-  dayOfWeek  String     @unique
+// used to block days of the week, time slots, day slots
+model Block  {
+  id            Int          @id @default(autoincrement())
+  // day during the week (every week) in which the restaurant is closed
+  dayOfWeek     String?      @unique
+  // if the resturant needs to adjust their open-time on a certain day
+  timeFrom      String?
+  timeTo        String?
+  date          DateTime?
+  // day(s) in which the restaurant is closed - vacation, holidays
+  dateFrom      DateTime?
+  dateTo        DateTime?
+  // relations
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId  Int
 }
 
-// day(s) in which the restaurant is closed - vacation, holidays
-model BlockedDaysPeriod {
-  id        Int        @id @default(autoincrement())
-  dateFrom  DateTime
-  dateTo    DateTime
+// when client reserve a table at the restaurant
+model Reservation {
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  time          String
+  date          DateTime
+  personName    String
+  personPhone   String
+  personEmail   String
+  peopleAmount  Int
+  accepted      Boolean?
+  // relations
+  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId  Int
 }
 
-// if the resturant needs to adjust their open-time on a certain day
-model BlockedWorkHourOnDate {
-  id        Int        @id @default(autoincrement())
-  hourFrom  String
-  hourTo    String
-  date      DateTime
-}
+// // day during the week (every week) in which the restaurant is closed
+// model BlockedDayEveryWeek {
+//   id         Int        @id @default(autoincrement())
+//   dayOfWeek  String     @unique
+// }
+
+// // day(s) in which the restaurant is closed - vacation, holidays
+// model BlockedDaysPeriod {
+//   id        Int        @id @default(autoincrement())
+//   dateFrom  DateTime
+//   dateTo    DateTime
+// }
+
+// // if the resturant needs to adjust their open-time on a certain day
+// model BlockedWorkHourOnDate {
+//   id        Int        @id @default(autoincrement())
+//   hourFrom  String
+//   hourTo    String
+//   date      DateTime
+// }

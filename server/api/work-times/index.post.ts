@@ -13,13 +13,14 @@ export default defineEventHandler(async (event) => {
 	// validate body
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
+
 	const { mealType, time } = value;
 	// convert mealType to the enum
 	let mealTypeValidated: MealType =
 		mealType === "LUNCH" ? MealType.LUNCH : MealType.DINNER;
 	// add to Database
 	const workTime = await prisma.workTime.create({
-		data: { mealType: mealTypeValidated, time },
+		data: { restaurantId: 1, mealType: mealTypeValidated, time },
 	});
 
 	// Disconnect the Prisma client after use

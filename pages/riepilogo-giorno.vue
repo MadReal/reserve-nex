@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // @ts-ignore
 const workTimes: WorkTime[] = await useFetchWorkHours() || []; // Provide an empty array as a default value
-const lunchWorkHours = useSortWorkHours(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
-const dinnerWorkHours = useSortWorkHours(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
+const lunchWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "LUNCH"));
+const dinnerWorkTimes = useSortWorkTimes(workTimes.filter((item: WorkTime) => item.mealType === "DINNER"));
 
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
 </script>
@@ -16,12 +16,12 @@ const todaysDate = useDateTimeFormatting(Date()).formattedDate
         div.mb-6
             p.mb-4 Lunch
             .grid.grid-cols-4.gap-2
-                BoxReservation(v-for="workTime in lunchWorkHours", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                BoxReservation(v-for="workTime in lunchWorkTimes", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 
         .h-full.border-r
 
         div.mb-6
             p.mb-4 Dinner
             .grid.grid-cols-4.gap-2
-                BoxReservation(v-for="workTime in dinnerWorkHours", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                BoxReservation(v-for="workTime in dinnerWorkTimes", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 </template>
