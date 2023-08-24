@@ -57,8 +57,8 @@ const toggleDropdownCalendar = () => {
 <template lang="pug">
 .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]")
     //- TIME From / To
-    SelectTime(:isTimeFrom="true", :time="blockTimePeriod.timeFrom", @updateBlockTimePeriod="updateTimeSlot")
-    SelectTime(:isTimeFrom="false", :time="blockTimePeriod.timeTo", @updateBlockTimePeriod="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="true", :time="blockTimePeriod.timeFrom", @updateBlockTimePeriod="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="false", :time="blockTimePeriod.timeTo", @updateBlockTimePeriod="updateTimeSlot")
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
