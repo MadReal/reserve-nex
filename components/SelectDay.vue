@@ -21,7 +21,7 @@ const dayIsAlreadyInBlockedDaysList = (dayInt: number) => props.blockedDaysOfWee
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         //- Dropdown
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="dayInt in 7", :key="dayInt", @click="$emit('addOrUpdateDay', blockedDay?.id, dayInt, isUpdate)",
+            p.py-2.px-3.text-sm(v-for="dayInt in 7", :key="dayInt", @click="$emit('addOrUpdateDay', blockedDay?.id, dayInt, isUpdate)",
                 :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : dayIsAlreadyInBlockedDaysList(dayInt), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !dayIsAlreadyInBlockedDaysList(dayInt) }") 
                 | {{ useTranslateDayOfWeek(dayInt) }}
 

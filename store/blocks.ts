@@ -37,20 +37,22 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		newDayOfWeek: Block["dayOfWeek"],
 		isUpdate: boolean
 	) {
-		if (isUpdate) removeBlockDayOfWeek(oldDayOfWeekId);
-		else {
-			try {
-				const { data, error } = await useFetch(blocksDayOfWeekApiUrl, {
-					method: "post",
-					body: {
-						dayOfWeek: newDayOfWeek,
-						restaurantId: 1,
-					},
-				});
-				if (data && data.value) blocksDaysOfWeekList.value.push(data.value);
-			} catch (error) {
-				console.error(error);
-			}
+		if (isUpdate) {
+			await useFetch(`${blocksDayOfWeekApiUrl}/${oldDayOfWeekId}`, {
+				method: "patch",
+				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
+			});
+			const dayOfWeekToUpdateIndex = blocksDaysOfWeekList.value.findIndex(
+				(e) => e.id === oldDayOfWeekId
+			);
+			blocksDaysOfWeekList.value[dayOfWeekToUpdateIndex].dayOfWeek =
+				newDayOfWeek;
+		} else {
+			const { data, error } = await useFetch(blocksDayOfWeekApiUrl, {
+				method: "post",
+				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
+			});
+			if (data && data.value) blocksDaysOfWeekList.value.push(data.value);
 		}
 	}
 

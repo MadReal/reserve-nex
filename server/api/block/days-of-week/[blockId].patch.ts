@@ -9,6 +9,7 @@ const schema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
 	// validate body
 	const { error, value } = schema.validate(body);
@@ -16,10 +17,11 @@ export default defineEventHandler(async (event) => {
 	try {
 		const { dayOfWeek, restaurantId } = value;
 		// * REQUEST *
-		const block = await prisma.block.create({
+		const blockDayOfWeekToUpdate = await prisma.block.update({
+			where: { id: parseInt(blockId) },
 			data: { dayOfWeek, restaurantId },
 		});
-		return block;
+		return blockDayOfWeekToUpdate;
 	} catch (err) {
 		console.error(err);
 		throw err;

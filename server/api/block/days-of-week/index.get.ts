@@ -4,15 +4,14 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
 	try {
+		// * REQUEST *
 		const block = await prisma.block.findMany({
-			where: {
-				dayOfWeek: { not: null },
-			},
+			where: { dayOfWeek: { not: null } },
 		});
 		return block;
 	} catch (err) {
 		console.error(err);
-		return createError({ statusMessage: "An error occurred" });
+		throw err;
 	} finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use
 	}
