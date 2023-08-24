@@ -15,33 +15,31 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		)
 	);
 
+	const mergedWorkTimesList = computed(() =>
+		useSortWorkTimes(lunchWorkTimesList.value.concat(dinnerWorkTimesList.value))
+	);
+
 	// ACTIONS
 	const fetchWorkTimes = async () => {
-		try {
-			const { data, error }: any = await useFetch(workTimesApiUrl);
-			if (data.value) workTimesList.value = data.value;
-		} catch (error) {
-			console.error(error);
-		}
+		const { data, error }: any = await useFetch(workTimesApiUrl);
+		if (data.value) workTimesList.value = data.value;
 	};
+
 	const addNewWorkTime = async (
 		newTime: WorkTime["time"],
 		isLunch: boolean
 	) => {
-		try {
-			const { data, error } = await useFetch(workTimesApiUrl, {
-				method: "post",
-				body: {
-					mealType: isLunch ? "LUNCH" : "DINNER",
-					time: newTime,
-					restaurantId: 1,
-				},
-			});
-			if (data && data.value) workTimesList.value.push(data.value);
-		} catch (error) {
-			console.error(error);
-		}
+		const { data, error } = await useFetch(workTimesApiUrl, {
+			method: "post",
+			body: {
+				mealType: isLunch ? "LUNCH" : "DINNER",
+				time: newTime,
+				restaurantId: 1,
+			},
+		});
+		if (data && data.value) workTimesList.value.push(data.value);
 	};
+
 	async function removeWorkTime(timeId: WorkTime["id"]) {
 		await useFetch(`${workTimesApiUrl}/${timeId}`, { method: "delete" });
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
@@ -52,6 +50,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		workTimesList,
 		lunchWorkTimesList,
 		dinnerWorkTimesList,
+		mergedWorkTimesList,
 		fetchWorkTimes,
 		addNewWorkTime,
 		removeWorkTime,

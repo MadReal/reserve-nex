@@ -39,7 +39,7 @@ model WorkTime {
 model Block  {
   id            Int          @id @default(autoincrement())
   // day during the week (every week) in which the restaurant is closed
-  dayOfWeek     Int?      @unique
+  dayOfWeek     Int?         @unique
   // if the resturant needs to adjust their open-time on a certain day
   timeFrom      String?
   timeTo        String?

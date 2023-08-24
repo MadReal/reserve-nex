@@ -1,4 +1,4 @@
-export default async function useFetchWorkHours() {
+export default async function useFetchWorkTime() {
 	const { data, error } = await useFetch("/api/work-times");
 
 	if (error.value) {
