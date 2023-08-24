@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import dbRestaurantHoursBlock from "@/data/db-hours-blocked.json";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
@@ -14,16 +13,16 @@ const workTimesStore = useWorkTimesStore();
 const { blocksTimePeriodList } = storeToRefs(blocksStore)
 const { mergedWorkTimesList } = storeToRefs(workTimesStore)
 
-onMounted(async () => {
-    await workTimesStore.fetchWorkTimes()
-    await blocksStore.fetchBlocksTimePeriod()
-});
-
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
-// // TODO: create new hour block
+// Data Picker dropdown
+const dropdownCalendarOpen = ref<number | null>(null);
+const toggleDropdownCalendar = (index: number | null) => {
+    dropdownCalendarOpen.value = dropdownCalendarOpen.value === index ? null : index;
+    // updateBlockTimePeriod()
+}
+// API CALLS
 const addBlockTimePeriod = () => blocksStore.addBlockTimePeriod(mergedWorkTimesList.value[0].time, mergedWorkTimesList.value[mergedWorkTimesList.value.length - 1].time)
-
 const updateBlockTimePeriod = (isTimeFrom: boolean, time: string, index: number) => {
     const block: Block = blocksTimePeriodList.value[index];
     if (isTimeFrom) block.timeFrom = time;
@@ -36,14 +35,11 @@ const updateBlockTimePeriod = (isTimeFrom: boolean, time: string, index: number)
     }
     blocksStore.updateBlockTimePeriod(block.id, block.timeFrom, block.timeTo, block.date)
 };
-// // Data Picker dropdown
-const dropdownCalendarOpen = ref<number | null>(null);
-const toggleDropdownCalendar = (index: number | null) => {
-    dropdownCalendarOpen.value = dropdownCalendarOpen.value === index ? null : index;
-    // updateBlockTimePeriod()
-}
 
-// const removeHourBlock = (index: number) => restaurantHoursBlock.value.splice(index, 1)
+onMounted(async () => {
+    await workTimesStore.fetchWorkTimes()
+    await blocksStore.fetchBlocksTimePeriod()
+});
 </script>
 
 
@@ -57,7 +53,6 @@ const toggleDropdownCalendar = (index: number | null) => {
                 //- TIME From / To
                 SelectTime(:isTimeFrom="true", :time="item.timeFrom", :blockIndex="index", @updateBlockTimePeriod="updateBlockTimePeriod")
                 SelectTime(:isTimeFrom="false", :time="item.timeTo", :blockIndex="index", @updateBlockTimePeriod="updateBlockTimePeriod")
-                //- Divider
                 .h-full.border-r
                 //- DATE
                 .flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar(index)")
@@ -67,7 +62,7 @@ const toggleDropdownCalendar = (index: number | null) => {
                         VueDatePicker(v-model="item.date", :month-change-on-scroll="false", :enable-time-picker="false", inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar(null)")
 
                 .flex.items-center.py-2.px-3
-                    SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeHourBlock(index)")
+                    SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="blocksStore.removeBlock(item.id)")
 
             //- Empty Row - Add Hour Block
             .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockTimePeriod()")

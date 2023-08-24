@@ -7,10 +7,10 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		// * REQUEST *
-		const blockDayOfWeekToDelete = await prisma.block.delete({
+		const block = await prisma.block.delete({
 			where: { id: parseInt(blockId) },
 		});
-		return blockDayOfWeekToDelete;
+		return block;
 	} catch (err) {
 		console.error(err);
 		throw err;

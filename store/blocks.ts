@@ -1,8 +1,9 @@
-const URL_blockDayOfWeek = "/api/block/days-of-week";
-const URL_blockTimePeriod = "/api/block/time-period";
+const URL_block = "/api/block";
+const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
+const URL_blockTimePeriod = `${URL_block}/time-period`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
-	// STATE - Block 'daysOfWeek'
+	// STATE - Block 'dayOfWeek'
 	const blocksDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block 'Work Hour On Date'
 	const blocksTimePeriodList = ref<Block[]>([]);
@@ -53,14 +54,6 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			//@ts-ignore
 			if (data.value) blocksDaysOfWeekList.value.push(data.value);
 		}
-	}
-
-	async function removeBlockDayOfWeek(blockId: Block["id"]) {
-		await useFetch(`${URL_blockDayOfWeek}/${blockId}`, { method: "delete" });
-		const dayOfWeekToRemoveIndex = blocksDaysOfWeekList.value.findIndex(
-			(e) => e.id === blockId
-		);
-		blocksDaysOfWeekList.value.splice(dayOfWeekToRemoveIndex, 1);
 	}
 
 	// ACTIONS - Block 'Work Hour On Date'
@@ -120,16 +113,26 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			newBlockTimePeriod;
 	}
 
+	// ACTIONS - Block All
+	async function removeBlock(blockId: Block["id"]) {
+		await useFetch(`${URL_block}/${blockId}`, { method: "delete" });
+		const blockToRemoveIndex = blocksDaysOfWeekList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		blocksDaysOfWeekList.value.splice(blockToRemoveIndex, 1);
+	}
+
 	return {
-		// Block - 'daysOfWeek'
+		// Block - 'dayOfWeek'
 		blocksDaysOfWeekList,
 		fetchBlocksDayOfWeek,
 		addOrUpdateBlockDayOfWeek,
-		removeBlockDayOfWeek,
 		// Block - 'Work Hour On Date'
 		blocksTimePeriodList,
 		fetchBlocksTimePeriod,
 		addBlockTimePeriod,
 		updateBlockTimePeriod,
+		// Block - All
+		removeBlock,
 	};
 });
