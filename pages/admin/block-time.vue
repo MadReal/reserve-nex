@@ -11,18 +11,18 @@ import { useWorkTimesStore } from '~/store/WorkTime'
 const blocksStore = useBlocksStore()
 const workTimesStore = useWorkTimesStore();
 
-const { blocksWorkTimeOnDateList } = storeToRefs(blocksStore)
+const { blocksTimePeriodList } = storeToRefs(blocksStore)
 const { mergedWorkTimesList } = storeToRefs(workTimesStore)
 
 onMounted(async () => {
     await workTimesStore.fetchWorkTimes()
-    await blocksStore.fetchBlocksWorkTimeOnDateList()
+    await blocksStore.fetchBlocksTimePeriod()
 });
 
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
-const updateTime = (isTimeFrom: boolean, time: string, index: number) => {
-    const block = blocksWorkTimeOnDateList.value[index];
+const updateBlockTimePeriod = (isTimeFrom: boolean, time: string, index: number) => {
+    const block: Block = blocksTimePeriodList.value[index];
     if (isTimeFrom) block.timeFrom = time;
     else block.timeTo = time;
 
@@ -31,13 +31,13 @@ const updateTime = (isTimeFrom: boolean, time: string, index: number) => {
     if ((isTimeFrom && block.timeTo < time) || (!isTimeFrom && block.timeFrom > time)) {
         block.timeTo = block.timeFrom = time;
     }
-    blocksStore.updateBlockWorkTimeOnDateList(block.id, block.timeFrom, block.timeTo, block.date)
+    blocksStore.updateBlockTimePeriod(block.id, block.timeFrom, block.timeTo, block.date)
 };
 // // Data Picker dropdown
 const dropdownCalendarOpen = ref<number | null>(null);
 const toggleDropdownCalendar = (index: number | null) => {
     dropdownCalendarOpen.value = dropdownCalendarOpen.value === index ? null : index;
-    // updateTime()
+    // updateBlockTimePeriod()
 }
 // // TODO: create new hour block
 // const addHourBlock = () => restaurantHoursBlock.value.push({
@@ -56,10 +56,10 @@ const toggleDropdownCalendar = (index: number | null) => {
 
     .grid.gap-6(class="grid-cols-[2fr_1px_1fr]")
         div.mb-8
-            .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]" v-for="(item, index) in blocksWorkTimeOnDateList", :key="item.id")
+            .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]" v-for="(item, index) in blocksTimePeriodList", :key="item.id")
                 //- TIME From / To
-                SelectTime(:isTimeFrom="true", :blockTime="item.timeFrom", :blockIndex="index", @updateTime="updateTime")
-                SelectTime(:isTimeFrom="false", :blockTime="item.timeTo", :blockIndex="index", @updateTime="updateTime")
+                SelectTime(:isTimeFrom="true", :time="item.timeFrom", :blockIndex="index", @updateBlockTimePeriod="updateBlockTimePeriod")
+                SelectTime(:isTimeFrom="false", :time="item.timeTo", :blockIndex="index", @updateBlockTimePeriod="updateBlockTimePeriod")
                 //- Divider
                 .h-full.border-r
                 //- DATE

@@ -1,15 +1,15 @@
-const URL_blocksDayOfWeek = "/api/block/days-of-week";
-const URL_blocksWorkTimeOnDateList = "/api/block/work-time-on-date";
+const URL_blockDayOfWeek = "/api/block/days-of-week";
+const URL_blockTimePeriod = "/api/block/time-period";
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'daysOfWeek'
 	const blocksDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block 'Work Hour On Date'
-	const blocksWorkTimeOnDateList = ref<Block[]>([]);
+	const blocksTimePeriodList = ref<Block[]>([]);
 
 	// ACTIONS - Block 'daysOfWeek'
 	async function fetchBlocksDayOfWeek() {
-		const { data, error }: any = await useFetch(URL_blocksDayOfWeek);
+		const { data, error }: any = await useFetch(URL_blockDayOfWeek);
 		if (data.value) {
 			// Sort by dayOfWeek
 			const sortedBlocks = data.value.slice().sort((a: Block, b: Block) => {
@@ -36,7 +36,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		isUpdate: boolean
 	) {
 		if (isUpdate) {
-			await useFetch(`${URL_blocksDayOfWeek}/${oldDayOfWeekId}`, {
+			await useFetch(`${URL_blockDayOfWeek}/${oldDayOfWeekId}`, {
 				method: "patch",
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
@@ -46,7 +46,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			blocksDaysOfWeekList.value[dayOfWeekToUpdateIndex].dayOfWeek =
 				newDayOfWeek;
 		} else {
-			const { data, error } = await useFetch(URL_blocksDayOfWeek, {
+			const { data, error } = await useFetch(URL_blockDayOfWeek, {
 				method: "post",
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
@@ -56,7 +56,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	async function removeBlockDayOfWeek(blockId: Block["id"]) {
-		await useFetch(`${URL_blocksDayOfWeek}/${blockId}`, { method: "delete" });
+		await useFetch(`${URL_blockDayOfWeek}/${blockId}`, { method: "delete" });
 		const dayOfWeekToRemoveIndex = blocksDaysOfWeekList.value.findIndex(
 			(e) => e.id === blockId
 		);
@@ -64,40 +64,39 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	// ACTIONS - Block 'Work Hour On Date'
-	async function fetchBlocksWorkTimeOnDateList() {
-		const { data, error }: any = await useFetch(URL_blocksWorkTimeOnDateList);
-		console.log(data.value);
-
-		if (data.value) blocksWorkTimeOnDateList.value = data.value;
+	async function fetchBlocksTimePeriod() {
+		const { data, error }: any = await useFetch(URL_blockTimePeriod);
+		if (data.value) blocksTimePeriodList.value = data.value;
 	}
 
-	async function updateBlockWorkTimeOnDateList(
+	async function updateBlockTimePeriod(
 		blockId: Block["id"],
 		timeFrom: Block["timeFrom"],
 		timeTo: Block["timeTo"],
 		date: Block["date"]
 	) {
-		const blockWorkTimeOnDate = {
+		const blockTimePeriod = {
 			timeFrom,
 			timeTo,
 			date,
 			restaurantId: 1,
 		};
 
-		await useFetch(`${URL_blocksWorkTimeOnDateList}/${blockId}`, {
+		await useFetch(`${URL_blockTimePeriod}/${blockId}`, {
 			method: "patch",
-			body: blockWorkTimeOnDate,
+			body: blockTimePeriod,
 		});
-		const blockWorkTimeOnDateToUpdateIndex =
-			blocksWorkTimeOnDateList.value.findIndex((e) => e.id === blockId);
-		const updatedBlockDayOfWeekToUpdateIndex = {
-			...blocksWorkTimeOnDateList.value[blockWorkTimeOnDateToUpdateIndex],
+		const blockTimePeriodToUpdateIndex = blocksTimePeriodList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		const newBlockTimePeriod = {
+			...blocksTimePeriodList.value[blockTimePeriodToUpdateIndex],
 			timeFrom,
 			timeTo,
 			date,
 		};
-		blocksWorkTimeOnDateList.value[blockWorkTimeOnDateToUpdateIndex] =
-			updatedBlockDayOfWeekToUpdateIndex;
+		blocksTimePeriodList.value[blockTimePeriodToUpdateIndex] =
+			newBlockTimePeriod;
 	}
 
 	return {
@@ -107,8 +106,8 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		addOrUpdateBlockDayOfWeek,
 		removeBlockDayOfWeek,
 		// Block - 'Work Hour On Date'
-		blocksWorkTimeOnDateList,
-		fetchBlocksWorkTimeOnDateList,
-		updateBlockWorkTimeOnDateList,
+		blocksTimePeriodList,
+		fetchBlocksTimePeriod,
+		updateBlockTimePeriod,
 	};
 });
