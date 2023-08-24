@@ -5,14 +5,14 @@ const URL_blockTimePeriod = `${URL_block}/time-period`;
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'dayOfWeek'
 	const blocksDaysOfWeekList = ref<Block[]>([]);
-	// STATE - Block 'Work Hour On Date'
+	// STATE - Block - 'Time Period On Date'
 	const blocksTimePeriodList = ref<Block[]>([]);
 
-	// ACTIONS - Block 'daysOfWeek'
+	// ACTIONS - Block 'dayOfWeek'
 	async function fetchBlocksDayOfWeek() {
 		const { data, error }: any = await useFetch(URL_blockDayOfWeek);
 		if (data.value) {
-			// Sort by dayOfWeek
+			// Sort week days ascendent (Monday, Tuesday)
 			const sortedBlocks = data.value.slice().sort((a: Block, b: Block) => {
 				if (a.dayOfWeek === null && b.dayOfWeek === null) return 0;
 				if (a.dayOfWeek === null) return 1;
@@ -56,10 +56,21 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		}
 	}
 
-	// ACTIONS - Block 'Work Hour On Date'
+	// ACTIONS - Block - 'Time Period On Date'
 	async function fetchBlocksTimePeriod() {
 		const { data, error }: any = await useFetch(URL_blockTimePeriod);
-		if (data.value) blocksTimePeriodList.value = data.value;
+		if (data.value) {
+			const validBlocks = data.value.filter(
+				(block: Block) => block.date !== null
+			);
+			const sortedBlocks = validBlocks
+				.slice()
+				.sort(
+					(a: Block, b: Block) =>
+						new Date(a.date!).getTime() - new Date(b.date!).getTime()
+				);
+			blocksTimePeriodList.value = sortedBlocks;
+		}
 	}
 
 	async function addBlockTimePeriod(
@@ -127,7 +138,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		blocksDaysOfWeekList,
 		fetchBlocksDayOfWeek,
 		addOrUpdateBlockDayOfWeek,
-		// Block - 'Work Hour On Date'
+		// Block - 'Time Period On Date'
 		blocksTimePeriodList,
 		fetchBlocksTimePeriod,
 		addBlockTimePeriod,
