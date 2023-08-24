@@ -1,22 +1,14 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { schemaBlockTimePeriod } from "~/server/api/block/time-period/index.post";
 
 const prisma = new PrismaClient();
-
-const schema = Joi.object({
-	timeFrom: Joi.string().required(),
-	timeTo: Joi.string().required(),
-	date: Joi.date().greater(new Date()).required(),
-	restaurantId: Joi.number().required(),
-});
 
 export default defineEventHandler(async (event) => {
 	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
-	// set date time to 00:00
-	// body.date.setHours(0, 0, 0, 0);
 	// validate body
-	const { error, value } = schema.validate(body);
+	const { error, value } = schemaBlockTimePeriod.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { timeFrom, timeTo, date, restaurantId } = value;

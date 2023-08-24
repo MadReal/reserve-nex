@@ -69,6 +69,27 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		if (data.value) blocksTimePeriodList.value = data.value;
 	}
 
+	async function addBlockTimePeriod(
+		timeFrom: Block["timeFrom"],
+		timeTo: Block["timeTo"]
+	) {
+		const todayMidnight = new Date();
+		todayMidnight.setHours(0, 0, 0, 0);
+
+		const blockTimePeriod = {
+			timeFrom,
+			timeTo,
+			date: todayMidnight,
+			restaurantId: 1,
+		};
+		const { data, error } = await useFetch(URL_blockTimePeriod, {
+			method: "post",
+			body: blockTimePeriod,
+		});
+		//@ts-ignore
+		if (data.value) blocksTimePeriodList.value.push(data.value);
+	}
+
 	async function updateBlockTimePeriod(
 		blockId: Block["id"],
 		timeFrom: Block["timeFrom"],
@@ -108,6 +129,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		// Block - 'Work Hour On Date'
 		blocksTimePeriodList,
 		fetchBlocksTimePeriod,
+		addBlockTimePeriod,
 		updateBlockTimePeriod,
 	};
 });

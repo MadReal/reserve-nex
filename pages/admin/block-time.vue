@@ -21,6 +21,9 @@ onMounted(async () => {
 
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
+// // TODO: create new hour block
+const addBlockTimePeriod = () => blocksStore.addBlockTimePeriod(mergedWorkTimesList.value[0].time, mergedWorkTimesList.value[mergedWorkTimesList.value.length - 1].time)
+
 const updateBlockTimePeriod = (isTimeFrom: boolean, time: string, index: number) => {
     const block: Block = blocksTimePeriodList.value[index];
     if (isTimeFrom) block.timeFrom = time;
@@ -39,13 +42,7 @@ const toggleDropdownCalendar = (index: number | null) => {
     dropdownCalendarOpen.value = dropdownCalendarOpen.value === index ? null : index;
     // updateBlockTimePeriod()
 }
-// // TODO: create new hour block
-// const addHourBlock = () => restaurantHoursBlock.value.push({
-//     "id": Math.random(),
-//     "date": new Date().toDateString(),
-//     "time_start": mergedWorkTimesList.value[0].time,
-//     "time_end": mergedWorkTimesList.value[mergedWorkTimesList.value.length - 1].time,
-// });
+
 // const removeHourBlock = (index: number) => restaurantHoursBlock.value.splice(index, 1)
 </script>
 
@@ -72,10 +69,10 @@ const toggleDropdownCalendar = (index: number | null) => {
                 .flex.items-center.py-2.px-3
                     SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeHourBlock(index)")
 
-                //- //- Empty Row - Add Hour Block
-                //- .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addHourBlock()")
-                //-     p.leading-normal.text-grey-200 Aggiungi Blocco
-                //-     SVGIcon.text-grey-300(svg="plus", :size="15")
+            //- Empty Row - Add Hour Block
+            .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockTimePeriod()")
+                p.leading-normal.text-grey-200 Aggiungi Blocco
+                SVGIcon.text-grey-300(svg="plus", :size="15")
 </template>
 
 

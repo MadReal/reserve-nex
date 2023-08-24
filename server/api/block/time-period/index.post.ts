@@ -1,21 +1,22 @@
-import Joi, { string } from "joi";
+import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const schema = Joi.object({
+const date = new Date();
+const yesterdayDate = date.setDate(date.getDate() - 1);
+
+export const schemaBlockTimePeriod = Joi.object({
 	timeFrom: Joi.string().required(),
 	timeTo: Joi.string().required(),
-	date: Joi.date().greater(new Date()).required(),
+	date: Joi.date().greater(yesterdayDate).required(),
 	restaurantId: Joi.number().required(),
 });
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
-	// set date time to 00:00
-	// body.date.setHours(0, 0, 0, 0);
-	// validate body
-	const { error, value } = schema.validate(body);
+	// Validate body
+	const { error, value } = schemaBlockTimePeriod.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { timeFrom, timeTo, date, restaurantId } = value;
