@@ -9,13 +9,19 @@ import { useBlocksStore } from '~/store/Blocks'
 
 const blocksStore = useBlocksStore()
 const { blocksDaysOfWeekList } = storeToRefs(blocksStore)
+const { blocksDayPeriodList } = storeToRefs(blocksStore)
+
+const { blocksDayPeriodEventList } = storeToRefs(blocksStore)
 
 // used to dynamically set class
 const isBlocksDaysOfWeekListShort = computed(() => blocksDaysOfWeekList.value.length < 1)
 // if all days are added
 const isBlockedDaysOfWeekListFull = computed(() => blocksDaysOfWeekList.value.length > 6)
 
-onMounted(async () => { await blocksStore.fetchBlocksDayOfWeek() });
+onMounted(async () => {
+    await blocksStore.fetchBlocksDayOfWeek()
+    await blocksStore.fetchBlocksDayPeriod()
+});
 
 //************
 // CALENDAR
@@ -24,18 +30,22 @@ const handleEventClick = (clickInfo: any) => {
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) clickInfo.event.remove()
 }
 const handleDateSelect = (selectInfo: any) => {
+    console.log(selectInfo);
+
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
-    let calendarApi = selectInfo.view.calendar
+    if (title) {
+        let calendarApi = selectInfo.view.calendar
 
-    calendarApi.unselect() // clear date selection
+        calendarApi.unselect() // clear date selection
 
-    calendarApi.addEvent({
-        id: Math.random(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-    })
+        calendarApi.addEvent({
+            // id: Math.random(),
+            title,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+        })
+    }
 }
 const handleEvents = (events: any) => {
     currentEvents = events
@@ -49,7 +59,6 @@ const calendarOptions = {
     events: [],
     editable: true,
     selectable: true,
-    // selectMirror: true,
     dayMaxEvents: true,
     contentHeight: 500,
     select: handleDateSelect,

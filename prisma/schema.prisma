@@ -41,12 +41,13 @@ model Block  {
   // day during the week (every week) in which the restaurant is closed
   dayOfWeek     Int?         @unique
   // if the resturant needs to adjust their open-time on a certain day
-  timeFrom      String?
-  timeTo        String?
+  timeStart     String?
+  timeEnd       String?
   date          DateTime?
   // day(s) in which the restaurant is closed - vacation, holidays
-  dateFrom      DateTime?
-  dateTo        DateTime?
+  dateStart     DateTime?
+  dateEnd       DateTime?
+  periodTitle   String?
   // relations
   restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId  Int
@@ -77,8 +78,8 @@ model Reservation {
 // // day(s) in which the restaurant is closed - vacation, holidays
 // model BlockedDaysPeriod {
 //   id        Int        @id @default(autoincrement())
-//   dateFrom  DateTime
-//   dateTo    DateTime
+//   dateStart  DateTime
+//   dateEnd    DateTime
 // }
 
 // // if the resturant needs to adjust their open-time on a certain day

@@ -1,12 +1,25 @@
 const URL_block = "/api/block";
 const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
 const URL_blockTimePeriod = `${URL_block}/time-period`;
+const URL_blockDayPeriod = `${URL_block}/day-period`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'dayOfWeek'
 	const blocksDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block - 'Time Period On Date'
 	const blocksTimePeriodList = ref<Block[]>([]);
+	// STATE - Block - 'One (or more) days period'
+	const blocksDayPeriodList = ref<Block[]>([]);
+
+	// GETTERS - Block - 'One (or more) days period'
+	const blocksDayPeriodEventList = computed(() => {
+		const updatedBlocks = blocksDayPeriodList.value.map((item) => ({
+			...item,
+			start: item.dateStart,
+			end: item.dateEnd,
+		}));
+		return updatedBlocks;
+	});
 
 	// ACTIONS - Block 'dayOfWeek'
 	async function fetchBlocksDayOfWeek() {
@@ -74,15 +87,15 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	async function addBlockTimePeriod(
-		timeFrom: Block["timeFrom"],
-		timeTo: Block["timeTo"]
+		timeStart: Block["timeStart"],
+		timeEnd: Block["timeEnd"]
 	) {
 		const todayMidnight = new Date();
 		todayMidnight.setHours(0, 0, 0, 0);
 
 		const blockTimePeriod = {
-			timeFrom,
-			timeTo,
+			timeStart,
+			timeEnd,
 			date: todayMidnight,
 			restaurantId: 1,
 		};
@@ -96,13 +109,13 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	async function updateBlockTimePeriod(
 		blockId: Block["id"],
-		timeFrom: Block["timeFrom"],
-		timeTo: Block["timeTo"],
+		timeStart: Block["timeStart"],
+		timeEnd: Block["timeEnd"],
 		date: Block["date"]
 	) {
 		const blockTimePeriod = {
-			timeFrom,
-			timeTo,
+			timeStart,
+			timeEnd,
 			date,
 			restaurantId: 1,
 		};
@@ -116,12 +129,18 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		);
 		const newBlockTimePeriod = {
 			...blocksTimePeriodList.value[blockTimePeriodToUpdateIndex],
-			timeFrom,
-			timeTo,
+			timeStart,
+			timeEnd,
 			date,
 		};
 		blocksTimePeriodList.value[blockTimePeriodToUpdateIndex] =
 			newBlockTimePeriod;
+	}
+
+	// ACTIONS - Block - 'One (or more) days period'
+	async function fetchBlocksDayPeriod() {
+		const { data, error }: any = await useFetch(URL_blockDayPeriod);
+		if (data.value) blocksDayPeriodList.value = data.value;
 	}
 
 	// ACTIONS - Block All
@@ -143,6 +162,10 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		fetchBlocksTimePeriod,
 		addBlockTimePeriod,
 		updateBlockTimePeriod,
+		// Block - 'One (or more) days period'
+		blocksDayPeriodList,
+		blocksDayPeriodEventList,
+		fetchBlocksDayPeriod,
 		// Block - All
 		removeBlock,
 	};

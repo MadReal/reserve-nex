@@ -11,11 +11,11 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = schemaBlockTimePeriod.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { timeFrom, timeTo, date, restaurantId } = value;
+		const { timeStart, timeEnd, date, restaurantId } = value;
 		// * REQUEST *
 		const blockUpdated = await prisma.block.update({
 			where: { id: parseInt(blockId) },
-			data: { timeFrom, timeTo, date, restaurantId },
+			data: { timeStart, timeEnd, date, restaurantId },
 		});
 		return blockUpdated;
 	} catch (err) {

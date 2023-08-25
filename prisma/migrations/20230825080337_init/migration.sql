@@ -22,12 +22,13 @@ CREATE TABLE "WorkTime" (
 -- CreateTable
 CREATE TABLE "Block" (
     "id" SERIAL NOT NULL,
-    "dayOfWeek" TEXT,
-    "timeFrom" TEXT,
-    "timeTo" TEXT,
+    "dayOfWeek" INTEGER,
+    "timeStart" TEXT,
+    "timeEnd" TEXT,
     "date" TIMESTAMP(3),
-    "dateFrom" TIMESTAMP(3),
-    "dateTo" TIMESTAMP(3),
+    "dateStart" TIMESTAMP(3),
+    "dateEnd" TIMESTAMP(3),
+    "periodTitle" TEXT NOT NULL,
     "restaurantId" INTEGER NOT NULL,
 
     CONSTRAINT "Block_pkey" PRIMARY KEY ("id")

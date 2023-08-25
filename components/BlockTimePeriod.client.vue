@@ -28,20 +28,20 @@ const disabledDates = computed(() => {
 // API CALLS
 const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
     const block: Block = props.blockTimePeriod
-    if (isTimeFrom) block.timeFrom = time;
-    else block.timeTo = time;
+    if (isTimeFrom) block.timeStart = time;
+    else block.timeEnd = time;
 
     // exits function if nulls
-    if (block === null || block.timeTo === null || block.timeFrom === null) return
+    if (block === null || block.timeEnd === null || block.timeStart === null) return
 
-    if ((isTimeFrom && block.timeTo < time) || (!isTimeFrom && block.timeFrom > time)) {
-        block.timeTo = block.timeFrom = time;
+    if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) {
+        block.timeEnd = block.timeStart = time;
     }
     updateBlockTimePeriod()
 };
 
 const updateBlockTimePeriod = () => {
-    blocksStore.updateBlockTimePeriod(props.blockTimePeriod.id, props.blockTimePeriod.timeFrom, props.blockTimePeriod.timeTo, props.blockTimePeriod.date)
+    blocksStore.updateBlockTimePeriod(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
 };
 
 // Data Picker dropdown
@@ -57,8 +57,8 @@ const toggleDropdownCalendar = () => {
 <template lang="pug">
 .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]")
     //- TIME From / To
-    BlockTimePeriodSelect(:isTimeFrom="true", :time="blockTimePeriod.timeFrom", @updateBlockTimePeriod="updateTimeSlot")
-    BlockTimePeriodSelect(:isTimeFrom="false", :time="blockTimePeriod.timeTo", @updateBlockTimePeriod="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockTimePeriod="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockTimePeriod="updateTimeSlot")
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")

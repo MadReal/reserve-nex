@@ -18,10 +18,10 @@ enum DayOfWeek {
 declare interface Block {
 	id: number;
 	dayOfWeek: DayOfWeek | null;
-	timeFrom: string | null;
-	timeTo: string | null;
+	timeStart: string | null;
+	timeEnd: string | null;
 	date: Date | null;
-	dateFrom: Date | null;
-	dateTo: Date | null;
+	dateStart: Date | null;
+	dateEnd: Date | null;
 	restaurantId: number | null;
 }

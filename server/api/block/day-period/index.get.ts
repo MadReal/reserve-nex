@@ -7,9 +7,8 @@ export default defineEventHandler(async (event) => {
 		// * REQUEST *
 		const block = await prisma.block.findMany({
 			where: {
-				timeStart: { not: null },
-				timeEnd: { not: null },
-				date: { not: null },
+				dateStart: { not: null },
+				dateEnd: { not: null },
 			},
 		});
 		return block;
