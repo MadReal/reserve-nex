@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// load data async without onMounted, before comp creation
+// https://vueschool.io/lessons/synchronous-and-asynchronous-actions-in-pinia
+// ==============================================
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/store/Restaurants'
 import { useWorkTimesStore } from '~/store/WorkTimes'
@@ -12,11 +15,14 @@ const storeBlocks = useBlocksStore()
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
 // Load all API DATA
-storeRestaurants.fetchRestaurants()
-storeWorkTimes.fetchWorkTimes()
-storeReservations.fetchResevations()
-storeBlocks.fetchBlockedDaysOfWeek()
+function loadAllData() {
+    storeRestaurants.fetchRestaurants()
+    storeWorkTimes.fetchWorkTimes()
+    storeReservations.fetchResevations()
+}
+// storeBlocks.fetchBlockedDaysOfWeek()
 // storeBlocks.fetchBlockedDates()
+loadAllData()
 
 // Component's logic
 const isDropdownOpen = ref(false);
@@ -27,14 +33,19 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 <template lang="pug">
 .min-h-screen.basis-60(class="bg-[#F1F2F7]")
     //- SIDEBAR MENU - Restaurant Profile
-    .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6.relative
-        div.mr-1(class="basis-1/5")
-            .w-8.h-8.bg-red-300.rounded-full
-        p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
-        SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="arrow-down", :size="20", @click="toggleDropdown")
+    div.relative
+        .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6.cursor-pointer(@click="toggleDropdown")
+            div.mr-1(class="basis-1/5")
+                .w-8.h-8.bg-red-300.rounded-full
+            p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
+            SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.p-3.text-xs(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="restaurant in restaurantsList" :key="restaurant.id") {{ restaurant.name }}
-            p.py-2.px-3 Aggiungi ristorante
+            .flex.items-center.justify-between.py-2.px-3.mb-1
+                p.cursor-pointer.hover_underline(v-for="restaurant in restaurantsList" :key="restaurant.id") {{ restaurant.name }}
+                SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="")
+            .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.cursor-pointer.hover_bg-slate-50(@click="toggleSelect()")
+                p.leading-normal.text-primary-100 Aggiungi ristorante
+                SVGIcon.text-primary-100(svg="plus", :size="15")            
 
     //- SIDEBAR MENU - Items
     .py-6.px-4

@@ -61,8 +61,10 @@ const calendarOptions = {
 }
 
 watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
+
+storeBlocks.fetchBlockedDaysOfWeek()
 onMounted(async () => {
-    // await storeBlocks.fetchBlockedDaysOfWeek()
+    await storeBlocks.fetchBlockedDaysOfWeek()
     await storeBlocks.fetchBlockedDates()
 });
 </script>

@@ -25,10 +25,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		if (data.value) workTimesList.value = data.value;
 	}
 
-	const addNewWorkTime = async (
-		newTime: WorkTime["time"],
-		isLunch: boolean
-	) => {
+	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
 		const { data, error } = await useFetch(URL, {
 			method: "post",
 			body: {
@@ -38,7 +35,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			},
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
-	};
+	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
 		await useFetch(`${URL}/${timeId}`, { method: "delete" });

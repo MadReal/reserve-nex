@@ -12,10 +12,7 @@ const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 // API CALLS
 const addBlockedTimeOnDay = () => storeBlocks.addBlockedTimeOnDay(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
 
-onBeforeMount(async () => {
-    await storeWorkTimes.fetchWorkTimes()
-    await storeBlocks.fetchBlockedTimesOnDay()
-});
+storeBlocks.fetchBlockedTimesOnDay()
 </script>
 
 
