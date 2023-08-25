@@ -24,7 +24,7 @@
             NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/day-summary")
                 SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="calendar", :size="20")
                 p.text-sm.text-grey-200.tracking-wide Riepilogo Giorno
-            NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/edit-time")
+            NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/edit-time-open")
                 SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="clock", :size="20")
                 p.text-sm.text-grey-200.tracking-wide Gestione Orari
 
