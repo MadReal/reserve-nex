@@ -45,7 +45,8 @@ loadAllData()
             SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.p-3.text-xs(v-show="isDropdownOpen")
             .flex.items-center.justify-between.py-2.px-3.mb-1
-                p.cursor-pointer.hover_underline(v-for="restaurant in restaurantsList" :key="restaurant.id") {{ restaurant.name }}
+                p.cursor-pointer.hover_underline(v-for="restaurant in restaurantsList" :key="restaurant.id", 
+                    @click="storeRestaurants.switchActiveResturant(restaurant.id)") {{ restaurant.name }}
                 SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', 'isEdit')")
             .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant', 'isNew')")
                 p.leading-normal.text-primary-100 Aggiungi ristorante

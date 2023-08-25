@@ -6,20 +6,23 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	let activeRestaurantId = ref<Restaurant["id"]>();
 
 	// GETTERS
-	const activeRestaurant = computed(() =>
-		restaurantsList.value.filter((item) => item.id === activeRestaurantId.value)
+	const activeRestaurant = computed(
+		() =>
+			restaurantsList.value.filter(
+				(item) => item.id === activeRestaurantId.value
+			)[0]
 	);
 
 	// ACTIONS
 	function switchActiveResturant(newId: number) {
-		activeRestaurantId.value = newId;
+		return (activeRestaurantId.value = newId);
 	}
 
 	async function fetchRestaurants() {
 		const { data, error }: any = await useFetch(URL);
-		if (data && data.value) restaurantsList.value = data.value;
+		if (data?.value) restaurantsList.value = data.value;
 		// set active restaurant automatically if only 1 in the list
-		if (data?.value.length === 1) activeRestaurantId = data.value[0].id;
+		// if (data?.value.length === 1) activeRestaurantId = data.value[0].id;
 	}
 
 	async function addRestaurant(restaurant: Restaurant) {
