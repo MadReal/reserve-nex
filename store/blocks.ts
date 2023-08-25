@@ -1,6 +1,6 @@
 const URL_block = "/api/block";
 const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
-const URL_blockTimePeriod = `${URL_block}/time-on-day`;
+const URL_blockTimeOnDay = `${URL_block}/time-on-day`;
 const URL_blockDayPeriod = `${URL_block}/dates-period`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
@@ -71,7 +71,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block - 'Time Period On Date'
 	async function fetchBlockedTimesOnDay() {
-		const { data, error }: any = await useFetch(URL_blockTimePeriod);
+		const { data, error }: any = await useFetch(URL_blockTimeOnDay);
 		if (data.value) {
 			const validBlocks = data.value.filter(
 				(block: Block) => block.date !== null
@@ -99,7 +99,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			date: todayMidnight,
 			restaurantId: 1,
 		};
-		const { data, error } = await useFetch(URL_blockTimePeriod, {
+		const { data, error } = await useFetch(URL_blockTimeOnDay, {
 			method: "post",
 			body: blockedTimeOnDay,
 		});
@@ -120,7 +120,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			restaurantId: 1,
 		};
 
-		await useFetch(`${URL_blockTimePeriod}/${blockId}`, {
+		await useFetch(`${URL_blockTimeOnDay}/${blockId}`, {
 			method: "patch",
 			body: blockedTimeOnDay,
 		});

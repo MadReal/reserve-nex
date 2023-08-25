@@ -25,7 +25,7 @@ onBeforeMount(async () => {
 
     .grid.gap-6(class="grid-cols-[2fr_1px_1fr]")
         div.mb-8
-            BlockTimePeriod(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
+            BlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
             //- Empty Row - Add Hour Block
             .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockedTimeOnDay()")

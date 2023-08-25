@@ -74,11 +74,11 @@ onBeforeMount(async () => {
 
         div.mt-2.mb-8
             //- Display for each day already "blocked"
-            blockDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
+            BlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
                 @addOrUpdateDay="storeBlocks.addOrUpdateblockDaysOfWeek", @removeDay="storeBlocks.removeBlock", 
                 :isUpdate="true", :showTrash="!isblockedDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
-            blockDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
+            BlockedDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
                 @addOrUpdateDay="storeBlocks.addOrUpdateblockDaysOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
