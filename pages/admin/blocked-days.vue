@@ -16,10 +16,10 @@ const isBlockedDaysOfWeekListFull = computed(() => blockedDaysOfWeekList.value.l
 //************
 // CALENDAR
 //************
-const handleEventClick = (clickInfo: any) => {
+const handleEventClick = async (clickInfo: any) => {
     const blockId: Block['id'] = clickInfo.event.id
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
-        storeBlocks.removeBlock(blockId)
+        await storeBlocks.removeBlock(blockId)
         clickInfo.event.remove()
     }
 }
@@ -75,11 +75,11 @@ onBeforeMount(async () => {
         div.mt-2.mb-8
             //- Display for each day already "blocked"
             BlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
-                @addOrUpdateDay="storeBlocks.addOrUpdateblockDaysOfWeek", @removeDay="storeBlocks.removeBlock", 
+                @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", @removeDay="storeBlocks.removeBlock", 
                 :isUpdate="true", :showTrash="!isblockedDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
             BlockedDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
-                @addOrUpdateDay="storeBlocks.addOrUpdateblockDaysOfWeek", 
+                @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options="calendarOptions")

@@ -162,12 +162,29 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	// ACTIONS - Block All
 	async function removeBlock(blockId: Block["id"]) {
 		await useFetch(`${URL_block}/${blockId}`, { method: "delete" });
-		const blockToRemoveIndex = blockedDaysOfWeekList.value.findIndex(
+
+		// try to find the index in each state, remove the one that works
+
+		// blockedDaysOfWeekList
+		const blockedDayOfWeekToRemoveIndex = blockedDaysOfWeekList.value.findIndex(
 			(e) => e.id === blockId
 		);
-		console.log(blockToRemoveIndex);
+		if (blockedDayOfWeekToRemoveIndex !== -1)
+			blockedDaysOfWeekList.value.splice(blockedDayOfWeekToRemoveIndex, 1);
 
-		blockedDaysOfWeekList.value.splice(blockToRemoveIndex, 1);
+		// blockedTimesOnDayList
+		const blockedTimeOnDayToRemoveIndex = blockedTimesOnDayList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		if (blockedTimeOnDayToRemoveIndex !== -1)
+			blockedTimesOnDayList.value.splice(blockedTimeOnDayToRemoveIndex, 1);
+
+		// blockedDatesList // TODO: this never gets it. I think it's the watch inside 'blocked-days'
+		const blockedDateToRemoveIndex = blockedDatesList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		if (blockedDateToRemoveIndex !== -1)
+			blockedDatesList.value.splice(blockedDateToRemoveIndex, 1);
 	}
 
 	return {
