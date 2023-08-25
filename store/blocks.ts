@@ -1,6 +1,6 @@
 const URL_block = "/api/block";
 const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
-const URL_blockTimePeriod = `${URL_block}/time-period`;
+const URL_blockTimePeriod = `${URL_block}/time-on-day`;
 const URL_blockDayPeriod = `${URL_block}/dates-period`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
