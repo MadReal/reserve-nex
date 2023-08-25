@@ -9,9 +9,7 @@ import { useBlocksStore } from '~/store/Blocks'
 
 const blocksStore = useBlocksStore()
 const { blocksDaysOfWeekList } = storeToRefs(blocksStore)
-const { blocksDayPeriodList } = storeToRefs(blocksStore)
-
-const { blocksDayPeriodEventList } = storeToRefs(blocksStore)
+const { blocksDayPeriodListFullCalendar } = storeToRefs(blocksStore)
 
 // used to dynamically set class
 const isBlocksDaysOfWeekListShort = computed(() => blocksDaysOfWeekList.value.length < 1)
@@ -34,42 +32,34 @@ const handleDateSelect = async (selectInfo: any) => {
 
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
     if (title) {
-        const blockDayPeriod = { dateStart: selectInfo.startStr, dateEnd: selectInfo.endStr, periodTitle: title }
-        await blocksStore.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
+        const newBlockDayPeriod = await blocksStore.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
 
         let calendarApi = selectInfo.view.calendar
         calendarApi.unselect() // clear date selection
         calendarApi.addEvent({
-            // id: Math.random(),
+            id: newBlockDayPeriod?.id,
             title,
-            start: selectInfo.startStr,
-            end: selectInfo.endStr,
+            start: newBlockDayPeriod?.dateStart,
+            end: newBlockDayPeriod?.dateEnd,
             allDay: selectInfo.allDay
         })
     }
 }
-const handleEvents = (events: any) => {
-    currentEvents = events
-}
 
-let currentEvents = []
 const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
     initialView: 'dayGridMonth',
-    events: [],
+    events: blocksDayPeriodListFullCalendar,
     editable: true,
     selectable: true,
     dayMaxEvents: true,
     contentHeight: 500,
     select: handleDateSelect,
     eventClick: handleEventClick,
-    eventsSet: handleEvents,
 }
 
-watch(blocksDayPeriodEventList, (newEvents) => {
-    calendarOptions.events = newEvents;
-});
+watch(blocksDayPeriodListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
 </script>
 
 
@@ -88,10 +78,12 @@ watch(blocksDayPeriodEventList, (newEvents) => {
         div.mt-2.mb-8
             //- Display for each day already "blocked"
             BlockDayOfWeek(v-for="day in blocksDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blocksDaysOfWeekList", :blockedDay="day",
-                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", @removeDay="blocksStore.removeBlock", :isUpdate="true", :showTrash="!isBlocksDaysOfWeekListShort")
+                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", @removeDay="blocksStore.removeBlock", 
+                :isUpdate="true", :showTrash="!isBlocksDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
             BlockDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blocksDaysOfWeekList", 
-                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", :isUpdate="false", :showTrash="false")
+                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", 
+                :isUpdate="false", :showTrash="false")
 
-    FullCalendar.mt-8(:options='calendarOptions')
+    FullCalendar.mt-8(:options="calendarOptions")
 </template>

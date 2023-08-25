@@ -12,14 +12,15 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	const blocksDayPeriodList = ref<Block[]>([]);
 
 	// GETTERS - Block - 'One (or more) days period'
-	const blocksDayPeriodEventList = computed(() => {
-		const updatedBlocks = blocksDayPeriodList.value.map((item) => ({
+	const blocksDayPeriodListFullCalendar = computed(() =>
+		blocksDayPeriodList.value.map((item) => ({
 			...item,
 			start: item.dateStart,
 			end: item.dateEnd,
-		}));
-		return updatedBlocks;
-	});
+			title: item.periodTitle,
+			allDay: true,
+		}))
+	);
 
 	// ACTIONS - Block 'dayOfWeek'
 	async function fetchBlocksDayOfWeek() {
@@ -156,6 +157,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			console.log("useFetch post");
 			//@ts-ignore
 			if (data.value) blocksDayPeriodList.value.push(data.value);
+			return data.value as Block;
 		} catch (error) {}
 	}
 
@@ -180,10 +182,14 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		updateBlockTimePeriod,
 		// Block - 'One (or more) days period'
 		blocksDayPeriodList,
-		blocksDayPeriodEventList,
+		blocksDayPeriodListFullCalendar,
 		fetchBlocksDayPeriod,
 		addBlockDayPeriod,
 		// Block - All
 		removeBlock,
 	};
 });
+
+if (import.meta.hot) {
+	import.meta.hot.accept(acceptHMRUpdate(useBlocksStore, import.meta.hot));
+}
