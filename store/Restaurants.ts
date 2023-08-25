@@ -3,13 +3,11 @@ const URL = "/api/restaurants";
 export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	// STATE
 	const restaurantsList = ref<Restaurant[]>([]);
-	const activeRestaurantId = ref<Restaurant["id"]>();
+	let activeRestaurantId = ref<Restaurant["id"]>();
 
 	// GETTERS
 	const activeRestaurant = computed(() =>
-		restaurantsList.value.findIndex(
-			(item) => item.id === activeRestaurantId.value
-		)
+		restaurantsList.value.filter((item) => item.id === activeRestaurantId.value)
 	);
 
 	// ACTIONS
@@ -20,6 +18,8 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	async function fetchRestaurants() {
 		const { data, error }: any = await useFetch(URL);
 		if (data && data.value) restaurantsList.value = data.value;
+		// set active restaurant automatically if only 1 in the list
+		if (data?.value.length === 1) activeRestaurantId = data.value[0].id;
 	}
 
 	async function addRestaurant(restaurant: Restaurant) {
@@ -33,6 +33,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	return {
 		restaurantsList,
 		activeRestaurantId,
+		activeRestaurant,
 		switchActiveResturant,
 		fetchRestaurants,
 		addRestaurant,

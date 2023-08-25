@@ -7,12 +7,22 @@ import { useRestaurantsStore } from '~/store/Restaurants'
 import { useWorkTimesStore } from '~/store/WorkTimes'
 import { useReservationsStore } from '@/store/Reservations';
 import { useBlocksStore } from '~/store/Blocks'
+import { useModalsStore } from '~/store/Modals'
 
+// Component's logic
+const isDropdownOpen = ref(false);
+const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
+
+// Store
 const storeRestaurants = useRestaurantsStore();
 const storeWorkTimes = useWorkTimesStore();
 const storeReservations = useReservationsStore();
-const storeBlocks = useBlocksStore()
+const storeModals = useModalsStore()
 const { restaurantsList } = storeToRefs(storeRestaurants)
+
+function openModal(modalType: ModalType, options: ModalOption) {
+    storeModals.openModal(modalType, options)
+}
 
 // Load all API DATA
 function loadAllData() {
@@ -20,13 +30,7 @@ function loadAllData() {
     storeWorkTimes.fetchWorkTimes()
     storeReservations.fetchResevations()
 }
-// storeBlocks.fetchBlockedDaysOfWeek()
-// storeBlocks.fetchBlockedDates()
 loadAllData()
-
-// Component's logic
-const isDropdownOpen = ref(false);
-const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 </script>
 
 
@@ -42,8 +46,8 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.p-3.text-xs(v-show="isDropdownOpen")
             .flex.items-center.justify-between.py-2.px-3.mb-1
                 p.cursor-pointer.hover_underline(v-for="restaurant in restaurantsList" :key="restaurant.id") {{ restaurant.name }}
-                SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="")
-            .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.cursor-pointer.hover_bg-slate-50(@click="toggleSelect()")
+                SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', 'isEdit')")
+            .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant', 'isNew')")
                 p.leading-normal.text-primary-100 Aggiungi ristorante
                 SVGIcon.text-primary-100(svg="plus", :size="15")            
 

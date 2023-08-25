@@ -44,3 +44,6 @@ declare interface Restaurant {
 	id: number;
 	name: string;
 }
+
+type ModalType = "restaurant" | "signup" | "forgotPassword" | "contact";
+type ModalOption = "isEdit" | "isNew";
