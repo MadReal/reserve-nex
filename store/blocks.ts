@@ -164,15 +164,17 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		dateStart: Block["dateStart"],
 		dateEnd: Block["dateEnd"]
 	) {
-		await useFetch(`${URL_blockedDaysOfWeek}/${blockId}`, {
+		await useFetch(`${URL_blockedDate}/${blockId}`, {
 			method: "patch",
 			body: { dateStart, dateEnd },
 		});
 		const blockedDateToUpdateIndex = blockedDatesList.value.findIndex(
 			(e) => e.id === blockId
 		);
-		blockedDatesList.value[blockedDateToUpdateIndex].dateStart = dateStart;
-		blockedDatesList.value[blockedDateToUpdateIndex].dateEnd = dateEnd;
+		if (blockedDateToUpdateIndex !== -1) {
+			blockedDatesList.value[blockedDateToUpdateIndex].dateStart = dateStart;
+			blockedDatesList.value[blockedDateToUpdateIndex].dateEnd = dateEnd;
+		}
 	}
 
 	// ACTIONS - Block All

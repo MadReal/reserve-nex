@@ -39,8 +39,9 @@ const handleDateSelect = async (selectInfo: any) => {
     }
 }
 
-const handleDragAndResize = async (info: any) => {
-    await storeBlocks.updateBlockedDate(info.id, info.event.start, info.event.end)
+const handleDragAndResize = (info: any) => {
+    const blockedDate = info.event
+    storeBlocks.updateBlockedDate(blockedDate.id, blockedDate.start, blockedDate.end)
 }
 
 const calendarOptions = {

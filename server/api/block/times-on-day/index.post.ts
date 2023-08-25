@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const schemaBlockTimePeriod = Joi.object({
+export const schemaBlockedTimesOnDay = Joi.object({
 	timeStart: Joi.string().required(),
 	timeEnd: Joi.string().required(),
 	date: Joi.date().greater(getYesterdayDate()).required(),
@@ -13,7 +13,7 @@ export const schemaBlockTimePeriod = Joi.object({
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
 	// Validate body
-	const { error, value } = schemaBlockTimePeriod.validate(body);
+	const { error, value } = schemaBlockedTimesOnDay.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { timeStart, timeEnd, date, restaurantId } = value;
