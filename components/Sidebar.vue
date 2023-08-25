@@ -1,17 +1,28 @@
-<script setup lang="ts">
+<script async setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useRestaurantsStore } from '~/store/Restaurants'
 
+const storeRestaurants = useRestaurantsStore();
+const { restaurantsList } = storeToRefs(storeRestaurants)
 
+const isDropdownOpen = ref(false);
+const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
+
+storeRestaurants.fetchRestaurants()
 </script>
 
 
 <template lang="pug">
 .min-h-screen.basis-60(class="bg-[#F1F2F7]")
     //- SIDEBAR MENU - Restaurant Profile
-    .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6
+    .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6.relative
         div.mr-1(class="basis-1/5")
             .w-8.h-8.bg-red-300.rounded-full
         p.text-sm.break-words(class="basis-3/5") Officina Del Riso (Navigli)
-        SVGIcon.text-grey-200(svg="arrow-down", :size="20")
+        SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="arrow-down", :size="20", @click="toggleDropdown")
+        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.p-3.text-xs(v-show="isDropdownOpen")
+            p.py-2.px-3(v-for="restaurant in restaurantsList" :key="restaurant.id") {{ restaurant.name }}
+            p.py-2.px-3 Aggiungi ristorante
 
     //- SIDEBAR MENU - Items
     .py-6.px-4

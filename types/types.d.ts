@@ -39,3 +39,8 @@ declare interface Reservation {
 	accepted: boolean | null;
 	restaurantId: number;
 }
+
+declare interface Restaurant {
+	id: number;
+	name: string;
+}
