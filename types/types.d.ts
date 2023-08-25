@@ -24,5 +24,18 @@ declare interface Block {
 	dateStart: Date | null;
 	dateEnd: Date | null;
 	periodTitle: string | null;
-	restaurantId: number | null;
+	restaurantId: number;
+}
+
+declare interface Reservation {
+	id: number;
+	createdAt: Date;
+	time: string;
+	date: Date;
+	personName: string;
+	personPhone: string;
+	personEmail: string;
+	peopleAmount: number;
+	accepted: boolean | null;
+	restaurantId: number;
 }

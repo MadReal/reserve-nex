@@ -1,4 +1,4 @@
-const workTimesApiUrl = "/api/work-times";
+const URL = "/api/work-times";
 
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	const workTimesList = ref<WorkTime[]>([]);
@@ -21,7 +21,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 
 	// ACTIONS
 	const fetchWorkTimes = async () => {
-		const { data, error }: any = await useFetch(workTimesApiUrl);
+		const { data, error }: any = await useFetch(URL);
 		if (data.value) workTimesList.value = data.value;
 	};
 
@@ -29,7 +29,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		newTime: WorkTime["time"],
 		isLunch: boolean
 	) => {
-		const { data, error } = await useFetch(workTimesApiUrl, {
+		const { data, error } = await useFetch(URL, {
 			method: "post",
 			body: {
 				mealType: isLunch ? "LUNCH" : "DINNER",
@@ -41,7 +41,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	};
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
-		await useFetch(`${workTimesApiUrl}/${timeId}`, { method: "delete" });
+		await useFetch(`${URL}/${timeId}`, { method: "delete" });
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
 		workTimesList.value.splice(workTimeIndex, 1);
 	}
