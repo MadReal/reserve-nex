@@ -23,5 +23,6 @@ declare interface Block {
 	date: Date | null;
 	dateStart: Date | null;
 	dateEnd: Date | null;
+	periodTitle: string | null;
 	restaurantId: number | null;
 }

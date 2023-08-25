@@ -143,6 +143,22 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		if (data.value) blocksDayPeriodList.value = data.value;
 	}
 
+	async function addBlockDayPeriod(
+		dateStart: Block["dateStart"],
+		dateEnd: Block["dateEnd"],
+		periodTitle: Block["periodTitle"]
+	) {
+		try {
+			const { data, error } = await useFetch(URL_blockDayPeriod, {
+				method: "post",
+				body: { dateStart, dateEnd, periodTitle, restaurantId: 1 },
+			});
+			console.log("useFetch post");
+			//@ts-ignore
+			if (data.value) blocksDayPeriodList.value.push(data.value);
+		} catch (error) {}
+	}
+
 	// ACTIONS - Block All
 	async function removeBlock(blockId: Block["id"]) {
 		await useFetch(`${URL_block}/${blockId}`, { method: "delete" });
@@ -166,6 +182,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		blocksDayPeriodList,
 		blocksDayPeriodEventList,
 		fetchBlocksDayPeriod,
+		addBlockDayPeriod,
 		// Block - All
 		removeBlock,
 	};

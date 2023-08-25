@@ -1,14 +1,13 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { yesterdayDate } from "@/utils/yesterdayDate";
 
 const prisma = new PrismaClient();
-
-const date = new Date();
-const yesterdayDate = date.setDate(date.getDate() - 1);
 
 const schema = Joi.object({
 	dateStart: Joi.date().greater(yesterdayDate).required(),
 	dateEnd: Joi.date().greater(yesterdayDate).required(),
+	periodTitle: Joi.string().required(),
 	restaurantId: Joi.number().required(),
 });
 
@@ -18,10 +17,10 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { dateStart, dateEnd, restaurantId } = value;
+		const { dateStart, dateEnd, periodTitle, restaurantId } = value;
 		// * REQUEST *
 		const blockCreated = await prisma.block.create({
-			data: { dateStart, dateEnd, restaurantId },
+			data: { dateStart, dateEnd, periodTitle, restaurantId },
 		});
 		return blockCreated;
 	} catch (err) {

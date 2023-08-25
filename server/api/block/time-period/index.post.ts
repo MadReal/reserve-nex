@@ -1,10 +1,8 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { yesterdayDate } from "@/utils/yesterdayDate";
 
 const prisma = new PrismaClient();
-
-const date = new Date();
-const yesterdayDate = date.setDate(date.getDate() - 1);
 
 export const schemaBlockTimePeriod = Joi.object({
 	timeStart: Joi.string().required(),

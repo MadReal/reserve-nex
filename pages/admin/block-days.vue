@@ -29,15 +29,16 @@ onMounted(async () => {
 const handleEventClick = (clickInfo: any) => {
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) clickInfo.event.remove()
 }
-const handleDateSelect = (selectInfo: any) => {
+const handleDateSelect = async (selectInfo: any) => {
     console.log(selectInfo);
 
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
     if (title) {
+        const blockDayPeriod = { dateStart: selectInfo.startStr, dateEnd: selectInfo.endStr, periodTitle: title }
+        await blocksStore.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
+
         let calendarApi = selectInfo.view.calendar
-
         calendarApi.unselect() // clear date selection
-
         calendarApi.addEvent({
             // id: Math.random(),
             title,
@@ -65,6 +66,10 @@ const calendarOptions = {
     eventClick: handleEventClick,
     eventsSet: handleEvents,
 }
+
+watch(blocksDayPeriodEventList, (newEvents) => {
+    calendarOptions.events = newEvents;
+});
 </script>
 
 

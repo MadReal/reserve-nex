@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 			where: {
 				timeStart: { not: null },
 				timeEnd: { not: null },
-				date: { not: null },
+				periodTitle: { not: null },
 			},
 		});
 		return block;
