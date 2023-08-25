@@ -1,19 +1,19 @@
 const URL_block = "/api/block";
 const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
 const URL_blockTimePeriod = `${URL_block}/time-period`;
-const URL_blockDayPeriod = `${URL_block}/day-period`;
+const URL_blockDayPeriod = `${URL_block}/dates-period`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'dayOfWeek'
-	const blocksDaysOfWeekList = ref<Block[]>([]);
+	const blockedDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block - 'Time Period On Date'
-	const blocksTimePeriodList = ref<Block[]>([]);
+	const blockedTimesOnDayList = ref<Block[]>([]);
 	// STATE - Block - 'One (or more) days period'
-	const blocksDayPeriodList = ref<Block[]>([]);
+	const blockedDatesList = ref<Block[]>([]);
 
 	// GETTERS - Block - 'One (or more) days period'
-	const blocksDayPeriodListFullCalendar = computed(() =>
-		blocksDayPeriodList.value.map((item) => ({
+	const blockedDatesListFullCalendar = computed(() =>
+		blockedDatesList.value.map((item) => ({
 			...item,
 			start: item.dateStart,
 			end: item.dateEnd,
@@ -23,7 +23,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	);
 
 	// ACTIONS - Block 'dayOfWeek'
-	async function fetchBlocksDayOfWeek() {
+	async function fetchBlockedDaysOfWeek() {
 		const { data, error }: any = await useFetch(URL_blockDayOfWeek);
 		if (data.value) {
 			// Sort week days ascendent (Monday, Tuesday)
@@ -41,11 +41,11 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 					dayOfWeek: block.dayOfWeek,
 				};
 			});
-			blocksDaysOfWeekList.value = blockDayOfWeek;
+			blockedDaysOfWeekList.value = blockDayOfWeek;
 		}
 	}
 
-	async function addOrUpdateBlockDayOfWeek(
+	async function addOrUpdateBlockedDayOfWeek(
 		oldDayOfWeekId: Block["id"],
 		newDayOfWeek: Block["dayOfWeek"],
 		isUpdate: boolean
@@ -55,10 +55,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				method: "patch",
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
-			const dayOfWeekToUpdateIndex = blocksDaysOfWeekList.value.findIndex(
-				(e) => e.id === oldDayOfWeekId
-			);
-			blocksDaysOfWeekList.value[dayOfWeekToUpdateIndex].dayOfWeek =
+			const blockedDayOfWeekToUpdateIndex =
+				blockedDaysOfWeekList.value.findIndex((e) => e.id === oldDayOfWeekId);
+			blockedDaysOfWeekList.value[blockedDayOfWeekToUpdateIndex].dayOfWeek =
 				newDayOfWeek;
 		} else {
 			const { data, error } = await useFetch(URL_blockDayOfWeek, {
@@ -66,12 +65,12 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
 			//@ts-ignore
-			if (data.value) blocksDaysOfWeekList.value.push(data.value);
+			if (data.value) blockedDaysOfWeekList.value.push(data.value);
 		}
 	}
 
 	// ACTIONS - Block - 'Time Period On Date'
-	async function fetchBlocksTimePeriod() {
+	async function fetchBlockedTimesOnDay() {
 		const { data, error }: any = await useFetch(URL_blockTimePeriod);
 		if (data.value) {
 			const validBlocks = data.value.filter(
@@ -83,18 +82,18 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 					(a: Block, b: Block) =>
 						new Date(a.date!).getTime() - new Date(b.date!).getTime()
 				);
-			blocksTimePeriodList.value = sortedBlocks;
+			blockedTimesOnDayList.value = sortedBlocks;
 		}
 	}
 
-	async function addBlockTimePeriod(
+	async function addBlockedTimeOnDay(
 		timeStart: Block["timeStart"],
 		timeEnd: Block["timeEnd"]
 	) {
 		const todayMidnight = new Date();
 		todayMidnight.setHours(0, 0, 0, 0);
 
-		const blockTimePeriod = {
+		const blockedTimeOnDay = {
 			timeStart,
 			timeEnd,
 			date: todayMidnight,
@@ -102,19 +101,19 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		};
 		const { data, error } = await useFetch(URL_blockTimePeriod, {
 			method: "post",
-			body: blockTimePeriod,
+			body: blockedTimeOnDay,
 		});
 		//@ts-ignore
-		if (data.value) blocksTimePeriodList.value.push(data.value);
+		if (data.value) blockedTimesOnDayList.value.push(data.value);
 	}
 
-	async function updateBlockTimePeriod(
+	async function updateBlockedTimeOnDay(
 		blockId: Block["id"],
 		timeStart: Block["timeStart"],
 		timeEnd: Block["timeEnd"],
 		date: Block["date"]
 	) {
-		const blockTimePeriod = {
+		const blockedTimeOnDay = {
 			timeStart,
 			timeEnd,
 			date,
@@ -123,28 +122,28 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 		await useFetch(`${URL_blockTimePeriod}/${blockId}`, {
 			method: "patch",
-			body: blockTimePeriod,
+			body: blockedTimeOnDay,
 		});
-		const blockTimePeriodToUpdateIndex = blocksTimePeriodList.value.findIndex(
+		const blockTimePeriodToUpdateIndex = blockedTimesOnDayList.value.findIndex(
 			(e) => e.id === blockId
 		);
 		const newBlockTimePeriod = {
-			...blocksTimePeriodList.value[blockTimePeriodToUpdateIndex],
+			...blockedTimesOnDayList.value[blockTimePeriodToUpdateIndex],
 			timeStart,
 			timeEnd,
 			date,
 		};
-		blocksTimePeriodList.value[blockTimePeriodToUpdateIndex] =
+		blockedTimesOnDayList.value[blockTimePeriodToUpdateIndex] =
 			newBlockTimePeriod;
 	}
 
 	// ACTIONS - Block - 'One (or more) days period'
-	async function fetchBlocksDayPeriod() {
+	async function fetchBlockedDates() {
 		const { data, error }: any = await useFetch(URL_blockDayPeriod);
-		if (data.value) blocksDayPeriodList.value = data.value;
+		if (data.value) blockedDatesList.value = data.value;
 	}
 
-	async function addBlockDayPeriod(
+	async function addBlockedDate(
 		dateStart: Block["dateStart"],
 		dateEnd: Block["dateEnd"],
 		periodTitle: Block["periodTitle"]
@@ -155,7 +154,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				body: { dateStart, dateEnd, periodTitle, restaurantId: 1 },
 			});
 			//@ts-ignore
-			if (data.value) blocksDayPeriodList.value.push(data.value);
+			if (data.value) blockedDatesList.value.push(data.value);
 			return data.value as Block;
 		} catch (error) {}
 	}
@@ -163,27 +162,29 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	// ACTIONS - Block All
 	async function removeBlock(blockId: Block["id"]) {
 		await useFetch(`${URL_block}/${blockId}`, { method: "delete" });
-		const blockToRemoveIndex = blocksDaysOfWeekList.value.findIndex(
+		const blockToRemoveIndex = blockedDaysOfWeekList.value.findIndex(
 			(e) => e.id === blockId
 		);
-		blocksDaysOfWeekList.value.splice(blockToRemoveIndex, 1);
+		console.log(blockToRemoveIndex);
+
+		blockedDaysOfWeekList.value.splice(blockToRemoveIndex, 1);
 	}
 
 	return {
 		// Block - 'dayOfWeek'
-		blocksDaysOfWeekList,
-		fetchBlocksDayOfWeek,
-		addOrUpdateBlockDayOfWeek,
+		blockedDaysOfWeekList,
+		fetchBlockedDaysOfWeek,
+		addOrUpdateBlockedDayOfWeek,
 		// Block - 'Time Period On Date'
-		blocksTimePeriodList,
-		fetchBlocksTimePeriod,
-		addBlockTimePeriod,
-		updateBlockTimePeriod,
+		blockedTimesOnDayList,
+		fetchBlockedTimesOnDay,
+		addBlockedTimeOnDay,
+		updateBlockedTimeOnDay,
 		// Block - 'One (or more) days period'
-		blocksDayPeriodList,
-		blocksDayPeriodListFullCalendar,
-		fetchBlocksDayPeriod,
-		addBlockDayPeriod,
+		blockedDatesList,
+		blockedDatesListFullCalendar,
+		fetchBlockedDates,
+		addBlockedDate,
 		// Block - All
 		removeBlock,
 	};

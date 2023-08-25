@@ -6,15 +6,15 @@ import { useWorkTimesStore } from '~/store/WorkTimes'
 const storeBlocks = useBlocksStore()
 const storeWorkTimes = useWorkTimesStore();
 
-const { blocksTimePeriodList } = storeToRefs(storeBlocks)
+const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
 const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 
 // API CALLS
-const addBlockTimePeriod = () => storeBlocks.addBlockTimePeriod(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
+const addBlockedTimeOnDay = () => storeBlocks.addBlockedTimeOnDay(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await storeWorkTimes.fetchWorkTimes()
-    await storeBlocks.fetchBlocksTimePeriod()
+    await storeBlocks.fetchBlockedTimesOnDay()
 });
 </script>
 
@@ -25,10 +25,10 @@ onMounted(async () => {
 
     .grid.gap-6(class="grid-cols-[2fr_1px_1fr]")
         div.mb-8
-            BlockTimePeriod(v-for="(item, index) in blocksTimePeriodList", :key="item.id", :blockTimePeriod="item")
+            BlockTimePeriod(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
             //- Empty Row - Add Hour Block
-            .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockTimePeriod()")
+            .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockedTimeOnDay()")
                 p.leading-normal.text-grey-200 Aggiungi Blocco
                 SVGIcon.text-grey-300(svg="plus", :size="15")
 </template>

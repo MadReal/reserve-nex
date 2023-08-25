@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { schemaBlockDayOfWeek } from "~/server/api/block/days-of-week/index.post";
+import { schemablockDaysOfWeek } from "~/server/api/block/days-of-week/index.post";
 
 const prisma = new PrismaClient();
 
@@ -8,16 +8,16 @@ export default defineEventHandler(async (event) => {
 	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
 	// validate body
-	const { error, value } = schemaBlockDayOfWeek.validate(body);
+	const { error, value } = schemablockDaysOfWeek.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { dayOfWeek, restaurantId } = value;
 		// * REQUEST *
-		const blockDayOfWeekToUpdate = await prisma.block.update({
+		const blockDaysOfWeekToUpdate = await prisma.block.update({
 			where: { id: parseInt(blockId) },
 			data: { dayOfWeek, restaurantId },
 		});
-		return blockDayOfWeekToUpdate;
+		return blockDaysOfWeekToUpdate;
 	} catch (err) {
 		console.error(err);
 		throw err;

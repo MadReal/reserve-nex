@@ -37,18 +37,18 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
     if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) {
         block.timeEnd = block.timeStart = time;
     }
-    updateBlockTimePeriod()
+    updateBlockedTimeOnDay()
 };
 
-const updateBlockTimePeriod = () => {
-    storeBlocks.updateBlockTimePeriod(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
+const updateBlockedTimeOnDay = () => {
+    storeBlocks.updateBlockedTimeOnDay(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
 };
 
 // Data Picker dropdown
 const isDropdownCalendarOpen = ref(false);
 const toggleDropdownCalendar = () => {
     isDropdownCalendarOpen.value = !isDropdownCalendarOpen.value
-    updateBlockTimePeriod()
+    updateBlockedTimeOnDay()
 }
 
 </script>
@@ -57,8 +57,8 @@ const toggleDropdownCalendar = () => {
 <template lang="pug">
 .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]")
     //- TIME From / To
-    BlockTimePeriodSelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockTimePeriod="updateTimeSlot")
-    BlockTimePeriodSelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockTimePeriod="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeOnDay="updateTimeSlot")
+    BlockTimePeriodSelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeOnDay="updateTimeSlot")
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")

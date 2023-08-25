@@ -6,7 +6,7 @@ const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
-onMounted(async () => { await storeReservations.fetchResevations() });
+onBeforeMount(async () => { await storeReservations.fetchResevations() });
 </script>
 
 
@@ -17,8 +17,8 @@ onMounted(async () => { await storeReservations.fetchResevations() });
     .mb-8
         .flex.items-center.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")
             p.inline
-                span.pr-1.text-black.font-semibold {{ item.personName }}
-                span.text-grey-200 {{ `[#${item.id}]` }}
+                span.pr-1.text-black.font-semibold.underline {{ item.personName }}
+                span.text-grey-200.text-xs {{ `[#${item.id}]` }}
             p.antialiased {{ formatDate(item.date) }}
             .flex.items-center.text-primary-100.antialiased
                 SVGIcon.pr-1(svg="users-filled", :size="20")

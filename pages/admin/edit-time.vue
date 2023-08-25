@@ -6,7 +6,7 @@ const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList } = storeToRefs(storeWorkTimes)
 const { dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 
-onMounted(async () => { await storeWorkTimes.fetchWorkTimes() });
+onBeforeMount(async () => { await storeWorkTimes.fetchWorkTimes() });
 </script>
 
 

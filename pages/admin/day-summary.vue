@@ -8,7 +8,7 @@ const { dinnerWorkTimesList } = storeToRefs(workTimeStore)
 
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await workTimeStore.fetchWorkTimes()
 });
 </script>
