@@ -1,13 +1,12 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { yesterdayDate } from "@/utils/yesterdayDate";
 
 const prisma = new PrismaClient();
 
 export const schema = Joi.object({
 	// createdAt: Joi.number().required(),
 	// time: Joi.string().required(),
-	// date: Joi.date().greater(yesterdayDate).required(),
+	// date: Joi.date().greater(getYesterdayDate()).required(),
 	// personName: Joi.string().required(),
 	// personPhone: Joi.string().required(),
 	// personEmail: Joi.string().required(),

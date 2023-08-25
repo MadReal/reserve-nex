@@ -1,2 +1,5 @@
-const date = new Date();
-export const yesterdayDate = date.setDate(date.getDate() - 1);
+export const getYesterdayDate = (): Date => {
+	const date = new Date();
+	date.setDate(date.getDate() - 1);
+	return date;
+};
