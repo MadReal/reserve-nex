@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import reservations from "@/data/db-reservations.json";
+import { storeToRefs } from 'pinia'
+import { useReservationsStore } from '@/store/Reservations';
 
 export interface BoxReservationProps {
     workTime: WorkTime,
@@ -7,9 +8,12 @@ export interface BoxReservationProps {
 }
 const props = defineProps<BoxReservationProps>()
 
-const todaysReservations = reservations.filter(item => useDateTimeFormatting(item.date).formattedDate == props.todaysDate)
+const storeReservations = useReservationsStore();
+const { reservationsList } = storeToRefs(storeReservations)
+
+const todaysReservations = reservationsList.value.filter(item => useDateTimeFormatting(item.date).formattedDate == props.todaysDate)
 // if time analyzed from the array equals time being passed from template, add people
-const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time === props.workTime.time ? total + item.people : total, 0);
+const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time === props.workTime.time ? total + item.peopleAmount : total, 0);
 </script>
 
 

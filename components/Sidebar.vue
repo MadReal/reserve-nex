@@ -1,14 +1,26 @@
-<script async setup lang="ts">
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/store/Restaurants'
+import { useWorkTimesStore } from '~/store/WorkTimes'
+import { useReservationsStore } from '@/store/Reservations';
+import { useBlocksStore } from '~/store/Blocks'
 
 const storeRestaurants = useRestaurantsStore();
+const storeWorkTimes = useWorkTimesStore();
+const storeReservations = useReservationsStore();
+const storeBlocks = useBlocksStore()
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
+// Load all API DATA
+storeRestaurants.fetchRestaurants()
+storeWorkTimes.fetchWorkTimes()
+storeReservations.fetchResevations()
+storeBlocks.fetchBlockedDaysOfWeek()
+// storeBlocks.fetchBlockedDates()
+
+// Component's logic
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
-
-storeRestaurants.fetchRestaurants()
 </script>
 
 

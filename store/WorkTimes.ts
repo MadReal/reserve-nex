@@ -20,10 +20,10 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	);
 
 	// ACTIONS
-	const fetchWorkTimes = async () => {
+	async function fetchWorkTimes() {
 		const { data, error }: any = await useFetch(URL);
 		if (data.value) workTimesList.value = data.value;
-	};
+	}
 
 	const addNewWorkTime = async (
 		newTime: WorkTime["time"],

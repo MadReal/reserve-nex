@@ -8,13 +8,8 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 
 	// ACTIONS
 	async function fetchRestaurants() {
-		console.log("ef");
-
 		const { data, error }: any = await useFetch(URL);
-		console.log(data.value);
-
 		if (data && data.value) restaurantsList.value = data.value;
-		console.log(restaurantsList.value);
 	}
 
 	return {

@@ -1,16 +1,8 @@
 <script setup lang="ts">
 import { useWorkTimesStore } from '~/store/WorkTimes'
-import { storeToRefs } from 'pinia'
 
 const workTimeStore = useWorkTimesStore();
-const { lunchWorkTimesList } = storeToRefs(workTimeStore)
-const { dinnerWorkTimesList } = storeToRefs(workTimeStore)
-
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
-
-onBeforeMount(async () => {
-    await workTimeStore.fetchWorkTimes()
-});
 </script>
 
 
@@ -22,12 +14,12 @@ onBeforeMount(async () => {
         div.mb-6
             p.mb-4 Lunch
             .grid.grid-cols-4.gap-2
-                BoxReservation(v-for="workTime in lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                BoxReservation(v-for="workTime in workTimeStore.lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 
         .h-full.border-r
 
         div.mb-6
             p.mb-4 Dinner
             .grid.grid-cols-4.gap-2
-                BoxReservation(v-for="workTime in dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                BoxReservation(v-for="workTime in workTimeStore.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 </template>
