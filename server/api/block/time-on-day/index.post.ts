@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { getYesterdayDate } from "~/utils/yesterdayDate";
 
 const prisma = new PrismaClient();
 
