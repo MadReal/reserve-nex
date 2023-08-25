@@ -39,6 +39,10 @@ const handleDateSelect = async (selectInfo: any) => {
     }
 }
 
+const handleDragAndResize = async (info: any) => {
+    await storeBlocks.updateBlockedDate(info.id, info.event.start, info.event.end)
+}
+
 const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
@@ -50,6 +54,9 @@ const calendarOptions = {
     contentHeight: 500,
     select: handleDateSelect,
     eventClick: handleEventClick,
+    // eventsSet: handleEvents
+    eventDrop: handleDragAndResize,
+    eventResize: handleDragAndResize
 }
 
 watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);

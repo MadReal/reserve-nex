@@ -1,7 +1,7 @@
 const URL_block = "/api/block";
-const URL_blockDayOfWeek = `${URL_block}/days-of-week`;
-const URL_blockTimeOnDay = `${URL_block}/time-on-day`;
-const URL_blockDayPeriod = `${URL_block}/dates-period`;
+const URL_blockedDaysOfWeek = `${URL_block}/days-of-week`;
+const URL_blockedTimesOnDay = `${URL_block}/times-on-day`;
+const URL_blockedDate = `${URL_block}/dates`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'dayOfWeek'
@@ -24,7 +24,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block 'dayOfWeek'
 	async function fetchBlockedDaysOfWeek() {
-		const { data, error }: any = await useFetch(URL_blockDayOfWeek);
+		const { data, error }: any = await useFetch(URL_blockedDaysOfWeek);
 		if (data.value) {
 			// Sort week days ascendent (Monday, Tuesday)
 			const sortedBlocks = data.value.slice().sort((a: Block, b: Block) => {
@@ -51,7 +51,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		isUpdate: boolean
 	) {
 		if (isUpdate) {
-			await useFetch(`${URL_blockDayOfWeek}/${oldDayOfWeekId}`, {
+			await useFetch(`${URL_blockedDaysOfWeek}/${oldDayOfWeekId}`, {
 				method: "patch",
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
@@ -60,7 +60,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			blockedDaysOfWeekList.value[blockedDayOfWeekToUpdateIndex].dayOfWeek =
 				newDayOfWeek;
 		} else {
-			const { data, error } = await useFetch(URL_blockDayOfWeek, {
+			const { data, error } = await useFetch(URL_blockedDaysOfWeek, {
 				method: "post",
 				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
 			});
@@ -71,7 +71,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block - 'Time Period On Date'
 	async function fetchBlockedTimesOnDay() {
-		const { data, error }: any = await useFetch(URL_blockTimeOnDay);
+		const { data, error }: any = await useFetch(URL_blockedTimesOnDay);
 		if (data.value) {
 			const validBlocks = data.value.filter(
 				(block: Block) => block.date !== null
@@ -99,7 +99,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			date: todayMidnight,
 			restaurantId: 1,
 		};
-		const { data, error } = await useFetch(URL_blockTimeOnDay, {
+		const { data, error } = await useFetch(URL_blockedTimesOnDay, {
 			method: "post",
 			body: blockedTimeOnDay,
 		});
@@ -120,7 +120,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			restaurantId: 1,
 		};
 
-		await useFetch(`${URL_blockTimeOnDay}/${blockId}`, {
+		await useFetch(`${URL_blockedTimesOnDay}/${blockId}`, {
 			method: "patch",
 			body: blockedTimeOnDay,
 		});
@@ -139,7 +139,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block - 'One (or more) days period'
 	async function fetchBlockedDates() {
-		const { data, error }: any = await useFetch(URL_blockDayPeriod);
+		const { data, error }: any = await useFetch(URL_blockedDate);
 		if (data.value) blockedDatesList.value = data.value;
 	}
 
@@ -149,7 +149,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		periodTitle: Block["periodTitle"]
 	) {
 		try {
-			const { data, error } = await useFetch(URL_blockDayPeriod, {
+			const { data, error } = await useFetch(URL_blockedDate, {
 				method: "post",
 				body: { dateStart, dateEnd, periodTitle, restaurantId: 1 },
 			});
@@ -157,6 +157,22 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			if (data.value) blockedDatesList.value.push(data.value);
 			return data.value as Block;
 		} catch (error) {}
+	}
+
+	async function updateBlockedDate(
+		blockId: Block["id"],
+		dateStart: Block["dateStart"],
+		dateEnd: Block["dateEnd"]
+	) {
+		await useFetch(`${URL_blockedDaysOfWeek}/${blockId}`, {
+			method: "patch",
+			body: { dateStart, dateEnd },
+		});
+		const blockedDateToUpdateIndex = blockedDatesList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		blockedDatesList.value[blockedDateToUpdateIndex].dateStart = dateStart;
+		blockedDatesList.value[blockedDateToUpdateIndex].dateEnd = dateEnd;
 	}
 
 	// ACTIONS - Block All
@@ -202,6 +218,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		blockedDatesListFullCalendar,
 		fetchBlockedDates,
 		addBlockedDate,
+		updateBlockedDate,
 		// Block - All
 		removeBlock,
 	};
