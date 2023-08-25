@@ -11,9 +11,9 @@ const blocksStore = useBlocksStore()
 const { blocksDaysOfWeekList } = storeToRefs(blocksStore)
 
 // used to dynamically set class
-const blockedDaysArrayShort = computed(() => blocksDaysOfWeekList.value.length < 1 ? true : false)
+const isBlocksDaysOfWeekListShort = computed(() => blocksDaysOfWeekList.value.length < 1)
 // if all days are added
-const blockedDaysArrayFull = computed(() => blocksDaysOfWeekList.value.length > 6)
+const isBlockedDaysOfWeekListFull = computed(() => blocksDaysOfWeekList.value.length > 6)
 
 onMounted(async () => { await blocksStore.fetchBlocksDayOfWeek() });
 
@@ -21,11 +21,9 @@ onMounted(async () => { await blocksStore.fetchBlocksDayOfWeek() });
 // CALENDAR
 //************
 const handleEventClick = (clickInfo: any) => {
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) clickInfo.event.remove()
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) clickInfo.event.remove()
 }
 const handleDateSelect = (selectInfo: any) => {
-    // let title = prompt('Please enter a new title for your event')
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
     let calendarApi = selectInfo.view.calendar
 
@@ -65,7 +63,7 @@ const calendarOptions = {
 .page
     PageTitle(title="Blocco Giorni")
 
-    .grid.gap-6.border-b(:class="['grid-cols-[2fr_1px_1fr]', {'items-center' : blockedDaysArrayShort }]")
+    .grid.gap-6.border-b(:class="['grid-cols-[2fr_1px_1fr]', {'items-center' : isBlocksDaysOfWeekListShort }]")
         div.mt-2.mb-8
             p.text-lg.text-grey-300 Giorno di Chiusura Settimanale
             p.text-sm.text-grey-200.font-light Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.
@@ -76,9 +74,9 @@ const calendarOptions = {
         div.mt-2.mb-8
             //- Display for each day already "blocked"
             BlockDayOfWeek(v-for="day in blocksDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blocksDaysOfWeekList", :blockedDay="day",
-                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", @removeDay="blocksStore.removeBlock", :isUpdate="true", :showTrash="!blockedDaysArrayShort")
+                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", @removeDay="blocksStore.removeBlock", :isUpdate="true", :showTrash="!isBlocksDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
-            BlockDayOfWeek(v-if="!blockedDaysArrayFull", :blockedDaysOfWeekList="blocksDaysOfWeekList", 
+            BlockDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blocksDaysOfWeekList", 
                 @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options='calendarOptions')
