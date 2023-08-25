@@ -3,37 +3,31 @@
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
-
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/store/Blocks'
-
 const blocksStore = useBlocksStore()
+
 const { blocksDaysOfWeekList } = storeToRefs(blocksStore)
 const { blocksDayPeriodListFullCalendar } = storeToRefs(blocksStore)
-
 // used to dynamically set class
 const isBlocksDaysOfWeekListShort = computed(() => blocksDaysOfWeekList.value.length < 1)
 // if all days are added
 const isBlockedDaysOfWeekListFull = computed(() => blocksDaysOfWeekList.value.length > 6)
 
-onMounted(async () => {
-    await blocksStore.fetchBlocksDayOfWeek()
-    await blocksStore.fetchBlocksDayPeriod()
-});
-
 //************
 // CALENDAR
 //************
 const handleEventClick = (clickInfo: any) => {
-    if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) clickInfo.event.remove()
+    const blockId: Block['id'] = clickInfo.event.id
+    if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
+        blocksStore.removeBlock(blockId)
+        clickInfo.event.remove()
+    }
 }
 const handleDateSelect = async (selectInfo: any) => {
-    console.log(selectInfo);
-
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
     if (title) {
         const newBlockDayPeriod = await blocksStore.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
-
         let calendarApi = selectInfo.view.calendar
         calendarApi.unselect() // clear date selection
         calendarApi.addEvent({
@@ -60,6 +54,10 @@ const calendarOptions = {
 }
 
 watch(blocksDayPeriodListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
+onMounted(async () => {
+    await blocksStore.fetchBlocksDayOfWeek()
+    await blocksStore.fetchBlocksDayPeriod()
+});
 </script>
 
 

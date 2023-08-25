@@ -154,7 +154,6 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				method: "post",
 				body: { dateStart, dateEnd, periodTitle, restaurantId: 1 },
 			});
-			console.log("useFetch post");
 			//@ts-ignore
 			if (data.value) blocksDayPeriodList.value.push(data.value);
 			return data.value as Block;
