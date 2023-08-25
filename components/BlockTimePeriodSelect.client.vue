@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useWorkTimesStore } from '~/store/WorkTime'
+import { useWorkTimesStore } from '~/store/WorkTimes'
 
 export interface SelectTimeProps {
     isTimeFrom: boolean,
@@ -8,8 +8,8 @@ export interface SelectTimeProps {
 }
 const props = defineProps<SelectTimeProps>()
 
-const workTimesStore = useWorkTimesStore();
-const { mergedWorkTimesList } = storeToRefs(workTimesStore)
+const storeWorkTimes = useWorkTimesStore();
+const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
@@ -24,6 +24,6 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
 
     //- Dropdown
     .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-        p.py-2.px-3(v-for="workTime in mergedWorkTimesList", :key="workTime.id", @click="$emit('updateBlockTimePeriod', isTimeFrom, workTime.time)",
+        p.py-2.px-3(v-for="workTime in workTimesListsMerged", :key="workTime.id", @click="$emit('updateBlockTimePeriod', isTimeFrom, workTime.time)",
             :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : workTime === time, 'cursor-pointer text-grey-300 hover_bg-gray-100' : workTime.time !== time }") {{ workTime.time }}
 </template>

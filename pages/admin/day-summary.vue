@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWorkTimesStore } from '~/store/WorkTime'
+import { useWorkTimesStore } from '~/store/WorkTimes'
 import { storeToRefs } from 'pinia'
 
 const workTimeStore = useWorkTimesStore();

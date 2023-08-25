@@ -5,10 +5,10 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/store/Blocks'
-const blocksStore = useBlocksStore()
+const storeBlocks = useBlocksStore()
 
-const { blocksDaysOfWeekList } = storeToRefs(blocksStore)
-const { blocksDayPeriodListFullCalendar } = storeToRefs(blocksStore)
+const { blocksDaysOfWeekList } = storeToRefs(storeBlocks)
+const { blocksDayPeriodListFullCalendar } = storeToRefs(storeBlocks)
 // used to dynamically set class
 const isBlocksDaysOfWeekListShort = computed(() => blocksDaysOfWeekList.value.length < 1)
 // if all days are added
@@ -20,14 +20,14 @@ const isBlockedDaysOfWeekListFull = computed(() => blocksDaysOfWeekList.value.le
 const handleEventClick = (clickInfo: any) => {
     const blockId: Block['id'] = clickInfo.event.id
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
-        blocksStore.removeBlock(blockId)
+        storeBlocks.removeBlock(blockId)
         clickInfo.event.remove()
     }
 }
 const handleDateSelect = async (selectInfo: any) => {
     let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
     if (title) {
-        const newBlockDayPeriod = await blocksStore.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
+        const newBlockDayPeriod = await storeBlocks.addBlockDayPeriod(selectInfo.startStr, selectInfo.endStr, title)
         let calendarApi = selectInfo.view.calendar
         calendarApi.unselect() // clear date selection
         calendarApi.addEvent({
@@ -55,8 +55,8 @@ const calendarOptions = {
 
 watch(blocksDayPeriodListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
 onMounted(async () => {
-    await blocksStore.fetchBlocksDayOfWeek()
-    await blocksStore.fetchBlocksDayPeriod()
+    await storeBlocks.fetchBlocksDayOfWeek()
+    await storeBlocks.fetchBlocksDayPeriod()
 });
 </script>
 
@@ -76,11 +76,11 @@ onMounted(async () => {
         div.mt-2.mb-8
             //- Display for each day already "blocked"
             BlockDayOfWeek(v-for="day in blocksDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blocksDaysOfWeekList", :blockedDay="day",
-                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", @removeDay="blocksStore.removeBlock", 
+                @addOrUpdateDay="storeBlocks.addOrUpdateBlockDayOfWeek", @removeDay="storeBlocks.removeBlock", 
                 :isUpdate="true", :showTrash="!isBlocksDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
             BlockDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blocksDaysOfWeekList", 
-                @addOrUpdateDay="blocksStore.addOrUpdateBlockDayOfWeek", 
+                @addOrUpdateDay="storeBlocks.addOrUpdateBlockDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options="calendarOptions")

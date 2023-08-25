@@ -10,7 +10,7 @@ export interface SelectTimePeriodProps {
 }
 const props = defineProps<SelectTimePeriodProps>()
 
-const blocksStore = useBlocksStore()
+const storeBlocks = useBlocksStore()
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
 const disabledDates = computed(() => {
@@ -41,7 +41,7 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
 };
 
 const updateBlockTimePeriod = () => {
-    blocksStore.updateBlockTimePeriod(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
+    storeBlocks.updateBlockTimePeriod(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
 };
 
 // Data Picker dropdown
@@ -70,7 +70,7 @@ const toggleDropdownCalendar = () => {
                 :disabled-dates="disabledDates")
 
     .flex.items-center.py-2.px-3
-        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="blocksStore.removeBlock(blockTimePeriod.id)")
+        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="storeBlocks.removeBlock(blockTimePeriod.id)")
 </template>
 
 

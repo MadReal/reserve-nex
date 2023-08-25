@@ -15,7 +15,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		)
 	);
 
-	const mergedWorkTimesList = computed(() =>
+	const workTimesListsMerged = computed(() =>
 		useSortWorkTimes(lunchWorkTimesList.value.concat(dinnerWorkTimesList.value))
 	);
 
@@ -50,7 +50,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		workTimesList,
 		lunchWorkTimesList,
 		dinnerWorkTimesList,
-		mergedWorkTimesList,
+		workTimesListsMerged,
 		fetchWorkTimes,
 		addNewWorkTime,
 		removeWorkTime,

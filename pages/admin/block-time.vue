@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/store/Blocks'
-import { useWorkTimesStore } from '~/store/WorkTime'
+import { useWorkTimesStore } from '~/store/WorkTimes'
 
-const blocksStore = useBlocksStore()
-const workTimesStore = useWorkTimesStore();
+const storeBlocks = useBlocksStore()
+const storeWorkTimes = useWorkTimesStore();
 
-const { blocksTimePeriodList } = storeToRefs(blocksStore)
-const { mergedWorkTimesList } = storeToRefs(workTimesStore)
+const { blocksTimePeriodList } = storeToRefs(storeBlocks)
+const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 
 // API CALLS
-const addBlockTimePeriod = () => blocksStore.addBlockTimePeriod(mergedWorkTimesList.value[0].time, mergedWorkTimesList.value[mergedWorkTimesList.value.length - 1].time)
+const addBlockTimePeriod = () => storeBlocks.addBlockTimePeriod(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
 
 onMounted(async () => {
-    await workTimesStore.fetchWorkTimes()
-    await blocksStore.fetchBlocksTimePeriod()
+    await storeWorkTimes.fetchWorkTimes()
+    await storeBlocks.fetchBlocksTimePeriod()
 });
 </script>
 
