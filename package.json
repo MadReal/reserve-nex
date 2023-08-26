@@ -25,7 +25,7 @@
 		"tailwindcss": "^3.3.3",
 		"vite-plugin-pug": "0.3.2",
 		"vite-svg-loader": "^4.0.0",
-		"@nuxtjs/supabase": "^1.0.2"
+		"@nuxtjs/supabase": "^0.3.0"
 	},
 	"dependencies": {
 		"@prisma/client": "5.2.0",

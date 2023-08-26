@@ -2,6 +2,10 @@
 import { storeToRefs } from 'pinia'
 import { useReservationsStore } from '@/stores/Reservations';
 
+definePageMeta({
+    middleware: ['auth']
+})
+
 const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
