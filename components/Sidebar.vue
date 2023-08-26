@@ -20,8 +20,8 @@ const storeReservations = useReservationsStore();
 const storeModals = useModalsStore()
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
-function openModal(modalType: ModalType, options: ModalOption) {
-    storeModals.openModal(modalType, options)
+function openModal(modalType: ModalType, restaurantId: Restaurant['id']) {
+    storeModals.openModal(modalType, restaurantId)
 }
 
 // Load all API DATA
