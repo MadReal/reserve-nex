@@ -33,7 +33,7 @@ nav.grow.h-16.border-b.border-grey-100.py-4.px-6.flex.justify-between
         .flex.items-center.text-grey-300
             SVGIcon.mr-2(svg="user-filled", :size="30")
             a.flex.items-center.cursor-pointer
-                p.text-sm Admin
+                p.text-sm {{ user?.user_metadata?.full_name }}
                 SVGIcon.text-grey-200(svg="arrow-down", :size="20")
 
         //- dropdown
