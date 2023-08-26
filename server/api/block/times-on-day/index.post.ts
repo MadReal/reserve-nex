@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export const schemaBlockedTimesOnDay = Joi.object({
 	timeStart: Joi.string().required(),
 	timeEnd: Joi.string().required(),
-	date: Joi.date().greater(getYesterdayDate()).required(),
+	date: Joi.date().greater(getPastDate()).required(),
 	restaurantId: Joi.number().required(),
 });
 

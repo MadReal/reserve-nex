@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const schema = Joi.object({
-	dateStart: Joi.date().greater(getYesterdayDate()).required(),
-	dateEnd: Joi.date().greater(getYesterdayDate()).required(),
+	dateStart: Joi.date().greater(getPastDate()).required(),
+	dateEnd: Joi.date().greater(getPastDate()).required(),
 	periodTitle: Joi.string().required(),
 	restaurantId: Joi.number().required(),
 });

@@ -15,14 +15,37 @@ enum MealType {
   DINNER
 }
 
-// hours in which the restaurant is open during the day, repeats every day
+enum JobTypes {
+  MANAGER
+  VIEWER
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  email       String     @unique
+  name        String?
+  isAdmin     Boolean    
+  jobs        UserJob[] 
+}
+
+model UserJob {
+  id             Int         @id @default(autoincrement())
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)       
+  userId         Int 
+  restaurant     Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId   Int
+  jobType        JobTypes 
+}
+
 model Restaurant {
-  id           Int           @id @default(autoincrement())
-  name         String        @unique
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
   // relations
-  Reservation  Reservation[]
-  WorkTime     WorkTime[]
-  Block        Block[]
+  reservation    Reservation[]
+  workTime       WorkTime[]
+  block          Block[]
+  jobs           UserJob[]
 }
 
 // hours in w  hich the restaurant is open during the day, repeats every day
@@ -68,24 +91,3 @@ model Reservation {
   restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId  Int
 }
-
-// // day during the week (every week) in which the restaurant is closed
-// model BlockedDayEveryWeek {
-//   id         Int        @id @default(autoincrement())
-//   dayOfWeek  String     @unique
-// }
-
-// // day(s) in which the restaurant is closed - vacation, holidays
-// model BlockedDaysPeriod {
-//   id        Int        @id @default(autoincrement())
-//   dateStart  DateTime
-//   dateEnd    DateTime
-// }
-
-// // if the resturant needs to adjust their open-time on a certain day
-// model BlockedWorkHourOnDate {
-//   id        Int        @id @default(autoincrement())
-//   hourFrom  String
-//   hourTo    String
-//   date      DateTime
-// }

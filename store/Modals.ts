@@ -4,7 +4,7 @@ export const useModalsStore = defineStore("ModalsStore", () => {
 	const activeModalOption = ref<any>(null);
 
 	// ACTIONS
-	function openModal(modalType: ModalType, options?: ModalOption) {
+	function openModal(modalType: ModalType, options?: Restaurant["id"] | null) {
 		activeModal.value = modalType;
 		if (options) activeModalOption.value = options;
 	}

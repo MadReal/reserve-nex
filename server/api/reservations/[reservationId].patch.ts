@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export const schema = Joi.object({
 	// createdAt: Joi.number().required(),
 	// time: Joi.string().required(),
-	// date: Joi.date().greater(getYesterdayDate()).required(),
+	// date: Joi.date().greater(getPastDate()).required(),
 	// personName: Joi.string().required(),
 	// personPhone: Joi.string().required(),
 	// personEmail: Joi.string().required(),

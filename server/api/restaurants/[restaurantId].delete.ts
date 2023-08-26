@@ -3,12 +3,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+	const { restaurantId } = event.context.params as { restaurantId: string };
+
 	try {
 		// * REQUEST *
-		const reservations = await prisma.reservation.findMany({
-			where: { date: { gte: getPastDate() } },
+		const restaurant = await prisma.restaurant.delete({
+			where: { id: parseInt(restaurantId) },
 		});
-		return reservations;
+		return restaurant;
 	} catch (err) {
 		console.error(err);
 		throw err;
