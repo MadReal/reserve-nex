@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWorkTimesStore } from '~/store/WorkTimes'
+import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const workTimeStore = useWorkTimesStore();
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
@@ -23,3 +23,4 @@ const todaysDate = useDateTimeFormatting(Date()).formattedDate
             .grid.grid-cols-4.gap-2
                 BoxReservation(v-for="workTime in workTimeStore.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 </template>
+~/stores/WorkTimes~/stores/WorkTimes

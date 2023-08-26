@@ -1,6 +1,6 @@
 const URL = "/api/restaurants";
 
-import { useModalsStore } from "~/store/Modals";
+import { useModalsStore } from "~/stores/Modals";
 
 export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	// STATE

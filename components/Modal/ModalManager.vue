@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useModalsStore } from '~/store/Modals'
+import { useModalsStore } from '~/stores/Modals'
 
 const storeModals = useModalsStore()
 const { activeModal } = storeToRefs(storeModals)
@@ -15,4 +15,4 @@ div(v-if="activeModal !== null")
 				SVGIcon.text-black(svg="close", :size="24" @click="storeModals.closeModal()")
 
 			ModalRestaurant(v-if="activeModal === 'restaurant'")
-</template>
+</template>~/stores/Modals~/stores/Modals

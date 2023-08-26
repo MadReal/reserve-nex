@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useModalsStore } from '~/store/Modals'
-import { useRestaurantsStore } from '~/store/Restaurants'
+import { useModalsStore } from '~/stores/Modals'
+import { useRestaurantsStore } from '~/stores/Restaurants'
 
 const storeModals = useModalsStore()
 const storeRestaurants = useRestaurantsStore()
@@ -44,4 +44,4 @@ const removeRestaurant = () => {
 			template(v-else)
 				button.py-3.px-4.bg-primary-200.text-white.rounded-lg.hover_shadow Modifica Nome
 				button.py-3.px-4.bg-error-200.text-white.rounded-lg.hover_shadow(@click="removeRestaurant") Elimina Ristorante
-</template>
+</template>~/stores/Modals~/stores/Restaurants~/stores/Modals~/stores/Restaurants

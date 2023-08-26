@@ -4,7 +4,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import { storeToRefs } from 'pinia'
-import { useBlocksStore } from '~/store/Blocks'
+import { useBlocksStore } from '~/stores/Blocks'
 const storeBlocks = useBlocksStore()
 
 const { blockedDaysOfWeekList, blockedDatesListFullCalendar } = storeToRefs(storeBlocks)
@@ -93,4 +93,4 @@ onMounted(async () => {
                 :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options="calendarOptions")
-</template>
+</template>~/stores/Blocks~/stores/Blocks

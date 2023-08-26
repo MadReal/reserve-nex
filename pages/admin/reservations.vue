@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useReservationsStore } from '@/store/Reservations';
+import { useReservationsStore } from '@/stores/Reservations';
 
 const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
@@ -35,3 +35,4 @@ onBeforeMount(async () => { await storeReservations.fetchResevations() });
                 a.py-1.px-3.rounded.bg-error-200.text-white.cursor-pointer(class="hover_bg-error-200/80", 
                     v-if="item.accepted === null" @click="storeReservations.updateReservation(item.id, false)") Rifiuta
 </template>
+~/stores/Reservations~/stores/Reservations

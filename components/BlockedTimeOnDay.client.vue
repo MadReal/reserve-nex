@@ -2,7 +2,7 @@
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
-import { useBlocksStore } from '~/store/Blocks'
+import { useBlocksStore } from '~/stores/Blocks'
 
 
 export interface SelectTimePeriodProps {
@@ -78,4 +78,4 @@ const toggleDropdownCalendar = () => {
 :root {
     --dp-font-family: "Poppins", sans-serif
 }
-</style>
+</style>~/stores/Blocks~/stores/Blocks

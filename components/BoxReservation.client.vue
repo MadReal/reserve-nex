@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useReservationsStore } from '@/store/Reservations';
+import { useReservationsStore } from '@/stores/Reservations';
 
 export interface BoxReservationProps {
     workTime: WorkTime,
@@ -26,3 +26,4 @@ const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time ==
         SVGIcon.mr-1(svg="users", :size="30")
         p.text-xl {{ peopleAtThisTime }}
 </template>
+~/stores/Reservations~/stores/Reservations

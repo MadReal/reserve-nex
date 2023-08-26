@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useWorkTimesStore } from '~/store/WorkTimes'
+import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList } = storeToRefs(storeWorkTimes)
@@ -25,3 +25,4 @@ onBeforeMount(async () => { await storeWorkTimes.fetchWorkTimes() });
             p.mb-4 Cena
             SelectWorkTime(:workTimes="dinnerWorkTimesList", :isLunch="false", @addNewTime="storeWorkTimes.addNewWorkTime", @removeTime="storeWorkTimes.removeWorkTime")
 </template>
+~/stores/WorkTimes~/stores/WorkTimes

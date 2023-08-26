@@ -2,13 +2,9 @@ import svgLoader from "vite-svg-loader";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	build: {
-		transpile: ["@vuepic/vue-datepicker"],
-	},
-	imports: {
-		dirs: ["stores"],
-	},
 	devtools: { enabled: true },
+	build: { transpile: ["@vuepic/vue-datepicker"] },
+	imports: { dirs: ["stores"] },
 	css: ["~/assets/css/main.sass"],
 	postcss: {
 		plugins: {
@@ -17,13 +13,14 @@ export default defineNuxtConfig({
 		},
 	},
 	modules: [
+		"@nuxt/image",
+		// "@nuxtjs/supabase",
 		[
 			"@pinia/nuxt",
 			{
 				autoImports: ["defineStore", "acceptHMRUpdate"],
 			},
 		],
-		"@nuxt/image",
 		[
 			"@nuxtjs/google-fonts",
 			{

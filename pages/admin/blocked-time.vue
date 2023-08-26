@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useBlocksStore } from '~/store/Blocks'
-import { useWorkTimesStore } from '~/store/WorkTimes'
+import { useBlocksStore } from '~/stores/Blocks'
+import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const storeBlocks = useBlocksStore()
 const storeWorkTimes = useWorkTimesStore();
@@ -35,4 +35,4 @@ storeBlocks.fetchBlockedTimesOnDay()
 :root {
     --dp-font-family: "Poppins", sans-serif
 }
-</style>
+</style>~/stores/Blocks~/stores/WorkTimes~/stores/Blocks~/stores/WorkTimes
