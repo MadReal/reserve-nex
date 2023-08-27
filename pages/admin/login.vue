@@ -11,6 +11,8 @@ const login = async () => {
         provider: 'google',
     })
     if (error) console.log(error);
+    console.log(data);
+
 }
 </script>
 

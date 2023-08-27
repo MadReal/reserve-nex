@@ -14,7 +14,6 @@ async function logout() {
         router.push('/admin')
     } catch (error) {
         console.error(error);
-
     }
 
 }
