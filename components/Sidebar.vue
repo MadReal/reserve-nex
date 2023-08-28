@@ -52,10 +52,10 @@ loadAllData()
         .absolute.inset-x-0.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")
             p.mb-2.py-3.px-5.border-b.text-xs.text-grey-200.tracking-widest RISTORANTI
             .mx-3.mt-3.mb-5
-                .mb-1.p-2.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
+                .p-3.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
                     p.cursor-pointer.hover_underline(@click="switchActiveResturant(restaurant.id)") {{ restaurant.name }}
                     SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id)")
-                .mt-2.p-2.flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant')")
+                .mt-2.p-3.flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant')")
                     p.leading-normal.text-primary-100 Aggiungi ristorante
                     SVGIcon.text-primary-100(svg="plus", :size="15")            
 
