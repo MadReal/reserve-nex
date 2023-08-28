@@ -10,7 +10,7 @@ const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
-onBeforeMount(async () => { await storeReservations.fetchResevations() });
+storeReservations.fetchResevations()
 </script>
 
 

@@ -16,16 +16,11 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 const storeRestaurants = useRestaurantsStore();
 const storeWorkTimes = useWorkTimesStore();
 const storeReservations = useReservationsStore();
-const storeModals = useModalsStore()
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
-function openModal(modalType: ModalType, restaurantId: Restaurant['id']) {
-    storeModals.openModal(modalType, restaurantId)
-}
+const { switchActiveRestaurant } = useSwitchActiveRestaurant()
+const { openModal } = useOpenModal();
 
-function switchActiveResturant(restaurantId: Restaurant['id']) {
-    storeRestaurants.switchActiveResturant(restaurantId)
-}
 
 // Load all API DATA
 function loadAllData() {
@@ -55,7 +50,7 @@ loadAllData()
                     SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id)")
                 .mt-2.p-3.flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant')")
                     p.leading-normal.text-primary-100 Aggiungi ristorante
-                    SVGIcon.text-primary-100(svg="plus", :size="15")            
+                    SVGIcon.text-primary-100(svg="plus", :size="15")
 
     //- SIDEBAR MENU - Items
     .py-6.px-4
