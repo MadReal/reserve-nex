@@ -1,14 +1,22 @@
+import { storeToRefs } from "pinia";
+import { useRestaurantsStore } from "~/stores/Restaurants";
+
 const URL = "/api/reservations";
 
 export const useReservationsStore = defineStore("ReservationsStore", () => {
+	const storeRestaurants = useRestaurantsStore();
+	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+
 	// STATE
 	const reservationsList = ref<Reservation[]>([]);
 
 	// GETTERS
 
 	// ACTIONS
-	async function fetchResevations() {
-		const { data, error }: any = await useFetch(URL);
+	async function fetchReservations() {
+		const { data, error }: any = await useFetch(URL, {
+			params: { restaurantId: activeRestaurantId },
+		});
 		if (data && data.value) {
 			// Sort the list by date and time
 			const reservationsSorted = data.value.sort(
@@ -56,7 +64,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 
 	return {
 		reservationsList,
-		fetchResevations,
+		fetchReservations,
 		updateReservation,
 	};
 });

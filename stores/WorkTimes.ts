@@ -1,6 +1,12 @@
+import { storeToRefs } from "pinia";
+import { useRestaurantsStore } from "~/stores/Restaurants";
+
 const URL = "/api/work-times";
 
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
+	const storeRestaurants = useRestaurantsStore();
+	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+
 	const workTimesList = ref<WorkTime[]>([]);
 
 	// GETTERS
@@ -21,7 +27,9 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 
 	// ACTIONS
 	async function fetchWorkTimes() {
-		const { data, error }: any = await useFetch(URL);
+		const { data, error }: any = await useFetch(URL, {
+			params: { restaurantId: activeRestaurantId },
+		});
 		if (data.value) workTimesList.value = data.value;
 	}
 

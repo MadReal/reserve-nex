@@ -1,9 +1,15 @@
+import { defineStore, storeToRefs } from "pinia";
+import { useRestaurantsStore } from "~/stores/Restaurants";
+
 const URL_block = "/api/block";
 const URL_blockedDaysOfWeek = `${URL_block}/days-of-week`;
 const URL_blockedTimesOnDay = `${URL_block}/times-on-day`;
 const URL_blockedDate = `${URL_block}/dates`;
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
+	const storeRestaurants = useRestaurantsStore();
+	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+
 	// STATE - Block 'dayOfWeek'
 	const blockedDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block - 'Time Period On Date'
@@ -24,7 +30,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block 'dayOfWeek'
 	async function fetchBlockedDaysOfWeek() {
-		const { data, error }: any = await useFetch(URL_blockedDaysOfWeek);
+		const { data, error }: any = await useFetch(URL_blockedDaysOfWeek, {
+			params: { restaurantId: activeRestaurantId },
+		});
 		if (data.value) {
 			// Sort week days ascendent (Monday, Tuesday)
 			const sortedBlocks = data.value.slice().sort((a: Block, b: Block) => {
@@ -62,7 +70,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		} else {
 			const { data, error } = await useFetch(URL_blockedDaysOfWeek, {
 				method: "post",
-				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
+				body: { dayOfWeek: newDayOfWeek, restaurantId: activeRestaurantId },
 			});
 			//@ts-ignore
 			if (data.value) blockedDaysOfWeekList.value.push(data.value);
@@ -71,7 +79,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block - 'Time Period On Date'
 	async function fetchBlockedTimesOnDay() {
-		const { data, error }: any = await useFetch(URL_blockedTimesOnDay);
+		const { data, error }: any = await useFetch(URL_blockedTimesOnDay, {
+			params: { restaurantId: activeRestaurantId },
+		});
 		if (data.value) {
 			const validBlocks = data.value.filter(
 				(block: Block) => block.date !== null
@@ -97,7 +107,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			timeStart,
 			timeEnd,
 			date: todayMidnight,
-			restaurantId: 1,
+			restaurantId: activeRestaurantId,
 		};
 		const { data, error } = await useFetch(URL_blockedTimesOnDay, {
 			method: "post",
@@ -117,7 +127,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			timeStart,
 			timeEnd,
 			date,
-			restaurantId: 1,
+			restaurantId: activeRestaurantId,
 		};
 
 		await useFetch(`${URL_blockedTimesOnDay}/${blockId}`, {
@@ -139,7 +149,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	// ACTIONS - Block - 'One (or more) days period'
 	async function fetchBlockedDates() {
-		const { data, error }: any = await useFetch(URL_blockedDate);
+		const { data, error }: any = await useFetch(URL_blockedDate, {
+			params: { restaurantId: activeRestaurantId },
+		});
 		if (data.value) blockedDatesList.value = data.value;
 	}
 
@@ -151,7 +163,12 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		try {
 			const { data, error } = await useFetch(URL_blockedDate, {
 				method: "post",
-				body: { dateStart, dateEnd, periodTitle, restaurantId: 1 },
+				body: {
+					dateStart,
+					dateEnd,
+					periodTitle,
+					restaurantId: activeRestaurantId,
+				},
 			});
 			//@ts-ignore
 			if (data.value) blockedDatesList.value.push(data.value);

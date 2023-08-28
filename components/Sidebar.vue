@@ -26,7 +26,7 @@ const { openModal } = useOpenModal();
 function loadAllData() {
     storeRestaurants.fetchRestaurants()
     storeWorkTimes.fetchWorkTimes()
-    storeReservations.fetchResevations()
+    storeReservations.fetchReservations()
 }
 loadAllData()
 </script>
