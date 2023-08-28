@@ -19,7 +19,7 @@ const noData = computed(() => (!reservationsList.value.length))
 .page
     PageTitle(title="Prenotazioni")
 
-    NoData(v-if="noData", text="Nessuna prenotazione prevista per date future.")
+    NoData(v-if="noData", text="Nessuna prenotazione prevista.")
 
     .mb-8(v-else)
         .flex.items-center.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")

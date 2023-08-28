@@ -2,11 +2,6 @@
 definePageMeta({
     middleware: ['auth', 'empty-restaurants-list']
 })
-
-// https://github.com/fullcalendar/fullcalendar-vue
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/stores/Blocks'
 const storeBlocks = useBlocksStore()
@@ -17,9 +12,16 @@ const isblockedDaysOfWeekListShort = computed(() => blockedDaysOfWeekList.value.
 // if all days are added
 const isBlockedDaysOfWeekListFull = computed(() => blockedDaysOfWeekList.value.length > 6)
 
+
 //************
 // CALENDAR
 //************
+// https://github.com/fullcalendar/fullcalendar-vue
+
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
+
 const handleEventClick = async (clickInfo: any) => {
     const blockId: Block['id'] = clickInfo.event.id
     if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
