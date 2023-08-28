@@ -1,94 +1,104 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider       = "postgresql"
+  url            = env("DATABASE_URL")
+  // directUrl      = env("DIRECT_URL")
+  schemas        = ["public", "auth"]
+}
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
-}
 
 enum MealType {
-  LUNCH
-  DINNER
+	LUNCH
+	DINNER
+	@@schema("public")
 }
 
 enum JobTypes {
-  MANAGER
-  VIEWER
+	MANAGER
+	VIEWER
+	@@schema("public")
 }
 
 model User {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  email       String     @unique
-  name        String?
-  isAdmin     Boolean    
-  jobs        UserJob[] 
+	id          Int        @id @default(autoincrement())
+	createdAt   DateTime   @default(now())
+	email       String     @unique
+	name        String?
+	isAdmin     Boolean
+	jobs        UserJob[]
+	@@schema("auth")
 }
 
 model UserJob {
-  id             Int           @id @default(autoincrement())
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)       
-  userId         Int 
-  restaurant     Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId   Int
-  jobType        JobTypes 
+	id             Int           @id @default(autoincrement())
+	user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)       
+	userId         Int
+	restaurant     Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId   Int
+	jobType        JobTypes
+	@@schema("public")
 }
 
 model Restaurant {
-  id             Int            @id @default(autoincrement())
-  name           String         @unique
-  // relations
-  reservation    Reservation[]
-  workTime       WorkTime[]
-  block          Block[]
-  jobs           UserJob[]
+	id             Int            @id @default(autoincrement())
+	name           String         @unique
+	// relations
+	reservation    Reservation[]
+	workTime       WorkTime[]
+	block          Block[]
+	jobs           UserJob[]
+	@@schema("public")
 }
 
 // hours in w  hich the restaurant is open during the day, repeats every day
 model WorkTime {
-  id            Int          @id @default(autoincrement())
-  time          String       @unique
-  mealType      MealType
-  // relations
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId  Int
+	id            Int          @id @default(autoincrement())
+	time          String       @unique
+	mealType      MealType
+	// relations
+	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId  Int
+	@@schema("public")
 }
 
 // used to block days of the week, time slots, day slots
 model Block  {
-  id            Int          @id @default(autoincrement())
-  // day during the week (every week) in which the restaurant is closed
-  dayOfWeek     Int?         @unique
-  // if the resturant needs to adjust their open-time on a certain day
-  timeStart     String?
-  timeEnd       String?
-  date          DateTime?
-  // day(s) in which the restaurant is closed - vacation, holidays
-  dateStart     DateTime?
-  dateEnd       DateTime?
-  periodTitle   String?
-  // relations
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId  Int
+	id            Int          @id @default(autoincrement())
+	// day during the week (every week) in which the restaurant is closed
+	dayOfWeek     Int?         @unique
+	// if the resturant needs to adjust their open-time on a certain day
+	timeStart     String?
+	timeEnd       String?
+	date          DateTime?
+	// day(s) in which the restaurant is closed - vacation, holidays
+	dateStart     DateTime?
+	dateEnd       DateTime?
+	periodTitle   String?
+	// relations
+	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId  Int
+	@@schema("public")
 }
 
 // when client reserve a table at the restaurant
 model Reservation {
-  id            String       @id @default(uuid())
-  createdAt     DateTime     @default(now())
-  time          String
-  date          DateTime
-  personName    String
-  personPhone   String
-  personEmail   String
-  peopleAmount  Int
-  accepted      Boolean?
-  // relations
-  restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  restaurantId  Int
+	id            String       @id @default(uuid())
+	createdAt     DateTime     @default(now())
+	time          String
+	date          DateTime
+	personName    String
+	personPhone   String
+	personEmail   String
+	peopleAmount  Int
+	accepted      Boolean?
+	// relations
+	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId  Int
+	@@schema("public")
 }
