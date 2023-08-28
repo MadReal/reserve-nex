@@ -8,12 +8,10 @@ export function useLoadAllData() {
 	const storeWorkTimes = useWorkTimesStore();
 	const storeReservations = useReservationsStore();
 
-	async function loadAllData() {
-		await Promise.all([
-			storeRestaurants.fetchRestaurants(),
-			storeWorkTimes.fetchWorkTimes(),
-			storeReservations.fetchReservations(),
-		]);
+	function loadAllData() {
+		storeRestaurants.fetchRestaurants();
+		storeWorkTimes.fetchWorkTimes();
+		storeReservations.fetchReservations();
 	}
 
 	return { loadAllData };

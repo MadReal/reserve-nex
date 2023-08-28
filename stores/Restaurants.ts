@@ -1,5 +1,7 @@
 const URL = "/api/restaurants";
 
+import { useLoadAllData } from "~/composables/useLoadAllData";
+
 export const useRestaurantsStore = defineStore(
 	"RestaurantsStore",
 	() => {
@@ -17,7 +19,10 @@ export const useRestaurantsStore = defineStore(
 
 		// ACTIONS
 		function switchActiveResturant(newId: number) {
-			return (activeRestaurantId.value = newId);
+			activeRestaurantId.value = newId;
+			// Call the loadAllData function to reload all data after switching active restaurant
+			const { loadAllData } = useLoadAllData();
+			loadAllData();
 		}
 
 		async function fetchRestaurants() {

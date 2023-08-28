@@ -2,32 +2,19 @@
 // load data async without onMounted, before comp creation
 // https://vueschool.io/lessons/synchronous-and-asynchronous-actions-in-pinia
 // ==============================================
+// Store
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/stores/Restaurants'
-import { useWorkTimesStore } from '~/stores/WorkTimes'
-import { useReservationsStore } from '@/stores/Reservations';
-import { useModalsStore } from '~/stores/Modals'
-
+const storeRestaurants = useRestaurantsStore();
+const { restaurantsList } = storeToRefs(storeRestaurants)
+// composables
+const { loadAllData } = useLoadAllData()
+const { switchActiveRestaurant } = useSwitchActiveRestaurant()
+const { openModal } = useOpenModal();
 // Component's logic
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
-
-// Store
-const storeRestaurants = useRestaurantsStore();
-const storeWorkTimes = useWorkTimesStore();
-const storeReservations = useReservationsStore();
-const { restaurantsList } = storeToRefs(storeRestaurants)
-
-const { switchActiveRestaurant } = useSwitchActiveRestaurant()
-const { openModal } = useOpenModal();
-
-
-// Load all API DATA
-function loadAllData() {
-    storeRestaurants.fetchRestaurants()
-    storeWorkTimes.fetchWorkTimes()
-    storeReservations.fetchReservations()
-}
+// // Load all API DATA
 loadAllData()
 </script>
 
