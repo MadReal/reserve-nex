@@ -23,13 +23,13 @@ loadAllData()
 .min-h-screen.basis-60(class="bg-[#F1F2F7]")
     //- SIDEBAR MENU - Restaurant Profile
     div.relative
-        .flex.items-center.h-16.border-b.border-grey-100.py-4.px-6.cursor-pointer(@click="toggleDropdown")
-            div.mr-1(class="basis-1/5")
+        .flex.items-center.h-16.border-b.border-grey-100.py-4.px-5.cursor-pointer(@click="toggleDropdown")
+            div(class="basis-1/5")
                 .w-8.h-8.bg-red-300.rounded-full
-            p.text-sm.break-words(class="basis-3/5") {{ storeRestaurants?.activeRestaurant?.name }}
+            p.text-sm.break-all(class="basis-3/5") {{ storeRestaurants?.activeRestaurant?.name }}
             SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
         //- Dropdown
-        .absolute.inset-x-0.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")
+        .absolute.left-2.right-2.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")
             p.mb-2.py-3.px-5.border-b.text-xs.text-grey-200.tracking-widest RISTORANTI
             .mx-3.mt-3.mb-5
                 .p-3.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
@@ -41,7 +41,7 @@ loadAllData()
 
     //- SIDEBAR MENU - Items
     .py-6.px-4
-        .mb-8.mt-4
+        .mb-8
             p.mb-3.px-3.text-xs.tracking-widest.text-grey-200 MENU
 
             NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/reservations" class="")
