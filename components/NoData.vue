@@ -9,7 +9,7 @@ const props = defineProps<NoDataProps>()
 
 
 <template lang="pug">
-.flex.items-center.justify-center(class="h-4/6")
+.flex.items-center.justify-center(class="h-4/6").mt-24
     .text-center
         p.text-xl.text-grey-100 {{ text }}
         .mt-6(v-if="buttonText && linkPath")
