@@ -10,7 +10,8 @@ const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
-storeReservations.fetchReservations()
+const noData = computed(() => (!reservationsList.value.length))
+// storeReservations.fetchReservations()
 </script>
 
 
@@ -18,7 +19,9 @@ storeReservations.fetchReservations()
 .page
     PageTitle(title="Prenotazioni")
 
-    .mb-8
+    NoData(v-if="noData", text="Nessuna prenotazione prevista per date future.")
+
+    .mb-8(v-else)
         .flex.items-center.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")
             p.inline
                 span.pr-1.text-black.font-semibold.underline {{ item.personName }}
