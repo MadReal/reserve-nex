@@ -25,4 +25,3 @@ onBeforeMount(async () => { await storeWorkTimes.fetchWorkTimes() });
             p.mb-4 Cena
             SelectWorkTime(:workTimes="dinnerWorkTimesList", :isLunch="false", @addNewTime="storeWorkTimes.addNewWorkTime", @removeTime="storeWorkTimes.removeWorkTime")
 </template>
-~/stores/WorkTimes~/stores/WorkTimes

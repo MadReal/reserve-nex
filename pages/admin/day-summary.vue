@@ -12,15 +12,14 @@ const todaysDate = useDateTimeFormatting(Date()).formattedDate
 
     .grid.gap-6.border-b.mb-8(class="grid-cols-[1fr_1px_1fr]")
         div.mb-6
-            p.mb-4 Lunch
+            p.mb-4 Pranzo
             .grid.grid-cols-4.gap-2
                 BoxReservation(v-for="workTime in workTimeStore.lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 
         .h-full.border-r
 
         div.mb-6
-            p.mb-4 Dinner
+            p.mb-4 Cena
             .grid.grid-cols-4.gap-2
                 BoxReservation(v-for="workTime in workTimeStore.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 </template>
-~/stores/WorkTimes~/stores/WorkTimes

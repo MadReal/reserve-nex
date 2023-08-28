@@ -27,4 +27,3 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
         p.py-2.px-3(v-for="workTime in workTimesListsMerged", :key="workTime.id", @click="$emit('updateBlockedTimeOnDay', isTimeFrom, workTime.time)",
             :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : workTime === time, 'cursor-pointer text-grey-300 hover_bg-gray-100' : workTime.time !== time }") {{ workTime.time }}
 </template>
-~/stores/WorkTimes~/stores/WorkTimes

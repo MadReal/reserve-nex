@@ -26,4 +26,3 @@ const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time ==
         SVGIcon.mr-1(svg="users", :size="30")
         p.text-xl {{ peopleAtThisTime }}
 </template>
-~/stores/Reservations~/stores/Reservations

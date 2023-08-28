@@ -93,4 +93,4 @@ onMounted(async () => {
                 :isUpdate="false", :showTrash="false")
 
     FullCalendar.mt-8(:options="calendarOptions")
-</template>~/stores/Blocks~/stores/Blocks
+</template>

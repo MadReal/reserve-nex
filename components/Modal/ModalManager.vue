@@ -15,4 +15,4 @@ div(v-if="activeModal !== null")
 				SVGIcon.text-black(svg="close", :size="24" @click="storeModals.closeModal()")
 
 			ModalRestaurant(v-if="activeModal === 'restaurant'")
-</template>~/stores/Modals~/stores/Modals
+</template>

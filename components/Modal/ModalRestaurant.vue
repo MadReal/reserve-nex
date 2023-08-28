@@ -15,17 +15,17 @@ const initialEditedRestaurantName = computed(() => selectedRestaurant.value ? se
 modalRestaurantName.value = initialEditedRestaurantName.value
 
 let modalError = ref('')
-const addOrUpdateRestaurant = () => {
+const addOrUpdateRestaurant = async () => {
 	if (!modalRestaurantName.value) modalError.value = 'Scrivi un nome valido'
 	else {
-		storeRestaurants.addOrUpdateRestaurant(modalRestaurantName.value, selectedRestaurant?.value?.id)
+		await storeRestaurants.addOrUpdateRestaurant(modalRestaurantName.value, selectedRestaurant?.value?.id)
 		modalError.value = ''
 		storeModals.closeModal()
 	}
 }
-const removeRestaurant = () => {
+const removeRestaurant = async () => {
 	if (confirm('Sicuro di voler eliminare il ristorante?')) {
-		storeRestaurants.removeRestaurant(selectedRestaurant.value.id)
+		await storeRestaurants.removeRestaurant(selectedRestaurant.value.id)
 		modalError.value = ''
 		storeModals.closeModal()
 	}

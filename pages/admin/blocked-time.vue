@@ -35,4 +35,4 @@ storeBlocks.fetchBlockedTimesOnDay()
 :root {
     --dp-font-family: "Poppins", sans-serif
 }
-</style>~/stores/Blocks~/stores/WorkTimes~/stores/Blocks~/stores/WorkTimes
+</style>

@@ -1,7 +1,5 @@
 const URL = "/api/restaurants";
 
-import { useModalsStore } from "~/stores/Modals";
-
 export const useRestaurantsStore = defineStore(
 	"RestaurantsStore",
 	() => {
@@ -33,8 +31,6 @@ export const useRestaurantsStore = defineStore(
 			restaurantName: Restaurant["name"],
 			restaurantId: Restaurant["id"] | null
 		) {
-			const storeModals = useModalsStore();
-
 			if (restaurantId) {
 				await useFetch(`${URL}/${restaurantId}`, {
 					method: "patch",
@@ -52,7 +48,6 @@ export const useRestaurantsStore = defineStore(
 				if (data && data.value) {
 					restaurantsList.value.push(data.value);
 					activeRestaurantId.value = data.value.id;
-					storeModals.closeModal();
 				}
 			}
 		}

@@ -39,4 +39,3 @@ onBeforeMount(async () => { await storeReservations.fetchResevations() });
                 a.py-1.px-3.rounded.bg-error-200.text-white.cursor-pointer(class="hover_bg-error-200/80", 
                     v-if="item.accepted === null" @click="storeReservations.updateReservation(item.id, false)") Rifiuta
 </template>
-~/stores/Reservations~/stores/Reservations
