@@ -1683,6 +1683,15 @@
     date-fns "^2.30.0"
     date-fns-tz "^1.3.7"
 
+"@vueuse/components@^10.4.1":
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/components/-/components-10.4.1.tgz#d6b51c60783da49eaa1a9d8014e1be53874f7dbc"
+  integrity sha512-hEWeumCfH394fkEYc/hng6T5VcjVkdqx7b75Sd6z4Uw3anjeo93Zp9qqtzFOv5bAmHls3Zy04Kowo1glrxDFRQ==
+  dependencies:
+    "@vueuse/core" "10.4.1"
+    "@vueuse/shared" "10.4.1"
+    vue-demi ">=0.14.5"
+
 "@vueuse/core@10.4.1":
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-10.4.1.tgz#fc2c8a83a571c207aaedbe393b22daa6d35123f2"
@@ -1697,18 +1706,6 @@
   version "10.4.1"
   resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-10.4.1.tgz#9d2ff5c67abf17a8c07865c2413fbd0e92f7b7d7"
   integrity sha512-2Sc8X+iVzeuMGHr6O2j4gv/zxvQGGOYETYXEc41h0iZXIRnRbJZGmY/QP8dvzqUelf8vg0p/yEA5VpCEu+WpZg==
-
-"@vueuse/nuxt@^10.4.1":
-  version "10.4.1"
-  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-10.4.1.tgz#8b6f038c41954ddb5b329e6e605cbde72acc254d"
-  integrity sha512-tJ25KCkozZaQEy0qli4Ta8WXlbMIjSD7gPnVfLScZ2DpSSgImMB5R66PQEkrbSg4GfFj0OuoYc4+vCHQ/FqTsw==
-  dependencies:
-    "@nuxt/kit" "^3.6.5"
-    "@vueuse/core" "10.4.1"
-    "@vueuse/metadata" "10.4.1"
-    local-pkg "^0.4.3"
-    nuxt "^3.6.5"
-    vue-demi ">=0.14.5"
 
 "@vueuse/shared@10.4.1":
   version "10.4.1"
@@ -4975,7 +4972,7 @@ nuxi@^3.7.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-nuxt@^3.6.5, nuxt@^3.7.0:
+nuxt@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-3.7.0.tgz#bc54cdacee28c62e3243a0b4b65dbed66ff1e613"
   integrity sha512-y0/xHYqwuJt20r26xezjpr74FLWR144dMpwSxZ/O2XXUrQUnyO7vHm3fEY4vi+miKbf343YMH5B78GXAELO/Vw==
