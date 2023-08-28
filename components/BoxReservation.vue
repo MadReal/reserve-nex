@@ -11,7 +11,7 @@ const props = defineProps<BoxReservationProps>()
 const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 
-const todaysReservations = reservationsList.value.filter(item => useDateTimeFormatting(item.date).formattedDate == props.todaysDate)
+const todaysReservations = reservationsList.value.filter(item => useDateTimeFormatting(item.date).formattedDate == props.todaysDate && item.accepted)
 // if time analyzed from the array equals time being passed from template, add people
 const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time === props.workTime.time ? total + item.peopleAmount : total, 0);
 </script>
