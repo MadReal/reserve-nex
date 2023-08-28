@@ -1,6 +1,8 @@
 import svgLoader from "vite-svg-loader";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering
+
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 	routeRules: {
@@ -29,6 +31,7 @@ export default defineNuxtConfig({
 				autoImports: ["defineStore", "acceptHMRUpdate"],
 			},
 		],
+		"@pinia-plugin-persistedstate/nuxt",
 		[
 			"@nuxtjs/google-fonts",
 			{

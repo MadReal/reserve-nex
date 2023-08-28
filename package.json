@@ -12,6 +12,8 @@
 		"@nuxt/devtools": "latest",
 		"@nuxt/image": "^1.0.0-rc.1",
 		"@nuxtjs/google-fonts": "^3.0.2",
+		"@nuxtjs/supabase": "^0.3.0",
+		"@pinia-plugin-persistedstate/nuxt": "^1.1.1",
 		"@pinia/nuxt": "^0.4.11",
 		"@types/node": "^20.5.6",
 		"autoprefixer": "^10.4.15",
@@ -24,15 +26,14 @@
 		"sass-loader": "13.3.2",
 		"tailwindcss": "^3.3.3",
 		"vite-plugin-pug": "0.3.2",
-		"vite-svg-loader": "^4.0.0",
-		"@nuxtjs/supabase": "^0.3.0"
+		"vite-svg-loader": "^4.0.0"
 	},
 	"dependencies": {
-		"@prisma/client": "5.2.0",
 		"@fullcalendar/core": "^6.1.8",
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/vue3": "^6.1.8",
+		"@prisma/client": "5.2.0",
 		"@vuepic/vue-datepicker": "^6.0.2"
 	}
 }
