@@ -6,7 +6,6 @@ import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/stores/Restaurants'
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 import { useReservationsStore } from '@/stores/Reservations';
-import { useBlocksStore } from '~/stores/Blocks'
 import { useModalsStore } from '~/stores/Modals'
 
 // Component's logic
@@ -27,7 +26,6 @@ function openModal(modalType: ModalType, restaurantId: Restaurant['id']) {
 function switchActiveResturant(restaurantId: Restaurant['id']) {
     storeRestaurants.switchActiveResturant(restaurantId)
 }
-
 
 // Load all API DATA
 function loadAllData() {
@@ -83,4 +81,4 @@ loadAllData()
             NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/blocked-time")
                 SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="block", :size="20")
                 p.text-sm.text-grey-200.tracking-wide Blocco Orari
-</template>~/stores/Restaurants~/stores/WorkTimes~/stores/Reservations~/stores/Blocks~/stores/Modals~/stores/Restaurants~/stores/WorkTimes~/stores/Reservations~/stores/Blocks~/stores/Modals
+</template>
