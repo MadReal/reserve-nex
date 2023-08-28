@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth', 'empty-restaurants-list']
+})
+
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '@/stores/Restaurants';
 

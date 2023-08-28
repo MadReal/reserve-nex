@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth', 'empty-restaurants-list']
+})
+
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const workTimeStore = useWorkTimesStore();

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: ['auth', 'empty-restaurants-list']
+})
+
 // https://github.com/fullcalendar/fullcalendar-vue
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
