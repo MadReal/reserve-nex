@@ -5,7 +5,7 @@ import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 import { useBlocksStore } from '~/stores/Blocks'
 
 
-export interface SelectTimePeriodProps {
+interface SelectTimePeriodProps {
     blockTimePeriod: Block,
 }
 const props = defineProps<SelectTimePeriodProps>()

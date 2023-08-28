@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export interface PageTitleProps {
+interface PageTitleProps {
     title: string
     date?: string
 }

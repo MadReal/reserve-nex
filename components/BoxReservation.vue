@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useReservationsStore } from '@/stores/Reservations';
 
-export interface BoxReservationProps {
+interface BoxReservationProps {
     workTime: WorkTime,
     todaysDate: string
 }

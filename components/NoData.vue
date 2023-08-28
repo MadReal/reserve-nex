@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export interface NoDataProps {
+interface NoDataProps {
     text: string
     buttonText?: string
     linkPath?: string

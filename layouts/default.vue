@@ -3,11 +3,5 @@
 	Sidebar
 	div
 		Navbar
-		ClientOnly
-			<slot />
+		<slot />
 </template>
-
-
-<script setup lang="ts">
-
-</script>

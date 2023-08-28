@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 
-export interface SelectTimeProps {
+interface SelectTimeProps {
     isTimeFrom: boolean,
     time: string,
 }

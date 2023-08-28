@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export interface SelectDayProps {
+interface SelectDayProps {
     showTrash: boolean,
     isUpdate: boolean // true: add new day - false: update day
     blockedDaysOfWeekList: Block[]

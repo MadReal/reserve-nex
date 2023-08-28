@@ -3,6 +3,13 @@ const user = useSupabaseUser()
 const client = useSupabaseAuthClient()
 const router = useRouter()
 
+interface NavbarProps {
+    showSerch?: boolean
+}
+const props = withDefaults(defineProps<NavbarProps>(), {
+    showSerch: true
+});
+
 // Component's logic
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
@@ -23,11 +30,12 @@ async function logout() {
 <template lang="pug">
 //- NAVBAR - Search, Admin
 nav.grow.h-16.border-b.border-grey-100.py-4.px-6.flex.justify-between
-    .flex.items-center
+    .flex.items-center(v-if="showSerch")
         .relative
             input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(name='search', class='bg-[#F6F6FB]', placeholder='Cerca prenotazione', autocomplete='off')        
             span.absolute.inset-y-0.right-0.flex.items-center.pr-3
                 SVGIcon.text-grey-100(svg="search")
+    div
     .relative.group
         .flex.items-center.text-grey-300
             SVGIcon.mr-2(svg="user-filled", :size="30")

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
+    layout: 'no-sidebar',
     middleware: ['auth', 'empty-restaurants-list']
 })
 
@@ -19,7 +20,7 @@ storeRestaurants.fetchRestaurants()
 .page
     PageTitle(title="Ristoranti")
 
-    .grid.grid-cols-3.gap-5.text-xl
+    .grid.grid-cols-4.gap-5.text-xl
         .flex.items-center.justify-center.border.border-gray-200.rounded.relative.cursor-pointer.hover_bg-slate-50(v-for="item in restaurantsList", :key="item.id")
             p.p-10.m-6.text-center(@click="switchActiveRestaurant(item.id)") {{ item.name }}            
 
