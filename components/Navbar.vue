@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore
-import { debounce } from 'lodash';
+import debounce from 'lodash.debounce';
 
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/stores/Restaurants'
@@ -15,7 +15,7 @@ const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
 // component's logic
 const user = useSupabaseUser()
-const client = useSupabaseAuthClient()
+const client = useSupabaseClient()
 
 interface NavbarProps {
     showSerch?: boolean
@@ -42,7 +42,7 @@ async function logout() {
 const delayedSearch = debounce(async (newSearch: string) => {
     showSearchError.value = false
     const data = await storeReservations.fetchReservations(newSearch)
-    if (!data || !data.legnth) showSearchError.value = true
+    if (!data || !data.length) { showSearchError.value = true }
 }, 1200);
 // Watch the search input and call the debounced function
 watch(search, (newSearch) => { delayedSearch(newSearch); });

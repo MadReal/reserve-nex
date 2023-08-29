@@ -22,6 +22,10 @@ export default defineNuxtConfig({
 			autoprefixer: {},
 		},
 	},
+	supabase: {
+		redirect: false,
+		// Options
+	},
 	modules: [
 		"@nuxt/image",
 		"@nuxtjs/supabase",

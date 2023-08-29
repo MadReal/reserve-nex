@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
 	const id: number | undefined =
 		restaurantId !== null ? Number(restaurantId) : undefined;
 
-	console.log(searchQuery);
-
 	try {
 		const where = {
 			restaurantId: id,

@@ -954,7 +954,7 @@
   optionalDependencies:
     ipx "^1.2.0"
 
-"@nuxt/kit@3.7.0", "@nuxt/kit@^3.2.3", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.5.3", "@nuxt/kit@^3.6.1", "@nuxt/kit@^3.6.5":
+"@nuxt/kit@3.7.0", "@nuxt/kit@^3.2.3", "@nuxt/kit@^3.5.0", "@nuxt/kit@^3.5.3", "@nuxt/kit@^3.6.5":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.7.0.tgz#14046349a7b12412e84782525ef802b65624268f"
   integrity sha512-bsPRb2NTLHRacjyybhhA3pZFIqo2pxB6bcP4FQDuzlGzVTI5PtJzbfNpkmQC7q+LZt8K0pNlxKVGisDvZctk6w==
@@ -1075,13 +1075,13 @@
     google-fonts-helper "^3.3.1"
     pathe "^1.1.1"
 
-"@nuxtjs/supabase@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/supabase/-/supabase-0.3.8.tgz#8a01ddf1bbc5cf5dfc44bbb06c7567ccc0d52fa1"
-  integrity sha512-MEhfgllJx7DQX4XrycGbnTmiW6JI1wLTaVTkDV9X90q+jfBz59d/uM2E6aj4XhLuJp4GN/THGpMg8k1RfuYxqQ==
+"@nuxtjs/supabase@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/supabase/-/supabase-1.0.2.tgz#339e2cb3ac6d85b94b04b120cd083416893ea9f4"
+  integrity sha512-stHwyZy6pMLBTJVuwdLh9LtaebtVpDIXSkQZ8rnY9lIik8S1+r3HkxUhnpL8VOwMUn4jpBBGqrZUAcRXM/csbQ==
   dependencies:
-    "@nuxt/kit" "^3.6.1"
-    "@supabase/supabase-js" "2.26.0"
+    "@nuxt/kit" "^3.6.5"
+    "@supabase/supabase-js" "2.31.0"
     defu "^6.1.2"
     pathe "^1.1.1"
 
@@ -1360,7 +1360,7 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.13"
 
-"@supabase/gotrue-js@^2.31.0":
+"@supabase/gotrue-js@^2.46.1":
   version "2.48.1"
   resolved "https://registry.yarnpkg.com/@supabase/gotrue-js/-/gotrue-js-2.48.1.tgz#f7f0e8c27e22215a59e99f8ac07254742bdafcc6"
   integrity sha512-jTcqA/iz2crq2b3PbzXZrW3QIoKJ7SfwPWTGJNv//1nDi0i2vCx1mO+BjXwPx+TlOSG8okK0QB2eP8uaF83OvA==
@@ -1397,13 +1397,13 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.13"
 
-"@supabase/supabase-js@2.26.0":
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.26.0.tgz#80eb5d7b6dc5ac7b29218f7211747e256184247a"
-  integrity sha512-RXmTPTobaYAwkSobadHZmEVLmzX3SGrtRZIGfLWnLv92VzBRrjuXn0a+bJqKl50GUzsyqPA+j5pod7EwMkcH5A==
+"@supabase/supabase-js@2.31.0":
+  version "2.31.0"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.31.0.tgz#49fe09652fa72b1173efe4ac086592e31c662cef"
+  integrity sha512-W9/4s+KnSUX67wJKBn/3yLq+ieycnMzVjK3nNTLX5Wko3ypNT/081l2iFYrf+nsLQ1CiT4mA92I3dxCy6CmxTg==
   dependencies:
     "@supabase/functions-js" "^2.1.0"
-    "@supabase/gotrue-js" "^2.31.0"
+    "@supabase/gotrue-js" "^2.46.1"
     "@supabase/postgrest-js" "^1.7.0"
     "@supabase/realtime-js" "^2.7.3"
     "@supabase/storage-js" "^2.5.1"
