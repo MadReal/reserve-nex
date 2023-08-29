@@ -9,14 +9,18 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 
 	// STATE
 	const reservationsList = ref<Reservation[]>([]);
+	const reservationsSearchList = ref<Reservation[]>([]);
 
 	// GETTERS
 
 	// ACTIONS
-	async function fetchReservations() {
-		const { data, error }: any = await useFetch(URL, {
-			params: { restaurantId: activeRestaurantId },
-		});
+	async function fetchReservations(searchQuery?: string) {
+		const queryParams = {
+			restaurantId: activeRestaurantId.value,
+			searchQuery: searchQuery,
+		};
+
+		const { data, error }: any = await useFetch(URL, { params: queryParams });
 		if (data && data.value) {
 			// Sort the list by date and time
 			const reservationsSorted = data.value.sort(
@@ -44,7 +48,8 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 					return 0;
 				}
 			);
-			reservationsList.value = reservationsSorted;
+			if (searchQuery) reservationsSearchList.value = reservationsSorted;
+			else reservationsList.value = reservationsSorted;
 		}
 	}
 
@@ -64,6 +69,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 
 	return {
 		reservationsList,
+		reservationsSearchList,
 		fetchReservations,
 		updateReservation,
 	};

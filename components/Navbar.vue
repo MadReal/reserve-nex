@@ -1,8 +1,14 @@
 <script setup lang="ts">
+// @ts-ignore
+import { debounce } from 'lodash';
+
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '~/stores/Restaurants'
+import { useReservationsStore } from '~/stores/Reservations'
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants)
+const storeReservations = useReservationsStore();
+const { reservationsSearchList } = storeToRefs(storeReservations)
 // composables
 const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
@@ -17,6 +23,8 @@ const props = withDefaults(defineProps<NavbarProps>(), {
     showSerch: true
 });
 
+let search = ref('')
+
 let isMenuOpen = ref(false)
 function toggleMenu() {
     isMenuOpen.value = !isMenuOpen.value
@@ -27,6 +35,16 @@ async function logout() {
     if (error) throw error
     else return navigateTo("/");
 }
+
+// Use the debounce function to create a debounced version of your callback
+const delayedSearch = debounce((newSearch: string) => {
+    storeReservations.fetchReservations(newSearch)
+}, 2500); // Adjust the delay time (in milliseconds) as needed
+// Watch the search input and call the debounced function
+watch(search, (newSearch) => {
+    delayedSearch(newSearch);
+});
+
 </script>
 
 
@@ -35,7 +53,7 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
     .flex.items-center.justify-between.h-full.mx-auto.p-4.lg_p-2.lg_px-3
         .hidden.lg_flex.items-center(v-if="showSerch")
             .relative
-                input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(name="search", class="bg-[#F6F6FB]", placeholder="Cerca prenotazione", autocomplete="off")        
+                input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(v-model="search", name="search", class="bg-[#F6F6FB]", placeholder="Cerca prenotazione", autocomplete="off")        
                 span.absolute.inset-y-0.right-0.flex.items-center.pr-3
                     SVGIcon.text-grey-100(svg="search")
 
