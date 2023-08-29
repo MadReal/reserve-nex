@@ -25,12 +25,7 @@ export default defineNuxtConfig({
 	modules: [
 		"@nuxt/image",
 		"@nuxtjs/supabase",
-		[
-			"@pinia/nuxt",
-			{
-				autoImports: ["defineStore", "acceptHMRUpdate"],
-			},
-		],
+		["@pinia/nuxt", { autoImports: ["defineStore", "acceptHMRUpdate"] }],
 		"@pinia-plugin-persistedstate/nuxt",
 		[
 			"@nuxtjs/google-fonts",
