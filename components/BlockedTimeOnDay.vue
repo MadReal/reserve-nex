@@ -61,15 +61,15 @@ const toggleDropdownCalendar = () => {
     BlockedTimeOnDaySelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeOnDay="updateTimeSlot")
     .h-full.border-r
     //- DATE
-    .flex.items-center.py-2.px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
+    .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
         p.leading-normal.text-grey-300 {{ formatDate(blockTimePeriod.date) }}
         //- Dropdown
-        .absolute.top-12.left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
+        .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
             VueDatePicker(v-model="blockTimePeriod.date", :month-change-on-scroll="false", :enable-time-picker="false", 
                 inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()"
                 :disabled-dates="disabledDates")
 
-    .flex.items-center.py-2.px-3
+    .flex.items-center.py-2.px-2.lg_px-3
         SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="storeBlocks.removeBlock(blockTimePeriod.id)")
 </template>
 

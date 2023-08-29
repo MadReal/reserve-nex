@@ -21,7 +21,7 @@ storeBlocks.fetchBlockedTimesOnDay()
 .page
     PageTitle(title="Blocco Orari")
 
-    .grid.gap-6(class="grid-cols-[2fr_1px_1fr]")
+    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]")
         div.mb-8
             BlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
