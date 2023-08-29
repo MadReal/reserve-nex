@@ -1,9 +1,5 @@
 <script setup lang="ts">
-definePageMeta({
-    // layout: 'custom',
-    layout: false,
-})
-
+definePageMeta({ layout: false })
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 

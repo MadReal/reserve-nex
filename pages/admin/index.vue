@@ -1,11 +1,9 @@
 <script setup lang="ts">
-definePageMeta({
-    middleware: ['redirect-index']
-})
+definePageMeta({ layout: false, middleware: ['redirect-index'] })
 </script>
 
 
 <template lang="pug">
 .page
-    p dwedw
+    p Admin
 </template>

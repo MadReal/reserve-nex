@@ -1,7 +1,5 @@
 <script setup lang="ts">
-definePageMeta({
-    middleware: ['auth', 'empty-restaurants-list']
-})
+definePageMeta({ middleware: ['auth', 'empty-restaurants-list'] })
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/stores/Blocks'
 const storeBlocks = useBlocksStore()

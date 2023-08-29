@@ -13,7 +13,6 @@ const { loadAllData } = useLoadAllData()
 const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
 // Component's logic
-const restaurantName = activeRestaurant.value?.name
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 // // Load all API DATA
@@ -28,7 +27,7 @@ loadAllData()
         .flex.items-center.h-16.border-b.border-grey-100.py-4.px-5.cursor-pointer(@click="toggleDropdown")
             div(class="basis-1/5")
                 .w-8.h-8.bg-red-300.rounded-full
-            p.text-sm.break-all(class="basis-3/5") {{ restaurantName }}
+            p.text-sm.break-all(class="basis-3/5") {{ activeRestaurant?.name }}
             SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
         //- Dropdown
         .absolute.left-2.right-2.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")

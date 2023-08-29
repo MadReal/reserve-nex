@@ -82,7 +82,7 @@ export const useRestaurantsStore = defineStore(
 		// persist: { storage: persistedState.localStorage },
 		persist: {
 			storage: persistedState.localStorage,
-			paths: ["activeRestaurantId", "activeRestaurant"],
+			paths: ["restaurantsList", "activeRestaurantId", "activeRestaurant"],
 		},
 	}
 );
