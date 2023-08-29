@@ -1,5 +1,5 @@
 <template lang="pug">
-.view.grid(class="grid-cols-[250px_1fr]")
+.view.lg_grid(class="lg_grid-cols-[250px_1fr]")
 	Sidebar
 	div
 		Navbar

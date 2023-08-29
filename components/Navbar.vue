@@ -19,8 +19,13 @@ async function logout() {
 
 <template lang="pug">
 //- NAVBAR - Search, Admin
-nav.grow.h-16.border-b.border-grey-100.py-4.px-6.flex.justify-between
-    .flex.items-center(v-if="showSerch")
+nav.grow.h-16.border-b.border-grey-100.py-4.px-4.flex.justify-between.lg_px-6
+    .relative.lg_hidden
+        SVGIcon.text-grey-100(svg="menu", :size="28")
+        //- .absolute.bg-white.z-10.inset-x-0.inset-y-0
+        //-     Menu
+
+    .hidden.lg_flex.items-center(v-if="showSerch")
         .relative
             input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(name='search', class='bg-[#F6F6FB]', placeholder='Cerca prenotazione', autocomplete='off')        
             span.absolute.inset-y-0.right-0.flex.items-center.pr-3
