@@ -16,11 +16,12 @@ async function loginWithEmail() {
     if (error) {
         errorMessage.value = error.toString()
         console.log(error);
+        throw error
     } else {
         errorMessage.value = ''
         // const restaurantsStore = JSON.parse(localStorage.getItem("RestaurantsStore")!);
         // console.log(restaurantsStore.activeRestaurantId);
-        // return navigateTo("/admin/reservations");
+        return navigateTo("/admin/reservations");
     }
 }
 

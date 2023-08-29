@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const user = useSupabaseUser()
 const client = useSupabaseAuthClient()
-const router = useRouter()
 
 interface NavbarProps {
     showSerch?: boolean
@@ -10,19 +9,10 @@ const props = withDefaults(defineProps<NavbarProps>(), {
     showSerch: true
 });
 
-// Component's logic
-const isDropdownOpen = ref(false);
-const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
-
 async function logout() {
-    try {
-        const { error } = await client.auth.signOut()
-        if (error) throw error
-        router.push('/admin')
-    } catch (error) {
-        console.error(error);
-    }
-
+    const { error } = await client.auth.signOut()
+    if (error) throw error
+    else return navigateTo("/");
 }
 </script>
 
