@@ -78,7 +78,12 @@ export const useRestaurantsStore = defineStore(
 		};
 	},
 	{
-		persist: { storage: persistedState.localStorage },
+		// https://github.com/prazdevs/pinia-plugin-persistedstate
+		// persist: { storage: persistedState.localStorage },
+		persist: {
+			storage: persistedState.localStorage,
+			paths: ["activeRestaurantId", "activeRestaurant"],
+		},
 	}
 );
 
