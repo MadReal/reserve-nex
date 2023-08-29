@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
 		// * REQUEST *
 		const block = await prisma.block.findMany({
 			where: {
+				date: { gte: getPastDate() },
 				timeStart: { not: null },
 				timeEnd: { not: null },
 				restaurantId: id,
