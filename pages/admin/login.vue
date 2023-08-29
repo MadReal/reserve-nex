@@ -42,11 +42,12 @@ const loginWithGoogle = async () => {
         div.text-center
             p.text-2xl.font-semibold.text-white Ciao, Admin!
             p.text-md.font-light.text-white.tracking-wide.mb-5 Entra nel tuo account
-            input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-2.placeholder_text-grey-100.focus_border-white.focus_outline-none(
-                v-model="email", name="username", type="text", placeholder="Username", autocomplete="off")        
-            input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-4.placeholder_text-grey-100.focus_border-white.focus_outline-none(
-                v-model="password", name="password", type="password", placeholder="Password", autocomplete="off")        
-            button.w-full.text-md.rounded-md.p-3.border.border-primary-100.bg-white.text-black(@click="loginWithEmail()") Login
+            form
+                input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-2.placeholder_text-grey-100.focus_border-white.focus_outline-none(
+                    v-model="email", name="username", type="text", placeholder="Username", autocomplete="off")        
+                input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-4.placeholder_text-grey-100.focus_border-white.focus_outline-none(
+                    v-model="password", name="password", type="password", placeholder="Password", autocomplete="off")        
+                button.w-full.text-md.rounded-md.p-3.border.border-primary-100.bg-white.text-black(type="submit", @click.prevent="loginWithEmail()") Login
 
             p.mt-4.text-red-400 {{ errorMessage }}
         //- p {{ user }}
