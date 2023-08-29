@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useRestaurantsStore } from '~/stores/Restaurants'
+const storeRestaurants = useRestaurantsStore();
+const { restaurantsList } = storeToRefs(storeRestaurants)
+// composables
+const { switchActiveRestaurant } = useSwitchActiveRestaurant()
+const { openModal } = useOpenModal();
+// component's logic
 const user = useSupabaseUser()
 const client = useSupabaseAuthClient()
 
@@ -23,9 +31,8 @@ async function logout() {
 
 
 <template lang="pug">
-nav.bg-white.fixed.w-full.h-16.z-20.top-0.left-0.border-b.border-gray-200.lg_relative
+nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_relative.lg_h-16
     .flex.items-center.justify-between.h-full.mx-auto.p-4.lg_p-2.lg_px-3
-
         .hidden.lg_flex.items-center(v-if="showSerch")
             .relative
                 input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(name="search", class="bg-[#F6F6FB]", placeholder="Cerca prenotazione", autocomplete="off")        
@@ -38,7 +45,15 @@ nav.bg-white.fixed.w-full.h-16.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                 span.sr-only Open Menu
                 SVGIcon(svg="menu", :size="28")
 
-        Menu.absolute.bg-white.z-10.inset-x-0.top-16.border-b.py-3(v-show="isMenuOpen", @toggleMenu="toggleMenu()")
+        Menu.absolute.bg-white.z-10.inset-x-0.top-12.border-b(v-show="isMenuOpen", @toggleMenu="toggleMenu()")
+            .py-8.bg-primary-100.text-white
+                p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
+                .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
+                    p.text-sm.cursor-pointer.hover_underline(@click="switchActiveRestaurant(restaurant.id), toggleMenu()") {{ restaurant.name }}
+                    SVGIcon.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id), toggleMenu()")
+                .mt-2.mx-3.p-3.flex.items-center.justify-between.border.border-dashed.border-white.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant'), toggleDropdown()")
+                    p.text-sm.leading-normal Aggiungi ristorante
+                    SVGIcon(svg="plus", :size="15")         
 
         .relative.group
             .flex.items-center.text-grey-300
