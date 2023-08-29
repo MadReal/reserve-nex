@@ -10,6 +10,7 @@ const { restaurantsList } = storeToRefs(storeRestaurants)
 const storeReservations = useReservationsStore();
 const { reservationsSearchList } = storeToRefs(storeReservations)
 // composables
+const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
 // component's logic
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<NavbarProps>(), {
 });
 
 let search = ref('')
+let showSearchError = ref(false)
 
 let isMenuOpen = ref(false)
 function toggleMenu() {
@@ -37,25 +39,39 @@ async function logout() {
 }
 
 // Use the debounce function to create a debounced version of your callback
-const delayedSearch = debounce((newSearch: string) => {
-    storeReservations.fetchReservations(newSearch)
-}, 2500); // Adjust the delay time (in milliseconds) as needed
+const delayedSearch = debounce(async (newSearch: string) => {
+    showSearchError.value = false
+    const data = await storeReservations.fetchReservations(newSearch)
+    if (!data || !data.legnth) showSearchError.value = true
+}, 1200);
 // Watch the search input and call the debounced function
-watch(search, (newSearch) => {
-    delayedSearch(newSearch);
-});
-
+watch(search, (newSearch) => { delayedSearch(newSearch); });
 </script>
 
 
 <template lang="pug">
 nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_relative.lg_h-16
     .flex.items-center.justify-between.h-full.mx-auto.p-4.lg_p-2.lg_px-3
+
+        //- Search Input
         .hidden.lg_flex.items-center(v-if="showSerch")
             .relative
                 input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(v-model="search", name="search", class="bg-[#F6F6FB]", placeholder="Cerca prenotazione", autocomplete="off")        
                 span.absolute.inset-y-0.right-0.flex.items-center.pr-3
-                    SVGIcon.text-grey-100(svg="search")
+                    SVGIcon.text-grey-100(svg="search", v-show="!search.length")
+                    SVGIcon.text-grey-100.cursor-pointer(svg="close", v-show="search.length", @click="search = ''")
+
+                .absolute.bg-white.z-10.inset-x-0.top-12.rounded-lg.shadow
+                    //- show "error" on search
+                    .flex.items-center.gap-5.p-4.border-b(v-if="showSearchError")
+                        p.pr-1.text-grey-100 Nessun risultato...
+                    //- show results
+                    .flex.items-center.gap-5.p-4.border-b.font-medium.hover_bg-slate-50(v-else, v-for="item in reservationsSearchList", :key="item.id")
+                        p.inline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id)")
+                            span.pr-1.text-black.font-semibold {{ item.personName }}
+                            span.text-grey-200.text-xs {{ `[#${item.id}]` }}
+                        p.antialiased.text-sm.-mb-px {{ formatDate(item.date) }}
+                        a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id)") APRI
 
         .flex.md_order-2.lg_hidden
             button.inline-flex.items-center.justify-center.text-sm.text-grey-200.rounded-lg(type="button", @click="toggleMenu",

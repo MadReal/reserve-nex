@@ -22,7 +22,7 @@ const noData = computed(() => (!reservationsList.value.length))
 
     .mb-8(v-else)
         .flex.items-center.flex-wrap.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")
-            .inline
+            p.inline
                 span.pr-1.text-black.font-semibold.underline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id)") {{ item.personName }}
                 span.text-grey-200.text-xs {{ `[#${item.id}]` }}
             p.antialiased {{ formatDate(item.date) }}

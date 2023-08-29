@@ -50,6 +50,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 			);
 			if (searchQuery) reservationsSearchList.value = reservationsSorted;
 			else reservationsList.value = reservationsSorted;
+			return reservationsSorted;
 		}
 	}
 
