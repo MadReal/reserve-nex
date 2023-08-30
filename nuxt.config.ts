@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 		// Admin dashboard renders only on client-side
 		"/admin/**": { ssr: false },
 		// Add cors headers on API routes
-		"/api/**": { cors: true },
+		// "/api/**": { cors: true },
 	},
 	build: { transpile: ["@vuepic/vue-datepicker"] },
 	imports: { dirs: ["stores"] },
