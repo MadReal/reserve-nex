@@ -3,7 +3,15 @@
 }
 
 .fc-toolbar-title {
-	@apply text-black text-xl #{!important};
+	@apply text-black text-xl capitalize #{!important};
+}
+
+.fc-day {
+	@apply capitalize #{!important};
+}
+
+.fc-daygrid-day-frame:hover {
+	@apply bg-gray-100 cursor-pointer #{!important};
 }
 
 .fc-button-primary,
@@ -34,4 +42,24 @@
 
 .fc-daygrid-day-top {
 	@apply p-2 #{!important};
+}
+
+.calendar-client {
+	// --fc-bg-event-color: {
+	// 	@apply bg-gray-400;
+	// }
+
+	.fc-event-start,
+	.fc-event-end,
+	.fc-event-future,
+	.fc-bg-event {
+		@apply bg-gray-400 cursor-not-allowed #{!important};
+
+		.fc-daygrid-day-frame:hover & {
+			@apply bg-inherit cursor-not-allowed #{!important};
+		}
+	}
+	// .fc-daygrid-day-number {
+	// 	@apply text-gray-300 cursor-not-allowed #{!important};
+	// }
 }
