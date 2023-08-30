@@ -5,14 +5,14 @@ import svgLoader from "vite-svg-loader";
 
 export default defineNuxtConfig({
 	devtools: { enabled: true },
-	// routeRules: {
-	// 	// Homepage pre-rendered at build time
-	// 	"/": { prerender: true },
-	// 	// Admin dashboard renders only on client-side
-	// 	"/admin/**": { ssr: false },
-	// 	// Add cors headers on API routes
-	// 	// "/api/**": { cors: true },
-	// },
+	routeRules: {
+		// Homepage pre-rendered at build time
+		"/": { prerender: true },
+		// Admin dashboard renders only on client-side
+		"/admin/**": { ssr: false },
+		// Add cors headers on API routes
+		"/api/**": { cors: true },
+	},
 	build: { transpile: ["@vuepic/vue-datepicker"] },
 	imports: { dirs: ["stores"] },
 	css: ["~/assets/css/main.sass"],
