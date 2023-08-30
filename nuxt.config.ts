@@ -4,7 +4,7 @@ import svgLoader from "vite-svg-loader";
 // https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering
 
 export default defineNuxtConfig({
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 	routeRules: {
 		// Homepage pre-rendered at build time
 		"/": { prerender: true },
