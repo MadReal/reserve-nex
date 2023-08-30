@@ -74,7 +74,7 @@ storeBlocks.fetchBlockedDates()
 
 <template lang="pug">
 .page
-    PageTitle(title="Blocco Giorni")
+    AdminPageTitle(title="Blocco Giorni")
 
     .grid.border-b.lg_gap-6(:class="['lg_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")
         div.lg_mt-2.mb-8
@@ -86,11 +86,11 @@ storeBlocks.fetchBlockedDates()
 
         div.mb-10.lg_mt-2.lg_mb-8
             //- Display for each day already "blocked"
-            BlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
+            AdminBlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", @removeDay="storeBlocks.removeBlock", 
                 :isUpdate="true", :showTrash="!isblockedDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
-            BlockedDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
+            AdminBlockedDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 

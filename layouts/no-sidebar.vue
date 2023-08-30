@@ -1,5 +1,5 @@
 <template lang="pug">
 .view
-	Navbar(:showSerch="false")
+	AdminNavbar(:showSerch="false")
 	<slot />
 </template>

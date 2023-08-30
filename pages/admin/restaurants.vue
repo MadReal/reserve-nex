@@ -15,7 +15,7 @@ storeRestaurants.fetchRestaurants()
 
 <template lang="pug">
 .page
-    PageTitle(title="Ristoranti")
+    AdminPageTitle(title="Ristoranti")
 
     .grid.grid-cols-4.gap-5.text-xl
         .flex.items-center.justify-center.border.border-gray-200.rounded.relative.cursor-pointer.hover_bg-slate-50(v-for="item in restaurantsList", :key="item.id")

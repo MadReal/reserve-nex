@@ -41,5 +41,5 @@ loadAllData()
                     SVGIcon.text-primary-100(svg="plus", :size="15")
 
     //- SIDEBAR MENU - Items
-    Menu
+    AdminMenu
 </template>

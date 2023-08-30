@@ -79,7 +79,7 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                 span.sr-only Open Menu
                 SVGIcon(svg="menu", :size="28")
 
-        Menu.absolute.bg-white.z-10.inset-x-0.top-12.border-b(v-show="isMenuOpen", @toggleMenu="toggleMenu()")
+        AdminMenu.absolute.bg-white.z-10.inset-x-0.top-12.border-b(v-show="isMenuOpen", @toggleMenu="toggleMenu()")
             .py-8.bg-primary-100.text-white
                 p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
                 .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")

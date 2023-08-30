@@ -19,11 +19,11 @@ storeBlocks.fetchBlockedTimesOnDay()
 
 <template lang="pug">
 .page
-    PageTitle(title="Blocco Orari")
+    AdminPageTitle(title="Blocco Orari")
 
     .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]")
         div.mb-8
-            BlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
+            AdminBlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
             //- Empty Row - Add Hour Block
             .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockedTimeOnDay()")

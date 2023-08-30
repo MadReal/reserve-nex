@@ -1,7 +1,7 @@
 <template lang="pug">
 .view.lg_grid(class="lg_grid-cols-[250px_1fr]")
-	Sidebar
+	AdminSidebar
 	div
-		Navbar
+		AdminNavbar
 		<slot />
 </template>

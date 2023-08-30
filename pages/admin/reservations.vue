@@ -16,9 +16,9 @@ const noData = computed(() => (!reservationsList.value.length))
 
 <template lang="pug">
 .page
-    PageTitle(title="Prenotazioni")
+    AdminPageTitle(title="Prenotazioni")
 
-    NoData(v-if="noData", text="Nessuna prenotazione prevista.")
+    AdminNoData(v-if="noData", text="Nessuna prenotazione prevista.")
 
     .mb-8(v-else)
         .flex.items-center.flex-wrap.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")
