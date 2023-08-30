@@ -38,7 +38,7 @@ const loginWithGoogle = async () => {
 
 
 <template lang="pug">
-.page.h-screen.bg-primary-200
+.admin-page.h-screen.bg-primary-200
     .flex.items-center.justify-center.h-full
         div.text-center
             p.text-2xl.font-semibold.text-white Ciao, Admin!

@@ -74,7 +74,7 @@ storeBlocks.fetchBlockedDates()
 
 
 <template lang="pug">
-.page
+.admin-page
     AdminPageTitle(title="Blocco Giorni")
 
     .grid.border-b.lg_gap-6(:class="['lg_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")

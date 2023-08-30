@@ -13,7 +13,7 @@ onBeforeMount(async () => { await storeWorkTimes.fetchWorkTimes() });
 
 
 <template lang="pug">
-.page
+.admin-page
     AdminPageTitle(title="Gestione Orari")
 
     .grid.gap-8.lg_gap-6.mb-8.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")

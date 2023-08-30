@@ -14,7 +14,7 @@ storeRestaurants.fetchRestaurants()
 
 
 <template lang="pug">
-.page
+.admin-page
     AdminPageTitle(title="Ristoranti")
 
     .grid.grid-cols-4.gap-5.text-xl

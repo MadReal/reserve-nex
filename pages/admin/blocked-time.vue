@@ -18,7 +18,7 @@ storeBlocks.fetchBlockedTimesOnDay()
 
 
 <template lang="pug">
-.page
+.admin-page
     AdminPageTitle(title="Blocco Orari")
 
     .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]")

@@ -1,4 +1,5 @@
 <template lang="pug">
-div
+.view
+	Navbar
 	<slot />
 </template>

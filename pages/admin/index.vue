@@ -4,6 +4,6 @@ definePageMeta({ layout: false, middleware: ['redirect-index'] })
 
 
 <template lang="pug">
-.page
+.admin-page
     p Admin
 </template>
