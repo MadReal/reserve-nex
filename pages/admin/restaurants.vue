@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'no-sidebar', middleware: ['auth'] })
+definePageMeta({ middleware: ['auth'], layout: 'admin-no-sidebar' })
 
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '@/stores/Restaurants';
