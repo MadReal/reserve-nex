@@ -45,5 +45,4 @@ declare interface Restaurant {
 	name: string;
 }
 
-type ModalType = "restaurant" | "signup" | "forgotPassword" | "contact";
-type ModalOption = "isEdit" | "isNew";
+type ModalType = "restaurant" | "reservation";

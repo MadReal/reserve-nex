@@ -16,21 +16,11 @@ export default defineNuxtConfig({
 	build: { transpile: ["@vuepic/vue-datepicker"] },
 	imports: { dirs: ["stores"] },
 	css: ["~/assets/css/main.sass"],
-	postcss: {
-		plugins: {
-			tailwindcss: {},
-			autoprefixer: {},
-		},
-	},
-	supabase: {
-		redirect: false,
-		// Options
-	},
 	modules: [
 		"@nuxt/image",
 		"@nuxtjs/supabase",
-		["@pinia/nuxt", { autoImports: ["defineStore", "acceptHMRUpdate"] }],
 		"@pinia-plugin-persistedstate/nuxt",
+		["@pinia/nuxt", { autoImports: ["defineStore", "acceptHMRUpdate"] }],
 		[
 			"@nuxtjs/google-fonts",
 			{
@@ -42,6 +32,13 @@ export default defineNuxtConfig({
 			},
 		],
 	],
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+			autoprefixer: {},
+		},
+	},
+	supabase: { redirect: false },
 	image: { provider: "netlify", format: ["webp", "jpg"] },
 	vite: { plugins: [svgLoader()] },
 });

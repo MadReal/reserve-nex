@@ -1,4 +1,4 @@
-import { defineStore, storeToRefs } from "pinia";
+import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
 
 const URL_block = "/api/block";
