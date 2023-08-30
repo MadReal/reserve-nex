@@ -14,8 +14,8 @@ const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
 // component's logic
-const user = useSupabaseUser()
 const client = useSupabaseClient()
+const user = useSupabaseUser()
 
 interface NavbarProps {
     showSerch?: boolean
@@ -89,7 +89,8 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                     p.text-sm.leading-normal Aggiungi ristorante
                     SVGIcon(svg="plus", :size="15")         
 
-        .relative.group
+        //- Admin/Profile - Logout
+        .relative.group.ml-auto
             .flex.items-center.text-grey-300
                 SVGIcon.ml-2.order-2.lg_mr-2.lg_order-1(svg="user-filled", :size="30")
                 SVGIcon.order-3.text-grey-200.lg_hidden(svg="arrow-down", :size="20")
