@@ -5,5 +5,6 @@ export default defineNuxtRouteMiddleware(() => {
 	const storeRestaurants = useRestaurantsStore();
 	const { restaurantsList } = storeToRefs(storeRestaurants);
 
-	if (!restaurantsList.value.length) return navigateTo("/admin/restaurants");
+	if (!restaurantsList.value || restaurantsList.value.length === 0)
+		return navigateTo("/admin/restaurants");
 });
