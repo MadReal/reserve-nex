@@ -32,14 +32,29 @@ const selectWorkTime = (workTime: WorkTime) => {
     activeSectionStep.value++
 }
 
-// step 2
+// step 3
 // ====================
+import { useReservationsStore } from '@/stores/Reservations';
+const storeReservations = useReservationsStore();
+// 
 const clientDetails = ref({
     personName: '',
     personEmail: '',
     personPhone: '',
-    peopleAmount: 1
+    peopleAmount: 1,
+    personInstagram: '',
 })
+
+async function addReservation() {
+    // @ts-ignore
+    const reservation: Reservation = {
+        ...clientDetails,
+        date: date.value,
+        time: selectedTime.value?.time!,
+        restaurantId: selectedRestaurant?.value?.id!
+    }
+    await storeReservations.addReservation(reservation);
+}
 
 //************
 // CALENDAR
@@ -50,6 +65,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import itLocale from '@fullcalendar/core/locales/it';
 import { number } from 'joi';
+import Restaurants from './admin/restaurants.vue';
 
 const events = ref([
     {
@@ -171,5 +187,5 @@ const calendarOptions = {
                 .mb-7.px-10.flex.items-center
                     p(v-if="activeSectionStep !== 1") {{ selectedRestaurant.name }}
                     button.p-2.bg-black.text-white.rounded.ml-auto {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3") Conferma
+                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3", @click="addReservation()") Conferma
 </template>

@@ -81,6 +81,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 		reservationsList,
 		reservationsSearchList,
 		fetchReservations,
+		addReservation,
 		updateReservation,
 	};
 });

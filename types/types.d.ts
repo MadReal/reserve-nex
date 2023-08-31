@@ -1,5 +1,5 @@
 declare interface WorkTime {
-	id: number;
+	id?: number;
 	mealType: string;
 	time: string;
 	restaurantId: number;
@@ -16,7 +16,7 @@ enum DayOfWeek {
 }
 
 declare interface Block {
-	id: number;
+	id?: number;
 	dayOfWeek: DayOfWeek | null;
 	timeStart: string | null;
 	timeEnd: string | null;
@@ -28,20 +28,21 @@ declare interface Block {
 }
 
 declare interface Reservation {
-	id: number;
-	createdAt: Date;
+	id?: number;
+	createdAt?: Date;
 	time: string;
-	date: Date;
+	date: Date | string;
 	personName: string;
 	personPhone: string;
 	personEmail: string;
 	peopleAmount: number;
+	personInstagram: string;
 	accepted: boolean | null;
 	restaurantId: number;
 }
 
 declare interface Restaurant {
-	id: number;
+	id?: number;
 	name: string;
 }
 
