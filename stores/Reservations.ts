@@ -54,6 +54,15 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 		}
 	}
 
+	async function addReservation(reservation: Reservation) {
+		const { data, error } = await useFetch(URL, {
+			method: "post",
+			body: { reservation },
+		});
+		//@ts-ignore
+		if (data && data.value) reservationsList.value.push(data.value);
+	}
+
 	async function updateReservation(
 		reservationId: Reservation["id"],
 		accepted: Reservation["accepted"]

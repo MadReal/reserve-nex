@@ -21,8 +21,8 @@ export default defineEventHandler(async (event) => {
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		// * REQUEST *
-		const restaurant = await prisma.reservation.create({ data: value });
-		return restaurant;
+		const reservation = await prisma.reservation.create({ data: value });
+		return reservation;
 	} catch (err) {
 		console.error(err);
 		throw err;
