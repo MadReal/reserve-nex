@@ -4,7 +4,6 @@ datasource db {
   provider       = "postgresql"
   url            = env("DATABASE_URL")
   // directUrl      = env("DIRECT_URL")
-  schemas        = ["public", "auth"]
 }
 
 generator client {
@@ -16,13 +15,11 @@ generator client {
 enum MealType {
 	LUNCH
 	DINNER
-	@@schema("public")
 }
 
 // enum JobTypes {
 // 	MANAGER
 // 	VIEWER
-// 	@@schema("public")
 // }
 
 // model User {
@@ -42,7 +39,6 @@ enum MealType {
 // 	restaurant     Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 // 	restaurantId   Int
 // 	jobType        JobTypes
-// 	@@schema("public")
 // }
 
 model Restaurant {
@@ -53,7 +49,6 @@ model Restaurant {
 	workTime       WorkTime[]
 	block          Block[]
 	// jobs           UserJob[]
-	@@schema("public")
 }
 
 // hours in w  hich the restaurant is open during the day, repeats every day
@@ -64,7 +59,6 @@ model WorkTime {
 	// relations
 	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 	restaurantId  Int
-	@@schema("public")
 }
 
 // used to block days of the week, time slots, day slots
@@ -83,7 +77,6 @@ model Block  {
 	// relations
 	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 	restaurantId  Int
-	@@schema("public")
 }
 
 // when client reserve a table at the restaurant
@@ -101,5 +94,4 @@ model Reservation {
 	// relations
 	restaurant    	  Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 	restaurantId      Int
-	@@schema("public")
 }
