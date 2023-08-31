@@ -26,9 +26,9 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	);
 
 	// ACTIONS
-	async function fetchWorkTimes() {
+	async function fetchWorkTimes(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch(URL, {
-			params: { restaurantId: activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId },
 		});
 		if (data.value) workTimesList.value = data.value;
 	}

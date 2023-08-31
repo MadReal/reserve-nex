@@ -5,10 +5,9 @@ import { storeToRefs } from 'pinia'
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const storeWorkTimes = useWorkTimesStore();
-const { lunchWorkTimesList } = storeToRefs(storeWorkTimes)
-const { dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
+const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 
-onBeforeMount(async () => { await storeWorkTimes.fetchWorkTimes() });
+onMounted(async () => { await storeWorkTimes.fetchWorkTimes() });
 </script>
 
 

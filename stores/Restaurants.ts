@@ -20,9 +20,9 @@ export const useRestaurantsStore = defineStore(
 		// ACTIONS
 		function switchActiveResturant(newId: number) {
 			activeRestaurantId.value = newId;
-			// Call the loadAllData function to reload all data after switching active restaurant
-			const { loadAllData } = useLoadAllData();
-			loadAllData();
+			// Call the loadAdminInitData function to reload all data after switching active restaurant
+			const { loadAdminInitData } = useLoadAllData();
+			loadAdminInitData();
 		}
 
 		async function fetchRestaurants() {

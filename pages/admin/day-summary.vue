@@ -3,11 +3,11 @@ definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-
 
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 
-const workTimeStore = useWorkTimesStore();
+const storeWorkTimes = useWorkTimesStore();
 const todaysDate = useDateTimeFormatting(Date()).formattedDate
 
-const noData = computed(() => (!workTimeStore.lunchWorkTimesList.length && !workTimeStore.dinnerWorkTimesList.length))
-// workTimeStore.fetchWorkTimes()
+const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length))
+// storeWorkTimes.fetchWorkTimes()
 </script>
 
 
@@ -21,12 +21,12 @@ const noData = computed(() => (!workTimeStore.lunchWorkTimesList.length && !work
         div.lg_mb-6
             p.mb-4 Pranzo
             .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                AdminBoxReservation(v-for="workTime in workTimeStore.lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                AdminBoxReservation(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 
         .border-b.lg_border-r.lg_border-b-0
 
         div.lg_mb-6
             p.mb-4 Cena
             .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                AdminBoxReservation(v-for="workTime in workTimeStore.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
+                AdminBoxReservation(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :todaysDate="todaysDate")
 </template>

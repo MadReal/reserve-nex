@@ -9,14 +9,14 @@ const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants)
 const { activeRestaurant } = storeToRefs(storeRestaurants)
 // composables
-const { loadAllData } = useLoadAllData()
+const { loadAdminInitData } = useLoadAllData()
 const { switchActiveRestaurant } = useSwitchActiveRestaurant()
 const { openModal } = useOpenModal();
 // Component's logic
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 // // Load all API DATA
-loadAllData()
+loadAdminInitData()
 </script>
 
 

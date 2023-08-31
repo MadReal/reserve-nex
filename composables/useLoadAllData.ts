@@ -1,18 +1,28 @@
 // useLoadAllData.ts (Composable)
 import { useRestaurantsStore } from "~/stores/Restaurants";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
 import { useReservationsStore } from "~/stores/Reservations";
+import { useWorkTimesStore } from "~/stores/WorkTimes";
+import { useBlocksStore } from "~/stores/Blocks";
 
 export function useLoadAllData() {
 	const storeRestaurants = useRestaurantsStore();
-	const storeWorkTimes = useWorkTimesStore();
 	const storeReservations = useReservationsStore();
+	const storeWorkTimes = useWorkTimesStore();
+	const storeBlocks = useBlocksStore();
 
-	function loadAllData() {
+	function loadAdminInitData() {
 		storeRestaurants.fetchRestaurants();
-		storeWorkTimes.fetchWorkTimes();
 		storeReservations.fetchReservations();
+		storeWorkTimes.fetchWorkTimes();
 	}
 
-	return { loadAllData };
+	function loadClientInitData() {
+		storeRestaurants.fetchRestaurants();
+		storeWorkTimes.fetchWorkTimes();
+		storeBlocks.fetchBlockedDaysOfWeek();
+		storeBlocks.fetchBlockedTimesOnDay();
+		storeBlocks.fetchBlockedDates();
+	}
+
+	return { loadAdminInitData, loadClientInitData };
 }

@@ -1,5 +1,5 @@
 <template lang="pug">
 .view
-	Navbar
+	ClientNavbar
 	<slot />
 </template>
