@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useRestaurantsStore } from '@/stores/Restaurants';
-import { getPastDate } from '@/server/utils/getPastDate';
 
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants)
@@ -36,32 +35,11 @@ import interactionPlugin from '@fullcalendar/interaction' // needed for dateClic
 import itLocale from '@fullcalendar/core/locales/it';
 
 const handleDateClick = (dateClickInfo: any) => {
+    dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
     console.log('day', dateClickInfo.date.toISOString());
-    // change the day's background color just for fun 
-    dateClickInfo.dayEl.style.backgroundColor = 'red';
 }
 
-const getPastDate = (daysBack = 1): string => {
-    const date = new Date();
-    date.setDate(date.getDate());
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-};
-
 const events = ref([
-    {
-        start: '2020-01-01',
-        end: getPastDate(),
-        display: 'background',
-        constraint: {
-            start: '2020-01-01',
-            end: getPastDate(),
-        }
-    },
     {
         start: '2023-09-13',
         end: '2023-09-16',
@@ -75,20 +53,12 @@ const calendarOptions = {
     locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
     initialView: 'dayGridMonth',
-    // validRange: function () {
-    //     return {
-    //         start: getPastDate(),
-    //         end: '2033-09-13'
-    //     };
-    // },
     events: events.value,
     // fixedWeekCount: false,
     // showNonCurrentDates: false,
     selectable: false,
     dayMaxEvents: true,
     contentHeight: 380,
-    // navLinks: true,
-    // navLinkDayClick: handleDateClick,
     dateClick: handleDateClick
 }
 </script>

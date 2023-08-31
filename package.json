@@ -34,7 +34,9 @@
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/vue3": "^6.1.8",
+		"@popperjs/core": "^2.11.8",
 		"@prisma/client": "5.2.0",
-		"@vuepic/vue-datepicker": "^6.0.2"
+		"@vuepic/vue-datepicker": "^6.0.2",
+		"v-calendar": "^3.0.3"
 	}
 }

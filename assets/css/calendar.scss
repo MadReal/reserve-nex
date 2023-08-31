@@ -1,17 +1,9 @@
-.fc .fc-toolbar {
+.fc-toolbar {
 	@apply justify-center gap-5 #{!important};
 }
 
 .fc-toolbar-title {
 	@apply text-black text-xl capitalize #{!important};
-}
-
-.fc-day {
-	@apply capitalize #{!important};
-}
-
-.fc-daygrid-day-frame:hover {
-	@apply bg-gray-100 cursor-pointer #{!important};
 }
 
 .fc-button-primary,
@@ -21,45 +13,51 @@
 	@apply bg-transparent text-black border-0 focus_shadow-none #{!important};
 }
 
-.fc-h-event {
-	@apply bg-error-200 border-error-200 px-2 #{!important};
-	// @apply bg-error-200 border-error-200 px-3 rounded-full #{!important};
-}
-
-.fc-theme-standard .fc-scrollgrid {
-	// @apply border-0 #{!important};
-}
-.fc-theme-standard th {
-	// @apply border-0 #{!important};
-}
-
-.fc-theme-standard .fc-scrollgrid,
+.fc-scrollgrid,
 .fc-theme-standard th,
 .fc-theme-standard td {
-	// @apply border-0 #{!important};
 	@apply border-gray-100 #{!important};
 }
 
-.fc-daygrid-day-top {
+.fc-day:not(.fc-day-past) {
+	@apply capitalize cursor-pointer;
+
+	&:hover {
+		@apply bg-slate-50;
+	}
+}
+
+.fc-day-past {
+	// @apply cursor-not-allowed opacity-5;
+	@apply bg-white cursor-not-allowed;
+	.fc-daygrid-day-number {
+		@apply text-[#f2f2f2];
+	}
+}
+
+// adjust padding for the day's number
+.fc-daygrid-day-number {
 	@apply p-2 #{!important};
 }
 
+// to be able to target hover state of fc-day
+// .fc-daygrid-day-frame {
+// z-index: 10;
+// }
+
+// ******
+// specific for admin and client site
+// ******
+.calendar-admin {
+	--fc-event-bg-color: rgb(240 106 106);
+	--fc-event-border-color: rgb(240 106 106);
+}
+
 .calendar-client {
-	// --fc-bg-event-color: {
-	// 	@apply bg-gray-400;
-	// }
+	--fc-bg-event-color: #000000;
+	--fc-bg-event-opacity: 0.7;
 
-	.fc-event-start,
-	.fc-event-end,
-	.fc-event-future,
-	.fc-bg-event {
-		@apply bg-gray-400 cursor-not-allowed #{!important};
-
-		.fc-daygrid-day-frame:hover & {
-			@apply bg-inherit cursor-not-allowed #{!important};
-		}
+	.fc-daygrid-day-bg .fc-bg-event {
+		@apply z-50 cursor-not-allowed;
 	}
-	// .fc-daygrid-day-number {
-	// 	@apply text-gray-300 cursor-not-allowed #{!important};
-	// }
 }

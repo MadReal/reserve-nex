@@ -95,5 +95,5 @@ storeBlocks.fetchBlockedDates()
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
-    FullCalendar.mt-10.lg_mt-8(:options="calendarOptions")
+    FullCalendar.calendar-admin.mt-10.lg_mt-8(:options="calendarOptions")
 </template>
