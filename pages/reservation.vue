@@ -118,8 +118,8 @@ const calendarOptions = {
 
                 div(v-if="activeSectionStep === 2")
                     .py-6.px-10
-                        .flex.items-center.gap-2.pb-5.border-b
-                            SVGIcon.text-grey-100(svg="calendar", :size="22")
+                        .flex.items-center.gap-1.pb-5.border-b
+                            SVGIcon.text-grey-100(svg="calendar", :size="18")
                             p.-mb-1.text-sm.text-grey-300 {{ date }}
 
                         .lg_my-6
@@ -135,41 +135,41 @@ const calendarOptions = {
                     .py-6.px-10
                         .pb-5.border-b
                             .flex.items-center.gap-5
-                                .flex.items-center.gap-2
-                                    SVGIcon.text-grey-100(svg="calendar", :size="22")
+                                .flex.items-center.gap-1
+                                    SVGIcon.text-grey-100(svg="calendar", :size="18")
                                     p.-mb-1.text-sm.text-grey-300 {{ date }}                                
-                                .flex.items-center.gap-2
-                                    SVGIcon.text-grey-100(svg="clock", :size="20")
+                                .flex.items-center.gap-1
+                                    SVGIcon.text-grey-100(svg="clock", :size="16")
                                     p.-mb-1.text-sm.text-grey-300 {{ selectedTime.time }}
                             p.text-xs.pt-3.text-grey-100 Stai prenotando per Officina Del Riso Navigli, Alzaia Naviglio Grande, 62, 20144 Milano MI
 
                         .lg_mt-6
                             .flex.mb-2.gap-4
                                 .flex-grow
-                                    label.text-xs(for="personName") Nome
+                                    label.text-xs(for="person-name") Nome
                                     input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                        v-model="clientDetails.personName", name="personName", id="personName", type="text", placeholder="Nome*", autocomplete="name" required)
+                                        v-model="clientDetails.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
                                 .basis-20
-                                    label.text-xs(for="peopleAmount") Persone
+                                    label.text-xs(for="people-amount") Persone
                                     .w-full.h-10.bg-transparent.border.border-grey-100.text-xs.rounded-md.flex
-                                        select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(name="peopleAmount", id="peopleAmount", v-model="clientDetails.peopleAmount")
+                                        select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(name="people-amount", id="people-amount", v-model="clientDetails.peopleAmount")
                                             option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
 
-                            label.text-xs(for="personEmail") Email
+                            label.text-xs(for="person-email") Email
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personEmail", name="personEmail", id="personEmail", type="email", placeholder="Email*", autocomplete="email" required)
+                                v-model="clientDetails.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
-                            label.text-xs(for="restaupersonPhonerants") Telefono
+                            label.text-xs(for="person-phone") Telefono
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personPhone", name="personPhone", id="personPhone", type="tel", placeholder="Telefono*", autocomplete="tel" required)
+                                v-model="clientDetails.personPhone", name="person-phone", id="person-phone", type="tel", placeholder="Telefono*", autocomplete="tel" required)
 
-                            label.text-xs(for="restaupersonPhonerants") Instagram (opzionale)
+                            label.text-xs(for="person-instagram") Instagram (opzionale)
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personPhone", name="personPhone", id="personPhone", type="tel", placeholder="@username")
+                                v-model="clientDetails.personPhone", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
 
                 //- footer
                 .mb-7.px-10.flex.items-center
                     p(v-if="activeSectionStep !== 1") {{ selectedRestaurant.name }}
                     button.p-2.bg-black.text-white.rounded.ml-auto {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2 Conferma
+                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3") Conferma
 </template>

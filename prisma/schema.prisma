@@ -19,31 +19,31 @@ enum MealType {
 	@@schema("public")
 }
 
-enum JobTypes {
-	MANAGER
-	VIEWER
-	@@schema("public")
-}
+// enum JobTypes {
+// 	MANAGER
+// 	VIEWER
+// 	@@schema("public")
+// }
 
-model User {
-	id          Int        @id @default(autoincrement())
-	createdAt   DateTime   @default(now())
-	email       String     @unique
-	name        String?
-	isAdmin     Boolean
-	jobs        UserJob[]
-	@@schema("auth")
-}
+// model User {
+// 	id          Int        @id @default(autoincrement())
+// 	createdAt   DateTime   @default(now())
+// 	email       String     @unique
+// 	name        String?
+// 	isAdmin     Boolean
+// 	jobs        UserJob[]
+// 	@@schema("auth")
+// }
 
-model UserJob {
-	id             Int           @id @default(autoincrement())
-	user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)       
-	userId         Int
-	restaurant     Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId   Int
-	jobType        JobTypes
-	@@schema("public")
-}
+// model UserJob {
+// 	id             Int           @id @default(autoincrement())
+// 	user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)       
+// 	userId         Int
+// 	restaurant     Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+// 	restaurantId   Int
+// 	jobType        JobTypes
+// 	@@schema("public")
+// }
 
 model Restaurant {
 	id             Int            @id @default(autoincrement())
@@ -52,7 +52,7 @@ model Restaurant {
 	reservation    Reservation[]
 	workTime       WorkTime[]
 	block          Block[]
-	jobs           UserJob[]
+	// jobs           UserJob[]
 	@@schema("public")
 }
 
@@ -88,17 +88,18 @@ model Block  {
 
 // when client reserve a table at the restaurant
 model Reservation {
-	id            String       @id @default(uuid())
-	createdAt     DateTime     @default(now())
-	time          String
-	date          DateTime
-	personName    String
-	personPhone   String
-	personEmail   String
-	peopleAmount  Int
-	accepted      Boolean?
+	id                String       @id @default(uuid())
+	createdAt         DateTime     @default(now())
+	time              String
+	date              DateTime
+	personName        String
+	personPhone       String
+	personEmail       String
+	peopleAmount      Int
+	personInstagram   String
+	accepted          Boolean?
 	// relations
-	restaurant    Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId  Int
+	restaurant    	  Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId      Int
 	@@schema("public")
 }

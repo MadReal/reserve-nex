@@ -6,8 +6,6 @@ interface ClientBoxWorkTimeProps {
 const props = withDefaults(defineProps<ClientBoxWorkTimeProps>(), {
     isSelected: false
 })
-
-// if time analyzed from the array equals time being passed from template, add people
 </script>
 
 
