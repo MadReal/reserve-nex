@@ -7,8 +7,8 @@ const schema = Joi.object({
 	time: Joi.string().required(),
 	date: Joi.date().greater(getPastDate()).required(),
 	personName: Joi.string().required(),
-	personPhone: Joi.string().required(),
-	personEmail: Joi.string().required(),
+	personPhone: Joi.number().required(),
+	personEmail: Joi.string().email().required(),
 	peopleAmount: Joi.number().required(),
 	personInstagram: Joi.string().required(),
 	restaurantId: Joi.number().required(),
@@ -16,6 +16,8 @@ const schema = Joi.object({
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
+	// convert phone into number
+	body.personPhone = parseInt(body.personPhone);
 	// Validate body
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });

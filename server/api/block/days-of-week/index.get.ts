@@ -10,6 +10,11 @@ export default defineEventHandler(async (event) => {
 		// * REQUEST *
 		const block = await prisma.block.findMany({
 			where: { dayOfWeek: { not: null }, restaurantId: id },
+			select: {
+				id: true,
+				dayOfWeek: true,
+				restaurantId: true,
+			},
 		});
 		return block;
 	} catch (err) {
