@@ -8,8 +8,15 @@ const restaurantIdParam = parseInt(route.params.restaurantId[0])
 // logic to move between steps
 const activeSectionStep = ref(1)
 const activeSectionClass = 'after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent'
+const clickClass = computed(() => activeSectionStep.value === 4 ? 'cursor-default' : 'cursor-pointer')
 const isActiveSectionStepBiggerThen = (number: number): boolean => (activeSectionStep.value > number)
-const goToStep = (step: number) => step < activeSectionStep.value ? activeSectionStep.value = step : null;
+const goToStep = (stepToGo: number) => {
+    // if already finished, can't go back
+    if (activeSectionStep.value === 4) return
+    // always go to previous stepToGo
+    if (stepToGo < activeSectionStep.value) activeSectionStep.value = stepToGo
+    if (stepToGo === 3 && newReservation.value.time) activeSectionStep.value = stepToGo
+}
 
 // init reservation object
 const newReservation = ref<Partial<Reservation>>({
@@ -33,14 +40,7 @@ const { activeRestaurant } = storeToRefs(storeRestaurants)
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
 const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map(item => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)))
-const blockedDays = computed(() => {
-    return blockedDatesListFullCalendar.value.map(item => ({
-        start: item.dateStart.split('T')[0],
-        end: item.dateEnd.split('T')[0],
-        display: 'background',
-    }));
-})
-// const blockedDays = ref([{ start: "2023-09-07", end: "2023-09-10", display: "background" }])
+const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item => ({ ...item, display: 'background' })))
 // step 2
 // ====================
 import { useWorkTimesStore } from '~/stores/WorkTimes'
@@ -80,10 +80,9 @@ const handleDateClick = (dateClickInfo: any) => {
     dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
     activeSectionStep.value++
     newReservation.value.date = dateClickInfo.date
-    // fetch workTimes from activeRestaurant
     storeWorkTimes.fetchWorkTimes(restaurantIdParam);
 }
-const calendarOptions = {
+const calendarOptions = reactive({
     plugins: [dayGridPlugin, interactionPlugin],
     locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
@@ -92,16 +91,13 @@ const calendarOptions = {
     dayMaxEvents: true,
     contentHeight: 360,
     progressiveEventRendering: true,
-    events: blockedDays.value,
+    events: blockedDates.value,
     hiddenDays: hiddenDaysOfWeek.value,
     dateClick: handleDateClick
-}
-// watch(activeRestaurant, async (newRestuarant) => {
-//     await storeBlocks.fetchBlockedDaysOfWeek(newRestuarant?.id)
-//     calendarOptions.hiddenDays = hiddenDaysOfWeek.value
-//     await storeBlocks.fetchBlockedDates(newRestuarant?.id)
-//     calendarOptions.events = blockedDays.value
-// });
+})
+
+storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
+storeBlocks.fetchBlockedDates(restaurantIdParam)
 </script>
 
 
@@ -111,26 +107,32 @@ const calendarOptions = {
         .max-w-screen-xl.px-4.py-48.mx-auto
             .border.rounded.mx-auto.min-h-min(class="w-6/12")
                 .grid.grid-cols-4.relative.border-b.bg-slate-50
+                    //- line in the background
                     .mx-10.absolute.inset-x-0.inset-y-0.z-0
                         .absolute.border-b.w-full.h-1.inset-x-0(class="top-1/2")
+
                     .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(:class="activeSectionStep === 1 ? activeSectionClass : ''", @click="goToStep(1)")
-                        .p-5.rounded-full.border.bg-white.cursor-pointer(:class="{ 'border-primary-100' : activeSectionStep === 1, 'border-grey-200' : isActiveSectionStepBiggerThen(1) }")
+                        .p-5.rounded-full.border.bg-white(
+                            :class="[{ 'border-primary-100' : activeSectionStep === 1, 'border-grey-200' : isActiveSectionStepBiggerThen(1)}, clickClass]")
                             SVGIcon.text-grey-100(svg="calendar", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 1, 'text-grey-200' : isActiveSectionStepBiggerThen(1) }")
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(:class="activeSectionStep === 2 ? activeSectionClass : ''", @click="goToStep(2)")
-                        .p-5.rounded-full.border.bg-white.cursor-pointer(:class="{ 'border-primary-100' : activeSectionStep === 2, 'border-grey-200' : isActiveSectionStepBiggerThen(2) }")
+
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                        :class="[activeSectionStep === 2 ? activeSectionClass : '', clickClass]", @click="goToStep(2)")
+                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 2, 'border-grey-200' : isActiveSectionStepBiggerThen(2) }")
                             SVGIcon.text-grey-100(svg="clock", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 2, 'text-grey-200' : isActiveSectionStepBiggerThen(2) }")
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(:class="activeSectionStep === 3 ? activeSectionClass : ''", @click="goToStep(3)")
-                        .p-5.rounded-full.border.bg-white.cursor-pointer(:class="{ 'border-primary-100' : activeSectionStep === 3, 'border-grey-200' : isActiveSectionStepBiggerThen(3) }")
+
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                        :class="[activeSectionStep === 3 ? activeSectionClass : '', clickClass]", @click="goToStep(3)")
+                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 3, 'border-grey-200' : isActiveSectionStepBiggerThen(3) }")
                             SVGIcon.text-grey-100(svg="users-filled", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 3, 'text-grey-200' : isActiveSectionStepBiggerThen(3) }")
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(:class="activeSectionStep === 4 ? activeSectionClass : ''", @click="goToStep(4)")
-                        .p-5.rounded-full.border.bg-white.cursor-pointer(:class="{ 'border-primary-100' : activeSectionStep === 4 }")
+
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                        :class="[activeSectionStep === 4 ? activeSectionClass : '', clickClass]", @click="goToStep(4)")
+                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 4 }")
                             SVGIcon.text-grey-100(svg="check", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
 
 
                 div(v-if="activeSectionStep === 1")
-                    p {{ hiddenDaysOfWeek }}
-                    p {{ blockedDays }}
-                    p {{ activeRestaurant }}
                     .py-6.px-10
                         ClientOnly
                             FullCalendar.calendar-client(:options="calendarOptions")

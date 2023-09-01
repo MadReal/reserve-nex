@@ -49,7 +49,7 @@ const handleDragAndResize = (info: any) => {
     storeBlocks.updateBlockedDate(blockedDate.id, blockedDate.start, blockedDate.end)
 }
 
-const calendarOptions = {
+const calendarOptions = ref({
     plugins: [dayGridPlugin, interactionPlugin],
     locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
@@ -64,7 +64,7 @@ const calendarOptions = {
     // eventsSet: handleEvents
     eventDrop: handleDragAndResize,
     eventResize: handleDragAndResize
-}
+})
 // @ts-ignore
 watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
 
