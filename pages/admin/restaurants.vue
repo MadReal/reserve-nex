@@ -19,7 +19,9 @@ storeRestaurants.fetchRestaurants()
 
     .grid.grid-cols-4.gap-5.text-xl
         .flex.items-center.justify-center.border.border-gray-200.rounded.relative.cursor-pointer.hover_bg-slate-50(v-for="item in restaurantsList", :key="item.id")
-            p.p-10.m-6.text-center(@click="switchActiveRestaurant(item.id)") {{ item.name }}
+            .w-full.py-10.px-4.m-6.text-center(@click="switchActiveRestaurant(item.id)")
+                p(@click="switchActiveRestaurant(item.id)") {{ item.name }}
+                p.text-sm.text-grey-200(@click="switchActiveRestaurant(item.id)") {{ item.address }}, {{ item.city }}
             .absolute.bottom-3.right-3.flex.items-center.gap-1
                 SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="20" @click="openModal('restaurant', item.id)")
 
