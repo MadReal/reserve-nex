@@ -20,6 +20,7 @@ const goToStep = (stepToGo: number) => {
 
 // init reservation object
 const newReservation = ref<Partial<Reservation>>({
+    id: null!,
     time: '',
     date: null!,
     personName: '',
@@ -58,11 +59,14 @@ import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 // 
 const formInputEmpty = computed(() => {
-    const { time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
+    const { id, time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
     return Object.values(otherDetails).some(value => value === '' || value === null);
 });
 async function addReservation() {
-    await storeReservations.addReservation(newReservation.value);
+    const { id, ...reservationData } = newReservation.value;
+    const reservation = await storeReservations.addReservation(reservationData);
+    // @ts-ignore
+    newReservation.value = reservation
     activeSectionStep.value++
 }
 
@@ -193,8 +197,9 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
                     .py-24.px-10.flex.items-center.justify-center.gap-5
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                            p Congratulazioni {{ newReservation.personName }}, #[br]
-                                | ti aspettiamo il {{ formatDate(newReservation.date) }} alle {{ newReservation.time }}
+                            p.text-lg Congratulazioni {{ newReservation.personName }},
+                            p ti aspettiamo il {{ formatDate(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-3.text-xs.text-primary-100 Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
                             p.mt-4.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
 
 

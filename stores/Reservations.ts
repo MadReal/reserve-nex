@@ -59,8 +59,8 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 			method: "post",
 			body: reservation,
 		});
-		//@ts-ignore
-		if (data && data.value) return reservationsList.value.push(data.value);
+		// if (data && data.value) return reservationsList.value.push(data.value);
+		if (data && data.value) return data.value;
 	}
 
 	async function updateReservation(
