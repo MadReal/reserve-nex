@@ -27,5 +27,5 @@ nav.border-gray-200.z-20.relative.text-black(:class="{'text-white': isRouteHome}
                 li
                     a.block.py-2.pl-3.pr-4.rounded.md_hover_text-red-700.md_p-0(href='#') Prenota
                 li
-                    NuxtLink.py-2.px-3.bg-white.text-black.rounded.hover_shadow(to="/admin/reservations") Admin
+                    NuxtLink.py-2.px-3.rounded.hover_shadow(:class="{ 'bg-white text-black' : isRouteHome, 'bg-primary-100 text-white' : !isRouteHome }", to="/admin/reservations") Admin
 </template>
