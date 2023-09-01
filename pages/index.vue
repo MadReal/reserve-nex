@@ -15,7 +15,7 @@ const backgroundImage = "url('/images/sushisamba.jpg')"
                 | Rilassati in un'atmosfera calda e raffinata
             p.lg_max-w-2xl.mb-4.font-light.text-gray-200.lg_mb-4.md_text-lg.lg_text-xl
                 | L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese, dando vita a straordinari Gunkan.
-            NuxtLink.inline-flex.items-center.justify-center.px-5.py-3.mr-3.text-base.font-medium.text-center.text-white.rounded-lg.bg-red-600.hover_bg-red-500.focus_ring-4.focus_ring-primary-300(to='/reservation')
+            NuxtLink.inline-flex.items-center.justify-center.px-5.py-3.mr-3.text-base.font-medium.text-center.text-white.rounded-lg.bg-red-600.hover_bg-red-500.focus_ring-4.focus_ring-primary-300(to='/reservation/1')
                 | Prenota
                 SVGIcon.w-5.h-5.ml-2.-mr-1(svg="calendar")
             //- a.inline-flex.items-center.justify-center.px-5.py-3.text-base.font-medium.text-center.text-gray-900.border.border-gray-300.rounded-lg.hover_bg-gray-100.focus_ring-4.focus_ring-gray-100(href='#')

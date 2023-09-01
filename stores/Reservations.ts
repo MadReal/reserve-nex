@@ -54,7 +54,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 		}
 	}
 
-	async function addReservation(reservation: Reservation) {
+	async function addReservation(reservation: Partial<Reservation>) {
 		const { data, error } = await useFetch(URL, {
 			method: "post",
 			body: reservation,

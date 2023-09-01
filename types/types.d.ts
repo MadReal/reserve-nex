@@ -33,10 +33,10 @@ declare interface Reservation {
 	time: string;
 	date: Date | string;
 	personName: string;
-	personPhone: number;
+	personPhone: string;
 	personEmail: string;
 	peopleAmount: number;
-	personInstagram: string;
+	personInstagram: string | null;
 	accepted: boolean | null;
 	restaurantId: number;
 }

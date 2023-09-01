@@ -16,6 +16,13 @@ export default defineEventHandler(async (event) => {
 				periodTitle: { not: null },
 				restaurantId: id,
 			},
+			select: {
+				id: true,
+				dateStart: true,
+				dateEnd: true,
+				periodTitle: true,
+				restaurantId: true,
+			},
 		});
 		return block;
 	} catch (err) {

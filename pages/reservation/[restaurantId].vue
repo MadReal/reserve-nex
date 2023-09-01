@@ -1,34 +1,54 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+const route = useRoute();
 const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
+// route params
+const restaurantIdParam = parseInt(route.params.restaurantId[0])
 // logic to move between steps
 const activeSectionStep = ref(1)
 const activeSectionClass = 'after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent'
 const isActiveSectionStepBiggerThen = (number: number): boolean => (activeSectionStep.value > number)
 const goToStep = (step: number) => step < activeSectionStep.value ? activeSectionStep.value = step : null;
 
+// init reservation object
+const newReservation = ref<Partial<Reservation>>({
+    time: '',
+    date: null!,
+    personName: '',
+    personEmail: '',
+    personPhone: '',
+    peopleAmount: 1,
+    personInstagram: null,
+    restaurantId: restaurantIdParam
+})
+
 // step 1
 // ====================
+const storeBlocks = useBlocksStore()
+const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks)
 import { useRestaurantsStore } from '@/stores/Restaurants';
 const storeRestaurants = useRestaurantsStore();
-const { restaurantsList } = storeToRefs(storeRestaurants)
-storeRestaurants.fetchRestaurants();
+const { activeRestaurant } = storeToRefs(storeRestaurants)
+storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
-const selectedRestaurant = ref<Restaurant | null>(null)
-const selectedRestaurantError = ref(false);
-const stepAttempted = ref(false);
-const date = ref('')
-
+const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map(item => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)))
+const blockedDays = computed(() => {
+    return blockedDatesListFullCalendar.value.map(item => ({
+        start: item.dateStart.split('T')[0],
+        end: item.dateEnd.split('T')[0],
+        display: 'background',
+    }));
+})
+// const blockedDays = ref([{ start: "2023-09-07", end: "2023-09-10", display: "background" }])
 // step 2
 // ====================
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 //
-const selectedTime = ref<WorkTime | null>(null)
-const selectWorkTime = (workTime: WorkTime) => {
-    selectedTime.value = workTime
+const selectTime = (time: WorkTime["time"]) => {
+    newReservation.value.time = time
     activeSectionStep.value++
 }
 
@@ -37,26 +57,12 @@ const selectWorkTime = (workTime: WorkTime) => {
 import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 // 
-const clientDetails = ref({
-    personName: '',
-    personEmail: '',
-    personPhone: '',
-    peopleAmount: 1,
-    personInstagram: null,
-})
-const clientDetailsEmpty = computed(() => {
-    const { personInstagram, ...otherDetails } = clientDetails.value;
+const formInputEmpty = computed(() => {
+    const { time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
     return Object.values(otherDetails).some(value => value === '' || value === null);
 });
 async function addReservation() {
-    // @ts-ignore
-    const reservation: Reservation = {
-        ...clientDetails.value,
-        date: date.value,
-        time: selectedTime.value?.time!,
-        restaurantId: selectedRestaurant?.value?.id!
-    }
-    await storeReservations.addReservation(reservation);
+    await storeReservations.addReservation(newReservation.value);
     activeSectionStep.value++
 }
 
@@ -69,36 +75,33 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import itLocale from '@fullcalendar/core/locales/it';
 
-const events = ref([
-    {
-        start: '2023-09-13',
-        end: '2023-09-16',
-        display: 'background',
-    }
-])
+
 const handleDateClick = (dateClickInfo: any) => {
     dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
-    stepAttempted.value = true
-    if (!selectedRestaurant.value) return selectedRestaurantError.value = true
     activeSectionStep.value++
-    date.value = dateClickInfo.date
-    events.value.push({ start: date.value, end: date.value, display: 'background' })
-    // fetch workTimes from selectedRestaurant
-    storeWorkTimes.fetchWorkTimes(selectedRestaurant.value.id);
+    newReservation.value.date = dateClickInfo.date
+    // fetch workTimes from activeRestaurant
+    storeWorkTimes.fetchWorkTimes(restaurantIdParam);
 }
 const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
     initialView: 'dayGridMonth',
-    events: events.value,
-    // fixedWeekCount: false,
-    // showNonCurrentDates: false,
     selectable: false,
     dayMaxEvents: true,
     contentHeight: 360,
+    progressiveEventRendering: true,
+    events: blockedDays.value,
+    hiddenDays: hiddenDaysOfWeek.value,
     dateClick: handleDateClick
 }
+// watch(activeRestaurant, async (newRestuarant) => {
+//     await storeBlocks.fetchBlockedDaysOfWeek(newRestuarant?.id)
+//     calendarOptions.hiddenDays = hiddenDaysOfWeek.value
+//     await storeBlocks.fetchBlockedDates(newRestuarant?.id)
+//     calendarOptions.events = blockedDays.value
+// });
 </script>
 
 
@@ -125,29 +128,27 @@ const calendarOptions = {
 
 
                 div(v-if="activeSectionStep === 1")
+                    p {{ hiddenDaysOfWeek }}
+                    p {{ blockedDays }}
+                    p {{ activeRestaurant }}
                     .py-6.px-10
-                        label(for="restaurants") Ristorante:
-                        .bg-gray-50.border.text-sm.rounded-lg.block.w-full.p-2(:class="{ 'text-gray-900 border-gray-300' : !selectedRestaurantError || !stepAttempted, 'text-error-200 border-error-200' : selectedRestaurantError && stepAttempted}")
-                            select.w-full.border-r-4.border-transparent.bg-gray-50.focus_ring-transparent.focus_border-transparent(name="restaurants", id="restaurants", v-model="selectedRestaurant")
-                                option(disabled :value="null") Scegli ristorante
-                                option(v-for="item in restaurantsList", :key="item.id", :value="item") {{ item.name }}
-                    .py-6.px-10
-                        FullCalendar.calendar-client(:options="calendarOptions")
+                        ClientOnly
+                            FullCalendar.calendar-client(:options="calendarOptions")
 
                 div(v-if="activeSectionStep === 2")
                     .py-6.px-10
                         .flex.items-center.gap-1.pb-5.border-b
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
-                            p.-mb-1.text-sm.text-grey-300 {{ formatDate(date) }}
+                            p.-mb-1.text-sm.text-grey-300 {{ formatDate(newReservation.date) }}
 
-                        .lg_my-6
+                        .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-4.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" :workTime="workTime", :isSelected="workTime === selectedTime", @selectWorkTime="selectWorkTime")
-                        .lg_my-6
+                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" :time="workTime.time", :isSelected="workTime.time === newReservation.time", @selectTime="selectTime")
+                        .lg_my-6(v-if="storeWorkTimes.dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-4.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" :workTime="workTime", :isSelected="workTime === selectedTime", @selectWorkTime="selectWorkTime")
+                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" :time="workTime.time", :isSelected="workTime.time === newReservation.time", @selectTime="selectTime")
 
                 div(v-if="activeSectionStep === 3")
                     .py-6.px-10
@@ -155,50 +156,51 @@ const calendarOptions = {
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.-mb-1.text-sm.text-grey-300 {{ formatDate(date) }}
+                                    p.-mb-1.text-sm.text-grey-300 {{ formatDate(newReservation.date) }}
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="clock", :size="16")
-                                    p.-mb-1.text-sm.text-grey-300 {{ selectedTime.time }}
-                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ selectedRestaurant.name }} - {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
+                                    p.-mb-1.text-sm.text-grey-300 {{ newReservation.time }}
+                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
 
                         .lg_mt-6
                             .flex.mb-2.gap-4
                                 .flex-grow
                                     label.text-xs(for="person-name") Nome
                                     input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                        v-model="clientDetails.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
+                                        v-model="newReservation.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
                                 .basis-20
                                     label.text-xs(for="people-amount") Persone
                                     .w-full.h-10.bg-transparent.border.border-grey-100.text-xs.rounded-md.flex
-                                        select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(name="people-amount", id="people-amount", v-model="clientDetails.peopleAmount")
+                                        select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(
+                                            v-model="newReservation.peopleAmount", name="people-amount", id="people-amount")
                                             option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
 
                             label.text-xs(for="person-email") Email
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
+                                v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
                             label.text-xs(for="person-phone") Telefono
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personPhone", name="person-phone", id="person-phone", type="tel", placeholder="Telefono*", autocomplete="tel" required)
+                                v-model="newReservation.personPhone", name="person-phone", id="person-phone", type="tel", placeholder="Telefono*", autocomplete="tel" required)
 
                             label.text-xs(for="person-instagram") Instagram (opzionale)
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
+                                v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
 
                 div(v-if="activeSectionStep === 4")
                     .py-24.px-10.flex.items-center.justify-center.gap-5
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                            p Congratulazioni {{ clientDetails.personName }}, #[br]
-                                | ti aspettiamo il {{ formatDate(date) }} alle {{ selectedTime.time }}
-                            p.mt-4.pt-4.border-t.text-sm.text-grey-200 {{ selectedRestaurant.name }} - {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
+                            p Congratulazioni {{ newReservation.personName }}, #[br]
+                                | ti aspettiamo il {{ formatDate(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-4.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
 
 
                 //- footer
                 .mb-7.px-10.flex.items-center
                     div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
-                        p {{ selectedRestaurant.name }} 
-                        p.text-xs.-mt-1.text-gray-500 {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
+                        p {{ activeRestaurant.name }} 
+                        p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
                     button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="clientDetailsEmpty", :class="{ 'disabled_opacity-25' : clientDetailsEmpty }", @click="addReservation()") Conferma
+                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
 </template>

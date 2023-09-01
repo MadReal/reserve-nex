@@ -29,9 +29,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	);
 
 	// ACTIONS - Block 'dayOfWeek'
-	async function fetchBlockedDaysOfWeek() {
+	async function fetchBlockedDaysOfWeek(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch(URL_blockedDaysOfWeek, {
-			params: { restaurantId: activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId },
 		});
 		if (data.value) {
 			// Sort week days ascendent (Monday, Tuesday)
@@ -148,11 +148,14 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	// ACTIONS - Block - 'One (or more) days period'
-	async function fetchBlockedDates() {
+	async function fetchBlockedDates(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch(URL_blockedDate, {
-			params: { restaurantId: activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId },
 		});
-		if (data.value) blockedDatesList.value = data.value;
+		if (data.value) {
+			blockedDatesList.value = data.value;
+			return data.value;
+		}
 	}
 
 	async function addBlockedDate(

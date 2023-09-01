@@ -16,10 +16,10 @@ const isBlockedDaysOfWeekListFull = computed(() => blockedDaysOfWeekList.value.l
 // CALENDAR
 //************
 // https://github.com/fullcalendar/fullcalendar-vue
-
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
+import itLocale from '@fullcalendar/core/locales/it';
 
 const handleEventClick = async (clickInfo: any) => {
     const blockId: Block['id'] = clickInfo.event.id
@@ -51,20 +51,21 @@ const handleDragAndResize = (info: any) => {
 
 const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
+    locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
     initialView: 'dayGridMonth',
-    events: blockedDatesListFullCalendar,
     editable: true,
     selectable: true,
     dayMaxEvents: true,
     contentHeight: 500,
+    events: blockedDatesListFullCalendar,
     select: handleDateSelect,
     eventClick: handleEventClick,
     // eventsSet: handleEvents
     eventDrop: handleDragAndResize,
     eventResize: handleDragAndResize
 }
-
+// @ts-ignore
 watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
 
 // API CALLS
