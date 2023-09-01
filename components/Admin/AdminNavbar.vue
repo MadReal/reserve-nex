@@ -51,7 +51,7 @@ const delayedSearch = debounce(async (newSearch: string) => {
     const data = await storeReservations.fetchReservations(newSearch)
     if (!data || !data.length) { showSearchError.value = true }
     else isSearchDropdownOpen.value = true
-}, 1200);
+}, 800);
 // Watch the search input and call the debounced function
 watch(search, (newSearch) => { delayedSearch(newSearch); });
 </script>
