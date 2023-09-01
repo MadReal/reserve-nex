@@ -16,9 +16,8 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = restaurantSchema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { name } = value;
 		// * REQUEST *
-		const restaurant = await prisma.restaurant.create({ data: { name } });
+		const restaurant = await prisma.restaurant.create({ data: value });
 		return restaurant;
 	} catch (err) {
 		console.error(err);

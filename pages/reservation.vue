@@ -44,11 +44,19 @@ const clientDetails = ref({
     peopleAmount: 1,
     personInstagram: '',
 })
+// const clientDetailsEmpty = computed(() => {
+//     const { personInstagram, ...otherDetails } = clientDetails.value;
+//     return Object.values(otherDetails).some(value => value === '');
+// });
+const clientDetailsEmpty = computed(() => {
+    const { personInstagram, ...otherDetails } = clientDetails.value;
+    return Object.values(otherDetails).every(value => !value);
+});
 
 async function addReservation() {
     // @ts-ignore
     const reservation: Reservation = {
-        ...clientDetails,
+        ...clientDetails.value,
         date: date.value,
         time: selectedTime.value?.time!,
         restaurantId: selectedRestaurant?.value?.id!
@@ -78,7 +86,7 @@ const handleDateClick = (dateClickInfo: any) => {
     stepAttempted.value = true
     if (!selectedRestaurant.value) return selectedRestaurantError.value = true
     activeSectionStep.value++
-    date.value = formatDate(dateClickInfo.date)
+    date.value = dateClickInfo.date
     events.value.push({ start: date.value, end: date.value, display: 'background' })
     // fetch workTimes from selectedRestaurant
     storeWorkTimes.fetchWorkTimes(selectedRestaurant.value.id);
@@ -122,7 +130,6 @@ const calendarOptions = {
 
 
                 div(v-if="activeSectionStep === 1")
-                    p {{  restaurantsList }}
                     .py-6.px-10
                         label(for="restaurants") Ristorante:
                         .bg-gray-50.border.text-sm.rounded-lg.block.w-full.p-2(:class="{ 'text-gray-900 border-gray-300' : !selectedRestaurantError || !stepAttempted, 'text-error-200 border-error-200' : selectedRestaurantError && stepAttempted}")
@@ -136,7 +143,7 @@ const calendarOptions = {
                     .py-6.px-10
                         .flex.items-center.gap-1.pb-5.border-b
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
-                            p.-mb-1.text-sm.text-grey-300 {{ date }}
+                            p.-mb-1.text-sm.text-grey-300 {{ formatDate(date) }}
 
                         .lg_my-6
                             p.mb-4 Pranzo
@@ -153,11 +160,11 @@ const calendarOptions = {
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.-mb-1.text-sm.text-grey-300 {{ date }}                                
+                                    p.-mb-1.text-sm.text-grey-300 {{ formatDate(date) }}
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="clock", :size="16")
                                     p.-mb-1.text-sm.text-grey-300 {{ selectedTime.time }}
-                            p.text-xs.pt-3.text-grey-100 Stai prenotando per Officina Del Riso Navigli, Alzaia Naviglio Grande, 62, 20144 Milano MI
+                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ selectedRestaurant.name }} - {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
 
                         .lg_mt-6
                             .flex.mb-2.gap-4
@@ -181,11 +188,13 @@ const calendarOptions = {
 
                             label.text-xs(for="person-instagram") Instagram (opzionale)
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                v-model="clientDetails.personPhone", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
+                                v-model="clientDetails.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
 
                 //- footer
                 .mb-7.px-10.flex.items-center
-                    p(v-if="activeSectionStep !== 1") {{ selectedRestaurant.name }}
+                    div(v-if="activeSectionStep !== 1")
+                        p {{ selectedRestaurant.name }} 
+                        p.text-xs.-mt-1.text-gray-500 {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
                     button.p-2.bg-black.text-white.rounded.ml-auto {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3", @click="addReservation()") Conferma
+                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3", :disabled="clientDetailsEmpty", :class="{ 'disabled_opacity-25' : clientDetailsEmpty }", @click="addReservation()") Conferma
 </template>

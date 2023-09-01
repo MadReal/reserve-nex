@@ -10,12 +10,15 @@ const schema = Joi.object({
 	personPhone: Joi.number().required(),
 	personEmail: Joi.string().email().required(),
 	peopleAmount: Joi.number().required(),
-	personInstagram: Joi.string().required(),
+	personInstagram: Joi.string().optional(),
 	restaurantId: Joi.number().required(),
 });
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
+	console.log("API");
+	console.log(body);
+
 	// convert phone into number
 	body.personPhone = parseInt(body.personPhone);
 	// Validate body

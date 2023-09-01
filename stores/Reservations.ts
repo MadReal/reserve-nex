@@ -55,9 +55,12 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	}
 
 	async function addReservation(reservation: Reservation) {
+		console.log("addReservation");
+		console.log(reservation);
+
 		const { data, error } = await useFetch(URL, {
 			method: "post",
-			body: { reservation },
+			body: reservation,
 		});
 		//@ts-ignore
 		if (data && data.value) reservationsList.value.push(data.value);

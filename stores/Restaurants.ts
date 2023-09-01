@@ -27,8 +27,6 @@ export const useRestaurantsStore = defineStore(
 
 		async function fetchRestaurants() {
 			const { data }: any = await useFetch(URL);
-			console.log(data.value);
-
 			if (data?.value) restaurantsList.value = data.value;
 			// set active restaurant automatically if only 1 in the list
 			if (data?.value?.length === 1)
