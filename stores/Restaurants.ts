@@ -49,7 +49,12 @@ export const useRestaurantsStore = defineStore(
 			if (restaurantId) {
 				const { data } = await useFetch(`${URL}/${restaurantId}`, {
 					method: "patch",
-					body: restaurant,
+					body: {
+						name: restaurant.name,
+						address: restaurant.address,
+						city: restaurant.city,
+						zipCode: restaurant.zipCode,
+					},
 				});
 				const restuarantToUpdateIndex = restaurantsList.value.findIndex(
 					(e) => e.id === restaurantId

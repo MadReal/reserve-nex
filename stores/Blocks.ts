@@ -61,7 +61,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		if (isUpdate) {
 			await useFetch(`${URL_blockedDaysOfWeek}/${oldDayOfWeekId}`, {
 				method: "patch",
-				body: { dayOfWeek: newDayOfWeek, restaurantId: 1 },
+				body: { dayOfWeek: newDayOfWeek, restaurantId: activeRestaurantId },
 			});
 			const blockedDayOfWeekToUpdateIndex =
 				blockedDaysOfWeekList.value.findIndex((e) => e.id === oldDayOfWeekId);

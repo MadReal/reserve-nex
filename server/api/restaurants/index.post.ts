@@ -7,7 +7,7 @@ export const restaurantSchema = Joi.object({
 	name: Joi.string().required(),
 	address: Joi.string().required(),
 	city: Joi.string().required(),
-	ZipCode: Joi.number().required(),
+	zipCode: Joi.number().required(),
 });
 
 export default defineEventHandler(async (event) => {
