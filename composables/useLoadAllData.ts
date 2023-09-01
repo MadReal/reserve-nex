@@ -16,13 +16,5 @@ export function useLoadAllData() {
 		storeWorkTimes.fetchWorkTimes();
 	}
 
-	function loadClientInitData() {
-		storeRestaurants.fetchRestaurants();
-		storeWorkTimes.fetchWorkTimes();
-		storeBlocks.fetchBlockedDaysOfWeek();
-		storeBlocks.fetchBlockedTimesOnDay();
-		storeBlocks.fetchBlockedDates();
-	}
-
-	return { loadAdminInitData, loadClientInitData };
+	return { loadAdminInitData };
 }

@@ -21,7 +21,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 <template lang="pug">
 .flex.items-center.justify-center.h-full
 	.text-center.basis-full
-		p.text-lg.font-semibold.mb-4 Prenotazione {{ `#${selectedReservation.id}` }}
+		p.text-lg.font-semibold.mb-4 Prenotazione
 
 		table.table-fixed.border-collapse.w-full.border.border-slate-400.bg-white.text-sm.text-left.shadow-sm
 			tbody

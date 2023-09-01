@@ -26,10 +26,15 @@ const props = withDefaults(defineProps<NavbarProps>(), {
 
 let search = ref('')
 let showSearchError = ref(false)
+let isSearchDropdownOpen = ref(false)
 
 let isMenuOpen = ref(false)
 function toggleMenu() {
     isMenuOpen.value = !isMenuOpen.value
+}
+function closeSearchDropdown() {
+    isSearchDropdownOpen.value = !isSearchDropdownOpen.value
+    search.value = ''
 }
 
 async function logout() {
@@ -40,9 +45,12 @@ async function logout() {
 
 // Use the debounce function to create a debounced version of your callback
 const delayedSearch = debounce(async (newSearch: string) => {
+    // Remove '#' character from string, in case
+    newSearch = newSearch.replace('#', '');
     showSearchError.value = false
     const data = await storeReservations.fetchReservations(newSearch)
     if (!data || !data.length) { showSearchError.value = true }
+    else isSearchDropdownOpen.value = true
 }, 1200);
 // Watch the search input and call the debounced function
 watch(search, (newSearch) => { delayedSearch(newSearch); });
@@ -61,17 +69,17 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                     SVGIcon.text-grey-100(svg="search", v-show="!search.length")
                     SVGIcon.text-grey-100.cursor-pointer(svg="close", v-show="search.length", @click="search = ''")
 
-                .absolute.bg-white.z-10.inset-x-0.top-12.rounded-lg.shadow
+                .absolute.bg-white.z-10.inset-x-0.top-12.rounded-lg.shadow.overflow-y-auto(class="lg_max-h-[20rem]" v-if="search.length > 0 && isSearchDropdownOpen")
                     //- show "error" on search
                     .flex.items-center.gap-5.p-4.border-b(v-if="showSearchError")
                         p.pr-1.text-grey-100 Nessun risultato...
                     //- show results
                     .flex.items-center.gap-5.p-4.border-b.font-medium.hover_bg-slate-50(v-else, v-for="item in reservationsSearchList", :key="item.id")
-                        p.inline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id)")
-                            span.pr-1.text-black.font-semibold {{ item.personName }}
-                            span.text-grey-200.text-xs {{ `[#${item.id}]` }}
+                        .inline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id); closeSearchDropdown()")
+                            p.pr-1.text-black.font-semibold {{ item.personName }}
+                            p.text-grey-200.text-xs.tracking-tight {{ `#${item.id}` }}
                         p.antialiased.text-sm.-mb-px {{ formatDate(item.date) }}
-                        a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id)") APRI
+                        a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id); closeSearchDropdown()") APRI
 
         .flex.md_order-2.lg_hidden
             button.inline-flex.items-center.justify-center.text-sm.text-grey-200.rounded-lg(type="button", @click="toggleMenu",
