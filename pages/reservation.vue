@@ -65,7 +65,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import itLocale from '@fullcalendar/core/locales/it';
 import { number } from 'joi';
-import Restaurants from './admin/restaurants.vue';
 
 const events = ref([
     {
@@ -123,6 +122,7 @@ const calendarOptions = {
 
 
                 div(v-if="activeSectionStep === 1")
+                    p {{  restaurantsList }}
                     .py-6.px-10
                         label(for="restaurants") Ristorante:
                         .bg-gray-50.border.text-sm.rounded-lg.block.w-full.p-2(:class="{ 'text-gray-900 border-gray-300' : !selectedRestaurantError || !stepAttempted, 'text-error-200 border-error-200' : selectedRestaurantError && stepAttempted}")

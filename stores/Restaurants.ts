@@ -26,31 +26,36 @@ export const useRestaurantsStore = defineStore(
 		}
 
 		async function fetchRestaurants() {
-			const { data, error }: any = await useFetch(URL);
+			const { data }: any = await useFetch(URL);
+			console.log(data.value);
+
 			if (data?.value) restaurantsList.value = data.value;
 			// set active restaurant automatically if only 1 in the list
-			if (data?.value.length === 1) activeRestaurantId.value = data.value[0].id;
+			if (data?.value?.length === 1)
+				activeRestaurantId.value = data.value[0].id;
 		}
 
 		async function addOrUpdateRestaurant(
-			restaurantName: Restaurant["name"],
+			restaurant: Restaurant,
 			restaurantId: Restaurant["id"] | null
 		) {
 			if (restaurantId) {
-				await useFetch(`${URL}/${restaurantId}`, {
+				const { data } = await useFetch(`${URL}/${restaurantId}`, {
 					method: "patch",
-					body: { name: restaurantName },
+					body: restaurant,
 				});
 				const restuarantToUpdateIndex = restaurantsList.value.findIndex(
 					(e) => e.id === restaurantId
 				);
-				restaurantsList.value[restuarantToUpdateIndex].name = restaurantName;
+				// @ts-ignore
+				restaurantsList.value[restuarantToUpdateIndex] = data.value;
 			} else {
 				const { data, error } = await useFetch(URL, {
 					method: "post",
-					body: { name: restaurantName },
+					body: restaurant,
 				});
 				if (data && data.value) {
+					// @ts-ignore
 					restaurantsList.value.push(data.value);
 					activeRestaurantId.value = data.value.id;
 				}

@@ -44,6 +44,9 @@ declare interface Reservation {
 declare interface Restaurant {
 	id?: number;
 	name: string;
+	address: string;
+	city: string;
+	zipCode: number | null;
 }
 
 type ModalType = "restaurant" | "reservation";

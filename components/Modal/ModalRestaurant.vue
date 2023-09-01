@@ -8,17 +8,22 @@ const storeRestaurants = useRestaurantsStore()
 const { activeModalOption } = storeToRefs(storeModals)
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
-const modalRestaurantName = ref('');
+const modalRestaurant = ref({
+	name: '',
+	address: '',
+	city: '',
+	zipCode: null,
+});
 const selectedRestaurant = ref(restaurantsList.value.filter((item: Restaurant) => item.id === activeModalOption.value)[0])
-// Set the initial value of modalRestaurantName based on activeRestaurant
+// Set the initial value of modalRestaurant based on activeRestaurant
 const initialEditedRestaurantName = computed(() => selectedRestaurant.value ? selectedRestaurant.value.name : '');
-modalRestaurantName.value = initialEditedRestaurantName.value
+modalRestaurant.value.name = initialEditedRestaurantName.value
 
 let modalError = ref('')
 const addOrUpdateRestaurant = async () => {
-	if (!modalRestaurantName.value) modalError.value = 'Scrivi un nome valido'
+	if (!modalRestaurant.value) modalError.value = 'Scrivi un nome valido'
 	else {
-		await storeRestaurants.addOrUpdateRestaurant(modalRestaurantName.value, selectedRestaurant?.value?.id)
+		await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id)
 		modalError.value = ''
 		storeModals.closeModal()
 	}
@@ -38,7 +43,7 @@ const removeRestaurant = async () => {
 	.text-center.basis-full
 		p.text-lg.font-semibold.mb-4 {{ selectedRestaurant ? 'Modifica Ristorante' : 'Aggiungi Ristorante'}}
 		input.h-10.p-3.rounded-lg.border(class="w-full lg_w-10/12", :class="{ 'border-error-200 placeholder_text-error-100' : modalError }", 
-			type="text", placeholder="Nome del ristorante", v-model="modalRestaurantName")
+			type="text", placeholder="Nome del ristorante", v-model="modalRestaurant.name")
 		p.mt-2.text-sm.text-error-200 {{ modalError || '' }}
 
 		.flex.items-center.justify-center.gap-2.mt-4
