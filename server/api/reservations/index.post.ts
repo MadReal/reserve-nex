@@ -7,10 +7,10 @@ const schema = Joi.object({
 	time: Joi.string().required(),
 	date: Joi.date().greater(getPastDate()).required(),
 	personName: Joi.string().required(),
-	personPhone: Joi.number().required(),
+	personPhone: Joi.string().required(),
 	personEmail: Joi.string().email().required(),
 	peopleAmount: Joi.number().required(),
-	personInstagram: Joi.string().optional(),
+	personInstagram: Joi.string().allow(null),
 	restaurantId: Joi.number().required(),
 });
 
@@ -19,8 +19,6 @@ export default defineEventHandler(async (event) => {
 	console.log("API");
 	console.log(body);
 
-	// convert phone into number
-	body.personPhone = parseInt(body.personPhone);
 	// Validate body
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });

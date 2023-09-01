@@ -42,17 +42,12 @@ const clientDetails = ref({
     personEmail: '',
     personPhone: '',
     peopleAmount: 1,
-    personInstagram: '',
+    personInstagram: null,
 })
-// const clientDetailsEmpty = computed(() => {
-//     const { personInstagram, ...otherDetails } = clientDetails.value;
-//     return Object.values(otherDetails).some(value => value === '');
-// });
 const clientDetailsEmpty = computed(() => {
     const { personInstagram, ...otherDetails } = clientDetails.value;
-    return Object.values(otherDetails).every(value => !value);
+    return Object.values(otherDetails).some(value => value === '' || value === null);
 });
-
 async function addReservation() {
     // @ts-ignore
     const reservation: Reservation = {
@@ -62,6 +57,7 @@ async function addReservation() {
         restaurantId: selectedRestaurant?.value?.id!
     }
     await storeReservations.addReservation(reservation);
+    activeSectionStep.value++
 }
 
 //************
@@ -72,7 +68,6 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
 import itLocale from '@fullcalendar/core/locales/it';
-import { number } from 'joi';
 
 const events = ref([
     {
@@ -111,7 +106,7 @@ const calendarOptions = {
 .page.relative.-mt-16.z-0
     section
         .max-w-screen-xl.px-4.py-48.mx-auto
-            .border.rounded.mx-auto(class="w-6/12")
+            .border.rounded.mx-auto.min-h-min(class="w-6/12")
                 .grid.grid-cols-4.relative.border-b.bg-slate-50
                     .mx-10.absolute.inset-x-0.inset-y-0.z-0
                         .absolute.border-b.w-full.h-1.inset-x-0(class="top-1/2")
@@ -190,11 +185,20 @@ const calendarOptions = {
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
                                 v-model="clientDetails.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
 
+                div(v-if="activeSectionStep === 4")
+                    .py-24.px-10.flex.items-center.justify-center.gap-5
+                        div.text-center
+                            SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
+                            p Congratulazioni {{ clientDetails.personName }}, #[br]
+                                | ti aspettiamo il {{ formatDate(date) }} alle {{ selectedTime.time }}
+                            p.mt-4.pt-4.border-t.text-sm.text-grey-200 {{ selectedRestaurant.name }} - {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
+
+
                 //- footer
                 .mb-7.px-10.flex.items-center
-                    div(v-if="activeSectionStep !== 1")
+                    div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
                         p {{ selectedRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ selectedRestaurant.address }}, {{ selectedRestaurant.zipCode }} {{ selectedRestaurant.city }}
-                    button.p-2.bg-black.text-white.rounded.ml-auto {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3", :disabled="clientDetailsEmpty", :class="{ 'disabled_opacity-25' : clientDetailsEmpty }", @click="addReservation()") Conferma
+                    button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="clientDetailsEmpty", :class="{ 'disabled_opacity-25' : clientDetailsEmpty }", @click="addReservation()") Conferma
 </template>

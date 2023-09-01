@@ -87,7 +87,7 @@ model Reservation {
 	time              String
 	date              DateTime
 	personName        String
-	personPhone       Int
+	personPhone       String
 	personEmail       String
 	peopleAmount      Int
 	personInstagram   String?
