@@ -16,9 +16,6 @@ const schema = Joi.object({
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
-	console.log("API");
-	console.log(body);
-
 	// Validate body
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
