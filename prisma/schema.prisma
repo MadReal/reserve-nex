@@ -28,7 +28,6 @@ enum MealType {
 // 	name        String?
 // 	isAdmin     Boolean
 // 	jobs        UserJob[]
-// 	@@schema("auth")
 // }
 
 // model UserJob {
@@ -85,7 +84,7 @@ model Reservation {
 	time              String
 	date              DateTime
 	personName        String
-	personPhone       String
+	personPhone       Int
 	personEmail       String
 	peopleAmount      Int
 	personInstagram   String
