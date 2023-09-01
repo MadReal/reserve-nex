@@ -1,17 +1,14 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { restaurantSchema } from "./index.post";
 
 const prisma = new PrismaClient();
-
-export const schema = Joi.object({
-	name: Joi.string().required(),
-});
 
 export default defineEventHandler(async (event) => {
 	const { restaurantId } = event.context.params as { restaurantId: string };
 	const body = await readBody(event);
 	// validate body
-	const { error, value } = schema.validate(body);
+	const { error, value } = restaurantSchema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { name } = value;
