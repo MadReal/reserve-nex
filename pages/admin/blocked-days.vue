@@ -83,7 +83,7 @@ storeBlocks.fetchBlockedDates()
             p.text-sm.text-grey-200.font-light Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.
 
         //- Divider
-        .hidden.lg_block.lg_border-r.lg_border-b-0
+        .hidden.lg_block.lg_h-full.lg_border-r
 
         div.mb-10.lg_mt-2.lg_mb-8
             //- Display for each day already "blocked"
