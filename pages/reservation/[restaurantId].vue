@@ -41,10 +41,11 @@ const { activeRestaurant } = storeToRefs(storeRestaurants)
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
 const daysClosedSentence = computed(() => {
+    const isActive = blockedDaysOfWeekList.value.length > 0
     const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? 'Giorni' : 'Giorno';
     const mainSentence = `${dayOrDaysWord} di chiusura: `
     const listOfDays = blockedDaysOfWeekList.value.map(item => useTranslateDayOfWeek(item.dayOfWeek!)).join(', ')
-    return { mainSentence, listOfDays }
+    return { isActive, mainSentence, listOfDays }
 })
 const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map(item => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)))
 const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item => ({ ...item, display: 'background' })))
@@ -159,7 +160,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                 div(v-if="activeSectionStep === 1")
                     .py-6.px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
-                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
+                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
 
                 div(v-if="activeSectionStep === 2")
                     .py-6.px-10
