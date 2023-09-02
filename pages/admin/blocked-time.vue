@@ -30,10 +30,3 @@ storeBlocks.fetchBlockedTimesOnDay()
                 p.leading-normal.text-grey-200 Aggiungi Blocco
                 SVGIcon.text-grey-300(svg="plus", :size="15")
 </template>
-
-
-<style>
-:root {
-    --dp-font-family: "Poppins", sans-serif
-}
-</style>

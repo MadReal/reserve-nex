@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 import { useBlocksStore } from '~/stores/Blocks'
-
 
 interface SelectTimePeriodProps {
     blockTimePeriod: Block,
@@ -20,7 +18,6 @@ const disabledDates = computed(() => {
     for (let i = new Date(0); i < today; i.setDate(i.getDate() + 1)) {
         disabledDatesArray.push(new Date(i));
     }
-
     return disabledDatesArray;
 });
 
@@ -30,12 +27,10 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
     if (isTimeFrom) block.timeStart = time;
     else block.timeEnd = time;
 
-    // exits function if nulls
+    // exit function if nulls
     if (block === null || block.timeEnd === null || block.timeStart === null) return
 
-    if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) {
-        block.timeEnd = block.timeStart = time;
-    }
+    if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) block.timeEnd = block.timeStart = time;
     updateBlockedTimeOnDay()
 };
 
@@ -49,7 +44,6 @@ const toggleDropdownCalendar = () => {
     isDropdownCalendarOpen.value = !isDropdownCalendarOpen.value
     updateBlockedTimeOnDay()
 }
-
 </script>
 
 
@@ -65,8 +59,7 @@ const toggleDropdownCalendar = () => {
         //- Dropdown
         .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
             VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 
-                inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()"
-                :disabled-dates="disabledDates")
+                inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()", :disabled-dates="disabledDates")
 
     .flex.items-center.py-2.px-2.lg_px-3
         SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="storeBlocks.removeBlock(blockTimePeriod.id)")

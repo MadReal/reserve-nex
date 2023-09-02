@@ -101,7 +101,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		timeEnd: Block["timeEnd"]
 	) {
 		const todayMidnight = new Date();
-		todayMidnight.setHours(0, 0, 0, 0);
+		todayMidnight.setUTCHours(0, 0, 0, 0);
 
 		const blockedTimeOnDay = {
 			timeStart,
