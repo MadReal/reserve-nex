@@ -21,14 +21,14 @@ enum MealType {
 // 	VIEWER
 // }
 
-// model User {
-// 	id          Int        @id @default(autoincrement())
-// 	createdAt   DateTime   @default(now())
-// 	email       String     @unique
-// 	name        String?
-// 	isAdmin     Boolean
-// 	jobs        UserJob[]
-// }
+model User {
+	id          Int        @id @default(autoincrement())
+	createdAt   DateTime   @default(now())
+	email       String     @unique
+	name        String?
+	isAdmin     Boolean
+	// jobs        UserJob[]
+}
 
 // model UserJob {
 // 	id             Int           @id @default(autoincrement())
