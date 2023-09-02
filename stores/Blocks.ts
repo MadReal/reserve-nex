@@ -78,9 +78,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	// ACTIONS - Block - 'Time Period On Date'
-	async function fetchBlockedTimesOnDay() {
+	async function fetchBlockedTimesOnDay(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch(URL_blockedTimesOnDay, {
-			params: { restaurantId: activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId },
 		});
 		if (data.value) {
 			const validBlocks = data.value.filter(

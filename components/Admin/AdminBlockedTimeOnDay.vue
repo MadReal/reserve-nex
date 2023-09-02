@@ -64,7 +64,7 @@ const toggleDropdownCalendar = () => {
         p.leading-normal.text-grey-300 {{ useDateTimeFormatting(blockTimePeriod.date) }}
         //- Dropdown
         .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
-            VueDatePicker(v-model="blockTimePeriod.date", :month-change-on-scroll="false", :enable-time-picker="false", 
+            VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 
                 inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()"
                 :disabled-dates="disabledDates")
 

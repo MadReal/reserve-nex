@@ -32,6 +32,7 @@ const newReservation = ref<Partial<Reservation>>({
 
 // step 1
 // ====================
+import { useBlocksStore } from '~/stores/Blocks'
 const storeBlocks = useBlocksStore()
 const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks)
 import { useRestaurantsStore } from '@/stores/Restaurants';
@@ -54,6 +55,8 @@ const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item 
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
+storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
+const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
 //
 const selectTime = (time: WorkTime["time"]) => {
     newReservation.value.time = time
