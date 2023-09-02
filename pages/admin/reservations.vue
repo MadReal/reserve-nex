@@ -17,7 +17,7 @@ const noData = computed(() => (!reservationsList.value.length))
 .admin-page
     AdminPageTitle(title="Prenotazioni")
 
-    AdminNoData(v-if="noData", text="Nessuna prenotazione prevista.")
+    AdminNoData(v-if="noData", text="Nessuna prenotazione in elenco.")
 
     .mb-8(v-else)
         .flex.items-center.flex-wrap.gap-5.py-5.border-b.font-medium(v-for="item in reservationsList", :key="item.id")
