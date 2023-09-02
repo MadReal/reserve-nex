@@ -17,7 +17,6 @@ export default defineNuxtConfig({
 	imports: { dirs: ["stores"] },
 	css: ["~/assets/css/main.sass"],
 	modules: [
-		"@vueuse/nuxt",
 		"@nuxt/image",
 		"@nuxtjs/supabase",
 		"@pinia-plugin-persistedstate/nuxt",

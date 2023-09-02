@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import _default_workTimesAvailable from "@/data/work-times-available.json";
 
+import { vOnClickOutside } from '@vueuse/components'
+
 interface SelectWorkHourProps {
     workTimes: WorkTime[],
     isLunch: boolean
@@ -12,9 +14,10 @@ const workTimesAvailable = _default_workTimesAvailable[props.isLunch ? 'lunch' :
 const isHoursStillAvailableToFill = computed(() => props.workTimes.length !== workTimesAvailable.length)
 
 let isSelectVisible = ref(false)
-let isDropdownOpen = ref(true)
 const toggleSelect = () => isSelectVisible.value = true
+let isDropdownOpen = ref(true)
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
+const closeDropdown = () => { if (isDropdownOpen.value) toggleDropdown() }
 
 const addNewTime = (newTime: WorkTime['time']) => {
     emit('addNewTime', newTime, props.isLunch)
@@ -39,7 +42,7 @@ div
         SVGIcon.text-primary-100(svg="plus", :size="15")
     //- SELECT
     .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
-        v-if="isSelectVisible && isHoursStillAvailableToFill", @click="toggleDropdown()")
+        v-if="isSelectVisible && isHoursStillAvailableToFill", @click="toggleDropdown()", v-on-click-outside="closeDropdown")
         p.leading-normal.text-primary-100 Seleziona Orario
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")

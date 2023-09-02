@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { vOnClickOutside } from '@vueuse/components'
+
 import { useBlocksStore } from '~/stores/Blocks'
 
 interface SelectTimePeriodProps {
@@ -44,6 +46,7 @@ const toggleDropdownCalendar = () => {
     isDropdownCalendarOpen.value = !isDropdownCalendarOpen.value
     updateBlockedTimeOnDay()
 }
+const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdownCalendarOpen.value = false }
 </script>
 
 
@@ -57,7 +60,7 @@ const toggleDropdownCalendar = () => {
     .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
         p.leading-normal.text-grey-300 {{ useDateTimeFormatting(blockTimePeriod.date) }}
         //- Dropdown
-        .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
+        .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen", v-on-click-outside="closeDropdownCalendar")
             VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 
                 inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()", :disabled-dates="disabledDates")
 
