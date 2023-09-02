@@ -171,12 +171,12 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                             p.mb-4 Pranzo
                             .grid.grid-cols-4.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" 
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime()")
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
                         .lg_my-6(v-if="storeWorkTimes.dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-4.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" 
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime()")
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
 
                 div(v-if="activeSectionStep === 3")
                     .py-6.px-10
