@@ -1,4 +1,4 @@
-export default function useDateTimeFormatting(isoTimestamp: string | Date) {
+export default function useDateFormatting(isoTimestamp: string | Date) {
 	const dateObject = new Date(isoTimestamp);
 
 	// Format the date and time

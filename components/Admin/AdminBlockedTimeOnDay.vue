@@ -58,7 +58,7 @@ const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdo
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
-        p.leading-normal.text-grey-300 {{ useDateTimeFormatting(blockTimePeriod.date) }}
+        p.leading-normal.text-grey-300 {{ useDateFormatting(blockTimePeriod.date) }}
         //- Dropdown
         .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen", v-on-click-outside="closeDropdownCalendar")
             VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 

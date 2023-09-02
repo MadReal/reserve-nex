@@ -4,7 +4,7 @@ definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 
 const storeWorkTimes = useWorkTimesStore();
-const todaysDate = useDateTimeFormatting(Date()).formattedDate
+const todaysDate = useDateFormatting(Date())
 
 const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length))
 // storeWorkTimes.fetchWorkTimes()

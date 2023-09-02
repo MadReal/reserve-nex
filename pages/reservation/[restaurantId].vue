@@ -165,7 +165,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                     .py-6.px-10
                         .flex.items-center.gap-1.pb-5.border-b
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
-                            p.-mb-1.text-sm.text-grey-300 {{ useDateTimeFormatting(newReservation.date) }}
+                            p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
 
                         .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
                             p.mb-4 Pranzo
@@ -184,7 +184,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.-mb-1.text-sm.text-grey-300 {{ useDateTimeFormatting(newReservation.date) }}
+                                    p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="clock", :size="16")
                                     p.-mb-1.text-sm.text-grey-300 {{ newReservation.time }}
@@ -220,7 +220,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
                             p.text-lg Congratulazioni {{ newReservation.personName }},
-                            p.mt-1 ti aspettiamo il {{ useDateTimeFormatting(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-1 ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
                             p.mt-4.text-xs.text-primary-100 Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
                             p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 

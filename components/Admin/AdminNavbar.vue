@@ -77,7 +77,7 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                         .inline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id); closeSearchDropdown()")
                             p.pr-1.text-black.font-semibold {{ item.personName }}
                             p.text-grey-200.text-xs.tracking-tight {{ `#${item.id}` }}
-                        p.antialiased.text-sm.-mb-px {{ useDateTimeFormatting(item.date) }}
+                        p.antialiased.text-sm.-mb-px {{ useDateFormatting(item.date) }}
                         a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id); closeSearchDropdown()") APRI
 
         .flex.md_order-2.lg_hidden

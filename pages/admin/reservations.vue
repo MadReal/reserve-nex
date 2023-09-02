@@ -24,7 +24,7 @@ const noData = computed(() => (!reservationsList.value.length))
             p.inline
                 span.pr-1.text-black.font-semibold.underline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id)") {{ item.personName }}
                 span.text-grey-200.text-xs {{ `[#${item.id}]` }}
-            p.antialiased {{ useDateTimeFormatting(item.date) }}
+            p.antialiased {{ useDateFormatting(item.date) }}
             .flex.items-center.text-primary-100.antialiased
                 SVGIcon.pr-1(svg="users-filled", :size="20")
                 p {{ item.peopleAmount }}
