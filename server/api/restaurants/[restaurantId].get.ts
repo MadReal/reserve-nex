@@ -10,9 +10,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		// * REQUEST *
 		const restaurant = await prisma.restaurant.findUnique({
-			where: {
-				id: restaurantId,
-			},
+			where: { id: restaurantId },
 		});
 		return restaurant;
 	} catch (err) {

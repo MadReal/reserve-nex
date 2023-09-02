@@ -15,6 +15,13 @@ export default defineEventHandler(async (event) => {
 				timeEnd: { not: null },
 				restaurantId: id,
 			},
+			select: {
+				id: true,
+				timeStart: true,
+				timeEnd: true,
+				date: true,
+				restaurantId: true,
+			},
 		});
 		return block;
 	} catch (err) {
