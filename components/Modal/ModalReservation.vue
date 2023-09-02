@@ -7,7 +7,6 @@ const storeModals = useModalsStore()
 const storeReservations = useReservationsStore()
 const { activeModalOption } = storeToRefs(storeModals)
 const { reservationsList } = storeToRefs(storeReservations)
-const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
 const selectedReservation = ref(reservationsList.value.filter((item: Reservation) => item.id === activeModalOption.value)[0])
 
@@ -39,7 +38,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					td.border.p-3.text-grey-200 {{ selectedReservation.personEmail }}
 				tr
 					td.w-28.border.p-3.text-grey-300 Data
-					td.border.p-3.text-grey-200 {{ formatDate(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
+					td.border.p-3.text-grey-200 {{ useDateTimeFormatting(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
 				tr
 					td.w-28.border.p-3.text-grey-300 Persone
 					td.border.p-3.text-grey-200 {{ selectedReservation.peopleAmount }}

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 const route = useRoute();
-const formatDate = (date: string) => useDateTimeFormatting(date).formattedDate
 
 // route params
 const restaurantIdParam = parseInt(route.params.restaurantId[0])
@@ -40,8 +39,16 @@ const storeRestaurants = useRestaurantsStore();
 const { activeRestaurant } = storeToRefs(storeRestaurants)
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
+const daysClosedSentence = computed(() => {
+    const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? 'Giorni' : 'Giorno';
+    const mainSentence = `${dayOrDaysWord} di chiusura: `
+    const listOfDays = blockedDaysOfWeekList.value.map(item => useTranslateDayOfWeek(item.dayOfWeek!)).join(', ')
+    return { mainSentence, listOfDays }
+})
 const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map(item => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)))
 const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item => ({ ...item, display: 'background' })))
+
+
 // step 2
 // ====================
 import { useWorkTimesStore } from '~/stores/WorkTimes'
@@ -86,7 +93,7 @@ const handleDateClick = (dateClickInfo: any) => {
     newReservation.value.date = dateClickInfo.date
     storeWorkTimes.fetchWorkTimes(restaurantIdParam);
 }
-const calendarOptions = reactive({
+const calendarOptions = ref({
     plugins: [dayGridPlugin, interactionPlugin],
     locale: itLocale,
     headerToolbar: { left: 'prev', center: 'title', right: 'next' },
@@ -95,14 +102,14 @@ const calendarOptions = reactive({
     dayMaxEvents: true,
     contentHeight: 360,
     progressiveEventRendering: true,
-    events: blockedDates.value,
-    hiddenDays: hiddenDaysOfWeek.value,
+    events: blockedDates,
+    hiddenDays: hiddenDaysOfWeek,
     dateClick: handleDateClick
 })
-// @ts-ignore
-watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
-// @ts-ignore
-watch(hiddenDaysOfWeek, (newEvents) => calendarOptions.hiddenDays = newEvents);
+// // @ts-ignore
+// watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
+// // @ts-ignore
+// watch(hiddenDaysOfWeek, (newEvents) => calendarOptions.hiddenDays = newEvents);
 
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
 storeBlocks.fetchBlockedDates(restaurantIdParam)
@@ -142,14 +149,14 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
 
                 div(v-if="activeSectionStep === 1")
                     .py-6.px-10
-                        ClientOnly
-                            FullCalendar.calendar-client(:options="calendarOptions")
+                        FullCalendar.calendar-client(:options="calendarOptions")
+                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
 
                 div(v-if="activeSectionStep === 2")
                     .py-6.px-10
                         .flex.items-center.gap-1.pb-5.border-b
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
-                            p.-mb-1.text-sm.text-grey-300 {{ formatDate(newReservation.date) }}
+                            p.-mb-1.text-sm.text-grey-300 {{ useDateTimeFormatting(newReservation.date) }}
 
                         .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
                             p.mb-4 Pranzo
@@ -166,11 +173,11 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.-mb-1.text-sm.text-grey-300 {{ formatDate(newReservation.date) }}
+                                    p.-mb-1.text-sm.text-grey-300 {{ useDateTimeFormatting(newReservation.date) }}
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="clock", :size="16")
                                     p.-mb-1.text-sm.text-grey-300 {{ newReservation.time }}
-                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
+                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
                         .lg_mt-6
                             .flex.mb-2.gap-4
@@ -202,16 +209,16 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
                             p.text-lg Congratulazioni {{ newReservation.personName }},
-                            p ti aspettiamo il {{ formatDate(newReservation.date) }} alle {{ newReservation.time }}
-                            p.mt-3.text-xs.text-primary-100 Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
-                            p.mt-4.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
+                            p.mt-1 ti aspettiamo il {{ useDateTimeFormatting(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-4.text-xs.text-primary-100 Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
+                            p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
 
                 //- footer
                 .mb-7.px-10.flex.items-center
                     div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
                         p {{ activeRestaurant.name }} 
-                        p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.zipCode }} {{ activeRestaurant.city }}
+                        p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
                     button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
                     button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
 </template>
