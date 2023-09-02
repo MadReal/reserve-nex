@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 	imports: { dirs: ["stores"] },
 	css: ["~/assets/css/main.sass"],
 	modules: [
+		"@vueuse/nuxt",
 		"@nuxt/image",
 		"@nuxtjs/supabase",
 		"@pinia-plugin-persistedstate/nuxt",
@@ -39,6 +40,5 @@ export default defineNuxtConfig({
 		},
 	},
 	supabase: { redirect: false },
-	image: { provider: "netlify", format: ["webp", "jpg"] },
 	vite: { plugins: [svgLoader()] },
 });
