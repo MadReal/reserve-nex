@@ -108,7 +108,7 @@ const calendarOptions = ref({
     initialView: 'dayGridMonth',
     selectable: false,
     dayMaxEvents: true,
-    contentHeight: 360,
+    contentHeight: 320,
     progressiveEventRendering: true,
     events: blockedDates,
     hiddenDays: hiddenDaysOfWeek,
@@ -169,12 +169,12 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
                         .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
                             p.mb-4 Pranzo
-                            .grid.grid-cols-4.my-3.gap-2
+                            .grid.grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" 
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
                         .lg_my-6(v-if="storeWorkTimes.dinnerWorkTimesList.length")
                             p.mb-4 Cena
-                            .grid.grid-cols-4.my-3.gap-2
+                            .grid.grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" 
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
 
@@ -226,7 +226,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
 
                 //- footer
-                .mb-7.px-10.flex.items-center
+                .mb-10.px-10.flex.items-center
                     div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
                         p {{ activeRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
