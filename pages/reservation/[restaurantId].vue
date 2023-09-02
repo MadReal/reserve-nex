@@ -55,10 +55,8 @@ const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item 
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
-storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
-const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
 //
-const selectTime = (time: WorkTime["time"]) => {
+const selectReservationTime = (time: WorkTime["time"]) => {
     newReservation.value.time = time
     activeSectionStep.value++
 }
@@ -92,10 +90,17 @@ import itLocale from '@fullcalendar/core/locales/it';
 
 const handleDateClick = (dateClickInfo: any) => {
     dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
-    activeSectionStep.value++
-    newReservation.value.date = dateClickInfo.date
+    activeSectionStep.value++;
+
+    // Get the date as a string without the time
+    // const selectedDate = dateClickInfo.date.toLocaleDateString('it-IT');
+    const selectedDate = dateClickInfo.date
+
+    newReservation.value.date = selectedDate;
     storeWorkTimes.fetchWorkTimes(restaurantIdParam);
 }
+
+
 const calendarOptions = ref({
     plugins: [dayGridPlugin, interactionPlugin],
     locale: itLocale,
@@ -116,6 +121,7 @@ const calendarOptions = ref({
 
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
 storeBlocks.fetchBlockedDates(restaurantIdParam)
+storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 </script>
 
 
@@ -164,11 +170,13 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
                         .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-4.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" :time="workTime.time", :isSelected="workTime.time === newReservation.time", @selectTime="selectTime")
+                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" 
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime()")
                         .lg_my-6(v-if="storeWorkTimes.dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-4.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" :time="workTime.time", :isSelected="workTime.time === newReservation.time", @selectTime="selectTime")
+                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" 
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime()")
 
                 div(v-if="activeSectionStep === 3")
                     .py-6.px-10
@@ -222,6 +230,6 @@ storeBlocks.fetchBlockedDates(restaurantIdParam)
                     div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
                         p {{ activeRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
-                    button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                    button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
                     button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
 </template>
