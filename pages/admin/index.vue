@@ -1,8 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
     layout: false,
-    middleware: defineNuxtRouteMiddleware(() => {
-        navigateTo("/admin/reservations");
+    middleware: defineNuxtRouteMiddleware((to, from) => {
+        return navigateTo("/admin/reservations");
     }),
 })
 </script>

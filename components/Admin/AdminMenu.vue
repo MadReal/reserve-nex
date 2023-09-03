@@ -17,6 +17,9 @@
         NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/edit-time-open", @click="$emit('toggleMenu')")
             SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="clock", :size="20")
             p.text-sm.text-grey-200.tracking-wide Gestione Orari
+        NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/discounts", @click="$emit('toggleMenu')")
+            SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="discount", :size="20")
+            p.text-sm.text-grey-200.tracking-wide Gestione Sconti
 
     .mb-8
         p.mb-3.px-3.text-xs.tracking-widest.text-grey-200 GESTIONE BLOCCHI
