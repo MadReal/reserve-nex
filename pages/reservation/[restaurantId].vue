@@ -168,15 +168,15 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
                             p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
 
-                        .lg_my-6(v-if="storeWorkTimes.lunchWorkTimesList.length")
+                        .lg_my-6(v-if="lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id" 
+                                ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id" 
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
-                        .lg_my-6(v-if="storeWorkTimes.dinnerWorkTimesList.length")
+                        .lg_my-6(v-if="dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id" 
+                                ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id" 
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
 
                 div(v-if="activeSectionStep === 3")

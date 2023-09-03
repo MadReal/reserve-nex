@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 			mealType === "LUNCH" ? MealType.LUNCH : MealType.DINNER;
 		// * REQUEST *
 		const workTime = await prisma.workTime.create({
-			data: { restaurantId, mealType: mealTypeValidated, time },
+			data: { mealType: mealTypeValidated, time, restaurantId },
 		});
 		return workTime;
 	} catch (err) {

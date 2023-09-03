@@ -20,7 +20,7 @@ const peopleAtThisTime = todaysReservations.reduce((total, item) => item.time ==
 <template lang="pug">
 .rounded-lg.p-4.border.border-gray-100.text-grey-200(:class="{'border-primary-100' : peopleAtThisTime > 0 }")
     .flex.items-center.justify-center.mb-2(:class="{'text-primary-100' : peopleAtThisTime > 0 }")
-        SVGIcon.mr-1(svg="clock", :size="15")
+        SVGIcon.mr-1(svg="clock", :size="14")
         p {{ workTime.time }}
     .flex.items-center.justify-center(:class="{'text-primary-100' : peopleAtThisTime > 0 }")
         SVGIcon.mr-1(svg="users", :size="30")

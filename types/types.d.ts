@@ -15,6 +15,20 @@ enum DayOfWeek {
 	SUNDAY = 7,
 }
 
+declare interface DiscountAmount {
+	id?: number;
+	amount: number;
+	restaurantId: number;
+}
+
+declare interface Discount {
+	id?: number;
+	amount: number;
+	dayOfWeek: DayOfWeek;
+	workTime: string;
+	restaurantId: number;
+}
+
 declare interface Block {
 	id?: number;
 	dayOfWeek: DayOfWeek | null;

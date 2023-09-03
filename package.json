@@ -31,11 +31,13 @@
 		"vite-svg-loader": "^4.0.0"
 	},
 	"dependencies": {
+		"@coders-tm/vue-number-format": "^3.31.0",
 		"@fullcalendar/core": "^6.1.8",
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/vue3": "^6.1.8",
 		"@prisma/client": "5.2.0",
-		"@vuepic/vue-datepicker": "^6.0.3"
+		"@vuepic/vue-datepicker": "^6.0.3",
+		"vuedraggable": "^4.1.0"
 	}
 }
