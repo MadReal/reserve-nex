@@ -15,7 +15,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 
 const storeDiscounts = useDiscountsStore();
 storeDiscounts.fetchDiscountAmounts()
-const { discountAmountsListOrdered } = storeToRefs(storeDiscounts)
+const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
 const selectedDayOfWeek = ref(1)
 let newDiscountAmount = ref()
@@ -40,7 +40,6 @@ async function deleteDiscountAmount(discountAmountId: number) {
     newDiscountAmount.value = null
 }
 async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
-    console.log('addDiscount');
     await storeDiscounts.addDiscount(selectedDayOfWeek.value, discountAmount, workTime)
 }
 </script>
@@ -63,14 +62,14 @@ async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
                 div.lg_mb-6
                     p.mb-4 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
 
                 .border-b.lg_border-r.lg_border-b-0
 
                 div.lg_mb-6
                     p.mb-4 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
 
 
         .border-b.lg_border-r.lg_border-b-0

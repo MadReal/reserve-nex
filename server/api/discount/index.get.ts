@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		// * REQUEST *
-		const discount = await prisma.discount.findMany({
+		const discounts = await prisma.discount.findMany({
 			where: { restaurantId: id },
 			include: {
 				workTime: {
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 						time: true,
 					},
 				},
-				amount: {
+				discountAmount: {
 					select: {
 						id: true,
 						amount: true,
@@ -27,7 +27,13 @@ export default defineEventHandler(async (event) => {
 			},
 		});
 
-		return discount;
+		// Remove "workTimeId" and "discountAmountId" properties
+		const filteredDiscounts = discounts.map(
+			({ workTimeId, discountAmountId, ...rest }) => rest
+		);
+		console.log(filteredDiscounts);
+
+		return filteredDiscounts;
 	} catch (err) {
 		console.error(err);
 		throw err;

@@ -34,7 +34,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		if (data?.value) discountsList.value = data.value;
 	}
 
-	async function addDiscountAmount(amount: Discount["amount"]) {
+	async function addDiscountAmount(amount: DiscountAmount["amount"]) {
 		const { data, error } = await useFetch(URL_discountAmount, {
 			method: "post",
 			body: { amount, restaurantId: activeRestaurantId },

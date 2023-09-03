@@ -80,7 +80,7 @@ model Discount {
 	id					Int						@id @default(autoincrement())
 	dayOfWeek			Int
 	// relations
-	amount				DiscountAmount			@relation(fields: [discountAmountId], references: [id], onDelete: Cascade)
+	discountAmount		DiscountAmount			@relation(fields: [discountAmountId], references: [id], onDelete: Cascade)
 	discountAmountId	Int
 	workTime			WorkTime				@relation(fields: [workTimeId], references: [id], onDelete: Cascade)
 	workTimeId			Int			   

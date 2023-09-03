@@ -2,7 +2,7 @@ declare interface WorkTime {
 	id?: number;
 	mealType: string;
 	time: string;
-	restaurantId: number;
+	restaurantId: Restaurant["id"];
 }
 
 enum DayOfWeek {
@@ -18,15 +18,17 @@ enum DayOfWeek {
 declare interface DiscountAmount {
 	id?: number;
 	amount: number;
-	restaurantId: number;
+	restaurantId: Restaurant["id"];
 }
 
 declare interface Discount {
 	id?: number;
-	amount: number;
 	dayOfWeek: DayOfWeek;
-	workTime: string;
-	restaurantId: number;
+	discountAmount: DiscountAmount["amount"];
+	discountAmountId: DiscountAmount["id"];
+	workTime: WorkTime["time"];
+	workTimeId: WorkTime["id"];
+	restaurantId: Restaurant["id"];
 }
 
 declare interface Block {
@@ -38,7 +40,7 @@ declare interface Block {
 	dateStart: Date | null;
 	dateEnd: Date | null;
 	periodTitle: string | null;
-	restaurantId: number;
+	restaurantId: Restaurant["id"];
 }
 
 declare interface Reservation {
@@ -52,7 +54,7 @@ declare interface Reservation {
 	peopleAmount: number;
 	personInstagram: string | null;
 	accepted: boolean | null;
-	restaurantId: number;
+	restaurantId: Restaurant["id"];
 }
 
 declare interface Restaurant {

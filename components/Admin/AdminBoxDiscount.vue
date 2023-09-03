@@ -5,16 +5,20 @@ import Draggable from 'vuedraggable'
 // https://okamuuu.com/posts/xjni9lf5h for SWAP
 
 interface BoxReservationProps {
+    selectedDayOfWeek: number,
     workTime: WorkTime,
 }
 const props = defineProps<BoxReservationProps>()
 const emit = defineEmits(['addDiscount'])
 
+const storeDiscounts = useDiscountsStore();
+const { discountsList } = storeToRefs(storeDiscounts)
+storeDiscounts.fetchDiscounts()
 
-const storeDiscount = useDiscountsStore();
+const discountOnWorkTime = computed(() => {
+    return discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)
+})
 
-
-const hours = ref([])
 function onCopy() {
     console.log('onCopy');
     // Push a copy of the item to the target list
@@ -27,6 +31,7 @@ function onSourceListEnd() {
     // this.sourceList = this.sourceList.filter(item => !this.targetList.includes(item));
 }
 async function change(e: any) {
+    console.log('change');
     const discountAmount = e.added.element
     emit('addDiscount', discountAmount, props.workTime)
 }
@@ -39,7 +44,7 @@ async function change(e: any) {
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    Draggable(v-model="hours" group="universalGroup", itemKey="id", :sort="false", :swap="true", swapClass="highlight", @change="change" @end="onSourceListEnd" @copy="onCopy")
-        template(#item="{ element, index }")
-            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab {{ element.amount }}%
+    Draggable(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", :swap="true", swapClass="highlight", @change="change" @end="onSourceListEnd" @copy="onCopy")
+        template(#item="{ element }")
+            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab {{ element.discountAmount.amount }}%
 </template>
