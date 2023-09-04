@@ -48,6 +48,8 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		discountAmount: DiscountAmount,
 		workTime: WorkTime
 	) {
+		console.log("fetch addDiscount");
+
 		const { data, error } = await useFetch(URL_discount, {
 			method: "post",
 			body: {

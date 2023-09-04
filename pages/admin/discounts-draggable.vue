@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
 
+import Draggable from 'vuedraggable'
 import { directive as VNumber } from '@coders-tm/vue-number-format'
 const number = { suffix: '% ', precision: 2, max: 99 }
 
@@ -40,9 +41,6 @@ async function deleteDiscountAmount(discountAmountId: number) {
     newDiscountAmount.value = null
 }
 async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
-    console.log('addDiscount');
-    console.log(discountAmount);
-
     // @ts-ignore
     await storeDiscounts.addDiscount(selectedDayOfWeek.value, discountAmount, workTime)
 }
@@ -80,18 +78,20 @@ async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
 
         div.lg_mb-6.pl-6
             p Sconti
-            p.text-xs.text-grey-100.mb-4 Crea nuovi sconti e poi selezionali all'interno dell'ora che desideri.
+            p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 
-            .grid.grid-cols-2.gap-2
-                .relative.rounded.bg-red-500.text-white.text-sm.text-center.cursor-default.group.overflow-hidden(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id")
-                    p.h-7.py-1.group-hover_mr-2 {{ discountAmount.value }}%
-                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200(@click="deleteDiscountAmount(discountAmount.id)")
-                        SVGIcon.cursor-pointer(svg="trash", :size="14")
+            Draggable.grid.grid-cols-2.gap-2(v-model="discountAmountsListOrdered" :group="{ name: 'universalGroup', pull: 'clone', put: false }" itemKey="id", :sort="false")
+                template(#item="{element}")
+                    .relative.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab.group.overflow-hidden
+                        p.h-7.py-1.group-hover_mr-2 {{ element.value }}%
+                        .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200(@click="deleteDiscountAmount(element.id)")
+                            SVGIcon.cursor-pointer(svg="trash", :size="14")
 
-                input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
-                    class="h-7 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
-                    placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none", :class="{ 'input--error': newDiscountAmountError }"
-                    @keyup.enter="addDiscountAmount", @input="validateInput")
+                template(#footer)
+                    input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
+                        class="h-7 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
+                        placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none", :class="{ 'input--error': newDiscountAmountError }"
+                        @keyup.enter="addDiscountAmount", @input="validateInput")
 </template>
 
 
