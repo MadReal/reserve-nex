@@ -46,12 +46,14 @@ watch(discountsList, () => {
 
 
 <template lang="pug">
-.py-3.px-2.text-grey-200.rounded-lg.border.border-gray-100.flex.items-center.justify-center.flex-col(class="min-h-[5rem]")
-    .flex.items-center.justify-center.mb-1
+//- .py-3.px-2.text-grey-200.rounded-lg.border.border-gray-100.flex.items-center.justify-center.flex-col(class="min-h-[5rem]")
+.pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(class="min-h-[5rem]")
+    .flex.items-center.justify-center.px-1
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    select.w-full.h-7.rounded.text-sm.text-center.border.text-grey-100(v-model="discountAmountId", :class="{ 'bg-red-500 text-white' : discountAmountId }")        
+    select.w-full.h-8.text-sm.text-center.text-grey-100.focus_outline-none.cursor-pointer(
+        v-model="discountAmountId", :class="{ 'bg-red-500 text-white' : discountAmountId, 'bg-transparent hover_brightness-125' : !discountAmountId }")        
         option(:value="null") -
         option(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id", :value="discountAmount.id") {{ discountAmount.value }}%
 </template>

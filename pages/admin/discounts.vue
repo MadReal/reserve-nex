@@ -52,7 +52,7 @@ async function deleteDiscountAmount(discountAmountId: number) {
     .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]")
         div
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
-            .flex.items-center.pb-8.gap-2.border-b
+            .flex.items-center.pb-6.gap-2.border-b
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
