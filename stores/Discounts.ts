@@ -9,14 +9,14 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 
 	// STATE
-	const discountAmountsList = ref<Discount[]>([]);
+	const discountAmountsList = ref<DiscountAmount[]>([]);
 	const discountsList = ref<Discount[]>([]);
 
 	// GETTERS
 	const discountAmountsListOrdered = computed(() =>
 		discountAmountsList.value
 			.slice()
-			.sort((a: any, b: any) => a.amount - b.amount)
+			.sort((a: any, b: any) => a.value - b.value)
 	);
 
 	// ACTIONS
@@ -34,10 +34,10 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		if (data?.value) discountsList.value = data.value;
 	}
 
-	async function addDiscountAmount(amount: DiscountAmount["amount"]) {
+	async function addDiscountAmount(value: DiscountAmount["value"]) {
 		const { data, error } = await useFetch(URL_discountAmount, {
 			method: "post",
-			body: { amount, restaurantId: activeRestaurantId },
+			body: { value, restaurantId: activeRestaurantId },
 		});
 		// @ts-ignore
 		if (data && data.value) discountAmountsList.value.push(data.value);
@@ -57,8 +57,18 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 				restaurantId: activeRestaurantId,
 			},
 		});
-		// @ts-ignore
-		if (data && data.value) discountsList.value.push(data.value);
+		if (data && data.value) {
+			const newDiscount = {
+				id: data.value.id,
+				dayOfWeek: data.value.dayOfWeek,
+				value: discountAmount.value,
+				discountAmountId: data.value.discountAmountId,
+				workTime: { id: data.value.workTimeId, time: workTime.time },
+				restaurantId: data.value.restaurantId,
+			};
+			// @ts-ignore
+			discountsList.value.push(newDiscount);
+		}
 	}
 
 	async function deleteDiscountAmount(discountAmountId: Discount["id"]) {

@@ -15,6 +15,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 
 const storeDiscounts = useDiscountsStore();
 storeDiscounts.fetchDiscountAmounts()
+storeDiscounts.fetchDiscounts()
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
 const selectedDayOfWeek = ref(1)
@@ -26,7 +27,7 @@ function validateInput() {
     else newDiscountAmountError.value = false;
 }
 async function addDiscountAmount() {
-    const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.amount === newDiscountAmount.value);
+    const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
     if (alreadyPresent) newDiscountAmountError.value = true
     else {
         await storeDiscounts.addDiscountAmount(newDiscountAmount.value)
@@ -40,6 +41,7 @@ async function deleteDiscountAmount(discountAmountId: number) {
     newDiscountAmount.value = null
 }
 async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
+    // @ts-ignore
     await storeDiscounts.addDiscount(selectedDayOfWeek.value, discountAmount, workTime)
 }
 </script>
@@ -81,7 +83,7 @@ async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
             Draggable.grid.grid-cols-2.gap-2(v-model="discountAmountsListOrdered" :group="{ name: 'universalGroup', pull: 'clone', put: false }" itemKey="id", :sort="false")
                 template(#item="{element}")
                     .relative.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab.group.overflow-hidden
-                        p.h-7.py-1.group-hover_mr-2 {{ element.amount }}%
+                        p.h-7.py-1.group-hover_mr-2 {{ element.value }}%
                         .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200(@click="deleteDiscountAmount(element.id)")
                             SVGIcon.cursor-pointer(svg="trash", :size="14")
 

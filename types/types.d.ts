@@ -16,19 +16,19 @@ enum DayOfWeek {
 }
 
 declare interface DiscountAmount {
-	id?: number;
-	amount: number;
+	id: number;
+	value: number;
 	restaurantId: Restaurant["id"];
 }
 
 declare interface Discount {
 	id?: number;
 	dayOfWeek: DayOfWeek;
-	discountAmount: DiscountAmount["amount"];
-	discountAmountId: DiscountAmount["id"];
-	workTime: WorkTime["time"];
-	workTimeId: WorkTime["id"];
-	restaurantId: Restaurant["id"];
+	value: DiscountAmount["value"];
+	discountAmountId?: DiscountAmount["id"];
+	workTime: WorkTime;
+	workTimeId?: WorkTime["id"];
+	restaurantId?: Restaurant["id"];
 }
 
 declare interface Block {

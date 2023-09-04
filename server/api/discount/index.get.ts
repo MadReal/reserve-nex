@@ -21,17 +21,23 @@ export default defineEventHandler(async (event) => {
 				discountAmount: {
 					select: {
 						id: true,
-						amount: true,
+						value: true,
 					},
 				},
 			},
 		});
 
+		// Use type assertion to add the "value" property (needed later for Vue draggable)
+		const modifiedDiscounts = discounts.map((item) => {
+			const newItem = item as any; // Use "as any" to bypass TypeScript checks
+			newItem.value = item.discountAmount.value;
+			return newItem;
+		});
+
 		// Remove "workTimeId" and "discountAmountId" properties
-		const filteredDiscounts = discounts.map(
-			({ workTimeId, discountAmountId, ...rest }) => rest
+		const filteredDiscounts = modifiedDiscounts.map(
+			({ workTimeId, discountAmount, ...rest }) => rest
 		);
-		console.log(filteredDiscounts);
 
 		return filteredDiscounts;
 	} catch (err) {

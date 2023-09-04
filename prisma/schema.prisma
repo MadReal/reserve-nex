@@ -68,7 +68,7 @@ model WorkTime {
 // discounts set by hour and by day of the week
 model DiscountAmount {
 	id					Int						@id @default(autoincrement())
-	amount				Int						
+	value				Int						
 	// relations
 	discount			Discount[]	
 	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)

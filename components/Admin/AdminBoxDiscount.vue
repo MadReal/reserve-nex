@@ -13,11 +13,20 @@ const emit = defineEmits(['addDiscount'])
 
 const storeDiscounts = useDiscountsStore();
 const { discountsList } = storeToRefs(storeDiscounts)
-storeDiscounts.fetchDiscounts()
 
-const discountOnWorkTime = computed(() => {
-    return discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)
+// const discountOnWorkTime = computed(() => {
+//     return discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)
+// })
+const discountOnWorkTime = ref<Discount[]>([]) // Use a ref instead of a computed property
+// Update discountOnWorkTime when discountsList or selectedDayOfWeek changes
+watch([discountsList, () => props.selectedDayOfWeek], ([newDiscountsList]) => {
+    discountOnWorkTime.value = newDiscountsList.filter(
+        item =>
+            item.dayOfWeek === props.selectedDayOfWeek &&
+            item.workTime.id === props.workTime.id
+    )
 })
+
 
 function onCopy() {
     console.log('onCopy');
@@ -31,7 +40,6 @@ function onSourceListEnd() {
     // this.sourceList = this.sourceList.filter(item => !this.targetList.includes(item));
 }
 async function change(e: any) {
-    console.log('change');
     const discountAmount = e.added.element
     emit('addDiscount', discountAmount, props.workTime)
 }
@@ -46,5 +54,5 @@ async function change(e: any) {
 
     Draggable(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", :swap="true", swapClass="highlight", @change="change" @end="onSourceListEnd" @copy="onCopy")
         template(#item="{ element }")
-            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab {{ element.discountAmount.amount }}%
+            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab {{ element.value }}%
 </template>

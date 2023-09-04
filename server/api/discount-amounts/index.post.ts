@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const schema = Joi.object({
-	amount: Joi.number().integer().min(1).max(99).precision(2).required(),
+	value: Joi.number().integer().min(1).max(99).precision(2).required(),
 	restaurantId: Joi.number().required(),
 });
 
