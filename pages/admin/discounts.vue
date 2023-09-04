@@ -59,14 +59,14 @@ async function deleteDiscountAmount(discountAmountId: number) {
 
 
             .grid.gap-8.lg_gap-6.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")
-                div.lg_pb-8.pt-8
+                div.lg_py-6
                     p.mb-4 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
                         AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
 
                 .border-b.lg_border-r.lg_border-b-0
 
-                div.lg_pb-8.pt-8
+                div.lg_py-6
                     p.mb-4 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
                         AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
@@ -74,7 +74,7 @@ async function deleteDiscountAmount(discountAmountId: number) {
 
         .border-b.lg_border-r.lg_border-b-0
 
-        div.pl-6.mt-1.lg_mb-8
+        div.pl-6.mt-1.lg_mb-6
             p Sconti
             p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e assegnali all'orario desiderato.
 
