@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useDiscountsStore } from '@/stores/Discounts';
 
 interface BoxReservationProps {
     selectedDayOfWeek: number,
     workTime: WorkTime,
 }
 const props = defineProps<BoxReservationProps>()
-const emit = defineEmits(['addDiscount'])
 
+import { useDiscountsStore } from '@/stores/Discounts';
 const storeDiscounts = useDiscountsStore();
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
 let discountOnWorkTimeId = ref<number | null>()
 const discountOnWorkTimeComp = computed({
     get: () => {
-        const discount = discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)[0]
+        const discount = discountsList.value.find(item => item.dayOfWeek === props.selectedDayOfWeek && item.workTime.id === props.workTime.id)
         return discount ? discount.discountAmountId : null
     },
     set: (discountAmountId) => {
@@ -30,21 +29,17 @@ const discountOnWorkTimeComp = computed({
         // delete
         if (discountAmountId === null && discountOnWorkTimeId.value) {
             storeDiscounts.deleteDiscount(discountOnWorkTimeId.value)
+            discountOnWorkTimeId.value = null
         }
     }
 });
 watch(discountsList, () => {
-    const discount = discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)[0]
+    const discount = discountsList.value.find(item => item.dayOfWeek === props.selectedDayOfWeek && item.workTime.id === props.workTime.id)
     if (discount) {
         // @ts-ignore
         discountOnWorkTimeId.value = discount.id
     } else discountOnWorkTimeId.value = null
 });
-
-
-// function removeItem(e: any) {
-//     storeDiscounts.deleteDiscount(parseInt(discountId))
-// }
 </script>
 
 

@@ -76,8 +76,6 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		workTimeId: WorkTime["id"],
 		discountId: Discount["id"]
 	) {
-		console.log("fetch addDiscount");
-
 		const { data } = await useFetch(`${URL_discount}/${discountId}`, {
 			method: "patch",
 			body: {

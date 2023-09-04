@@ -18,13 +18,15 @@ storeDiscounts.fetchDiscounts()
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
 const selectedDayOfWeek = ref(1)
+
 let newDiscountAmount = ref()
 const newDiscountAmountError = ref(false)
-
 function validateInput() {
     if (isNaN(newDiscountAmount.value)) newDiscountAmountError.value = true
     else newDiscountAmountError.value = false;
 }
+
+// methods for DiscountAmount
 async function addDiscountAmount() {
     const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
     if (alreadyPresent) newDiscountAmountError.value = true
@@ -38,13 +40,6 @@ async function deleteDiscountAmount(discountAmountId: number) {
     await storeDiscounts.deleteDiscountAmount(discountAmountId)
     newDiscountAmountError.value = false
     newDiscountAmount.value = null
-}
-async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
-    console.log('addDiscount');
-    console.log(discountAmount);
-
-    // @ts-ignore
-    await storeDiscounts.addDiscount(selectedDayOfWeek.value, discountAmount, workTime)
 }
 </script>
 
@@ -66,14 +61,14 @@ async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
                 div.lg_mb-6
                     p.mb-4 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
 
                 .border-b.lg_border-r.lg_border-b-0
 
                 div.lg_mb-6
                     p.mb-4 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
 
 
         .border-b.lg_border-r.lg_border-b-0
