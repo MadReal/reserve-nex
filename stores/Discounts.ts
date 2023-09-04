@@ -45,16 +45,14 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function addDiscount(
 		dayOfWeek: DayOfWeek,
-		discountAmount: DiscountAmount,
+		discountAmountId: DiscountAmount["id"],
 		workTime: WorkTime
 	) {
-		console.log("fetch addDiscount");
-
 		const { data, error } = await useFetch(URL_discount, {
 			method: "post",
 			body: {
 				dayOfWeek,
-				discountAmountId: discountAmount.id,
+				discountAmountId: discountAmountId,
 				workTimeId: workTime.id,
 				restaurantId: activeRestaurantId,
 			},
@@ -63,13 +61,36 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			const newDiscount = {
 				id: data.value.id,
 				dayOfWeek: data.value.dayOfWeek,
-				value: discountAmount.value,
+				// value: discountAmountId,
 				discountAmountId: data.value.discountAmountId,
 				workTime: { id: data.value.workTimeId, time: workTime.time },
 				restaurantId: data.value.restaurantId,
 			};
 			// @ts-ignore
 			discountsList.value.push(newDiscount);
+		}
+	}
+
+	async function updateDiscount(
+		discountAmountId: DiscountAmount["id"],
+		workTimeId: WorkTime["id"],
+		discountId: Discount["id"]
+	) {
+		console.log("fetch addDiscount");
+
+		const { data } = await useFetch(`${URL_discount}/${discountId}`, {
+			method: "patch",
+			body: {
+				discountAmountId: discountAmountId,
+				workTimeId: workTimeId,
+			},
+		});
+		if (data && data.value) {
+			const discountToUpdateIndex = discountsList.value.findIndex(
+				(e) => e.id === discountId
+			);
+			// @ts-ignore
+			discountsList.value[discountToUpdateIndex] = data.value;
 		}
 	}
 
@@ -101,6 +122,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		fetchDiscounts,
 		addDiscountAmount,
 		addDiscount,
+		updateDiscount,
 		deleteDiscountAmount,
 		deleteDiscount,
 	};

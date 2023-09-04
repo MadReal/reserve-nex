@@ -3,26 +3,25 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const discountSchema = Joi.object({
-	// amount: Joi.number().integer().min(1).max(99).precision(2).required(),
-	dayOfWeek: Joi.number().valid(1, 2, 3, 4, 5, 6, 7).required(),
+export const schema = Joi.object({
 	discountAmountId: Joi.number().required(),
 	workTimeId: Joi.number().required(),
-	restaurantId: Joi.number().required(),
 });
 
 export default defineEventHandler(async (event) => {
+	const { discountId } = event.context.params as { discountId: string };
 	const body = await readBody(event);
-	// Validate body
-	const { error, value } = discountSchema.validate(body);
+	// validate body
+	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { dayOfWeek, discountAmountId, workTimeId, restaurantId } = value;
+		const { discountAmountId, workTimeId } = value;
 		// * REQUEST *
-		const discountAmount = await prisma.discount.create({
-			data: { dayOfWeek, discountAmountId, workTimeId, restaurantId },
+		const discountToUpdate = await prisma.discount.update({
+			where: { id: parseInt(discountId) },
+			data: { discountAmountId, workTimeId },
 		});
-		return discountAmount;
+		return discountToUpdate;
 	} catch (err) {
 		console.error(err);
 		throw err;

@@ -12,27 +12,35 @@ const emit = defineEmits(['addDiscount'])
 const storeDiscounts = useDiscountsStore();
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
-// const discountOnWorkTime = computed(() => {
-//     return discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)
-
-// })
-const discountOnWorkTime = computed({
+let discountOnWorkTimeId = ref<number | null>()
+const discountOnWorkTimeComp = computed({
     get: () => {
-        const lol = discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)
-        if (lol.length) {
-            console.log(lol[0].value);
-            return lol[0].discountAmountId
-        }
-        else return null
+        const discount = discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)[0]
+        return discount ? discount.discountAmountId : null
     },
-    set: (discountAmount) => {
-        if (discountAmount) emit('addDiscount', discountAmount, props.workTime)
-        else {
-            console.log('empty');
-
+    set: (discountAmountId) => {
+        // create
+        if (discountAmountId && !discountOnWorkTimeId.value) {
+            storeDiscounts.addDiscount(props.selectedDayOfWeek, discountAmountId, props.workTime)
+        }
+        // update
+        if (discountAmountId && discountOnWorkTimeId.value) {
+            storeDiscounts.updateDiscount(discountAmountId, props.workTime.id, discountOnWorkTimeId.value)
+        }
+        // delete
+        if (discountAmountId === null && discountOnWorkTimeId.value) {
+            storeDiscounts.deleteDiscount(discountOnWorkTimeId.value)
         }
     }
 });
+watch(discountsList, () => {
+    const discount = discountsList.value.filter(item => item.dayOfWeek === props.selectedDayOfWeek).filter(item => item.workTime.id === props.workTime.id)[0]
+    if (discount) {
+        // @ts-ignore
+        discountOnWorkTimeId.value = discount.id
+    } else discountOnWorkTimeId.value = null
+});
+
 
 // function removeItem(e: any) {
 //     storeDiscounts.deleteDiscount(parseInt(discountId))
@@ -46,8 +54,7 @@ const discountOnWorkTime = computed({
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    select.w-full.h-7.rounded.text-sm.text-center.border.text-grey-100(
-        v-model="discountOnWorkTime", :class="{ 'bg-red-500 text-white' : discountOnWorkTime }")        
+    select.w-full.h-7.rounded.text-sm.text-center.border.text-grey-100(v-model="discountOnWorkTimeComp", :class="{ 'bg-red-500 text-white' : discountOnWorkTimeComp }")        
         option(:value="null") -
-        option(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount", :value="discountAmount.id") {{ discountAmount.value }}%
+        option(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id", :value="discountAmount.id") {{ discountAmount.value }}%
 </template>
