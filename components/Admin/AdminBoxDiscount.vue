@@ -27,21 +27,18 @@ watch([discountsList, () => props.selectedDayOfWeek], ([newDiscountsList]) => {
     )
 })
 
-
-function onCopy() {
-    console.log('onCopy');
-    // Push a copy of the item to the target list
-    // hours.value.push(original);
-}
-function onSourceListEnd() {
-    console.log('onSourceListEnd');
-    // Remove items from the source list if needed
-    // For example, if you want to move items instead of copying
-    // this.sourceList = this.sourceList.filter(item => !this.targetList.includes(item));
-}
 async function change(e: any) {
     const discountAmount = e.added.element
     emit('addDiscount', discountAmount, props.workTime)
+}
+
+function removeItem(e: any) {
+    const discount = e.item.classList
+    const idClass = Array.from(discount).filter(className => /^id_/.test(className as string))[0];
+    if (idClass) {
+        const discountId = (idClass as string).replace(/^id_/, ''); // Remove "id_" prefix
+        storeDiscounts.deleteDiscount(parseInt(discountId))
+    }
 }
 </script>
 
@@ -52,7 +49,7 @@ async function change(e: any) {
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    Draggable(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", :swap="true", swapClass="highlight", @change="change" @end="onSourceListEnd" @copy="onCopy")
+    Draggable(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", :swap="true", swapClass="highlight", @change="change", :removeOnSpill="true", :onSpill="removeItem")        
         template(#item="{ element }")
-            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab {{ element.value }}%
+            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab(:class="'id_'+element.id") {{ element.value }}%
 </template>

@@ -1,5 +1,5 @@
 const URL_discountAmount = "/api/discount-amounts";
-const URL_discount = "/api/discount";
+const URL_discount = "/api/discounts";
 
 import { DiscountAmount } from "@prisma/client";
 import { storeToRefs } from "pinia";
@@ -71,7 +71,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		}
 	}
 
-	async function deleteDiscountAmount(discountAmountId: Discount["id"]) {
+	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 		await useFetch(`${URL_discountAmount}/${discountAmountId}`, {
 			method: "delete",
 		});
@@ -79,6 +79,16 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			(e) => e.id === discountAmountId
 		);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
+	}
+
+	async function deleteDiscount(discountId: Discount["id"]) {
+		await useFetch(`${URL_discount}/${discountId}`, {
+			method: "delete",
+		});
+		const discountToRemoveIndex = discountsList.value.findIndex(
+			(e) => e.id === discountId
+		);
+		discountsList.value.splice(discountToRemoveIndex, 1);
 	}
 
 	return {
@@ -90,6 +100,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		addDiscountAmount,
 		addDiscount,
 		deleteDiscountAmount,
+		deleteDiscount,
 	};
 });
 

@@ -3,16 +3,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-	const { discountAmountId } = event.context.params as {
-		discountAmountId: string;
+	const { discountId } = event.context.params as {
+		discountId: string;
 	};
 
 	try {
 		// * REQUEST *
-		const restaurant = await prisma.discountAmount.delete({
-			where: { id: parseInt(discountAmountId) },
+		const discount = await prisma.discount.delete({
+			where: { id: parseInt(discountId) },
 		});
-		return restaurant;
+		return discount;
 	} catch (err) {
 		console.error(err);
 		throw err;
