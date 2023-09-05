@@ -53,7 +53,7 @@ watch(discountsList, () => {
         p {{ workTime.time }}
 
     select.w-full.h-8.text-sm.text-center.text-grey-100.focus_outline-none.cursor-pointer(
-        v-model="discountAmountId", :class="{ 'bg-red-500 text-white' : discountAmountId, 'bg-transparent hover_brightness-125' : !discountAmountId }")        
+        v-model="discountAmountId", :class="{ 'bg-red-500 text-white' : discountAmountId, 'bg-transparent hover_brightness-125' : !discountAmountId }")
         option(:value="null") -
         option(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id", :value="discountAmount.id") {{ discountAmount.value }}%
 </template>

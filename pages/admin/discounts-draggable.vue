@@ -52,31 +52,32 @@ async function addDiscount(discountAmount: DiscountAmount, workTime: WorkTime) {
     AdminPageTitle(title="Gestione Orari")
 
     //- AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
-    .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[3fr_1px_1fr]")
+    .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]")
         div
-            .flex.items-center.mb-8.gap-2
+            p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
+            .flex.items-center.pb-6.gap-2.border-b
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
 
 
             .grid.gap-8.lg_gap-6.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")
-                div.lg_mb-6
+                div.lg_py-6
                     p.mb-4 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscountDraggable(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
 
                 .border-b.lg_border-r.lg_border-b-0
 
-                div.lg_mb-6
+                div.lg_py-6
                     p.mb-4 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
+                        AdminBoxDiscountDraggable(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime", @addDiscount="addDiscount")
 
 
         .border-b.lg_border-r.lg_border-b-0
 
-        div.lg_mb-6.pl-6
+        div.pl-6.mt-1.lg_mb-6
             p Sconti
             p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 

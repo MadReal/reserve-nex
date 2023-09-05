@@ -45,41 +45,31 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function addDiscount(
 		dayOfWeek: DayOfWeek,
-		discountAmountId: DiscountAmount["id"],
-		workTime: WorkTime
+		workTimeId: WorkTime["id"],
+		discountAmountId: DiscountAmount["id"]
 	) {
 		const { data, error } = await useFetch(URL_discount, {
 			method: "post",
 			body: {
 				dayOfWeek,
 				discountAmountId: discountAmountId,
-				workTimeId: workTime.id,
+				workTimeId: workTimeId,
 				restaurantId: activeRestaurantId,
 			},
 		});
-		if (data && data.value) {
-			const newDiscount = {
-				id: data.value.id,
-				dayOfWeek: data.value.dayOfWeek,
-				// value: discountAmountId,
-				discountAmountId: data.value.discountAmountId,
-				workTime: { id: data.value.workTimeId, time: workTime.time },
-				restaurantId: data.value.restaurantId,
-			};
-			// @ts-ignore
-			discountsList.value.push(newDiscount);
-		}
+		// @ts-ignore
+		if (data && data.value) discountsList.value.push(data.value);
 	}
 
 	async function updateDiscount(
-		discountAmountId: DiscountAmount["id"],
+		discountId: Discount["id"],
 		workTimeId: WorkTime["id"],
-		discountId: Discount["id"]
+		discountAmountId?: DiscountAmount["id"]
 	) {
 		const { data } = await useFetch(`${URL_discount}/${discountId}`, {
 			method: "patch",
 			body: {
-				discountAmountId: discountAmountId,
+				discountAmountId: discountAmountId || null,
 				workTimeId: workTimeId,
 			},
 		});

@@ -1,10 +1,11 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
+import { discountInclude } from "./index.get";
 
 const prisma = new PrismaClient();
 
 export const schema = Joi.object({
-	discountAmountId: Joi.number().required(),
+	discountAmountId: Joi.number(),
 	workTimeId: Joi.number().required(),
 });
 
@@ -20,6 +21,7 @@ export default defineEventHandler(async (event) => {
 		const discountToUpdate = await prisma.discount.update({
 			where: { id: parseInt(discountId) },
 			data: { discountAmountId, workTimeId },
+			include: discountInclude,
 		});
 		return discountToUpdate;
 	} catch (err) {

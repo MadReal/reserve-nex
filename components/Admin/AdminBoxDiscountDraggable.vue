@@ -27,9 +27,9 @@ watch([discountsList, () => props.selectedDayOfWeek], ([newDiscountsList]) => {
     )
 })
 
-async function change(e: any) {
+async function addOrUpdateDiscount(e: any) {
     const discountAmount = e.added.element
-    emit('addDiscount', discountAmount, props.workTime)
+    emit('addDiscount', discountAmount.id, props.workTime)
 }
 
 function removeItem(e: any) {
@@ -44,18 +44,18 @@ function removeItem(e: any) {
 
 
 <template lang="pug">
-.h-20.py-3.px-1.text-grey-200.rounded-lg.border.border-gray-100
-    .flex.items-center.justify-center.mb-2
+.pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(class="min-h-[5rem]")
+    .flex.items-center.justify-center
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    Draggable.relative(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", 
-        :swap="true", swapClass="highlight", @change="change", :removeOnSpill="true", :onSpill="removeItem")        
+    Draggable.relative.h-8.w-full.overflow-hidden(v-model="discountOnWorkTime" group="universalGroup", itemKey="id", :sort="false", 
+        :swap="true", swapClass="highlight", @change="addOrUpdateDiscount", :removeOnSpill="true", :onSpill="removeItem")        
         template(#item="{ element }")
-            p.h-7.p-1.rounded.bg-red-500.text-white.text-sm.text-center.cursor-grab(:class="'id_'+element.id") {{ element.value }}%
-        template(#footer)
-            .trash.hidden.bg-white.p-2.absolute.rounded-full.-top-2.right-0
-                SVGIcon(svg="trash", :size="14")
+            p.h-8.p-1.bg-red-500.text-white.text-sm.text-center.cursor-grab(:class="'id_'+element.id") {{ element.value }}%
+        //- template(#footer)
+        //-     .trash.hidden.bg-white.p-2.absolute.rounded-full.-top-2.right-0
+        //-         SVGIcon(svg="trash", :size="14")
 </template>
 
 <style lang="sass">
