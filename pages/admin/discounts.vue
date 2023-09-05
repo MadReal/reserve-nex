@@ -75,7 +75,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
 <template lang="pug">
 .admin-page
-    AdminPageTitle(title="Gestione Orari")
+    AdminPageTitle(title="Gestione Sconti")
 
     //- AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
     .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]")

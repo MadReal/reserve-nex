@@ -39,7 +39,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			body: {
 				mealType: isLunch ? "LUNCH" : "DINNER",
 				time: newTime,
-				restaurantId: 1,
+				restaurantId: activeRestaurantId,
 			},
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
