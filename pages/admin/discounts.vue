@@ -84,7 +84,6 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     AdminPageTitle(title="Gestione Sconti")
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
-    //- AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
     .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]", v-else)
         div.lg_border-r
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
@@ -99,25 +98,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
             AdminContainerGrid2ColsBorder
                 .lg_py-6
                     p.mb-4.mt-1 Pranzo
-                    AdminContainerGrid4Cols
-                        .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
-                            class="min-h-[5rem]",
-                            v-for="workTime in lunchWorkTimesList", :key="workTime.id")
-                            .flex.items-center.justify-center
-                                .mr-1: SVGIcon(svg="clock", :size="14")
-                                p {{ workTime.time }}
-
-                            .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center(
-                                draggable="true",
-                                @drop="onDrop($event, workTime.id)",
-                                @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
-                                @dragleave="leaveDrag()", @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
-                                @dragenter.prevent, @dragover.prevent,
-                                :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
-                                p(:class="{ 'group-hover_mr-2' : discountOnWorkTime(workTime.id) }") {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
-
-                                .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
-                                    SVGIcon(svg="close", :size="14")
+                    AdminDiscountTimeSlot(:workTimesList="lunchWorkTimesList", :selectedDayOfWeek="selectedDayOfWeek")
 
                 AdminContainerDivider
 
