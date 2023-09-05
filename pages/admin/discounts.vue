@@ -18,15 +18,17 @@ storeDiscounts.fetchDiscounts()
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
 const selectedDayOfWeek = ref(1)
-
 let newDiscountAmount = ref()
 const newDiscountAmountError = ref(false)
+
+const discountOnWorkTime = (workTimeId: WorkTime["id"]) => {
+    return discountsList.value.find(item => item.dayOfWeek === selectedDayOfWeek.value && item.workTime.id === workTimeId)
+}
+
 function validateInput() {
     if (isNaN(newDiscountAmount.value)) newDiscountAmountError.value = true
     else newDiscountAmountError.value = false;
 }
-
-// methods for DiscountAmount
 async function addDiscountAmount() {
     const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
     if (alreadyPresent) newDiscountAmountError.value = true
@@ -40,6 +42,33 @@ async function deleteDiscountAmount(discountAmountId: number) {
     await storeDiscounts.deleteDiscountAmount(discountAmountId)
     newDiscountAmountError.value = false
     newDiscountAmount.value = null
+}
+
+
+const dragHasLelt = ref(false)
+const startDrag = (event: any, discountId: Discount["id"], discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
+    event.dataTransfer.effectAllowed = effectAllowed
+    event.dataTransfer.dropEffect = effectAllowed
+    event.dataTransfer.setData('discountId', discountId)
+    event.dataTransfer.setData('discountAmountId', discountAmountId)
+}
+const leaveDrag = () => dragHasLelt.value = true
+const endDrag = (event: any, discountId: Discount["id"]) => dragHasLelt.value ? storeDiscounts.deleteDiscount(discountId) : null
+const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
+    dragHasLelt.value = false
+    const effectAllowed = event.dataTransfer.effectAllowed
+    const discountId = parseInt(event.dataTransfer.getData('discountId'))
+    const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
+
+    const discountToCheck = discountOnWorkTime(workTimeId)
+    if (effectAllowed === 'copy') {
+        // if you're adding a Discount on WorkTime
+        if (!discountId && !discountToCheck) storeDiscounts.addDiscount(selectedDayOfWeek.value, workTimeId, discountAmountId)
+        // if you're trying to replace a discountAmount in a workTime with Discount already set
+        if (!discountId && discountToCheck) storeDiscounts.updateDiscount(discountToCheck.id, workTimeId, discountAmountId)
+    } else if (effectAllowed === 'move') {
+        storeDiscounts.updateDiscount(discountId, workTimeId, discountAmountId)
+    }
 }
 </script>
 
@@ -62,27 +91,60 @@ async function deleteDiscountAmount(discountAmountId: number) {
                 div.lg_py-6
                     p.mb-4 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
+                        .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
+                            class="min-h-[5rem]",
+                            v-for="workTime in lunchWorkTimesList", :key="workTime.id")
+                            .flex.items-center.justify-center
+                                .mr-1: SVGIcon(svg="clock", :size="14")
+                                p {{ workTime.time }}
+
+                            .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center(
+                                draggable="true",
+                                @drop="onDrop($event, workTime.id)",
+                                @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
+                                @dragleave="leaveDrag()", @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
+                                @dragenter.prevent, @dragover.prevent,
+                                :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
+                                p {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
 
                 .border-b.lg_border-r.lg_border-b-0
 
                 div.lg_py-6
                     p.mb-4 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
-                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :selectedDayOfWeek="selectedDayOfWeek", :workTime="workTime")
+                        .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
+                            class="min-h-[5rem]",
+                            v-for="workTime in dinnerWorkTimesList", :key="workTime.id")
+                            .flex.items-center.justify-center
+                                .mr-1: SVGIcon(svg="clock", :size="14")
+                                p {{ workTime.time }}
 
+                            .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center(
+                                draggable="true",
+                                @drop="onDrop($event, workTime.id)",
+                                @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
+                                @dragleave="leaveDrag()",
+                                @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
+                                @dragenter.prevent, @dragover.prevent,
+                                :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
+                                p {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
+
+            //- p.mt-2.mb-2.text-sm.text-grey-100 Cancella gli sconti trascinandoli al di fuori dell'intervallo di tempo.
 
         .border-b.lg_border-r.lg_border-b-0
 
         div.pl-6.mt-1.lg_mb-6
             p Sconti
-            p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e assegnali all'orario desiderato.
+            p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 
             .grid.grid-cols-2.gap-2
-                .relative.rounded.bg-red-500.text-white.text-sm.text-center.cursor-default.group.overflow-hidden(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id")
-                    p.h-7.py-1.group-hover_mr-4 {{ discountAmount.value }}%
-                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200(@click="deleteDiscountAmount(discountAmount.id)")
-                        SVGIcon.cursor-pointer(svg="trash", :size="14")
+                .relative.rounded.h-8.w-full.overflow-hidden.flex.items-center.justify-center.bg-red-500.text-white.text-sm.text-center.cursor-grab.group(
+                    v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id"
+                    draggable="true", @dragstart="startDrag($event, null, discountAmount.id, 'copy')", @dragenter.prevent, @dragover.prevent)
+                    p.group-hover_mr-2 {{ discountAmount.value }}%
+
+                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(@click="deleteDiscountAmount(item.id)")
+                        SVGIcon(svg="trash", :size="14")                            
 
                 input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
                     class="h-7 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
