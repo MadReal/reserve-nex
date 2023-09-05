@@ -20,8 +20,7 @@ const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !sto
     AdminPageTitle(title="Riepilogo Giorno", :date="todaysDate")
 
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
-
-    .grid.gap-8.lg_gap-6.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]", v-else)
+    AdminContainerGrid(v-else)
         div.lg_mb-6
             p.mb-4.mt-1 Pranzo #[span.text-sm.text-grey-200 (totale: {{ lunchReservationsPeopleAmount }})]
             .grid.grid-cols-3.lg_grid-cols-4.gap-2

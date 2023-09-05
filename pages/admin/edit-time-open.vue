@@ -16,7 +16,7 @@ storeWorkTimes.fetchWorkTimes()
 .admin-page
     AdminPageTitle(title="Gestione Orari")
 
-    .grid.gap-8.lg_gap-6.mb-8.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")
+    AdminContainerGrid
         div.lg_mb-6
             p.mb-4.mt-1 Pranzo
             AdminSelectWorkTime(:workTimes="lunchWorkTimesList", :isLunch="true", @addNewTime="storeWorkTimes.addNewWorkTime", @removeTime="storeWorkTimes.removeWorkTime")

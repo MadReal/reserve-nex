@@ -93,9 +93,9 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
 
-            .grid.gap-8.lg_gap-6.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")
+            AdminContainerGrid
                 div.lg_py-6
-                    p.mb-4 Pranzo
+                    p.mb-4.mt-1 Pranzo
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
                         .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
                             class="min-h-[5rem]",
@@ -119,7 +119,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                 .border-b.lg_border-r.lg_border-b-0
 
                 div.lg_py-6
-                    p.mb-4 Cena
+                    p.mb-4.mt-1 Cena
                     .grid.grid-cols-3.lg_grid-cols-4.gap-2
                         .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
                             class="min-h-[5rem]",
