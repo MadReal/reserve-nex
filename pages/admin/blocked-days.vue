@@ -29,7 +29,7 @@ const handleEventClick = async (clickInfo: any) => {
     }
 }
 const handleDateSelect = async (selectInfo: any) => {
-    let title = prompt('Inserisci un titolo for questo evento', 'Blocco giorni')
+    let title = prompt('Inserisci un titolo per questo evento', 'Blocco giorni')
     if (title) {
         const newblockDatesPeriod = await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title)
         let calendarApi = selectInfo.view.calendar
