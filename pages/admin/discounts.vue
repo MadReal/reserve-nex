@@ -143,7 +143,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     draggable="true", @dragstart="startDrag($event, null, discountAmount.id, 'copy')", @dragenter.prevent, @dragover.prevent)
                     p.group-hover_mr-2 {{ discountAmount.value }}%
 
-                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(@click="deleteDiscountAmount(item.id)")
+                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(@click="deleteDiscountAmount(discountAmount.id)")
                         SVGIcon(svg="trash", :size="14")                            
 
                 input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
