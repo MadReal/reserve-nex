@@ -83,7 +83,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
     //- AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
     .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]")
-        div
+        div.lg_border-r
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
             .flex.items-center.pb-6.gap-2.border-b
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
@@ -93,10 +93,10 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
 
-            AdminContainerGrid
-                div.lg_py-6
+            AdminContainerGrid2ColsBorder
+                .lg_py-6
                     p.mb-4.mt-1 Pranzo
-                    .grid.grid-cols-3.lg_grid-cols-4.gap-2
+                    AdminContainerGrid4Cols
                         .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
                             class="min-h-[5rem]",
                             v-for="workTime in lunchWorkTimesList", :key="workTime.id")
@@ -116,11 +116,11 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                                 .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
                                     SVGIcon(svg="close", :size="14")
 
-                .border-b.lg_border-r.lg_border-b-0
+                AdminContainerDivider
 
-                div.lg_py-6
+                .lg_py-6
                     p.mb-4.mt-1 Cena
-                    .grid.grid-cols-3.lg_grid-cols-4.gap-2
+                    AdminContainerGrid4Cols
                         .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
                             class="min-h-[5rem]",
                             v-for="workTime in dinnerWorkTimesList", :key="workTime.id")
@@ -142,9 +142,10 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                                     SVGIcon(svg="close", :size="14")
             //- p.mt-2.mb-2.text-sm.text-grey-100 Cancella gli sconti trascinandoli al di fuori dell'intervallo di tempo.
 
-        .border-b.lg_border-r.lg_border-b-0
+        //- AdminContainerDivider
+        div
 
-        div.pl-6.mt-1.lg_mb-6
+        .pl-6.mt-1.lg_mb-6
             p Sconti
             p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 
@@ -161,6 +162,10 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     class="h-8 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
                     placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none",
                     :class="{ 'input--error': newDiscountAmountError }", @keyup.enter="addDiscountAmount", @input="validateInput")
+
+            .my-5.border-b
+
+            .py-3.px-1.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per sconto in tutte le ore
 </template>
 
 

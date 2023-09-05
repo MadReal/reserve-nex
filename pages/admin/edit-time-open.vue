@@ -16,14 +16,14 @@ storeWorkTimes.fetchWorkTimes()
 .admin-page
     AdminPageTitle(title="Gestione Orari")
 
-    AdminContainerGrid
-        div.lg_mb-6
+    AdminContainerGrid2ColsBorder
+        .lg_mb-6
             p.mb-4.mt-1 Pranzo
             AdminSelectWorkTime(:workTimes="lunchWorkTimesList", :isLunch="true", @addNewTime="storeWorkTimes.addNewWorkTime", @removeTime="storeWorkTimes.removeWorkTime")
 
-        .border-b.lg_border-b-0.lg_border-r
+        AdminContainerDivider
 
-        div.lg_mb-6
+        .lg_mb-6
             p.mb-4.mt-1 Cena
             AdminSelectWorkTime(:workTimes="dinnerWorkTimesList", :isLunch="false", @addNewTime="storeWorkTimes.addNewWorkTime", @removeTime="storeWorkTimes.removeWorkTime")
 </template>
