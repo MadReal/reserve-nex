@@ -38,10 +38,13 @@ async function addDiscountAmount() {
     }
     newDiscountAmount.value = null
 }
-async function deleteDiscountAmount(discountAmountId: number) {
+async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
     await storeDiscounts.deleteDiscountAmount(discountAmountId)
     newDiscountAmountError.value = false
     newDiscountAmount.value = null
+}
+const deleteDiscount = (discountId: Discount["id"]) => {
+    storeDiscounts.deleteDiscount(discountId)
 }
 
 
@@ -53,7 +56,7 @@ const startDrag = (event: any, discountId: Discount["id"], discountAmountId: Dis
     event.dataTransfer.setData('discountAmountId', discountAmountId)
 }
 const leaveDrag = () => dragHasLelt.value = true
-const endDrag = (event: any, discountId: Discount["id"]) => dragHasLelt.value ? storeDiscounts.deleteDiscount(discountId) : null
+const endDrag = (event: any, discountId: Discount["id"]) => dragHasLelt.value ? deleteDiscount(discountId) : null
 const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     dragHasLelt.value = false
     const effectAllowed = event.dataTransfer.effectAllowed
@@ -85,6 +88,8 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
+                .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
+                    @click="selectedDayOfWeek = 10") Tutti i Giorni
 
 
             .grid.gap-8.lg_gap-6.lg_border-b(class="grid-rows-[1fr_1px_1fr] lg_grid-rows-none lg_grid-cols-[1fr_1px_1fr]")
@@ -105,7 +110,10 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                                 @dragleave="leaveDrag()", @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
                                 @dragenter.prevent, @dragover.prevent,
                                 :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
-                                p {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
+                                p(:class="{ 'group-hover_mr-2' : discountOnWorkTime(workTime.id) }") {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
+
+                                .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
+                                    SVGIcon(svg="close", :size="14")
 
                 .border-b.lg_border-r.lg_border-b-0
 
@@ -129,6 +137,8 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                                 :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
                                 p {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
 
+                                .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
+                                    SVGIcon(svg="close", :size="14")
             //- p.mt-2.mb-2.text-sm.text-grey-100 Cancella gli sconti trascinandoli al di fuori dell'intervallo di tempo.
 
         .border-b.lg_border-r.lg_border-b-0
