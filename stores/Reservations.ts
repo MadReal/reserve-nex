@@ -4,6 +4,8 @@ import { lunch, dinner } from "~/data/work-times-available.json";
 
 const URL = "/api/reservations";
 
+// Define a reusable function
+
 export const useReservationsStore = defineStore("ReservationsStore", () => {
 	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
@@ -13,12 +15,20 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	const reservationsSearchList = ref<Reservation[]>([]);
 
 	// GETTERS
-	const lunchReservationsList = computed(() =>
-		reservationsList.value.filter((item) => lunch.includes(item.time))
-	);
-	const dinnerReservationsList = computed(() =>
-		reservationsList.value.filter((item) => dinner.includes(item.time))
-	);
+	function computeReservationsList(timeArray: string[]) {
+		return computed(() =>
+			reservationsList.value
+				.filter((item) => timeArray.includes(item.time) && item.accepted)
+				.reduce(
+					(totalPeopleAmount, item) => totalPeopleAmount + item.peopleAmount,
+					0
+				)
+		);
+	}
+
+	// Use the function to create the computed properties
+	const lunchReservationsPeopleAmount = computeReservationsList(lunch);
+	const dinnerReservationsPeopleAmount = computeReservationsList(dinner);
 
 	// ACTIONS
 	async function fetchReservations(searchQuery?: string) {
@@ -87,8 +97,8 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	return {
 		reservationsList,
 		reservationsSearchList,
-		lunchReservationsList,
-		dinnerReservationsList,
+		lunchReservationsPeopleAmount,
+		dinnerReservationsPeopleAmount,
 		fetchReservations,
 		addReservation,
 		updateReservation,
