@@ -147,7 +147,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                         SVGIcon(svg="trash", :size="14")                            
 
                 input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
-                    class="h-7 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
+                    class="h-8 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
                     placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none",
                     :class="{ 'input--error': newDiscountAmountError }", @keyup.enter="addDiscountAmount", @input="validateInput")
 </template>
