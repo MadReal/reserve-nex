@@ -18,6 +18,8 @@ storeDiscounts.fetchDiscountAmounts()
 storeDiscounts.fetchDiscounts()
 const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
 
+const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length))
+
 const selectedDayOfWeek = ref(1)
 let newDiscountAmount = ref()
 const newDiscountAmountError = ref(false)
@@ -80,9 +82,10 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 <template lang="pug">
 .admin-page
     AdminPageTitle(title="Gestione Sconti")
+    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
     //- AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
-    .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]")
+    .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]", v-else)
         div.lg_border-r
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
             .flex.items-center.pb-6.gap-2.border-b
