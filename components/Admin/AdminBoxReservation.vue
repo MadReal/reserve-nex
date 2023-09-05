@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useReservationsStore } from '@/stores/Reservations';
 
 interface BoxReservationProps {
     workTime: WorkTime,
@@ -8,6 +7,7 @@ interface BoxReservationProps {
 }
 const props = defineProps<BoxReservationProps>()
 
+import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations)
 

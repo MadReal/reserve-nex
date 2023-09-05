@@ -1,5 +1,6 @@
 import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
+import { lunch, dinner } from "~/data/work-times-available.json";
 
 const URL = "/api/reservations";
 
@@ -12,6 +13,12 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	const reservationsSearchList = ref<Reservation[]>([]);
 
 	// GETTERS
+	const lunchReservationsList = computed(() =>
+		reservationsList.value.filter((item) => lunch.includes(item.time))
+	);
+	const dinnerReservationsList = computed(() =>
+		reservationsList.value.filter((item) => dinner.includes(item.time))
+	);
 
 	// ACTIONS
 	async function fetchReservations(searchQuery?: string) {
@@ -80,6 +87,8 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	return {
 		reservationsList,
 		reservationsSearchList,
+		lunchReservationsList,
+		dinnerReservationsList,
 		fetchReservations,
 		addReservation,
 		updateReservation,

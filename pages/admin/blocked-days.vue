@@ -59,7 +59,7 @@ const calendarOptions = ref({
     editable: true,
     selectable: true,
     dayMaxEvents: true,
-    contentHeight: 500,
+    contentHeight: 480,
     events: blockedDatesListFullCalendar,
     select: handleDateSelect,
     eventClick: handleEventClick,
