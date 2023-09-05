@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
+useHead({ title: 'Gestione Sconti', })
 
 import { directive as VNumber } from '@coders-tm/vue-number-format'
 const number = { suffix: '% ', precision: 2, max: 99 }

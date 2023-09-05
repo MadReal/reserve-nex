@@ -25,7 +25,7 @@ loadAdminInitData()
 <template lang="pug">
 .hidden.lg_block.lg_min-h-screen.lg_basis-60(class="bg-[#F1F2F7]")
     //- SIDEBAR MENU - Restaurant Profile
-    .relative
+    .relative(v-on-click-outside="closeDropdown")
         .flex.items-center.h-16.border-b.border-grey-100.py-4.px-5.cursor-pointer(@click="toggleDropdown")
             div(class="basis-1/5")
                 .w-8.h-8.bg-red-300.rounded-full
@@ -33,7 +33,7 @@ loadAdminInitData()
             SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
 
         //- Dropdown
-        .absolute.left-2.right-2.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen", v-on-click-outside="closeDropdown")
+        .absolute.left-2.right-2.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")
             p.mb-2.py-3.px-5.border-b.text-xs.text-grey-200.tracking-widest RISTORANTI
             .mx-3.mt-3.mb-5
                 .p-3.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")

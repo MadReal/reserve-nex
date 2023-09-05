@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['empty-restaurants-list', 'auth'], layout: 'admin-default' })
+useHead({ title: 'Prenotazioni', })
 
 import { storeToRefs } from 'pinia'
 import { useReservationsStore } from '@/stores/Reservations';
@@ -9,7 +10,6 @@ const { reservationsList } = storeToRefs(storeReservations)
 const { openModal } = useOpenModal();
 
 const noData = computed(() => (!reservationsList.value.length))
-// storeReservations.fetchReservations()
 </script>
 
 

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
+useHead({ title: 'Blocco Giorni', })
+
 
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/stores/Blocks'

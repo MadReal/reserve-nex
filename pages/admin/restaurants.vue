@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['auth'], layout: 'admin-no-sidebar' })
+useHead({ title: 'Ristoranti', })
 
 import { storeToRefs } from 'pinia'
 import { useRestaurantsStore } from '@/stores/Restaurants';

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
+useHead({ title: 'Blocco Orari', })
 
 import { storeToRefs } from 'pinia'
 import { useBlocksStore } from '~/stores/Blocks'
