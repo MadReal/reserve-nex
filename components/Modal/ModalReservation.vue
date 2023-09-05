@@ -9,6 +9,13 @@ const { activeModalOption } = storeToRefs(storeModals)
 const { reservationsList } = storeToRefs(storeReservations)
 
 const selectedReservation = ref(reservationsList.value.filter((item: Reservation) => item.id === activeModalOption.value)[0])
+const instagramName = ref(
+	selectedReservation.value.personInstagram
+		? (selectedReservation.value.personInstagram.includes('@')
+			? selectedReservation.value.personInstagram
+			: `@${selectedReservation.value.personInstagram}`)
+		: '-'
+);
 
 const updateReservation = async (reservationId: Reservation['id'], isAccepted: boolean) => {
 	await storeReservations.updateReservation(reservationId, isAccepted)
@@ -28,6 +35,9 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					td.w-28.border.p-3.text-grey-300 ID
 					td.border.p-3.text-grey-200 {{ `#${selectedReservation.id}` }}
 				tr
+					td.w-28.border.p-3.text-grey-300 Data
+					td.border.p-3.text-grey-200 {{ useDateFormatting(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
+				tr
 					td.w-28.border.p-3.text-grey-300 Nome
 					td.border.p-3.text-grey-200 {{ selectedReservation.personName }}
 				tr
@@ -37,8 +47,11 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					td.w-28.border.p-3.text-grey-300 Email
 					td.border.p-3.text-grey-200 {{ selectedReservation.personEmail }}
 				tr
-					td.w-28.border.p-3.text-grey-300 Data
-					td.border.p-3.text-grey-200 {{ useDateFormatting(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
+					td.w-28.border.p-3.text-grey-300 Instagram
+					td.border.p-3.text-grey-200 {{ instagramName }}
+				tr
+					td.w-28.border.p-3.text-red-500 Sconto
+					td.border.p-3.text-red-500 {{ selectedReservation.discount }}{{ selectedReservation.discount ? '%' : '' }}
 				tr
 					td.w-28.border.p-3.text-grey-300 Persone
 					td.border.p-3.text-grey-200 {{ selectedReservation.peopleAmount }}
