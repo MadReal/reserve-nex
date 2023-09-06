@@ -26,17 +26,12 @@ export default defineEventHandler(async (event) => {
 					// delete them all (if there are any)
 					await prisma.discount.deleteMany({ where: { restaurantId } });
 					// build them all
-					return await prisma.discount.createMany({
-						data: [
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 1 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 2 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 3 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 4 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 5 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 6 },
-							{ ...value, workTimeId: workTime.id, dayOfWeek: 7 },
-						],
-					});
+					const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({
+						...value,
+						workTimeId: workTime.id,
+						dayOfWeek: number,
+					}));
+					return await prisma.discount.createMany({ data });
 				} else {
 					// delete all the ones with same dayOfWeek
 					await prisma.discount.deleteMany({
