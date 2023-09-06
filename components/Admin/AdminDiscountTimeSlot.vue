@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 
 interface AdminDiscountDragProps {
-    workTimesList: WorkTime[],
+    workTime: WorkTime,
     selectedDayOfWeek: DayOfWeek
 }
 const props = withDefaults(defineProps<AdminDiscountDragProps>(), {});
@@ -47,23 +47,26 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
 
 <template lang="pug">
-AdminContainerGrid4Cols
-    .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
-        class="min-h-[5rem]",
-        v-for="workTime in workTimesList", :key="workTime.id")
-        .flex.items-center.justify-center
-            .mr-1: SVGIcon(svg="clock", :size="14")
-            p {{ workTime.time }}
+.relative.pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(class="min-h-[5rem]")
+    .flex.items-center.justify-center
+        .mr-1: SVGIcon(svg="clock", :size="14")
+        p {{ workTime.time }}
 
-        .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center(
-            draggable="true",
-            @drop="onDrop($event, workTime.id)",
-            @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
-            @dragleave="leaveDrag()", @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
-            @dragenter.prevent, @dragover.prevent,
-            :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
-            p(:class="{ 'group-hover_mr-2' : discountOnWorkTime(workTime.id) }") {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
+    .absolute.inset-0(        
+        @drop="onDrop($event, workTime.id)",
+        @dragenter.prevent, @dragover.prevent,
+    )
 
-            .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
-                SVGIcon(svg="close", :size="14")
+    .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center.z-10(
+        draggable="true",
+        @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
+        @dragleave="leaveDrag()",
+        @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
+        @dragenter.prevent, @dragover.prevent,
+        :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
+
+        p(:class="{ 'group-hover_mr-2' : discountOnWorkTime(workTime.id) }") {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
+
+        .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
+            SVGIcon(svg="close", :size="14")
 </template>

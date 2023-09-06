@@ -98,32 +98,17 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
             AdminContainerGrid2ColsBorder
                 .lg_py-6
                     p.mb-4.mt-1 Pranzo
-                    AdminDiscountTimeSlot(:workTimesList="lunchWorkTimesList", :selectedDayOfWeek="selectedDayOfWeek")
+
+                    AdminContainerGrid4Cols
+                        AdminDiscountTimeSlot(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
                 AdminContainerDivider
 
                 .lg_py-6
                     p.mb-4.mt-1 Cena
                     AdminContainerGrid4Cols
-                        .pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.text-white.overflow-hidden(
-                            class="min-h-[5rem]",
-                            v-for="workTime in dinnerWorkTimesList", :key="workTime.id")
-                            .flex.items-center.justify-center
-                                .mr-1: SVGIcon(svg="clock", :size="14")
-                                p {{ workTime.time }}
+                        AdminDiscountTimeSlot(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
-                            .relative.h-8.w-full.overflow-hidden.flex.items-center.justify-center.group.bg-red-500.text-white.text-sm.text-center(
-                                draggable="true",
-                                @drop="onDrop($event, workTime.id)",
-                                @dragstart="startDrag($event, discountOnWorkTime(workTime.id)?.id, discountOnWorkTime(workTime.id)?.discountAmount.id,  'move')"
-                                @dragleave="leaveDrag()",
-                                @dragend="endDrag($event, discountOnWorkTime(workTime.id)?.id)", 
-                                @dragenter.prevent, @dragover.prevent,
-                                :class="{ 'bg-transparent' : !discountOnWorkTime(workTime.id), 'cursor-grab' : discountOnWorkTime(workTime.id) }")
-                                p {{ discountOnWorkTime(workTime.id)?.discountAmount?.value }}{{ discountOnWorkTime(workTime.id)?.discountAmount?.value ? '%' : '-' }}
-
-                                .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="discountOnWorkTime(workTime.id)", @click="deleteDiscount(discountOnWorkTime(workTime.id)?.id)")
-                                    SVGIcon(svg="close", :size="14")
             //- p.mt-2.mb-2.text-sm.text-grey-100 Cancella gli sconti trascinandoli al di fuori dell'intervallo di tempo.
 
         //- AdminContainerDivider
@@ -149,7 +134,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
             .my-5.border-b
 
-            .py-3.px-1.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per sconto in tutte le ore
+            .py-3.px-1.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per applicare a tutti gli orari
 </template>
 
 
