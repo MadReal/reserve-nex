@@ -51,7 +51,7 @@ const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdo
 
 
 <template lang="pug">
-.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]")
+.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]", v-on-click-outside="closeDropdownCalendar")
     //- TIME From / To
     AdminBlockedTimeOnDaySelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeOnDay="updateTimeSlot")
     AdminBlockedTimeOnDaySelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeOnDay="updateTimeSlot")
@@ -60,7 +60,7 @@ const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdo
     .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
         p.leading-normal.text-grey-300 {{ useDateFormatting(blockTimePeriod.date) }}
         //- Dropdown
-        .absolute.top-12.right-0.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen", v-on-click-outside="closeDropdownCalendar")
+        .absolute.top-12.right-0.lg_right-auto.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
             VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 
                 inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()", :disabled-dates="disabledDates")
 

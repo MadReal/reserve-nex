@@ -94,7 +94,6 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                 .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
                     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
-
             AdminContainerGrid2ColsBorder
                 .lg_py-6
                     p.mb-4.mt-1 Pranzo
