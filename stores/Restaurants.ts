@@ -34,10 +34,11 @@ export const useRestaurantsStore = defineStore(
 		}
 
 		async function fetchSingleRestaurant(restaurantId: Restaurant["id"]) {
-			const { data }: any = await useFetch(URL);
-			if (data.value) {
-				restaurantsList.value = data.value;
-				activeRestaurantId.value = data.value[0].id;
+			const { data } = await useFetch<Restaurant>(`${URL}/${restaurantId}`);
+
+			if (data && data.value) {
+				restaurantsList.value = [data.value];
+				activeRestaurantId.value = data.value.id;
 				return data.value;
 			}
 		}
@@ -47,7 +48,7 @@ export const useRestaurantsStore = defineStore(
 			restaurantId: Restaurant["id"] | null
 		) {
 			if (restaurantId) {
-				const { data } = await useFetch(`${URL}/${restaurantId}`, {
+				const { data } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
 					method: "patch",
 					body: {
 						name: restaurant.name,
@@ -59,15 +60,14 @@ export const useRestaurantsStore = defineStore(
 				const restuarantToUpdateIndex = restaurantsList.value.findIndex(
 					(e) => e.id === restaurantId
 				);
-				// @ts-ignore
-				restaurantsList.value[restuarantToUpdateIndex] = data.value;
+				if (data && data.value)
+					restaurantsList.value[restuarantToUpdateIndex] = data.value;
 			} else {
-				const { data, error } = await useFetch(URL, {
+				const { data, error } = await useFetch<Restaurant>(URL, {
 					method: "post",
 					body: restaurant,
 				});
 				if (data && data.value) {
-					// @ts-ignore
 					restaurantsList.value.push(data.value);
 					activeRestaurantId.value = data.value.id;
 				}

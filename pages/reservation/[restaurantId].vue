@@ -123,10 +123,6 @@ const calendarOptions = ref({
     hiddenDays: hiddenDaysOfWeek,
     dateClick: handleDateClick
 })
-// // @ts-ignore
-// watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
-// // @ts-ignore
-// watch(hiddenDaysOfWeek, (newEvents) => calendarOptions.hiddenDays = newEvents);
 
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
 storeBlocks.fetchBlockedDates(restaurantIdParam)

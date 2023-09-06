@@ -37,7 +37,9 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 			searchQuery: searchQuery,
 		};
 
-		const { data, error }: any = await useFetch(URL, { params: queryParams });
+		const { data, error } = await useFetch<Reservation[]>(URL, {
+			params: queryParams,
+		});
 		if (data && data.value) {
 			// Sort the list by date and time
 			const reservationsSorted = data.value.sort(
@@ -72,7 +74,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	}
 
 	async function addReservation(reservation: Partial<Reservation>) {
-		const { data, error } = await useFetch(URL, {
+		const { data, error } = await useFetch<Reservation>(URL, {
 			method: "post",
 			body: reservation,
 		});

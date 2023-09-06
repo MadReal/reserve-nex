@@ -17,11 +17,11 @@ export default defineEventHandler(async (event) => {
 	if (error) throw createError({ statusMessage: error.message });
 	const { dayOfWeek, discountAmountId, restaurantId } = value;
 	try {
-		const workTimesList: WorkTime[] = await prisma.workTime.findMany({
+		const workTimesRows: WorkTime[] = await prisma.workTime.findMany({
 			where: { restaurantId },
 		});
 		const results = await Promise.all(
-			workTimesList.map(async (workTime) => {
+			workTimesRows.map(async (workTime) => {
 				if (dayOfWeek === 10) {
 					// delete them all (if there are any)
 					await prisma.discount.deleteMany({ where: { restaurantId } });

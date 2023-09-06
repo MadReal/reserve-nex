@@ -61,7 +61,7 @@ declare interface Reservation {
 }
 
 declare interface Restaurant {
-	id?: number;
+	id?: number | string;
 	name: string;
 	address: string;
 	city: string;

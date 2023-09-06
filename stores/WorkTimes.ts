@@ -27,14 +27,14 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 
 	// ACTIONS
 	async function fetchWorkTimes(restaurantId?: Restaurant["id"]) {
-		const { data, error }: any = await useFetch(URL, {
+		const { data, error } = await useFetch<WorkTime[]>(URL, {
 			params: { restaurantId: restaurantId || activeRestaurantId },
 		});
 		if (data.value) workTimesList.value = data.value;
 	}
 
 	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
-		const { data, error } = await useFetch(URL, {
+		const { data, error } = await useFetch<WorkTime>(URL, {
 			method: "post",
 			body: {
 				mealType: isLunch ? "LUNCH" : "DINNER",

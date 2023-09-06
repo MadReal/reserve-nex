@@ -67,9 +67,6 @@ const calendarOptions = ref({
     eventDrop: handleDragAndResize,
     eventResize: handleDragAndResize
 })
-// // @ts-ignore
-// watch(blockedDatesListFullCalendar, (newEvents) => calendarOptions.events = newEvents);
-
 // API CALLS
 storeBlocks.fetchBlockedDaysOfWeek()
 storeBlocks.fetchBlockedDates()
