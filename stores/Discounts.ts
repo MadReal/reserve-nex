@@ -100,6 +100,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			(e) => e.id === discountAmountId
 		);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
+		await fetchDiscounts();
 	}
 
 	async function deleteDiscount(discountId: Discount["id"]) {

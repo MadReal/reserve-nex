@@ -42,6 +42,7 @@ async function addDiscountAmount() {
 }
 async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
     await storeDiscounts.deleteDiscountAmount(discountAmountId)
+    // window.location.reload()
     newDiscountAmountError.value = false
     newDiscountAmount.value = null
 }
@@ -128,7 +129,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
             .my-6.border-b
 
-            .py-3.px-1.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per applicare a tutti gli orari
+            .py-5.px-4.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per applicare a tutti gli orari
 </template>
 
 
