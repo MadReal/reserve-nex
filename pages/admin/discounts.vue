@@ -49,33 +49,24 @@ async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 const deleteDiscount = (discountId: Discount["id"]) => {
     storeDiscounts.deleteDiscount(discountId)
 }
+const deleteAllDiscountsOnDayOfWeek = (selectedDayOfWeek: number) => {
+    storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)
+}
 
 
-const dragHasLelt = ref(false)
 const startDrag = (event: any, discountId: Discount["id"], discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
     event.dataTransfer.effectAllowed = effectAllowed
     event.dataTransfer.dropEffect = effectAllowed
     event.dataTransfer.setData('discountId', discountId)
     event.dataTransfer.setData('discountAmountId', discountAmountId)
 }
-const leaveDrag = () => dragHasLelt.value = true
-const endDrag = (event: any, discountId: Discount["id"]) => dragHasLelt.value ? deleteDiscount(discountId) : null
-const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
-    dragHasLelt.value = false
-    const effectAllowed = event.dataTransfer.effectAllowed
-    const discountId = parseInt(event.dataTransfer.getData('discountId'))
+const onDrop = (event: any) => {
     const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
-
-    const discountToCheck = discountOnWorkTime(workTimeId)
-    if (effectAllowed === 'copy') {
-        // if you're adding a Discount on WorkTime
-        if (!discountId && !discountToCheck) storeDiscounts.addDiscount(selectedDayOfWeek.value, workTimeId, discountAmountId)
-        // if you're trying to replace a discountAmount in a workTime with Discount already set
-        if (!discountId && discountToCheck) storeDiscounts.updateDiscount(discountToCheck.id, workTimeId, discountAmountId)
-    } else if (effectAllowed === 'move') {
-        storeDiscounts.updateDiscount(discountId, workTimeId, discountAmountId)
-    }
+    console.log(selectedDayOfWeek.value);
+    console.log(discountAmountId);
+    storeDiscounts.addManyDiscounts(selectedDayOfWeek.value, discountAmountId)
 }
+
 </script>
 
 
@@ -108,7 +99,8 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     AdminContainerGrid4Cols
                         AdminDiscountBox(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
-            button.w-fit.mt-3.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white Reset giorno
+            button.w-fit.mt-3.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white(@click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
+            button.w-fit.mt-3.p-2.ml-3.border.border-red-400.rounded.text-xs.text-center.text-red-400.cursor-pointer.hover_bg-red-300.hover_text-red-700(@click="deleteAllDiscountsOnDayOfWeek(10)") Reset Tutto
 
         AdminContainerDivider
 
@@ -129,7 +121,8 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
             .my-6.border-b
 
-            .py-5.px-4.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per applicare a tutti gli orari
+            .py-5.px-3.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-300(
+                @drop="onDrop($event)", @dragenter.prevent, @dragover.prevent) Trascina per applicare sconto a tutti gli orari del giorno selezionato
 </template>
 
 

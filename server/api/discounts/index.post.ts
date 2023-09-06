@@ -1,11 +1,10 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { discountInclude } from "./index.get";
+import { discountInclude } from "~/server/api/discounts/index.get";
 
 const prisma = new PrismaClient();
 
 export const discountSchema = Joi.object({
-	// amount: Joi.number().integer().min(1).max(99).precision(2).required(),
 	dayOfWeek: Joi.number().valid(1, 2, 3, 4, 5, 6, 7).required(),
 	discountAmountId: Joi.number().required(),
 	workTimeId: Joi.number().required(),

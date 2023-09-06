@@ -13,6 +13,7 @@ enum DayOfWeek {
 	FRIDAY = 5,
 	SATURDAY = 6,
 	SUNDAY = 7,
+	ALL = 10,
 }
 
 declare interface DiscountAmount {
