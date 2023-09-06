@@ -10,7 +10,6 @@ import { useWorkTimesStore } from '~/stores/WorkTimes'
 import { useDiscountsStore } from '~/stores/Discounts'
 
 const storeWorkTimes = useWorkTimesStore();
-storeWorkTimes.fetchWorkTimes()
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 
 const storeDiscounts = useDiscountsStore();

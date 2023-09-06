@@ -13,8 +13,11 @@ const emit = defineEmits(['selectTime'])
 
 
 import { useBlocksStore } from '~/stores/Blocks'
+import { useDiscountsStore } from '~/stores/Discounts'
 const storeBlocks = useBlocksStore()
+const storeDiscounts = useDiscountsStore();
 const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
+const { discountsList } = storeToRefs(storeDiscounts)
 
 const blockedTimesToday = computed(() => {
     // Use .filter() to create a new array with items that have the same date
@@ -64,20 +67,26 @@ const isTimePast = (() => {
     return isToday && !isBetweenMidnightAnd4AM && timeToCheckMinutes < currentMinutes;
 })();
 
+const discountAmountOnTime = computed(() => discountsList.value.find(item => item.workTime.time === props.time)?.discountAmount?.value)
 
 function selectTime(time: string) {
     if (isTimeBlocked) return
-    else emit('selectTime', time)
+    else emit('selectTime', time, discountAmountOnTime.value)
 }
 </script>
 
 
 <template lang="pug">
-.rounded-lg.p-4.border.border-gray-100.text-grey-200.hover_border-primary-100(
-    :class="{ 'border-primary-100' : isSelected, 'cursor-not-allowed line-through decoration-grey-100 text-grey-100 hover_border-gray-100' : isTimeBlocked || isTimePast, 'cursor-pointer' : !isTimeBlocked }", @click="selectTime(time)")
+.px-2.rounded-lg.border.border-gray-100.text-grey-200.hover_border-primary-100.flex.items-center.flex-col.justify-center.group(
+    class="min-h-[4rem]"
+    :class="{ 'border-primary-100' : isSelected, 'cursor-not-allowed line-through decoration-grey-100 text-grey-100 hover_border-gray-100' : isTimeBlocked || isTimePast, 'cursor-pointer' : !isTimeBlocked }",
+    @click="selectTime(time)")
 
-    .flex.items-center.justify-center.hover_text-primary-100(
+    .flex.items-center.justify-center.group-hover_text-primary-100(
         :class="{ 'text-primary-100' : isSelected, 'cursor-not-allowed text-grey-100 hover_text-grey-100' : isTimeBlocked || isTimePast}")
         SVGIcon.mr-1(svg="clock", :size="15")
-        p {{ time }}
+        p {{ time }}             
+
+    .h-5.px-1.flex.items-center.justify-center.rounded-sm.bg-red-500.text-white.text-sm.text-center(v-if="discountAmountOnTime")
+        p.text-xs #[span(class="text-[9px] tracking-tight relative -top-px") Sconto] {{ discountAmountOnTime }}%
 </template>

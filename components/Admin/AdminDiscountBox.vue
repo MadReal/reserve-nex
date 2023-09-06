@@ -8,8 +8,6 @@ interface AdminDiscountDragProps {
 const props = withDefaults(defineProps<AdminDiscountDragProps>(), {});
 
 const storeDiscounts = useDiscountsStore();
-storeDiscounts.fetchDiscountAmounts()
-storeDiscounts.fetchDiscounts()
 const { discountsList } = storeToRefs(storeDiscounts)
 
 const discountOnWorkTime = computed(() => discountsList.value.find(item => item.dayOfWeek === props.selectedDayOfWeek && item.workTime.id === props.workTime.id))

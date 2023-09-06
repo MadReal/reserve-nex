@@ -18,23 +18,20 @@ export const discountInclude = {
 };
 
 export default defineEventHandler(async (event) => {
-	const { restaurantId } = getQuery(event);
+	const { dayOfWeek, restaurantId } = getQuery(event);
 	const id: number | undefined =
 		restaurantId !== null ? Number(restaurantId) : undefined;
+
+	const where = dayOfWeek
+		? { restaurantId: id, dayOfWeek: Number(dayOfWeek) }
+		: { restaurantId: id };
 
 	try {
 		// * REQUEST *
 		const discounts = await prisma.discount.findMany({
-			where: { restaurantId: id },
+			where,
 			include: discountInclude,
 		});
-
-		// // Use type assertion to add the "value" property (needed later for Vue draggable)
-		// const modifiedDiscounts = discounts.map((item) => {
-		// 	const newItem = item as any; // Use "as any" to bypass TypeScript checks
-		// 	newItem.value = item.discountAmount.value;
-		// 	return newItem;
-		// });
 
 		// Remove "workTimeId" and "discountAmountId" properties
 		const filteredDiscounts = discounts.map(

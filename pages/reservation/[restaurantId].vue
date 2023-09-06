@@ -20,8 +20,9 @@ const goToStep = (stepToGo: number) => {
 // init reservation object
 const newReservation = ref<Partial<Reservation>>({
     id: null!,
-    time: '',
     date: null!,
+    time: '',
+    discountAmount: null,
     personName: '',
     personEmail: '',
     personPhone: '',
@@ -56,9 +57,12 @@ const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item 
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
+import { useDiscountsStore } from '~/stores/Discounts'
+const storeDiscounts = useDiscountsStore();
 //
-const selectReservationTime = (time: WorkTime["time"]) => {
+const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: number) => {
     newReservation.value.time = time
+    newReservation.value.discountAmount = discountAmount
     activeSectionStep.value++
 }
 
@@ -96,9 +100,13 @@ const handleDateClick = (dateClickInfo: any) => {
     // Get the date as a string without the time
     // const selectedDate = dateClickInfo.date.toLocaleDateString('it-IT');
     const selectedDate = dateClickInfo.date
+    let dayOfWeek = selectedDate.getDay()
+    // adjust sunday, because it's 0 but 7 is app=s sunday
+    dayOfWeek === 0 ? dayOfWeek = 7 : dayOfWeek = dayOfWeek
 
     newReservation.value.date = selectedDate;
     storeWorkTimes.fetchWorkTimes(restaurantIdParam);
+    storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam)
 }
 
 
@@ -171,13 +179,14 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                         .lg_my-6(v-if="lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id" 
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
+                                ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
+
                         .lg_my-6(v-if="dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id" 
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTime")
+                                ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
                 div(v-if="activeSectionStep === 3")
                     .py-6.px-10
@@ -185,10 +194,13 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
+                                    p.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="clock", :size="16")
-                                    p.-mb-1.text-sm.text-grey-300 {{ newReservation.time }}
+                                    p.text-sm.text-grey-300 {{ newReservation.time }}
+                                .flex.items-center.gap-1(v-if="newReservation.discountAmount")
+                                    SVGIcon.text-red-500(svg="discount", :size="16")
+                                    p.text-sm.text-red-400 #[span(class="text-xs tracking-tight") Sconto] {{ newReservation.discountAmount }}%
                             p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
                         .lg_mt-6

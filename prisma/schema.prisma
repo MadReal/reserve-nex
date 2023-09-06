@@ -122,7 +122,7 @@ model Reservation {
 	personInstagram		String?
 	accepted			Boolean?
 	// relations
-	discount			Int?
+	discountAmount		Int?
 	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 	restaurantId		Int
 }

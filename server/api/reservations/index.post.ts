@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 const schema = Joi.object({
 	time: Joi.string().required(),
 	date: Joi.date().greater(getPastDate()).required(),
+	discountAmount: Joi.number().allow(null),
 	personName: Joi.string().required(),
 	personPhone: Joi.string().required(),
 	personEmail: Joi.string().email().required(),

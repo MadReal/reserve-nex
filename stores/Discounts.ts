@@ -34,6 +34,16 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		if (data?.value) discountsList.value = data.value;
 	}
 
+	async function fetchDiscountsByDayOfWeek(
+		dayOfWeek: DayOfWeek,
+		restaurantId?: Restaurant["id"]
+	) {
+		const { data }: any = await useFetch(URL_discount, {
+			params: { dayOfWeek, restaurantId: restaurantId || activeRestaurantId },
+		});
+		if (data?.value) discountsList.value = data.value;
+	}
+
 	async function addDiscountAmount(value: DiscountAmount["value"]) {
 		const { data, error } = await useFetch(URL_discountAmount, {
 			method: "post",
@@ -108,6 +118,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		discountsList,
 		fetchDiscountAmounts,
 		fetchDiscounts,
+		fetchDiscountsByDayOfWeek,
 		addDiscountAmount,
 		addDiscount,
 		updateDiscount,
