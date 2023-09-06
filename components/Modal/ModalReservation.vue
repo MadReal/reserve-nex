@@ -51,7 +51,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					td.border.p-3.text-grey-200 {{ instagramName }}
 				tr
 					td.w-28.border.p-3.text-red-500 Sconto
-					td.border.p-3.text-red-500 {{ selectedReservation.discount }}{{ selectedReservation.discount ? '%' : '' }}
+					td.border.p-3.text-red-500 {{ selectedReservation.discountAmount }}{{ selectedReservation.discountAmount ? '%' : '' }}
 				tr
 					td.w-28.border.p-3.text-grey-300 Persone
 					td.border.p-3.text-grey-200 {{ selectedReservation.peopleAmount }}
