@@ -85,7 +85,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
     .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]", v-else)
-        div.lg_border-r
+        div
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
             .flex.items-center.pb-6.gap-2.border-b
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
@@ -100,39 +100,35 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
                     p.mb-4.mt-1 Pranzo
 
                     AdminContainerGrid4Cols
-                        AdminDiscountTimeSlot(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+                        AdminDiscountBox(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
                 AdminContainerDivider
 
                 .lg_py-6
                     p.mb-4.mt-1 Cena
                     AdminContainerGrid4Cols
-                        AdminDiscountTimeSlot(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+                        AdminDiscountBox(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
-            //- p.mt-2.mb-2.text-sm.text-grey-100 Cancella gli sconti trascinandoli al di fuori dell'intervallo di tempo.
+            button.w-fit.mt-3.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white Reset giorno
 
-        //- AdminContainerDivider
-        div
+        AdminContainerDivider
 
         .pl-6.mt-1.lg_mb-6
             p Sconti
-            p.text-xs.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
+            p.text-sm.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 
             .grid.grid-cols-2.gap-2
-                .relative.rounded.h-8.w-full.overflow-hidden.flex.items-center.justify-center.bg-red-500.text-white.text-sm.text-center.cursor-grab.group(
-                    v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id"
-                    draggable="true", @dragstart="startDrag($event, null, discountAmount.id, 'copy')", @dragenter.prevent, @dragover.prevent)
-                    p.group-hover_mr-2 {{ discountAmount.value }}%
-
-                    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(@click="deleteDiscountAmount(discountAmount.id)")
-                        SVGIcon(svg="trash", :size="14")                            
+                AdminDiscountAmount.rounded(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id", 
+                    :value="discountAmount.value", isTrash, 
+                    @updateOrDelete="deleteDiscountAmount(discountAmount.id)", 
+                    @dragstart="startDrag($event, null, discountAmount.id, 'copy')")
 
                 input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
                     class="h-8 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
                     placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none",
                     :class="{ 'input--error': newDiscountAmountError }", @keyup.enter="addDiscountAmount", @input="validateInput")
 
-            .my-5.border-b
+            .my-6.border-b
 
             .py-3.px-1.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-200 Trascina per applicare a tutti gli orari
 </template>
