@@ -134,59 +134,59 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 .page.relative.-mt-16.z-0
     section
         .max-w-screen-xl.px-4.py-40.mx-auto
-            .border.rounded.mx-auto.min-h-min(class="w-6/12")
+            .w-full.border.rounded.mx-auto.min-h-min(class="md_w-6/12")
                 .grid.grid-cols-4.relative.border-b.bg-slate-50
                     //- line in the background
                     .mx-10.absolute.inset-x-0.inset-y-0.z-0
                         .absolute.border-b.w-full.h-1.inset-x-0(class="top-1/2")
 
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(:class="activeSectionStep === 1 ? activeSectionClass : ''", @click="goToStep(1)")
-                        .p-5.rounded-full.border.bg-white(
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(:class="activeSectionStep === 1 ? activeSectionClass : ''", @click="goToStep(1)")
+                        .p-3.md_p-5.rounded-full.border.bg-white(
                             :class="[{ 'border-primary-100' : activeSectionStep === 1, 'border-grey-200' : isActiveSectionStepBiggerThen(1)}, clickClass]")
-                            SVGIcon.text-grey-100(svg="calendar", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 1, 'text-grey-200' : isActiveSectionStepBiggerThen(1) }")
+                            SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="calendar", :class="{ 'text-primary-100' : activeSectionStep === 1, 'text-grey-200' : isActiveSectionStepBiggerThen(1) }")
 
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
                         :class="[activeSectionStep === 2 ? activeSectionClass : '', clickClass]", @click="goToStep(2)")
-                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 2, 'border-grey-200' : isActiveSectionStepBiggerThen(2) }")
-                            SVGIcon.text-grey-100(svg="clock", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 2, 'text-grey-200' : isActiveSectionStepBiggerThen(2) }")
+                        .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 2, 'border-grey-200' : isActiveSectionStepBiggerThen(2) }")
+                            SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="clock", :class="{ 'text-primary-100' : activeSectionStep === 2, 'text-grey-200' : isActiveSectionStepBiggerThen(2) }")
 
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
                         :class="[activeSectionStep === 3 ? activeSectionClass : '', clickClass]", @click="goToStep(3)")
-                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 3, 'border-grey-200' : isActiveSectionStepBiggerThen(3) }")
-                            SVGIcon.text-grey-100(svg="users-filled", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 3, 'text-grey-200' : isActiveSectionStepBiggerThen(3) }")
+                        .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 3, 'border-grey-200' : isActiveSectionStepBiggerThen(3) }")
+                            SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="users-filled", :class="{ 'text-primary-100' : activeSectionStep === 3, 'text-grey-200' : isActiveSectionStepBiggerThen(3) }")
 
-                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-6.z-10(
+                    .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
                         :class="[activeSectionStep === 4 ? activeSectionClass : '', clickClass]", @click="goToStep(4)")
-                        .p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 4 }")
-                            SVGIcon.text-grey-100(svg="check", :size="30", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
+                        .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 4 }")
+                            SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="check", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
 
 
                 div(v-if="activeSectionStep === 1")
-                    .py-6.px-10
+                    .px-4.py-6.md_px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
                         p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
 
                 div(v-if="activeSectionStep === 2")
-                    .py-6.px-10
-                        .flex.items-center.gap-1.pb-5.border-b
+                    .px-4.py-6.md_px-10
+                        .flex.items-center.gap-1.pb-5.border-b.mb-5.md_mb-0
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
                             p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
 
                         .lg_my-6(v-if="lunchWorkTimesList.length")
                             p.mb-4 Pranzo
-                            .grid.grid-cols-5.my-3.gap-2
+                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
                         .lg_my-6(v-if="dinnerWorkTimesList.length")
                             p.mb-4 Cena
-                            .grid.grid-cols-5.my-3.gap-2
+                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
                 div(v-if="activeSectionStep === 3")
-                    .py-6.px-10
-                        .pb-5.border-b
+                    .px-4.py-6.md_px-10
+                        .pb-5.border-b.mb-5.md_mb-0
                             .flex.items-center.gap-5
                                 .flex.items-center.gap-1
                                     SVGIcon.text-grey-100(svg="calendar", :size="18")
@@ -235,10 +235,11 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
 
                 //- footer
-                .mb-10.px-10.flex.items-center
+                .px-4.mb-10.md_px-10.flex.items-center.flex-col.md_flex-row
                     div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
                         p {{ activeRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
-                    button.p-2.bg-black.text-white.rounded.ml-auto(v-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded.ml-2(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
+                    .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
+                        button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                        button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
 </template>
