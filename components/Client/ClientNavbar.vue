@@ -9,23 +9,39 @@ watchEffect(() => {
 </script>
 
 
-<template lang="pug">
-nav.border-gray-200.z-20.relative.text-black(:class="{'text-white': isRouteHome}")
-    .max-w-screen-xl.flex.flex-wrap.items-center.justify-between.mx-auto.p-3
-        NuxtLink.flex.items-center(to="/")
-            span.self-center.text-2xl.font-semibold.whitespace-nowrap Restaurant
-        button.inline-flex.items-center.p-2.w-10.h-10.justify-center.text-sm.text-gray-500.rounded-lg(data-collapse-toggle='navbar-default', type='button', class='md_hidden hover_bg-gray-100 focus_outline-none focus_ring-2 focus_ring-gray-200 dark_text-gray-400 dark_hover_bg-gray-700 dark_focus_ring-gray-600', aria-controls='navbar-default', aria-expanded='false')
-            span.sr-only Open main menu
-            SVGIcon(svg="menu", :size="24")
+<template>
+    <nav id="nav"
+        class="fixed inset-x-0 top-0 flex flex-row justify-between z-50 text-black bg-white h-14 md_h-min md_bg-transparent"
+        :class="{ 'text-white': isRouteHome }">
+        <div class="p-4">
+            <div class="font-semibold text-xl">
+                <nuxt-link to="/"
+                    class=" text-black transition duration-300 hover_text-primary-100 focus_text-black">Ristorante</nuxt-link>
+            </div>
+        </div>
 
-        #navbar-default.hidden.w-full.md_block.md_w-auto
-            ul.font-medium.flex.flex-col.p-4.mt-4.rounded-lg.md_p-0.md_flex-row.md_space-x-8.md_mt-0
-                li
-                    a.block.py-2.pl-3.pr-4.rounded.md_hover_text-red-700.md_p-0(href='#') Home
-                li
-                    a.block.py-2.pl-3.pr-4.rounded.md_hover_text-red-700.md_p-0(href='#') Menu
-                li
-                    a.block.py-2.pl-3.pr-4.rounded.md_hover_text-red-700.md_p-0(href='#') Prenota
-                li
-                    NuxtLink.py-2.px-3.rounded.hover_shadow(:class="{ 'bg-white text-black' : isRouteHome, 'bg-primary-100 text-white' : !isRouteHome }", to="/admin/reservations") Admin
+        <!-- Nav Items Working on Tablet & Bigger Sceen -->
+        <div class="p-4 text-lg hidden md_flex flex-row justify-between font-semibold">
+            <nuxt-link to="/"
+                class="mx-4 border-b-2 border-transparent hover_border-b-2 hover_border-primary-200 transition duration-300">Home</nuxt-link>
+            <a href="#about"
+                class="mx-4 border-b-2 border-transparent hover_border-b-2 hover_border-primary-200 transition duration-300">Menu</a>
+            <a href="#contactus"
+                class="mx-4 border-b-2 border-transparent hover_border-b-2 hover_border-primary-200 transition duration-300">Contatti
+            </a>
+            <nuxt-link to="/admin"
+                class="mx-4 border-b-2 border-primary-200 hover_border-b-2 hover_border-indigo-300 transition duration-300">Admin</nuxt-link>
+        </div>
+
+        <!-- Burger Nav Button on Mobile -->
+        <div id="nav-open" class="p-4 md_hidden text-black">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-menu">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </div>
+    </nav>
 </template>
