@@ -58,7 +58,7 @@
 	--fc-bg-event-opacity: 0.7;
 
 	.fc-daygrid-day-bg .fc-bg-event {
-		@apply flex items-center z-50 cursor-not-allowed;
+		@apply flex items-center z-30 cursor-not-allowed;
 	}
 
 	.fc-bg-event .fc-event-title {

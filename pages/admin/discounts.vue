@@ -76,10 +76,10 @@ const onDrop = (event: any) => {
     AdminPageTitle(title="Gestione Sconti")
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
-    .grid(class="grid-rows-[1fr_1px] lg_grid-rows-none lg_grid-cols-[4fr_1px_1fr]", v-else)
+    .grid(class="grid-rows-[1fr_1px] md_grid-rows-none md_grid-cols-[4fr_1px_1fr]", v-else)
         div
             p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
-            .flex.items-center.pb-6.gap-2.border-b
+            .flex.items-center.flex-wrap.pb-6.gap-2.border-b.mb-6.md_mb-0
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
@@ -87,7 +87,7 @@ const onDrop = (event: any) => {
                 //-     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
             AdminContainerGrid2ColsBorder
-                .lg_py-6
+                .md_py-6
                     p.mb-4.mt-1 Pranzo
 
                     AdminContainerGrid4Cols
@@ -95,17 +95,18 @@ const onDrop = (event: any) => {
 
                 AdminContainerDivider
 
-                .lg_py-6
+                .md_py-6
                     p.mb-4.mt-1 Cena
                     AdminContainerGrid4Cols
                         AdminDiscountBox(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
-            button.w-fit.mt-3.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white(@click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
-            button.w-fit.mt-3.p-2.ml-3.border.border-red-400.rounded.text-xs.text-center.text-red-400.cursor-pointer.hover_bg-red-300.hover_text-red-700(@click="deleteAllDiscountsOnDayOfWeek(10)") Reset Tutto
+            .w-full.my-8.pt-6.inline-flex.gap-3.border-t.md_my-6.md_pt-0.md_border-t-0
+                button.w-fit.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white(@click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
+                button.w-fit.p-2.border.border-red-400.rounded.text-xs.text-center.text-red-400.cursor-pointer.hover_bg-red-300.hover_text-red-700(@click="deleteAllDiscountsOnDayOfWeek(10)") Reset Tutto
 
-        AdminContainerDivider
+        AdminContainerDivider.hidden.md_block
 
-        .pl-6.mt-1.lg_mb-6
+        .my-6.md_pl-6.md_mb-6.md_mt-1
             p Sconti
             p.text-sm.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 

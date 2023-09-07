@@ -64,7 +64,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 			ul
 				li.mb-2
 					p.text-grey-300 ID:
-					p.text-sm.text-grey-200 {{ `#${selectedReservation.id}` }}
+					p.text-xs.text-grey-200 {{ `#${selectedReservation.id}` }}
 				li.mb-2
 					p.text-grey-300 Data:
 					p.text-sm.text-grey-200 {{ useDateFormatting(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
@@ -82,7 +82,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					//- p.text-sm.text-grey-200 {{ instagramName }}
 				li.mb-2
 					p.text-red-500 #[span.font-medium Sconto:] {{ selectedReservation.discountAmount }}{{ selectedReservation.discountAmount ? '%' : '' }}
-				li
+				li.mb-2
 					p.text-grey-300 #[span.font-medium Persone:] {{ selectedReservation.peopleAmount }}
 
 

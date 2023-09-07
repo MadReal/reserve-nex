@@ -85,7 +85,7 @@ storeBlocks.fetchBlockedDates()
         //- Divider
         .hidden.lg_block.lg_h-full.lg_border-r
 
-        .mb-10.lg_mt-1.lg_mb-6
+        .mb-8.md_mb-6.md_mt-1
             //- Display for each day already "blocked"
             AdminBlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", @removeDay="storeBlocks.removeBlock", 
@@ -96,7 +96,7 @@ storeBlocks.fetchBlockedDates()
                 :isUpdate="false", :showTrash="false")
 
     div                
-        .lg_mt-8.mb-8
+        .mt-8.mb-8
             p.text-lg.text-grey-300 Aggiungi Periodi di Chiusura o Vacanze
             p.text-sm.text-grey-100.font-light Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. 
                 #br Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura.

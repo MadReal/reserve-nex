@@ -21,7 +21,7 @@
             SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="discount", :size="20")
             p.text-sm.text-grey-200.tracking-wide Gestione Sconti
 
-    .mb-8
+    .mb-4.md_mb-8
         p.mb-3.px-3.text-xs.tracking-widest.text-grey-200 GESTIONE BLOCCHI
 
         NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/blocked-days", @click="$emit('toggleMenu')")
