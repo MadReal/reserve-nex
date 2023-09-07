@@ -29,7 +29,9 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 	.text-center.basis-full
 		p.text-lg.font-semibold.mb-4 Prenotazione
 
-		table.table-fixed.border-collapse.w-full.border.border-slate-400.bg-white.text-sm.text-left.shadow-sm
+
+		//- desktop
+		table.hidden.md_table.table-fixed.border-collapse.w-full.border.border-slate-400.bg-white.text-sm.text-left.shadow-sm
 			tbody
 				tr
 					td.w-28.border.p-3.text-grey-300 ID
@@ -55,6 +57,34 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 				tr
 					td.w-28.border.p-3.text-grey-300 Persone
 					td.border.p-3.text-grey-200 {{ selectedReservation.peopleAmount }}
+
+
+		//- mobile
+		.w-full.bg-white.text-sm.text-left
+			ul
+				li.mb-2
+					p.text-grey-300 ID:
+					p.text-sm.text-grey-200 {{ `#${selectedReservation.id}` }}
+				li.mb-2
+					p.text-grey-300 Data:
+					p.text-sm.text-grey-200 {{ useDateFormatting(selectedReservation.date) }} #[span.ml-2.text-grey-300.font-medium Orario #[span.text-grey-300.font-semibold {{ selectedReservation.time }}]]
+				li.mb-2
+					p.text-grey-300 Nome:
+					p.text-sm.text-grey-200 {{ selectedReservation.personName }}
+				li.mb-2
+					p.text-grey-300 Telefono:
+					p.text-sm.text-grey-200 {{ selectedReservation.personPhone }}
+				li.mb-2
+					p.text-grey-300 Email:
+					p.text-sm.text-grey-200 {{ selectedReservation.personEmail }}
+				li.mb-2
+					p.text-grey-300 #[span.font-medium Instagram:] {{ instagramName }}
+					//- p.text-sm.text-grey-200 {{ instagramName }}
+				li.mb-2
+					p.text-red-500 #[span.font-medium Sconto:] {{ selectedReservation.discountAmount }}{{ selectedReservation.discountAmount ? '%' : '' }}
+				li
+					p.text-grey-300 #[span.font-medium Persone:] {{ selectedReservation.peopleAmount }}
+
 
 		.mt-5.flex.items-center.justify-center.gap-2
 			button.py-2.px-4.rounded.bg-success-100.text-success-300.cursor-not-allowed(v-if="selectedReservation.accepted === true") Accettata

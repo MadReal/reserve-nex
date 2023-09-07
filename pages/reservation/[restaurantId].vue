@@ -172,13 +172,13 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
                             p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
 
-                        .lg_my-6(v-if="lunchWorkTimesList.length")
+                        .md_my-6(v-if="lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
-                        .lg_my-6(v-if="dinnerWorkTimesList.length")
+                        .md_my-6(v-if="dinnerWorkTimesList.length")
                             p.mb-4 Cena
                             .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
                                 ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
@@ -199,7 +199,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                                     p.text-sm.text-red-400 #[span(class="text-xs tracking-tight") Sconto] {{ newReservation.discountAmount }}%
                             p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
-                        .lg_mt-6
+                        .md_mt-6
                             .flex.mb-2.gap-4
                                 .flex-grow
                                     label.text-xs(for="person-name") Nome
@@ -225,21 +225,22 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                                 v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
 
                 div(v-if="activeSectionStep === 4")
-                    .py-24.px-10.flex.items-center.justify-center.gap-5
+                    .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                            p.text-lg Congratulazioni {{ newReservation.personName }},
-                            p.mt-1 ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
-                            p.mt-4.text-xs.text-primary-100 Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
+                            p.text-md.md_text-lg Congratulazioni {{ newReservation.personName }},
+                            p.mt-1.text-sm.md_text-md ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
                             p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
 
                 //- footer
-                .px-4.mb-10.md_px-10.flex.items-center.flex-col.md_flex-row
-                    div(v-if="activeSectionStep !== 1 && activeSectionStep !== 4")
+                .px-4.mb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeSectionStep !== 4")
+                    div
                         p {{ activeRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
                     .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
-                        button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                        button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep === 1" @click="navigateTo('/reservation')") Torna Indietro
+                        button.p-2.bg-black.text-white.rounded(v-else-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
                         button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
 </template>

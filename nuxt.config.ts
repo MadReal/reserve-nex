@@ -2,8 +2,15 @@ import svgLoader from "vite-svg-loader";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering
-
 export default defineNuxtConfig({
+	app: {
+		head: {
+			title: "Ristorante",
+			charset: "utf-8",
+			viewport: "width=device-width, initial-scale=1",
+			htmlAttrs: { lang: "it" },
+		},
+	},
 	devtools: { enabled: false },
 	routeRules: {
 		// Homepage pre-rendered at build time
