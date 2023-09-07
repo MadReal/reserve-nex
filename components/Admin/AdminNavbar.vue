@@ -94,7 +94,7 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                     SVGIcon.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id), toggleMenu()")
                 .mt-2.mx-3.p-3.flex.items-center.justify-between.border.border-dashed.border-white.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant'), toggleDropdown()")
                     p.text-sm.leading-normal Aggiungi ristorante
-                    SVGIcon(svg="plus", :size="15")         
+                    SVGIcon(svg="plus", :size="15")
 
         //- Admin/Profile - Logout
         .relative.group.ml-auto
