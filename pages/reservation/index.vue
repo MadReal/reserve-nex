@@ -12,7 +12,7 @@ storeRestaurants.fetchRestaurants();
 <template lang="pug">
 .page.relative.-mt-16.z-0
     section
-        .max-w-screen-xl.px-4.py-48.mx-auto
+        .max-w-screen-xl.px-4.py-40.mx-auto
 
             h1.mb-6.text-3xl.text-center.font-semibold.text-grey-100 Seleziona il ristornate
 

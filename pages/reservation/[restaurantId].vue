@@ -133,7 +133,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 <template lang="pug">
 .page.relative.-mt-16.z-0
     section
-        .max-w-screen-xl.px-4.py-48.mx-auto
+        .max-w-screen-xl.px-4.py-40.mx-auto
             .border.rounded.mx-auto.min-h-min(class="w-6/12")
                 .grid.grid-cols-4.relative.border-b.bg-slate-50
                     //- line in the background
