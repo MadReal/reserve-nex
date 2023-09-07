@@ -1,5 +1,5 @@
 declare interface WorkTime {
-	id?: number;
+	id: number;
 	mealType: string;
 	time: string;
 	restaurantId: Restaurant["id"];
@@ -25,7 +25,6 @@ declare interface DiscountAmount {
 declare interface Discount {
 	id?: number;
 	dayOfWeek: DayOfWeek;
-	value: DiscountAmount["value"];
 	discountAmount?: DiscountAmount;
 	discountAmountId?: DiscountAmount["id"];
 	workTime: WorkTime;

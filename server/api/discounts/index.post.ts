@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { discountInclude } from "~/server/api/discounts/index.get";
+import { includeDiscount } from "~/server/api/discounts/index.get";
 
 const prisma = new PrismaClient();
 
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 		// * REQUEST *
 		const discountAmount = await prisma.discount.create({
 			data: { dayOfWeek, discountAmountId, workTimeId, restaurantId },
-			include: discountInclude,
+			include: includeDiscount,
 		});
 		return discountAmount;
 	} catch (err) {

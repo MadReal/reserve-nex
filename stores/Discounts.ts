@@ -84,22 +84,16 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		});
 		if (data && data.value) {
 			// replace them all with the new list returned
-			if (dayOfWeek === 10) {
-				console.log(data.value);
-				discountsList.value = data.value;
-			}
+			if (dayOfWeek === 10) discountsList.value = data.value;
 			// otherwises remove discount that have dayOfWeek === param.dayOfWeek
 			else {
-				console.log(data.value);
 				discountsList.value
 					.filter((x) => x.dayOfWeek === dayOfWeek)
 					.forEach((x) =>
 						discountsList.value.splice(discountsList.value.indexOf(x), 1)
 					);
 
-				data.value.forEach((element) => {
-					discountsList.value.push(element);
-				});
+				data.value.forEach((element) => discountsList.value.push(element));
 			}
 		}
 	}

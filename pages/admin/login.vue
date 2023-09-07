@@ -16,12 +16,11 @@ async function loginWithEmail() {
     })
     if (error) {
         errorMessage.value = error.toString()
-        console.log(error);
+        console.error(error);
         throw error
     } else {
         errorMessage.value = ''
         // const restaurantsStore = JSON.parse(localStorage.getItem("RestaurantsStore")!);
-        // console.log(restaurantsStore.activeRestaurantId);
         return navigateTo("/admin/reservations");
     }
 }
@@ -31,8 +30,7 @@ const loginWithGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
     })
-    if (error) console.log(error);
-    console.log(data);
+    if (error) console.error(error);
 }
 </script>
 

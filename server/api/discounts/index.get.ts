@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const discountInclude = {
+export const includeDiscount = {
 	workTime: {
 		select: {
 			id: true,
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 		// * REQUEST *
 		const discounts = await prisma.discount.findMany({
 			where,
-			include: discountInclude,
+			include: includeDiscount,
 		});
 
 		// Remove "workTimeId" and "discountAmountId" properties

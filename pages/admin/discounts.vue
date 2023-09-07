@@ -49,8 +49,11 @@ async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 const deleteDiscount = (discountId: Discount["id"]) => {
     storeDiscounts.deleteDiscount(discountId)
 }
-const deleteAllDiscountsOnDayOfWeek = (selectedDayOfWeek: number) => {
-    storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)
+const deleteAllDiscountsOnDayOfWeek = async (selectedDayOfWeek: number) => {
+    const sentence = selectedDayOfWeek === 10 ? 'Sicuro di voler eliminare tutti gli sconti impostati?' : `Sicuro di voler eliminare gli sconti di ${useTranslateDayOfWeek(selectedDayOfWeek)}?`
+    if (confirm(sentence)) {
+        await storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)
+    }
 }
 
 
@@ -62,8 +65,6 @@ const startDrag = (event: any, discountId: Discount["id"], discountAmountId: Dis
 }
 const onDrop = (event: any) => {
     const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
-    console.log(selectedDayOfWeek.value);
-    console.log(discountAmountId);
     storeDiscounts.addManyDiscounts(selectedDayOfWeek.value, discountAmountId)
 }
 
@@ -82,8 +83,8 @@ const onDrop = (event: any) => {
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
-                .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
-                    @click="selectedDayOfWeek = 10") Tutti i Giorni
+                //- .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
+                //-     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
             AdminContainerGrid2ColsBorder
                 .lg_py-6
