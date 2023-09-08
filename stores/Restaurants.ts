@@ -7,7 +7,7 @@ export const useRestaurantsStore = defineStore(
 	() => {
 		// STATE
 		const restaurantsList = ref<Restaurant[]>([]);
-		let activeRestaurantId = ref<Restaurant["id"]>();
+		let activeRestaurantId = ref<Restaurant["id"] | null>();
 
 		// GETTERS
 		const activeRestaurant = computed(
@@ -27,10 +27,16 @@ export const useRestaurantsStore = defineStore(
 
 		async function fetchRestaurants() {
 			const { data }: any = await useFetch(URL);
-			if (data?.value) restaurantsList.value = data.value;
-			// set active restaurant automatically if only 1 in the list
-			if (data?.value?.length === 1)
-				activeRestaurantId.value = data.value[0].id;
+			const fetchedRestaurants: Restaurant[] = data.value
+			if (fetchedRestaurants) {
+				restaurantsList.value = fetchedRestaurants;
+				// if current active restuarant id is not part of the list (maybe restuarant was deleted by cookie still has old ID)				
+				const isActiveRestaurantIdInsideFetched = fetchedRestaurants.some(item => item.id === activeRestaurantId.value)
+				// set new activce restuarant id to null => user goes to /restuarant page to set new active one
+				if (!isActiveRestaurantIdInsideFetched && fetchedRestaurants.length >= 1) activeRestaurantId.value = null
+				// set active restaurant automatically if only 1 in the list
+				if (fetchedRestaurants.length === 1) activeRestaurantId.value = data.value[0].id;
+			}
 		}
 
 		async function fetchSingleRestaurant(restaurantId: Restaurant["id"]) {
