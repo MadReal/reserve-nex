@@ -227,8 +227,8 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                 .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
                     div.text-center
                         SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                        p.text-md.md_text-lg Congratulazioni {{ newReservation.personName }},
-                        p.mt-1.text-sm.md_text-md ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
+                        p.text-base.md_text-lg Congratulazioni {{ newReservation.personName }},
+                        p.mt-1.text-sm.md_text-base ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
                         p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
                         p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 

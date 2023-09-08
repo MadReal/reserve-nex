@@ -74,7 +74,7 @@ const removeRestaurant = async () => {
 
 		p.mt-2.text-sm.text-error-200.text-center {{ modalError || '' }}
 
-		.flex.items-center.justify-center.gap-3.mt-5
+		.flex.items-center.justify-center.gap-3.mt-5.text-sm.md_text-base
 			button.p-2.bg-primary-200.text-white.rounded.hover_shadow(@click="addOrUpdateRestaurant") {{ selectedRestaurant ? 'Modifica' : 'Aggiungi' }}
 			button.p-2.bg-error-200.text-white.rounded.hover_shadow(v-if="selectedRestaurant", @click="removeRestaurant") Elimina Ristorante
 </template>

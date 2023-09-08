@@ -23,5 +23,5 @@ storeRestaurants.fetchRestaurants();
                     NuxtImg.absolute.h-full.w-full.inset-0.z-0.opacity-60.object-cover.transition-transform.transition-opacity.duration-500.group-hover_opacity-30.group-hover_scale-105(:src="`/images/plate${index + 1}.webp`")
                     .relative.z-10.text-center
                         p.text-2xl.text-white.font-bold.tracking-wider {{ restaurant.name }}
-                        p.text-md.text-gray-300 {{ restaurant.address }}, {{ restaurant.city }} {{ restaurant.zipCode }}
+                        p.text-base.text-gray-300 {{ restaurant.address }}, {{ restaurant.city }} {{ restaurant.zipCode }}
 </template>

@@ -60,7 +60,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 
 
 		//- mobile
-		.w-full.bg-white.text-sm.text-left
+		.w-full.bg-white.text-sm.text-left.md_hidden
 			ul
 				li.mb-2
 					p.text-grey-300 ID:
@@ -86,7 +86,7 @@ const updateReservation = async (reservationId: Reservation['id'], isAccepted: b
 					p.text-grey-300 #[span.font-medium Persone:] {{ selectedReservation.peopleAmount }}
 
 
-		.mt-5.flex.items-center.justify-center.gap-2
+		.mt-5.flex.items-center.justify-center.gap-2.text-sm.md_text-base
 			button.py-2.px-4.rounded.bg-success-100.text-success-300.cursor-not-allowed(v-if="selectedReservation.accepted === true") Accettata
 			button.py-2.px-4.rounded.bg-error-100.text-error-300.cursor-not-allowed(v-if="selectedReservation.accepted === false") Rifiutata
 			button.py-2.px-4.rounded.bg-success-200.text-white.cursor-pointer(class="hover_bg-success-200/80", 
