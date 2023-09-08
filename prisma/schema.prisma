@@ -60,7 +60,7 @@ model Restaurant {
 // hours in which the restaurant is open during the day, repeats every day
 model WorkTime {
 	id					Int						@id @default(autoincrement())
-	time				String					@unique
+	time				String					
 	mealType			MealType
 	discount			Discount[]
 	// relations
@@ -95,7 +95,7 @@ model Discount {
 model Block  {
 	id					Int						@id @default(autoincrement())
 	// day during the week (every week) in which the restaurant is closed
-	dayOfWeek			Int?					@unique
+	dayOfWeek			Int?					
 	// if the resturant needs to adjust their open-time on a certain day
 	timeStart			String?
 	timeEnd				String?
