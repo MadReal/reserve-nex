@@ -5,7 +5,6 @@ const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
 storeRestaurants.fetchRestaurants();
-
 </script>
 
 

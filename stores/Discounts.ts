@@ -23,14 +23,14 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	// ACTIONS
 	async function fetchDiscountAmounts(restaurantId?: Restaurant["id"]) {
 		const { data } = await useFetch<DiscountAmount[]>(URL_discountAmount, {
-			params: { restaurantId: restaurantId || activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountAmountsList.value = data.value;
 	}
 
 	async function fetchDiscounts(restaurantId?: Restaurant["id"]) {
 		const { data } = await useFetch<Discount[]>(URL_discount, {
-			params: { restaurantId: restaurantId || activeRestaurantId },
+			params: { restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountsList.value = data.value;
 	}
@@ -40,7 +40,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		restaurantId?: Restaurant["id"]
 	) {
 		const { data } = await useFetch<Discount[]>(URL_discount, {
-			params: { dayOfWeek, restaurantId: restaurantId || activeRestaurantId },
+			params: { dayOfWeek, restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountsList.value = data.value;
 	}
@@ -48,7 +48,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function addDiscountAmount(value: DiscountAmount["value"]) {
 		const { data, error } = await useFetch<DiscountAmount>(URL_discountAmount, {
 			method: "post",
-			body: { value, restaurantId: activeRestaurantId },
+			body: { value, restaurantId: activeRestaurantId.value },
 		});
 		if (data && data.value) discountAmountsList.value.push(data.value);
 	}
@@ -64,7 +64,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 				dayOfWeek,
 				discountAmountId: discountAmountId,
 				workTimeId: workTimeId,
-				restaurantId: activeRestaurantId,
+				restaurantId: activeRestaurantId.value,
 			},
 		});
 		if (data && data.value) discountsList.value.push(data.value);
@@ -79,7 +79,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			body: {
 				dayOfWeek,
 				discountAmountId: discountAmountId,
-				restaurantId: activeRestaurantId,
+				restaurantId: activeRestaurantId.value,
 			},
 		});
 		if (data && data.value) {
@@ -144,7 +144,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	) {
 		await useFetch(`${URL_discountDayOfWeek}`, {
 			method: "delete",
-			body: { dayOfWeek, restaurantId: activeRestaurantId },
+			body: { dayOfWeek, restaurantId: activeRestaurantId.value },
 		});
 		// remove locally, if ALL remove everything
 		if (dayOfWeek === 10) {
