@@ -20,7 +20,7 @@ function closeMenu() {
 
 <template>
     <nav id="nav"
-        class="fixed inset-x-0 top-0 flex flex-row justify-between z-40 text-black  h-14 md_h-min md_bg-transparent"
+        class="sticky md_fixed inset-x-0 top-0 flex flex-row justify-between z-40 text-black h-14 md_h-min md_bg-transparent"
         :class="{ 'text-white': isRouteHome, 'bg-white': !isRouteHome }">
 
         <div class="p-4">

@@ -87,6 +87,6 @@ function selectTime(time: string) {
         SVGIcon.mr-1(svg="clock", :size="15")
         p {{ time }}             
 
-    .h-5.px-1.flex.items-center.justify-center.rounded-sm.bg-red-500.text-white.text-sm.text-center(v-if="discountAmountOnTime")
+    .h-5.px-1.flex.items-center.justify-center.rounded-sm.bg-red-500.text-white.text-sm.text-center.whitespace-nowrap(v-if="discountAmountOnTime")
         p.text-xs #[span(class="text-[9px] tracking-tight relative -top-px") Sconto] {{ discountAmountOnTime }}%
 </template>

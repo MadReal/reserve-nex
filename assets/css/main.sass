@@ -7,16 +7,21 @@
 body
     // @apply antialiased
 
-.view--admin
-    .router-link-active, .router-link-active:hover
-        @apply bg-primary-100/10 rounded
+.view
+    &--admin
+        .router-link-active, .router-link-active:hover
+            @apply bg-primary-100/10 rounded
 
-        svg, p
-            @apply text-primary-200
+            svg, p
+                @apply text-primary-200
 
-.admin-page
-    @apply px-4 pt-10 pb-16 mt-14 lg_px-10 lg_mt-0
-    // @apply px-10 pt-10 pb-16 h-3/6
+.page
+    // @apply h-screen
+    // &--admin
+    &__content
+        // @apply px-4 pt-10 pb-16 mt-14 lg_px-10 lg_mt-0 h-max overflow-scroll
+        // @apply px-4 py-20 lg_py-10 h-max overflow-scroll
+        @apply my-8 px-4 md_my-10 md_px-10
 
 .container
     @apply max-w-screen-xl mx-auto p-4

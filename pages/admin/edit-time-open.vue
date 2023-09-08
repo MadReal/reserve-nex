@@ -13,7 +13,7 @@ storeWorkTimes.fetchWorkTimes()
 
 
 <template lang="pug">
-.admin-page
+.page__content
     AdminPageTitle(title="Gestione Orari")
 
     AdminContainerGrid2ColsBorder

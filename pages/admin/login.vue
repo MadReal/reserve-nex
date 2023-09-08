@@ -36,7 +36,7 @@ const loginWithGoogle = async () => {
 
 
 <template lang="pug">
-.admin-page.h-screen.bg-primary-200.relative(class="!mt-0")
+.page__content.h-screen.bg-primary-200.relative(class="!mt-0")
     NuxtLink.absolute.top-3.right-3(to="/")
         SVGIcon.text-white(svg="close", :size="34")
     .flex.items-center.justify-center.h-full

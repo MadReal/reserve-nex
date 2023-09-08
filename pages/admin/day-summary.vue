@@ -16,7 +16,7 @@ const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !sto
 
 
 <template lang="pug">
-.admin-page
+.page__content
     AdminPageTitle(title="Riepilogo Giorno", :date="todaysDate")
 
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")

@@ -72,7 +72,7 @@ const onDrop = (event: any) => {
 
 
 <template lang="pug">
-.admin-page
+.page__content
     AdminPageTitle(title="Gestione Sconti")
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
@@ -106,7 +106,7 @@ const onDrop = (event: any) => {
 
         AdminContainerDivider.hidden.md_block
 
-        .my-6.md_pl-6.md_mb-6.md_mt-1
+        .my-6.md_pl-6.md_mb-6.md_mt-1.h-max
             p Sconti
             p.text-sm.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
 
@@ -123,7 +123,7 @@ const onDrop = (event: any) => {
 
             .my-6.border-b
 
-            .py-5.px-3.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-300(
+            .mb-20.md_mb-0.py-5.px-3.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-300(
                 @drop="onDrop($event)", @dragenter.prevent, @dragover.prevent) Trascina per applicare sconto a tutti gli orari del giorno selezionato
 </template>
 

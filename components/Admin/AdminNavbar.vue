@@ -35,6 +35,11 @@ function toggleMenu() {
 function closeMenu() {
     isMenuOpen.value = false
 }
+watch(() => isMenuOpen.value, () => {
+    if (isMenuOpen.value) document.body.classList.add('overflow-hidden')
+    else document.body.classList.remove('overflow-hidden')
+})
+
 function closeSearchDropdown() {
     isSearchDropdownOpen.value = !isSearchDropdownOpen.value
     search.value = ''
@@ -61,7 +66,7 @@ watch(search, (newSearch) => { delayedSearch(newSearch); });
 
 
 <template lang="pug">
-nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_relative.lg_h-16
+nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_relative.lg_h-16
     .flex.items-center.justify-between.h-full.mx-auto.p-4.lg_p-2.lg_px-3(v-on-click-outside="closeMenu")
         //- Search Input
         .hidden.lg_flex.items-center(v-if="showSerch")
@@ -83,14 +88,15 @@ nav.bg-white.fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_rel
                         p.antialiased.text-sm.-mb-px {{ useDateFormatting(item.date) }}
                         a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id); closeSearchDropdown()") APRI
 
-        .flex.md_order-2.lg_hidden
+        //- Mobile - Menu Icon
+        .flex.md_order-2.md_hidden
             button.inline-flex.items-center.justify-center.text-sm.text-grey-200.rounded-lg(type="button", @click="toggleMenu()",
                 class="hover:text-grey-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-expanded="false")
                 span.sr-only Open Menu
                 SVGIcon(svg="menu", :size="28")
 
-        AdminMenu.absolute.bg-white.z-20.inset-x-0.top-12.border-b(v-show="isMenuOpen", @toggleMenu="toggleMenu()", class="overflow-y-scroll h-[40rem] max-h-[40rem]")
-            .py-8.bg-primary-200.text-white
+        AdminMenu.absolute.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden(v-show="isMenuOpen", @toggleMenu="toggleMenu()", class="overflow-y-scroll h-screen")
+            .py-8.bg-primary-200.text-white.mb-16
                 p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
                 .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
                     p.text-sm.cursor-pointer.hover_underline(@click="switchActiveRestaurant(restaurant.id); closeMenu()") {{ restaurant.name }}

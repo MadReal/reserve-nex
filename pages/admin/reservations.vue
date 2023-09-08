@@ -14,7 +14,7 @@ const noData = computed(() => (!reservationsList.value.length))
 
 
 <template lang="pug">
-.admin-page
+.page__content
     AdminPageTitle(title="Prenotazioni")
 
     AdminNoData(v-if="noData", text="Nessuna prenotazione in elenco.")

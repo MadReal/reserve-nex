@@ -1,6 +1,6 @@
 <template lang="pug">
 NuxtLayout
-  ModalManager
   NuxtPage
+  ModalManager
 </template>
 

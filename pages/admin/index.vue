@@ -9,6 +9,6 @@ definePageMeta({
 
 
 <template lang="pug">
-.admin-page
+.page__content
     p Admin
 </template>
