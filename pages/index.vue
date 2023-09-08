@@ -8,7 +8,7 @@ useHead({ title: 'Ristorante', })
     <div class="page">
         <section class="relative">
             <div
-                class="h-screen md_h-screen flex items-center justify-center max-w-screen-xl py-28 px-4 md_py-48 md_px-0 mx-auto relative z-20">
+                class="h-screen py-28 px-4 mx-auto relative z-20 flex items-center justify-center max-w-screen-xl md_h-screen md_py-48">
                 <div class="md_basis-1/2 relative z-20">
                     <h1 class="text-black lg_leading-[5rem] mb-2 text-4xl font-extrabold lg_text-7xl">Rilassati in
                         un'atmosfera calda e raffinata</h1>
