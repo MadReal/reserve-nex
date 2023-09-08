@@ -83,8 +83,8 @@ const onDrop = (event: any) => {
                 .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
                     :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
                     @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
-                .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
-                    @click="selectedDayOfWeek = 10") Tutti i Giorni
+                //- .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
+                //-     @click="selectedDayOfWeek = 10") Tutti i Giorni
 
             AdminContainerGrid2ColsBorder
                 .md_py-6
