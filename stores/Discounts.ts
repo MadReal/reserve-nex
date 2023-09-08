@@ -142,14 +142,13 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function deleteAllDiscountsOnDayOfWeek(
 		dayOfWeek: Discount["dayOfWeek"]
 	) {
-		await useFetch(`${URL_discountDayOfWeek}`, {
-			method: "delete",
-			body: { dayOfWeek, restaurantId: activeRestaurantId.value },
+		await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, {
+			method: "delete"
 		});
 		// remove locally, if ALL remove everything
 		if (dayOfWeek === 10) {
 			discountsList.value = [];
-			refreshNuxtData();
+			// refreshNuxtData(); // this causes bug and double FETCH, DELETE, POST
 		} // otherwises remove discount that have dayOfWeek === param.dayOfWeek
 		else {
 			discountsList.value

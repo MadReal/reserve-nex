@@ -50,7 +50,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    .absolute.inset-0(        
+    .absolute.inset-0.z-30(        
         @drop="onDrop($event, workTime.id)",
         @dragenter.prevent, @dragover.prevent)
 
