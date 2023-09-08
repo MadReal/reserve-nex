@@ -72,13 +72,17 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function addManyDiscounts(
 		dayOfWeek: DayOfWeek,
-		discountAmountId: DiscountAmount["id"]
+		discountAmountId: DiscountAmount["id"],
+		workTimeId?: WorkTime["id"]
 	) {
+		console.log('addManyDiscounts');
+
 		const { data, error } = await useFetch<Discount[]>(URL_discountDayOfWeek, {
 			method: "post",
 			body: {
 				dayOfWeek,
 				discountAmountId: discountAmountId,
+				workTimeId,
 				restaurantId: activeRestaurantId.value,
 			},
 		});

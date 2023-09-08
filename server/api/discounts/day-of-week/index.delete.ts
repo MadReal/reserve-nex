@@ -9,6 +9,7 @@ export const schema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	// dayOfWeek & restaurantId inside the query params
 	const queryParams = getQuery(event);
 
 	const { error, value } = schema.validate(queryParams);
