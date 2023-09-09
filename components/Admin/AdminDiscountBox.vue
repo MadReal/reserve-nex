@@ -11,7 +11,7 @@ const storeDiscounts = useDiscountsStore();
 const { discountsList } = storeToRefs(storeDiscounts)
 
 const isDiscountOnEveryDay = computed(() => {
-    const filteredList = discountsList.value.filter(obj => obj.workTime.id === props.workTime.id);
+    const filteredList = discountsList.value.filter(discount => discount.workTime.id === props.workTime.id);
     return filteredList.length === 7
 })
 
