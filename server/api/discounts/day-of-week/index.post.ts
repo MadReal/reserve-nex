@@ -13,101 +13,48 @@ export const schema = Joi.object({
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
-	// Validate body
-	const { error, value } = schema.validate(body);
+	const { error, value } = schema.validate(body); // Validate body
 	if (error) throw createError({ statusMessage: error.message });
+
 	const { dayOfWeek, discountAmountId, workTimeId, restaurantId } = value;
+
 	try {
-		// console.log("workTimes");
-		// console.log(workTimes);
+		// if it's dragged on ALL DAYS - ALL TIME
 		if (dayOfWeek === 10 && !workTimeId) {
+			console.log('ALL DAYS - ALL TIME');
 			await prisma.discount.deleteMany({ where: { restaurantId } });
 			const workTimes: WorkTime[] = await prisma.workTime.findMany({ where: { restaurantId } });
 			workTimes.forEach(async (workTime) => {
-				const discountData = [1, 2, 3, 4, 5, 6, 7].map((number) => ({
-					discountAmountId,
-					workTimeId: workTime.id,
-					dayOfWeek: number,
-					restaurantId,
-				}));
-				await prisma.discount.createMany({ data: discountData });
+				const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId: workTime.id, dayOfWeek: number, restaurantId }));
+				await prisma.discount.createMany({ data });
 			})
 		}
-		else {
-			console.log('specific hour');
 
+		// if it's dragged on ALL DAYS - 1 TIME
+		else if (dayOfWeek === 10 && workTimeId) {
+			console.log('ALL DAYS - 1 TIME');
 			await prisma.discount.deleteMany({ where: { workTimeId, restaurantId } });
-			const discountData = [1, 2, 3, 4, 5, 6, 7].map((number) => ({
-				discountAmountId,
-				workTimeId,
-				dayOfWeek: number,
-				restaurantId,
-			}));
-			// build them all
-			await prisma.discount.createMany({ data: discountData });
+			const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId, dayOfWeek: number, restaurantId }));
+			await prisma.discount.createMany({ data });
 		}
+
+		// if it's dragged on 1 DAY - ALL TIME
+		else if (dayOfWeek !== 10 && !workTimeId) {
+			console.log('1 DAY - ALL TIME');
+			await prisma.discount.deleteMany({ where: { dayOfWeek, restaurantId } });
+			const workTimes: WorkTime[] = await prisma.workTime.findMany({ where: { restaurantId } });
+			workTimes.forEach(async (workTime) => {
+				const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId: workTime.id, dayOfWeek, restaurantId }));
+				await prisma.discount.createMany({ data });
+			})
+		}
+
 		const discounts = await prisma.discount.findMany({ where: { restaurantId }, include: includeDiscount });
 		return discounts
 	} catch (error) {
-		console.error(
-			`Error creating discounts`,
-			error
-		);
-		throw error; // Rethrow the error to stop Promise.all if needed
+		console.error(`Error creating discounts`, error);
+		throw error;
 	}
-
-	// const results = await Promise.all(
-	// 	workTimes.map(async (workTime: WorkTime) => {
-	// 		try {
-	// 			if (dayOfWeek === 10 && !workTimeId) {
-	// 				// delete them all (if there are any)
-	// 				await prisma.discount.deleteMany({ where: { restaurantId } });
-	// 				// build them all
-	// 				const discountData = [1, 2, 3, 4, 5, 6, 7].map((number) => ({
-	// 					discountAmountId,
-	// 					workTimeId: workTime.id,
-	// 					dayOfWeek: number,
-	// 					restaurantId,
-	// 				}));
-
-	// 				await prisma.discount.createMany({ data: discountData });
-	// 				// fetch after createMany because we need 'include'
-	// 				const discounts = await prisma.discount.findMany({
-	// 					where: { restaurantId },
-	// 					include: includeDiscount,
-	// 				});
-	// 				console.log("createMany");
-	// 				console.log("discounts created");
-	// 				console.log(discounts);
-
-	// 				const filteredDiscounts = discounts.map(
-	// 					({ workTimeId, discountAmountId, ...rest }) => rest
-	// 				);
-	// 				return filteredDiscounts;
-	// 			} else {
-	// 				// delete all the ones with same dayOfWeek
-	// 				await prisma.discount.deleteMany({
-	// 					where: { dayOfWeek, restaurantId },
-	// 				});
-	// 				// build them all
-	// 				return await prisma.discount.create({
-	// 					data: { workTimeId: workTime.id, ...value },
-	// 					include: includeDiscount,
-	// 				});
-	// 			}
-	// 		} catch (error) {
-	// 			console.error(
-	// 				`Error creating discounts for workTime.id ${workTime.id}:`,
-	// 				error
-	// 			);
-	// 			throw error; // Rethrow the error to stop Promise.all if needed
-	// 		}
-	// 	}
-	// 	)
-	// );
-	// Flatten the array of arrays into a single array of objects
-	// const flattenedResults = results.flat();
-	// return flattenedResults;
 
 	finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use

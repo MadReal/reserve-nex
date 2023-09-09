@@ -37,10 +37,14 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
 
     const discountToCheck = discountOnWorkTime.value
+
     if (effectAllowed === 'copy') {
-        // if the drop is while "all days" is selected
-        if (props.selectedDayOfWeek === 10) storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId)
-        // otherwise
+        // if it's dragged on ALL DAYS - 1 TIME
+        if (props.selectedDayOfWeek === 10) {
+            console.log("if it's dragged on ALL DAYS - 1 TIME");
+            storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId)
+        }
+        // if it's dragged on 1 DAY - 1 TIME
         else {
             // if you're adding a Discount on WorkTime
             if (!discountId && !discountToCheck) storeDiscounts.addDiscount(props.selectedDayOfWeek, workTimeId, discountAmountId)
@@ -66,12 +70,13 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     .w-5.h-5.mb-4.border.border-red-500.rounded-full(v-if="selectedDayOfWeek === 10" class="p-0.5")
         .w-full.h-full.rounded-full(:class="{ 'bg-red-500' : isDiscountOnEveryDay }")
 
-    .absolute.inset-0.z-30(        
+    .absolute.inset-0(        
         @drop="onDrop($event, workTime.id)",
         @dragenter.prevent, @dragover.prevent)
 
     AdminDiscountAmount(v-if="selectedDayOfWeek !== 10",
         :value="discountAmountOnWorkTimeValue",
+        @drop="onDrop($event, workTime.id)",
         @updateOrDelete="deleteDiscount(discountOnWorkTime?.id)", 
         @dragstart="startDrag($event, null, discountAmountOnWorkTime?.id, 'copy')"
         @dragleave="leaveDrag()",

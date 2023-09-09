@@ -65,6 +65,7 @@ const startDrag = (event: any, discountId: Discount["id"], discountAmountId: Dis
 }
 const onDrop = (event: any) => {
     const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
+    // drags on 1 DAY - ALL TIME || ALL DAYS - 1 TIME 
     storeDiscounts.addManyDiscounts(selectedDayOfWeek.value, discountAmountId)
 }
 
