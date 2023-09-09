@@ -24,10 +24,10 @@ export default defineEventHandler(async (event) => {
 			// console.log('ALL DAYS - ALL TIME');
 			await prisma.discount.deleteMany({ where: { restaurantId } });
 			const workTimes: WorkTime[] = await prisma.workTime.findMany({ where: { restaurantId } });
-			workTimes.forEach(async (workTime) => {
+			await Promise.all(workTimes.map(async (workTime) => {
 				const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId: workTime.id, dayOfWeek: number, restaurantId }));
 				await prisma.discount.createMany({ data });
-			})
+			}))
 		}
 
 		// DiscountAmount dragged on ALL DAYS - 1 TIME
@@ -43,10 +43,10 @@ export default defineEventHandler(async (event) => {
 			// console.log('1 DAY - ALL TIME');
 			await prisma.discount.deleteMany({ where: { dayOfWeek, restaurantId } });
 			const workTimes: WorkTime[] = await prisma.workTime.findMany({ where: { restaurantId } });
-			workTimes.forEach(async (workTime) => {
+			await Promise.all(workTimes.map(async (workTime) => {
 				const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId: workTime.id, dayOfWeek, restaurantId }));
 				await prisma.discount.createMany({ data });
-			})
+			}))
 		}
 
 		const discounts = await prisma.discount.findMany({ where: { restaurantId }, include: includeDiscount });

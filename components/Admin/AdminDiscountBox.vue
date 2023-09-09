@@ -67,8 +67,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
-    .w-5.h-5.mb-4.border.border-red-500.rounded-full(v-if="selectedDayOfWeek === 10" class="p-0.5")
-        .w-full.h-full.rounded-full(:class="{ 'bg-red-500' : isDiscountOnEveryDay }")
+    .w-5.h-5.mb-4.border.border-red-500.rounded-full(v-if="selectedDayOfWeek === 10", :class="{ 'bg-red-500' : isDiscountOnEveryDay }")
 
     .absolute.inset-0(        
         @drop="onDrop($event, workTime.id)",
