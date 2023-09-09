@@ -2,8 +2,12 @@
 definePageMeta({ layout: false })
 useHead({ title: 'Login', })
 
+import { storeToRefs } from 'pinia'
 const supabase = useSupabaseClient()
 // const user = useSupabaseUser()
+
+import { useAuthStore } from '~/stores/Auth'
+const storeAuth = useAuthStore();
 
 let email = ref('admin')
 let password = ref('admin')
@@ -15,12 +19,17 @@ async function loginWithEmail() {
         email: adjustedEmail,
         password: password.value,
     })
+
     if (error) {
         errorMessage.value = error.toString()
         console.error(error);
         throw error
     } else {
         errorMessage.value = ''
+        const { data } = await supabase.auth.getSession()
+        const authToken: string = data.session ? data.session.access_token : ''
+        storeAuth.setAuthToken(authToken)
+
         return navigateTo("/admin/reservations");
     }
 }
