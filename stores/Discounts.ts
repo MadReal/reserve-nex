@@ -126,11 +126,11 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		await useFetch(`${URL_discountAmount}/${discountAmountId}`, {
 			method: "delete",
 		});
-		const discountAmountToRemoveIndex = discountsList.value.findIndex(
+		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex(
 			(e) => e.id === discountAmountId
 		);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
-		await fetchDiscounts();
+		// await fetchDiscounts();
 	}
 
 	async function deleteDiscount(discountId: Discount["id"]) {
