@@ -1,8 +1,9 @@
 <script setup lang="ts">
 definePageMeta({ layout: false })
+useHead({ title: 'Login', })
 
 const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+// const user = useSupabaseUser()
 
 let email = ref('admin')
 let password = ref('admin')
@@ -20,37 +21,40 @@ async function loginWithEmail() {
         throw error
     } else {
         errorMessage.value = ''
-        // const restaurantsStore = JSON.parse(localStorage.getItem("RestaurantsStore")!);
         return navigateTo("/admin/reservations");
     }
 }
 
-
-const loginWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-    })
-    if (error) console.error(error);
-}
+// const loginWithGoogle = async () => {
+//     const { data, error } = await supabase.auth.signInWithOAuth({
+//         provider: 'google',
+//     })
+//     if (error) console.error(error);
+// }
 </script>
 
 
-<template lang="pug">
-.page__content.h-screen.bg-primary-200.relative(class="!mt-0")
-    NuxtLink.absolute.top-3.right-3(to="/")
-        SVGIcon.text-white(svg="close", :size="34")
-    .flex.items-center.justify-center.h-full
-        div.text-center
-            p.text-2xl.font-semibold.text-white Ciao, Admin!
-            p.text-base.font-light.text-white.tracking-wide.mb-5 Entra nel tuo account
-            form
-                input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-2.placeholder_text-grey-100.focus_border-white.focus_outline-none(
-                    v-model="email", name="username", type="text", placeholder="Username", autocomplete="off")        
-                input.w-full.text-sm.rounded-md.p-3.border.border-primary-100.bg-transparent.text-white.mb-4.placeholder_text-grey-100.focus_border-white.focus_outline-none(
-                    v-model="password", name="password", type="password", placeholder="Password", autocomplete="off")        
-                button.w-full.text-base.rounded-md.p-3.border.border-primary-100.bg-white.text-black(type="submit", @click.prevent="loginWithEmail()") Login
-
-            p.mt-4.text-red-400 {{ errorMessage }}
-        //- p {{ user }}
-        //- button.py-2.px-3.rounded-lg.bg-primary-100.text-white(@click="loginWithGoogle") Login With Google
+<template>
+    <div class="page__content h-screen bg-primary-200 relative !mt-0">
+        <NuxtLink class="absolute top-3 right-3" to="/">
+            <SVGIcon class="text-white" svg="close" :size="34"></SVGIcon>
+        </NuxtLink>
+        <div class="flex items-center justify-center h-full">
+            <div class="text-center">
+                <p class="text-2xl font-semibold text-white">Ciao, Admin!</p>
+                <p class="text-base font-light text-white tracking-wide mb-5">Entra nel tuo account</p>
+                <form>
+                    <input
+                        class="w-full text-sm rounded-md p-3 border border-primary-100 bg-transparent text-white mb-2 placeholder_text-grey-100 focus_border-white focus_outline-none"
+                        v-model="email" name="username" type="text" placeholder="Username" autocomplete="off" />
+                    <input
+                        class="w-full text-sm rounded-md p-3 border border-primary-100 bg-transparent text-white mb-4 placeholder_text-grey-100 focus_border-white focus_outline-none"
+                        v-model="password" name="password" type="password" placeholder="Password" autocomplete="off" />
+                    <button class="w-full text-base rounded-md p-3 border border-primary-100 bg-white text-black"
+                        type="submit" @click.prevent="loginWithEmail()">Login</button>
+                </form>
+                <p class="mt-4 text-red-400">{{ errorMessage }}</p>
+            </div>
+        </div>
+    </div>
 </template>
