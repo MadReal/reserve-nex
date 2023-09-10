@@ -11,11 +11,11 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = restaurantSchema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { name, address, city, zipCode } = value;
+		const { name, address, city, zipCode, isLive } = value;
 		// * REQUEST *
 		const restaurantToUpdate = await prisma.restaurant.update({
 			where: { id: parseInt(restaurantId) },
-			data: { name, address, city, zipCode },
+			data: { name, address, city, zipCode, isLive },
 		});
 		return restaurantToUpdate;
 	} catch (err) {
