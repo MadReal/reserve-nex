@@ -7,11 +7,12 @@ export default defineNuxtConfig({
 		head: {
 			title: "Ristorante",
 			charset: "utf-8",
-			viewport: "width=device-width, initial-scale=1.0, user-scalable=no;user-scalable=0",
+			// viewport: "width=device-width, initial-scale=1.0, user-scalable=no;user-scalable=0",
+			viewport: "width=device-width, initial-scale=1.0, user-scalable=no",
 			htmlAttrs: { lang: "it" },
-			meta: [
-				{ name: 'viewport', content: 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no', },
-			],
+			// meta: [
+			// 	{ name: 'viewport', content: 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no', },
+			// ],
 		},
 	},
 	devtools: { enabled: false },
