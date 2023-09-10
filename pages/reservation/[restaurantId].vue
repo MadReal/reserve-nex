@@ -165,7 +165,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
 
 <template lang="pug">
-.page.relative.md_-mt-16.z-0
+.page.relative.z-0.h-screen
     section.max-w-screen-xl.px-4.mx-auto.py-4.mb-12.md_py-40
         .w-full.border.rounded.mx-auto.min-h-min(class="md_w-6/12")
             .grid.grid-cols-4.relative.border-b.bg-slate-50
@@ -194,91 +194,92 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                         SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="check", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
 
 
-            div(v-if="activeSectionStep === 1")
-                .px-4.py-6.md_px-10
-                    FullCalendar.calendar-client(:options="calendarOptions")
-                    p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
+            .bg-white
+                div(v-if="activeSectionStep === 1")
+                    .px-4.py-6.md_px-10
+                        FullCalendar.calendar-client(:options="calendarOptions")
+                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
 
-            div(v-if="activeSectionStep === 2")
-                .px-4.py-6.md_px-10
-                    .flex.items-center.gap-1.pb-5.border-b.mb-5.md_mb-0
-                        SVGIcon.text-grey-100(svg="calendar", :size="18")
-                        p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
+                div(v-if="activeSectionStep === 2")
+                    .px-4.py-6.md_px-10
+                        .flex.items-center.gap-1.pb-5.border-b.mb-5.md_mb-0
+                            SVGIcon.text-grey-100(svg="calendar", :size="18")
+                            p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
 
-                    .md_my-6(v-if="lunchWorkTimesList.length")
-                        p.mb-4 Pranzo
-                        .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
-                            ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
-                                :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
+                        .md_my-6(v-if="lunchWorkTimesList.length")
+                            p.mb-4 Pranzo
+                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
+                                ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
-                    .md_my-6(v-if="dinnerWorkTimesList.length")
-                        p.mb-4 Cena
-                        .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
-                            ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
-                                :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
+                        .md_my-6(v-if="dinnerWorkTimesList.length")
+                            p.mb-4 Cena
+                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
+                                ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
+                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
-            div(v-if="activeSectionStep === 3")
-                .px-4.py-6.md_px-10
-                    .pb-5.border-b.mb-5.md_mb-0
-                        .flex.items-center.gap-x-3.gap-y-2.md_gap-x-5.flex-wrap
-                            .flex.items-center.gap-1
-                                SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                p.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
-                            .flex.items-center.gap-1
-                                SVGIcon.text-grey-100(svg="clock", :size="16")
-                                p.text-sm.text-grey-300 {{ newReservation.time }}
-                            .flex.items-center.gap-1.whitespace-nowrap(v-if="newReservation.discountAmount")
-                                SVGIcon.text-red-500(svg="discount", :size="16")
-                                p.text-sm.text-red-400 #[span(class="text-xs tracking-tight") Sconto] {{ newReservation.discountAmount }}%
-                        p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
+                div(v-if="activeSectionStep === 3")
+                    .px-4.py-6.md_px-10
+                        .pb-5.border-b.mb-5.md_mb-0
+                            .flex.items-center.gap-x-3.gap-y-2.md_gap-x-5.flex-wrap
+                                .flex.items-center.gap-1
+                                    SVGIcon.text-grey-100(svg="calendar", :size="18")
+                                    p.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
+                                .flex.items-center.gap-1
+                                    SVGIcon.text-grey-100(svg="clock", :size="16")
+                                    p.text-sm.text-grey-300 {{ newReservation.time }}
+                                .flex.items-center.gap-1.whitespace-nowrap(v-if="newReservation.discountAmount")
+                                    SVGIcon.text-red-500(svg="discount", :size="16")
+                                    p.text-sm.text-red-400 #[span(class="text-xs tracking-tight") Sconto] {{ newReservation.discountAmount }}%
+                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
-                    .md_mt-6
-                        .flex.mb-2.gap-4
-                            .flex-grow
-                                label.text-xs(for="person-name") Nome
-                                input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                                    v-model="newReservation.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
-                            .basis-20
-                                label.text-xs(for="people-amount") Persone
-                                .w-full.h-10.bg-transparent.border.border-grey-100.text-xs.rounded-md.flex
-                                    select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(
-                                        v-model="newReservation.peopleAmount", name="people-amount", id="people-amount")
-                                        option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
+                        .md_mt-6
+                            .flex.mb-2.gap-4
+                                .flex-grow
+                                    label.text-xs(for="person-name") Nome
+                                    input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                                        v-model="newReservation.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
+                                .basis-20
+                                    label.text-xs(for="people-amount") Persone
+                                    .w-full.h-10.bg-transparent.border.border-grey-100.text-xs.rounded-md.flex
+                                        select.w-full.py-1.px-2.border-r-4.border-transparent.bg-transparent.focus_ring-transparent.focus_border-transparent(
+                                            v-model="newReservation.peopleAmount", name="people-amount", id="people-amount")
+                                            option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
 
-                        label.text-xs(for="person-email") Email
-                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
-                            :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personEmail, 'border-error-200 placeholder_text-error-100' : errorOnInput.personEmail  }",
-                            v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
+                            label.text-xs(for="person-email") Email
+                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                                :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personEmail, 'border-error-200 placeholder_text-error-100' : errorOnInput.personEmail  }",
+                                v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
-                        label.text-xs(for="person-phone") Telefono
-                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
-                            :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
-                            v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
+                            label.text-xs(for="person-phone") Telefono
+                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                                :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
+                                v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
 
-                        label.text-xs(for="person-instagram") Instagram (opzionale)
-                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                            v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
+                            label.text-xs(for="person-instagram") Instagram (opzionale)
+                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                                v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
 
-                        p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
+                            p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
 
-            div(v-if="activeSectionStep === 4")
-                .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
-                    div.text-center
-                        SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                        p.text-base.md_text-lg Congratulazioni {{ newReservation.personName }},
-                        p.mt-1.text-sm.md_text-base ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
-                        p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
-                        p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
+                div(v-if="activeSectionStep === 4")
+                    .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
+                        div.text-center
+                            SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
+                            p.text-base.md_text-lg Congratulazioni {{ newReservation.personName }},
+                            p.mt-1.text-sm.md_text-base ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
+                            p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
+                            p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
 
-            //- footer
-            .px-4.mb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeSectionStep !== 4")
-                div
-                    p {{ activeRestaurant.name }} 
-                    p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
-                .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
-                    button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep === 1" @click="navigateTo('/reservation')") Torna Indietro
-                    button.p-2.bg-black.text-white.rounded(v-else-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="isFormEmpty", 
-                        :class="{ 'disabled_opacity-25' : isFormEmpty }", @click="addReservation()") Conferma
+                //- footer
+                .px-4.pb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeSectionStep !== 4")
+                    div
+                        p {{ activeRestaurant.name }} 
+                        p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
+                    .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
+                        button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep === 1" @click="navigateTo('/reservation')") Torna Indietro
+                        button.p-2.bg-black.text-white.rounded(v-else-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                        button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="isFormEmpty", 
+                            :class="{ 'disabled_opacity-25' : isFormEmpty }", @click="addReservation()") Conferma
 </template>
