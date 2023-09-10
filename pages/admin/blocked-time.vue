@@ -12,6 +12,8 @@ const storeWorkTimes = useWorkTimesStore();
 const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
 const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 
+const noData = computed(() => (!blockedTimesOnDayList.value.length))
+
 // API CALLS
 const addBlockedTimeOnDay = () => storeBlocks.addBlockedTimeOnDay(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
 storeBlocks.fetchBlockedTimesOnDay()
@@ -20,9 +22,10 @@ storeBlocks.fetchBlockedTimesOnDay()
 
 <template lang="pug">
 .page__content
-    AdminPageTitle(title="Blocco Orari")
+    AdminPageTitle(title="Blocco Orari", subtitle="Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica.")
+    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter creare blocchi orari.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
-    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]")
+    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]", v-else)
         div.mb-8
             AdminBlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
