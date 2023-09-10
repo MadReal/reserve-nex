@@ -12,7 +12,7 @@ const storeWorkTimes = useWorkTimesStore();
 const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
 const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
 
-const noData = computed(() => (!blockedTimesOnDayList.value.length))
+const noData = computed(() => (!workTimesListsMerged.value.length))
 
 // API CALLS
 const addBlockedTimeOnDay = () => storeBlocks.addBlockedTimeOnDay(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
