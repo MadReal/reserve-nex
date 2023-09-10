@@ -14,22 +14,6 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	const reservationsList = ref<Reservation[]>([]);
 	const reservationsSearchList = ref<Reservation[]>([]);
 
-	// GETTERS
-	function computeReservationsList(timeArray: string[]) {
-		return computed(() =>
-			reservationsList.value
-				.filter((item) => timeArray.includes(item.time) && item.accepted)
-				.reduce(
-					(totalPeopleAmount, item) => totalPeopleAmount + item.peopleAmount,
-					0
-				)
-		);
-	}
-
-	// Use the function to create the computed properties
-	const lunchReservationsPeopleAmount = computeReservationsList(lunch);
-	const dinnerReservationsPeopleAmount = computeReservationsList(dinner);
-
 	// ACTIONS
 	async function fetchReservations(searchQuery?: string) {
 		const queryParams = {
@@ -99,8 +83,6 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	return {
 		reservationsList,
 		reservationsSearchList,
-		lunchReservationsPeopleAmount,
-		dinnerReservationsPeopleAmount,
 		fetchReservations,
 		addReservation,
 		updateReservation,

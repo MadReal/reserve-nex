@@ -2,14 +2,27 @@
 definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
 useHead({ title: 'Riepilogo Giorno', })
 
+import { lunch, dinner } from "~/data/work-times-available.json";
 import { storeToRefs } from 'pinia'
 import { useWorkTimesStore } from '~/stores/WorkTimes'
 import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
-const { lunchReservationsPeopleAmount, dinnerReservationsPeopleAmount } = storeToRefs(storeReservations)
+const { reservationsList } = storeToRefs(storeReservations)
 
 const storeWorkTimes = useWorkTimesStore();
 const todaysDate = useDateFormatting(Date())
+
+function computedReservationsTotalPeople(timeArray: string[]) {
+    return computed(() =>
+        reservationsList.value
+            .filter((item) => timeArray.includes(item.time) && item.accepted && useDateFormatting(item.date) === todaysDate)
+            .reduce((totalPeopleAmount, item) => totalPeopleAmount + item.peopleAmount, 0)
+    );
+}
+
+// Use the function to create the computed properties
+const lunchReservationsPeopleAmount = computedReservationsTotalPeople(lunch);
+const dinnerReservationsPeopleAmount = computedReservationsTotalPeople(dinner);
 
 const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length))
 </script>
