@@ -33,7 +33,7 @@ function validateInput() {
 }
 async function addDiscountAmount() {
     const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
-    if (alreadyPresent) newDiscountAmountError.value = true
+    if (alreadyPresent || newDiscountAmount.value === 0) newDiscountAmountError.value = true
     else {
         await storeDiscounts.addDiscountAmount(newDiscountAmount.value)
         newDiscountAmountError.value = false
