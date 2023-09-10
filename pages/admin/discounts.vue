@@ -75,7 +75,7 @@ const onDrop = (event: any) => {
 <template lang="pug">
 .page__content
     AdminPageTitle(title="Gestione Sconti")
-    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
+    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter creare e applicare sconti.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
     .grid(class="grid-rows-[1fr_1px] md_grid-rows-none md_grid-cols-[4fr_1px_1fr]", v-else)
         div
