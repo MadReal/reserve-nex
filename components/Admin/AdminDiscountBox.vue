@@ -10,10 +10,10 @@ const props = withDefaults(defineProps<AdminDiscountDragProps>(), {});
 const storeDiscounts = useDiscountsStore();
 const { discountsList } = storeToRefs(storeDiscounts)
 
-const isDiscountOnEveryDay = computed(() => {
-    const filteredList = discountsList.value.filter(discount => discount.workTime.id === props.workTime.id);
-    return filteredList.length === 7
-})
+// const isDiscountOnEveryDay = computed(() => {
+//     const filteredList = discountsList.value.filter(discount => discount.workTime.id === props.workTime.id);
+//     return filteredList.length === 7
+// })
 
 const discountOnWorkTime = computed(() => discountsList.value.find(item => item.dayOfWeek === props.selectedDayOfWeek && item.workTime.id === props.workTime.id))
 const discountAmountOnWorkTime = computed(() => discountOnWorkTime.value?.discountAmount)
@@ -66,8 +66,6 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     .flex.items-center.justify-center
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
-
-    .w-5.h-5.mb-4.border.border-red-500.rounded-full(v-if="selectedDayOfWeek === 10", :class="{ 'bg-red-500' : isDiscountOnEveryDay }")
 
     .absolute.inset-0(        
         @drop="onDrop($event, workTime.id)",
