@@ -17,6 +17,13 @@ const { openModal } = useOpenModal();
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 const closeDropdown = () => { if (isDropdownOpen.value) toggleDropdown() }
+
+function switchActiveRestaurantMethod(restaurantId: number) {
+    // if different restaurant execute the function
+    if (restaurantId !== activeRestaurant.value.id) switchActiveRestaurant(restaurantId)
+    // otherwise simply close the dropdown
+    toggleDropdown()
+}
 // // Load all API DATA
 loadAdminInitData()
 </script>
@@ -27,17 +34,17 @@ loadAdminInitData()
     //- SIDEBAR MENU - Restaurant Profile
     .relative(v-on-click-outside="closeDropdown")
         .flex.items-center.h-16.border-b.border-grey-100.py-4.px-5.cursor-pointer(@click="toggleDropdown")
-            div(class="basis-1/5")
+            div(class="mr-1.5")
                 .w-8.h-8.bg-red-300.rounded-full
             p.text-sm.break-all(class="basis-3/5") {{ activeRestaurant?.name }}
-            SVGIcon.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
+            SVGIcon.ml-auto.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
 
         //- Dropdown
         .absolute.left-2.right-2.top-14.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10.text-xs(v-show="isDropdownOpen")
             p.mb-2.py-3.px-5.border-b.text-xs.text-grey-200.tracking-widest RISTORANTI
             .mx-3.mt-3.mb-5
                 .p-3.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
-                    p.cursor-pointer.hover_underline(@click="switchActiveRestaurant(restaurant.id); toggleDropdown()") {{ restaurant.name }}
+                    p.cursor-pointer.hover_underline(@click="switchActiveRestaurantMethod(restaurant.id)") {{ restaurant.name }}
                     SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" 
                         @click="openModal('restaurant', restaurant.id); closeDropdown()")
                 .mt-2.p-3.flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.cursor-pointer.hover_bg-slate-50(
