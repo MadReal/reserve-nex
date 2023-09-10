@@ -114,12 +114,26 @@ import itLocale from '@fullcalendar/core/locales/it';
 
 
 const handleDateClick = (dateClickInfo: any) => {
+    // Get the date as a string without the time
+    const selectedDate = dateClickInfo.date
+    const selectedDateFixed = new Date(dateClickInfo.dateStr)
+
+    const currentDate = new Date(); // Get the current date and time
+    currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
+
+    // Check if the selectedDate is inside the blockedDates array
+    const isDateBlocked = blockedDates.value.some((blockedDate) => {
+        const blockStartDate = new Date(blockedDate.dateStart);
+        const blockEndDate = new Date(blockedDate.dateEnd);
+        return selectedDateFixed >= blockStartDate && selectedDateFixed <= blockEndDate;
+    });
+
+    //  if the selected date is before today's date or is inside blockedDates exit the function
+    if (selectedDate < currentDate || isDateBlocked) return
+
     dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
     activeSectionStep.value++;
 
-    // Get the date as a string without the time
-    // const selectedDate = dateClickInfo.date.toLocaleDateString('it-IT');
-    const selectedDate = dateClickInfo.date
     let dayOfWeek = selectedDate.getDay()
     // adjust sunday, because it's 0 but 7 is app=s sunday
     dayOfWeek === 0 ? dayOfWeek = 7 : dayOfWeek = dayOfWeek
