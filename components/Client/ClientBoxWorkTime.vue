@@ -70,23 +70,35 @@ const isTimePast = (() => {
 const discountAmountOnTime = computed(() => discountsList.value.find(item => item.workTime.time === props.time)?.discountAmount?.value)
 
 function selectTime(time: string) {
-    if (isTimeBlocked) return
+    if (isTimeBlocked || isTimePast) return
     else emit('selectTime', time, discountAmountOnTime.value)
 }
+
+const boxClasses = ref({
+    'border-primary-100': props.isSelected,
+    'cursor-not-allowed line-through decoration-grey-100 text-grey-100 hover_border-gray-100': isTimeBlocked || isTimePast,
+    'cursor-pointer hover_border-primary-100': !isTimeBlocked && !isTimePast
+})
 </script>
 
 
-<template lang="pug">
-.px-2.rounded-lg.border.border-gray-100.text-grey-200.hover_border-primary-100.flex.items-center.flex-col.justify-center.group(
-    class="min-h-[4rem]"
-    :class="{ 'border-primary-100' : isSelected, 'cursor-not-allowed line-through decoration-grey-100 text-grey-100 hover_border-gray-100' : isTimeBlocked || isTimePast, 'cursor-pointer' : !isTimeBlocked }",
-    @click="selectTime(time)")
+<template>
+    <div class="px-2 rounded-lg border border-gray-100 text-grey-200 flex items-center flex-col justify-center group min-h-[4rem]"
+        :class="boxClasses" @click="selectTime(time)">
 
-    .flex.items-center.justify-center.group-hover_text-primary-100(
-        :class="{ 'text-primary-100' : isSelected, 'cursor-not-allowed text-grey-100 hover_text-grey-100' : isTimeBlocked || isTimePast}")
-        SVGIcon.mr-1(svg="clock", :size="15")
-        p {{ time }}             
+        <div class="flex items-center justify-center group-hover_text-primary-100"
+            :class="{ 'text-primary-100': isSelected, 'cursor-not-allowed text-grey-100 hover_text-grey-100 group-hover_text-grey-100 ': isTimeBlocked || isTimePast }">
+            <SVGIcon class="mr-1" svg="clock" :size="15"></SVGIcon>
+            <p>{{ time }} </p>
+        </div>
 
-    .h-5.px-1.flex.items-center.justify-center.rounded-sm.bg-red-500.text-white.text-sm.text-center.whitespace-nowrap(v-if="discountAmountOnTime")
-        p.text-xs #[span(class="text-[9px] tracking-tight relative -top-px") Sconto] {{ discountAmountOnTime }}%
+        <div v-if="discountAmountOnTime"
+            class="h-5 px-1 flex items-center justify-center rounded-sm bg-red-500 text-white text-sm text-center whitespace-nowrap"
+            :class="{ 'opacity-10': isTimeBlocked || isTimePast }">
+
+            <p class="text-xs">
+                <span class="text-[9px] tracking-tight relative -top-px">Sconto</span> {{ discountAmountOnTime }}%
+            </p>
+        </div>
+    </div>
 </template>
