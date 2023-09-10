@@ -34,7 +34,6 @@ const handleDateSelect = async (selectInfo: any) => {
     let title = prompt('Inserisci un titolo per questo evento', 'Blocco giorni')
     // Define an array of swear words to check against
     const swearWords = ['fanculo', 'troia', 'puttana', 'dio cane', 'diocane', 'porco dio', 'merda'];
-    console.log(selectInfo);
 
     if (title) {
         // Convert the user's input to lowercase to make the check case-insensitive
