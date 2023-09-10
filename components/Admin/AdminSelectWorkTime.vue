@@ -20,12 +20,13 @@ const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value
 const closeDropdown = () => { if (isDropdownOpen.value) toggleDropdown() }
 
 const addNewTime = (newTime: WorkTime['time']) => {
+    if (isTimeUsed(newTime)) return
     emit('addNewTime', newTime, props.isLunch)
     isSelectVisible.value = false
     isDropdownOpen.value = false
 }
 const removeTime = (timeId: number) => emit('removeTime', timeId)
-const isTimeUsed = (time: string): boolean => props.workTimes.some(workTime => workTime.time === time)
+const isTimeUsed = (time: WorkTime['time']): boolean => props.workTimes.some(workTime => workTime.time === time)
 </script>
 
 
@@ -47,5 +48,6 @@ div
         SVGIcon.text-primary-100(svg="arrow-down", :size="15")
         .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
             p.py-2.px-3(v-for="time in workTimesAvailable", :key="time", @click="addNewTime(time)",
-                :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") {{ time }}
+                :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") 
+                | {{ time }}
 </template>
