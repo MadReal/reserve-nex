@@ -7,7 +7,9 @@ import { storeToRefs } from "pinia";
 
 export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	const storeRestaurants = useRestaurantsStore();
+	const storeNotifications = useNotificationsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+	const { activeNotification } = storeToRefs(storeNotifications);
 
 	// STATE
 	const discountAmountsList = ref<DiscountAmount[]>([]);
@@ -75,8 +77,6 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		discountAmountId: DiscountAmount["id"],
 		workTimeId?: WorkTime["id"]
 	) {
-		console.log('addManyDiscounts');
-
 		const { data, error } = await useFetch<Discount[]>(URL_discountDayOfWeek, {
 			method: "post",
 			body: {
@@ -88,7 +88,10 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		});
 		if (data && data.value) {
 			// replace them all with the new list returned
-			if (dayOfWeek === 10) discountsList.value = data.value;
+			if (dayOfWeek === 10) {
+				discountsList.value = data.value;
+				storeNotifications.openNotification('Sconti applicati correttamente a tutti gli orari.')
+			}
 			// otherwises remove discount that have dayOfWeek === param.dayOfWeek
 			else {
 				discountsList.value

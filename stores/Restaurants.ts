@@ -53,8 +53,6 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 		restaurant: Restaurant,
 		restaurantId: Restaurant["id"] | null
 	) {
-		console.log(restaurant);
-
 		if (restaurantId) {
 			const { data } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
 				method: "patch",

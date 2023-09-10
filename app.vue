@@ -2,5 +2,6 @@
 NuxtLayout
   NuxtPage
   ModalManager
+  NotificationManager
 </template>
 

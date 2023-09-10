@@ -40,10 +40,7 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
     if (effectAllowed === 'copy') {
         // if it's dragged on ALL DAYS - 1 TIME
-        if (props.selectedDayOfWeek === 10) {
-            console.log("if it's dragged on ALL DAYS - 1 TIME");
-            storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId)
-        }
+        if (props.selectedDayOfWeek === 10) storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId)
         // if it's dragged on 1 DAY - 1 TIME
         else {
             // if you're adding a Discount on WorkTime
