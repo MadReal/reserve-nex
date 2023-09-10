@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface PageTitleProps {
+interface AdminPageTitleProps {
     title: string
-    subtitle: string,
+    subtitle?: string,
     date?: string
 }
-const props = defineProps<PageTitleProps>()
+const props = defineProps<AdminPageTitleProps>()
 </script>
 
 
