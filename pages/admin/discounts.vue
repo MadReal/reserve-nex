@@ -102,7 +102,10 @@ const onDrop = (event: any) => {
                         AdminDiscountBox(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
             .w-full.my-8.pt-6.inline-flex.gap-3.border-t.md_my-6.md_pt-0.md_border-t-0
-                button.w-fit.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200.cursor-pointer.hover_bg-grey-200.hover_text-white(@click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
+                button.w-fit.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200(
+                    :disabled="selectedDayOfWeek === 10", 
+                    :class="{ 'opacity-20 cursor-not-allowed' : selectedDayOfWeek === 10, 'cursor-pointer hover_bg-grey-200 hover_text-white' : selectedDayOfWeek !== 10 }",
+                    @click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
                 button.w-fit.p-2.border.border-red-400.rounded.text-xs.text-center.text-red-400.cursor-pointer.hover_bg-red-300.hover_text-red-700(@click="deleteAllDiscountsOnDayOfWeek(10)") Reset Tutto
 
         AdminContainerDivider.hidden.md_block
