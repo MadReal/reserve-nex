@@ -47,7 +47,7 @@ function closeSearchDropdown() {
 
 async function logout() {
     const { error } = await client.auth.signOut()
-    if (error) throw error
+    if (error) throw new Error()
     else return navigateTo("/");
 }
 

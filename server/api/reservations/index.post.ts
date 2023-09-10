@@ -8,7 +8,7 @@ const schema = Joi.object({
 	date: Joi.date().greater(getPastDate()).required(),
 	discountAmount: Joi.number().allow(null),
 	personName: Joi.string().required(),
-	personPhone: Joi.string().required(),
+	personPhone: Joi.number().required(),
 	personEmail: Joi.string().email().required(),
 	peopleAmount: Joi.number().required(),
 	personInstagram: Joi.string().allow(null),
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 		return reservation;
 	} catch (err) {
 		console.error(err);
-		throw err;
+		throw new Error();
 	} finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use
 	}

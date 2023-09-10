@@ -59,6 +59,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 					address: restaurant.address,
 					city: restaurant.city,
 					zipCode: restaurant.zipCode,
+					isLive: restaurant.isLive,
 				},
 			});
 			const restuarantToUpdateIndex = restaurantsList.value.findIndex(

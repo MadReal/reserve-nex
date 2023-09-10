@@ -23,7 +23,7 @@ async function loginWithEmail() {
     if (error) {
         errorMessage.value = error.toString()
         console.error(error);
-        throw error
+        throw new Error()
     } else {
         errorMessage.value = ''
         const { data } = await supabase.auth.getSession()

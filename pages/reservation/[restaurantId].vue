@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 const route = useRoute();
+import { directive as VNumber } from '@coders-tm/vue-number-format'
+const number = { precision: 13, separator: '' }
+
 
 // route params
 const restaurantIdParam = parseInt(route.params.restaurantId[0])
@@ -23,9 +26,9 @@ const newReservation = ref<Partial<Reservation>>({
     date: null!,
     time: '',
     discountAmount: null,
-    personName: '',
-    personEmail: '',
-    personPhone: '',
+    personName: undefined,
+    personEmail: undefined,
+    personPhone: undefined,
     peopleAmount: 1,
     personInstagram: null,
     restaurantId: restaurantIdParam
@@ -71,11 +74,28 @@ const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discount
 import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 // 
+const inputErrors = ref({
+    personEmail: false,
+    personPhone: false,
+})
+
 const formInputEmpty = computed(() => {
     const { id, time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
     return Object.values(otherDetails).some(value => value === '' || value === null);
 });
+function validateEmail(email: string | undefined) {
+    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return
+    else inputErrors.value.personEmail = true
+}
+function validatePhone(phoneNumber: number | undefined) {
+    const phoneNumberStr = phoneNumber ? phoneNumber?.toString() : null; // Convert the number to a string
+    if (phoneNumberStr && phoneNumberStr.length < 8) return
+    else inputErrors.value.personPhone = true
+}
 async function addReservation() {
+    validateEmail(newReservation.value.personEmail)
+    validatePhone(newReservation.value.personPhone)
+
     const { id, ...reservationData } = newReservation.value;
     const reservation = await storeReservations.addReservation(reservationData);
     // @ts-ignore
@@ -217,11 +237,11 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
                         label.text-xs(for="person-phone") Telefono
                         input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                            v-model="newReservation.personPhone", name="person-phone", id="person-phone", type="tel", placeholder="Telefono*", autocomplete="tel" required)
+                            v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
 
                         label.text-xs(for="person-instagram") Instagram (opzionale)
                         input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
-                            v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="tel", placeholder="@username")
+                            v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
 
             div(v-if="activeSectionStep === 4")
                 .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5

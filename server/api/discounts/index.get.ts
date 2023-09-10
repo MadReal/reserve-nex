@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
 		return filteredDiscounts;
 	} catch (err) {
 		console.error(err);
-		throw err;
+		throw new Error();
 	} finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use
 	}

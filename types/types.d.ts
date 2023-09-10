@@ -51,7 +51,7 @@ declare interface Reservation {
 	time: string;
 	discountAmount: number | null;
 	personName: string;
-	personPhone: string;
+	personPhone: number;
 	personEmail: string;
 	peopleAmount: number;
 	personInstagram: string | null;
@@ -65,6 +65,7 @@ declare interface Restaurant {
 	address: string;
 	city: string;
 	zipCode: number | null;
+	isLive: boolean;
 }
 
 type ModalType = "restaurant" | "reservation";

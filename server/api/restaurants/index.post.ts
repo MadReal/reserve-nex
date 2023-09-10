@@ -8,6 +8,7 @@ export const restaurantSchema = Joi.object({
 	address: Joi.string().required(),
 	city: Joi.string().required(),
 	zipCode: Joi.number().required(),
+	isLive: Joi.boolean().required(),
 });
 
 export default defineEventHandler(async (event) => {
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
 		return restaurant;
 	} catch (err) {
 		console.error(err);
-		throw err;
+		throw new Error();
 	} finally {
 		await prisma.$disconnect(); // Disconnect the Prisma client after use
 	}

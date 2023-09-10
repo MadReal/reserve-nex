@@ -8,22 +8,24 @@ const storeRestaurants = useRestaurantsStore()
 const { activeModalOption } = storeToRefs(storeModals)
 const { restaurantsList } = storeToRefs(storeRestaurants)
 
-const modalRestaurant = ref({
+const modalRestaurant = ref();
+
+const selectedRestaurant = ref(restaurantsList.value.filter((item: Restaurant) => item.id === activeModalOption.value)[0])
+// Set the initial value of modalRestaurant based on activeRestaurant
+const initialEditedRestaurantName = computed(() => selectedRestaurant.value || {
 	name: '',
 	address: '',
 	city: '',
 	zipCode: null,
+	isLive: false,
 });
-const selectedRestaurant = ref(restaurantsList.value.filter((item: Restaurant) => item.id === activeModalOption.value)[0])
-// Set the initial value of modalRestaurant based on activeRestaurant
-const initialEditedRestaurantName = computed(() => selectedRestaurant.value || {});
-// @ts-ignore
+
 modalRestaurant.value = initialEditedRestaurantName.value
 
 let modalError = ref('')
 const addOrUpdateRestaurant = async () => {
-	if (!modalRestaurant.value || Object.values(modalRestaurant.value).some(value => value === null || value === undefined || value === '')) {
-		modalError.value = 'Completa tutte le caselle';
+	if (!modalRestaurant.value || !modalRestaurant.value.name || !modalRestaurant.value.name || !modalRestaurant.value.address || !modalRestaurant.value.city || !modalRestaurant.value.zipCode) {
+		return modalError.value = 'Completa tutte le caselle';
 	}
 	else {
 		await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id)
@@ -53,7 +55,7 @@ const removeRestaurant = async () => {
 				:class="{ 'border-error-200 placeholder_text-error-100' : modalError }",
 				v-model="modalRestaurant.name", name="name", id="name", type="text", placeholder="Nome*", required)
 
-		.w-full.flex.gap-2.mb-2
+		.w-full.flex.gap-2.mb-4
 			.basis-36
 				label.text-xs.text-grey-200(for="city") Città
 				input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
@@ -71,6 +73,10 @@ const removeRestaurant = async () => {
 				input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
 					:class="{ 'border-error-200 placeholder_text-error-100' : modalError }",
 					v-model.number="modalRestaurant.zipCode", name="zip-code", id="zip-code", type="text", placeholder="CAP*", autocomplete="name" required)
+
+		.flex.items-center.mb-2
+			input.w-4.h-4.border.border-grey-200.rounded.cursor-pointer.focus_ring-0(id="isLive" type="checkbox" v-model="modalRestaurant.isLive")
+			label.pl-2.text-xs.text-grey-200.cursor-pointer(for="isLive") Visibile ai clienti
 
 		p.mt-2.text-sm.text-error-200.text-center {{ modalError || '' }}
 

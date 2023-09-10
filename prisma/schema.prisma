@@ -48,6 +48,7 @@ model Restaurant {
 	address				String         
 	city				String         
 	zipCode				Int         
+	isLive				Boolean					@default(false)
 	// relations
 	reservation			Reservation[]
 	workTime			WorkTime[]
@@ -116,7 +117,7 @@ model Reservation {
 	time				String
 	date				DateTime
 	personName			String
-	personPhone			String
+	personPhone			Int
 	personEmail			String
 	peopleAmount		Int
 	personInstagram		String?

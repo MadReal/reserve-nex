@@ -51,9 +51,9 @@ export default defineEventHandler(async (event) => {
 
 		const discounts = await prisma.discount.findMany({ where: { restaurantId }, include: includeDiscount });
 		return discounts
-	} catch (error) {
-		console.error(`Error creating discounts`, error);
-		throw error;
+	} catch (err) {
+		console.error(`Error creating discounts`, err);
+		throw new Error();
 	}
 
 	finally {
