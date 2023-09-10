@@ -32,14 +32,29 @@ const handleEventClick = async (clickInfo: any) => {
 }
 const handleDateSelect = async (selectInfo: any) => {
     let title = prompt('Inserisci un titolo per questo evento', 'Blocco giorni')
+    // Define an array of swear words to check against
+    const swearWords = ['fanculo', 'troia', 'puttana', 'dio cane', 'diocane', 'porco dio', 'merda'];
+
     if (title) {
+        // Convert the user's input to lowercase to make the check case-insensitive
+        const lowercasedTitle = title.toLowerCase();
+        // Check if the user's input contains any swear words
+        if (swearWords.some(word => lowercasedTitle.includes(word))) {
+            // Display an alert message if a swear word is found
+            alert('Per favore, evita di utilizzare linguaggio offensivo.');
+            return; // Exit the function
+        }
+
         const newblockDatesPeriod = await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title)
         let calendarApi = selectInfo.view.calendar
         calendarApi.unselect() // clear date selection
         calendarApi.addEvent({
-            id: newblockDatesPeriod?.id,
+            // @ts-ignore
+            id: newblockDatesPeriod.id,
             title,
+            // @ts-ignore
             start: newblockDatesPeriod?.dateStart,
+            // @ts-ignore
             end: newblockDatesPeriod?.dateEnd,
             allDay: selectInfo.allDay
         })
