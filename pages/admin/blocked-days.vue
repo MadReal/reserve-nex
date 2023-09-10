@@ -31,6 +31,13 @@ const handleEventClick = async (clickInfo: any) => {
     }
 }
 const handleDateSelect = async (selectInfo: any) => {
+    // ********* if user clicks on "past" dates, exit function *********
+    const selectedDate = selectInfo.start
+    const currentDate = new Date(); // Get the current date and time
+    currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
+    if (selectedDate < currentDate) return
+    // ********* END *********
+
     let title = prompt('Inserisci un titolo per questo evento', 'Blocco giorni')
     // Define an array of swear words to check against
     const swearWords = ['fanculo', 'troia', 'puttana', 'dio cane', 'diocane', 'porco dio', 'merda'];
