@@ -101,7 +101,7 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                 .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
                     p.text-sm.cursor-pointer.hover_underline(@click="switchActiveRestaurant(restaurant.id); closeMenu()") {{ restaurant.name }}
                     SVGIcon.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id); closeMenu()")
-                .mt-2.mx-3.p-3.flex.items-center.justify-between.border.border-dashed.border-white.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="openModal('restaurant'); closeMenu()")
+                .mt-2.mx-3.p-3.flex.items-center.justify-between.border.border-dashed.border-white.rounded-lg.cursor-pointer(@click="openModal('restaurant'); closeMenu()")
                     p.text-sm.leading-normal Aggiungi ristorante
                     SVGIcon(svg="plus", :size="15")
 
