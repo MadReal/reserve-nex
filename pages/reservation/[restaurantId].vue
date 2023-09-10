@@ -74,7 +74,7 @@ import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 // 
 const isFormEmpty = computed(() => {
-    const { id, time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
+    const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
     return Object.values(otherDetails).some(value => value === '' || value === null || value === undefined);
 });
 const errorOnInput = ref({
