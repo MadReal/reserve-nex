@@ -15,6 +15,8 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 			)[0]
 	);
 
+	const restaurantsIsLiveList = computed(() => restaurantsList.value.filter((item) => item.isLive));
+
 	// ACTIONS
 	function switchActiveResturant(newId: number) {
 		activeRestaurantId.value = newId;
@@ -91,6 +93,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 
 	return {
 		restaurantsList,
+		restaurantsIsLiveList,
 		activeRestaurantId,
 		activeRestaurant,
 		switchActiveResturant,
