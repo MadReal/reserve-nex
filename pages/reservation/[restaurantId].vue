@@ -22,7 +22,6 @@ const goToStep = (stepToGo: number) => {
 
 // init reservation object
 const newReservation = ref<Partial<Reservation>>({
-    id: null!,
     date: null!,
     time: '',
     discountAmount: null,
@@ -74,30 +73,29 @@ const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discount
 import { useReservationsStore } from '@/stores/Reservations';
 const storeReservations = useReservationsStore();
 // 
-const inputErrors = ref({
+const isFormEmpty = computed(() => {
+    const { id, time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
+    return Object.values(otherDetails).some(value => value === '' || value === null || value === undefined);
+});
+const errorOnInput = ref({
     personEmail: false,
     personPhone: false,
 })
-
-const formInputEmpty = computed(() => {
-    const { id, time, date, restaurantId, personInstagram, ...otherDetails } = newReservation.value;
-    return Object.values(otherDetails).some(value => value === '' || value === null);
-});
 function validateEmail(email: string | undefined) {
-    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return
-    else inputErrors.value.personEmail = true
+    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return errorOnInput.value.personEmail = false
+    else return errorOnInput.value.personEmail = true
 }
 function validatePhone(phoneNumber: number | undefined) {
-    const phoneNumberStr = phoneNumber ? phoneNumber?.toString() : null; // Convert the number to a string
-    if (phoneNumberStr && phoneNumberStr.length < 8) return
-    else inputErrors.value.personPhone = true
+    if (!phoneNumber || phoneNumber.toString().length < 8) return errorOnInput.value.personPhone = true
+    else return errorOnInput.value.personPhone = false
 }
 async function addReservation() {
+    // exit if there are any errors
     validateEmail(newReservation.value.personEmail)
     validatePhone(newReservation.value.personPhone)
+    if (errorOnInput.value.personEmail || errorOnInput.value.personPhone) return
 
-    const { id, ...reservationData } = newReservation.value;
-    const reservation = await storeReservations.addReservation(reservationData);
+    const reservation = await storeReservations.addReservation(newReservation.value);
     // @ts-ignore
     newReservation.value = reservation
     activeSectionStep.value++
@@ -123,7 +121,9 @@ const handleDateClick = (dateClickInfo: any) => {
 
     // Check if the selectedDate is inside the blockedDates array
     const isDateBlocked = blockedDates.value.some((blockedDate) => {
+        // @ts-ignore
         const blockStartDate = new Date(blockedDate.dateStart);
+        // @ts-ignore
         const blockEndDate = new Date(blockedDate.dateEnd);
         return selectedDateFixed >= blockStartDate && selectedDateFixed <= blockEndDate;
     });
@@ -246,16 +246,20 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                                         option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
 
                         label.text-xs(for="person-email") Email
-                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                            :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personEmail, 'border-error-200 placeholder_text-error-100' : errorOnInput.personEmail  }",
                             v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
                         label.text-xs(for="person-phone") Telefono
-                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                        input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                            :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
                             v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
 
                         label.text-xs(for="person-instagram") Instagram (opzionale)
                         input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
                             v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
+
+                        p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
 
             div(v-if="activeSectionStep === 4")
                 .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
@@ -275,5 +279,6 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                 .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
                     button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep === 1" @click="navigateTo('/reservation')") Torna Indietro
                     button.p-2.bg-black.text-white.rounded(v-else-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                    button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="formInputEmpty", :class="{ 'disabled_opacity-25' : formInputEmpty }", @click="addReservation()") Conferma
+                    button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="isFormEmpty", 
+                        :class="{ 'disabled_opacity-25' : isFormEmpty }", @click="addReservation()") Conferma
 </template>

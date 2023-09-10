@@ -8,7 +8,7 @@ const schema = Joi.object({
 	date: Joi.date().greater(getPastDate()).required(),
 	discountAmount: Joi.number().allow(null),
 	personName: Joi.string().required(),
-	personPhone: Joi.number().required(),
+	personPhone: Joi.string().required(),
 	personEmail: Joi.string().email().required(),
 	peopleAmount: Joi.number().required(),
 	personInstagram: Joi.string().allow(null),
