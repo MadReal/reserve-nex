@@ -37,6 +37,7 @@
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/vue3": "^6.1.8",
 		"@prisma/client": "5.2.0",
-		"@vuepic/vue-datepicker": "6.1.0"
+		"@vuepic/vue-datepicker": "6.1.0",
+		"vue-tel-input": "^8.1.4"
 	}
 }

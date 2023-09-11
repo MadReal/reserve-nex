@@ -4,6 +4,19 @@ const route = useRoute();
 import { directive as VNumber } from '@coders-tm/vue-number-format'
 const number = { suffix: '', precision: 13, separator: '' }
 
+// @ts-ignore
+import { VueTelInput } from 'vue-tel-input';
+import 'vue-tel-input/vue-tel-input.css';
+
+const telOptions = {
+    id: "person-phone",
+    name: "person-phone",
+    placeholder: "Telefono*",
+    showDialCode: true,
+    required: true,
+    // maxlength: 20,
+}
+const preferredCountries = ['it', 'ch', 'gb', 'fr', 'de', 'us', 'cn',]
 
 // route params
 const restaurantIdParam = parseInt(route.params.restaurantId[0])
@@ -172,8 +185,9 @@ storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
 
 
     section.max-w-screen-xl.mx-auto.px-4.pt-8.pb-20.md_pt-36
-        .w-full.border.rounded-lg.mx-auto.min-h-min.overflow-hidden.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
-            .grid.grid-cols-4.relative.border-b.bg-slate-50
+        .w-full.mx-auto.min-h-min.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
+
+            .grid.grid-cols-4.relative.border.bg-slate-50.rounded-t-lg
                 //- line in the background
                 .mx-10.absolute.inset-x-0.inset-y-0.z-0
                     .absolute.border-b.w-full.h-1.inset-x-0(class="top-1/2")
@@ -199,7 +213,7 @@ storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
                         SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="check", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
 
 
-            .bg-white.z-10.relative
+            .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
                 div(v-if="activeSectionStep === 1")
                     .px-4.py-6.md_px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
@@ -242,7 +256,7 @@ storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
                             .flex.mb-2.gap-4
                                 .flex-grow
                                     label.text-xs(for="person-name") Nome
-                                    input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                                    input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-300.focus_outline-none(
                                         v-model="newReservation.personName", name="person-name", id="person-name", type="text", placeholder="Nome*", autocomplete="name" required)
                                 .basis-20
                                     label.text-xs(for="people-amount") Persone
@@ -252,17 +266,21 @@ storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
                                             option(v-for="number in 10", :key="number", :value="number") {{ number }}                            
 
                             label.text-xs(for="person-email") Email
-                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
                                 :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personEmail, 'border-error-200 placeholder_text-error-100' : errorOnInput.personEmail  }",
                                 v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
                             label.text-xs(for="person-phone") Telefono
-                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-200.focus_outline-none(
+                            VueTelInput.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
                                 :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
-                                v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
+                                v-model="newReservation.personPhone", v-number="number", mode="international", :inputOptions="telOptions", :preferredCountries="preferredCountries")
+
+                            //- input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
+                            //-     :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
+                            //-     v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
 
                             label.text-xs(for="person-instagram") Instagram (opzionale)
-                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
+                            input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-300.focus_outline-none(
                                 v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
 
                             p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.

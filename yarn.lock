@@ -3996,6 +3996,11 @@ lazystream@^1.0.0:
   dependencies:
     readable-stream "^2.0.5"
 
+libphonenumber-js@^1.10.12:
+  version "1.10.44"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.44.tgz#6709722461173e744190494aaaec9c1c690d8ca8"
+  integrity sha512-svlRdNBI5WgBjRC20GrCfbFiclbF0Cx+sCcQob/C1r57nsoq0xg8r65QbTyVyweQIlB33P+Uahyho6EMYgcOyQ==
+
 lilconfig@^2.0.5, lilconfig@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.1.0.tgz#78e23ac89ebb7e1bfbf25b18043de756548e7f52"
@@ -6772,7 +6777,15 @@ vue-router@^4.2.4:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
-vue@^3.3.4:
+vue-tel-input@^8.1.4:
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/vue-tel-input/-/vue-tel-input-8.1.4.tgz#40ad2b414da3a48bf84c75d496e7e0fd0f5b92f9"
+  integrity sha512-gx+hX9VsYrfGj2mwT84xkpTu9mokFZZqpyymIYZs6XwKL+O63P1x7lcu0nyySDUycHkBXzYmHtvgYfBgDZ9J1w==
+  dependencies:
+    libphonenumber-js "^1.10.12"
+    vue "^3.2.47"
+
+vue@^3.2.47, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
