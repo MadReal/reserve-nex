@@ -51,7 +51,7 @@ const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdo
 
 
 <template lang="pug">
-.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_2fr_min-content]", v-on-click-outside="closeDropdownCalendar")
+.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_3fr_min-content]", v-on-click-outside="closeDropdownCalendar")
     //- TIME From / To
     AdminBlockedTimeOnDaySelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeOnDay="updateTimeSlot")
     AdminBlockedTimeOnDaySelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeOnDay="updateTimeSlot")

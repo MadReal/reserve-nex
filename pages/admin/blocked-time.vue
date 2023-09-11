@@ -25,7 +25,7 @@ storeBlocks.fetchBlockedTimesOnDay()
     AdminPageTitle(title="Blocco Orari", subtitle="Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica.")
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter creare blocchi orari.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
 
-    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_1fr]", v-else)
+    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_2fr]", v-else)
         div.mb-8
             AdminBlockedTimeOnDay(v-for="(item, index) in blockedTimesOnDayList", :key="item.id", :blockTimePeriod="item")
 
