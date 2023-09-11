@@ -20,12 +20,12 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 
+	// STATE - Block 'Dates' (One (or more) days period, vacation)
+	const blockedDatesList = ref<Block[]>([]);
 	// STATE - Block 'dayOfWeek'
 	const blockedDaysOfWeekList = ref<Block[]>([]);
-	// STATE - Block - 'Time Period On Date'
+	// STATE - Block - 'Time Range On Date'
 	const blockedTimeRangeOnDateList = ref<Block[]>([]);
-	// STATE - Block - 'One (or more) days period'
-	const blockedDatesList = ref<Block[]>([]);
 
 	// GETTERS - Block - 'One (or more) days period'
 	const blockedDatesListFullCalendar = computed(() =>
@@ -38,7 +38,54 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		}))
 	);
 
+	// ***********************************
+	// ACTIONS - Block 'Dates' (One (or more) days period, vacation)
+	// ***********************************
+	async function fetchBlockedDates(restaurantId?: Restaurant["id"]) {
+		const { data, error }: any = await useFetch<Block[]>(URL_blockedDate, {
+			params: { restaurantId: restaurantId || activeRestaurantId.value },
+		});
+		if (data && data.value) blockedDatesList.value = data.value;
+	}
+
+	async function addBlockedDate(
+		dateStart: Block["dateStart"],
+		dateEnd: Block["dateEnd"],
+		periodTitle: Block["periodTitle"]
+	) {
+		const { data, error } = await useFetch<Block>(URL_blockedDate, {
+			method: "post",
+			body: {
+				dateStart,
+				dateEnd,
+				periodTitle,
+				restaurantId: activeRestaurantId.value,
+			},
+		});
+		if (data && data.value) blockedDatesList.value.push(data.value);
+	}
+
+	async function updateBlockedDate(
+		blockId: Block["id"],
+		dateStart: Block["dateStart"],
+		dateEnd: Block["dateEnd"]
+	) {
+		await useFetch<Block>(`${URL_blockedDate}/${blockId}`, {
+			method: "patch",
+			body: { dateStart, dateEnd },
+		});
+		const blockedDateToUpdateIndex = blockedDatesList.value.findIndex(
+			(e) => e.id === blockId
+		);
+		if (blockedDateToUpdateIndex !== -1) {
+			blockedDatesList.value[blockedDateToUpdateIndex].dateStart = dateStart;
+			blockedDatesList.value[blockedDateToUpdateIndex].dateEnd = dateEnd;
+		}
+	}
+
+	// ***********************************
 	// ACTIONS - Block 'dayOfWeek'
+	// ***********************************
 	async function fetchBlockedDaysOfWeek(restaurantId?: Restaurant["id"]) {
 		const { data, error } = await useFetch<Block[]>(URL_blockedDaysOfWeek, {
 			params: { restaurantId: restaurantId || activeRestaurantId.value },
@@ -77,7 +124,9 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		}
 	}
 
-	// ACTIONS - Block - 'Time Period On Date'
+	// ***********************************
+	// ACTIONS - Block - 'Time Range On Date'
+	// ***********************************
 	async function fetchBlockedTimeRangeOnDate(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch<Block[]>(
 			URL_blockedTimesOnDay,
@@ -149,49 +198,6 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			newBlockTimePeriod;
 	}
 
-	// ACTIONS - Block - 'One (or more) days period'
-	async function fetchBlockedDates(restaurantId?: Restaurant["id"]) {
-		const { data, error }: any = await useFetch<Block[]>(URL_blockedDate, {
-			params: { restaurantId: restaurantId || activeRestaurantId.value },
-		});
-		if (data && data.value) blockedDatesList.value = data.value;
-	}
-
-	async function addBlockedDate(
-		dateStart: Block["dateStart"],
-		dateEnd: Block["dateEnd"],
-		periodTitle: Block["periodTitle"]
-	) {
-		const { data, error } = await useFetch<Block>(URL_blockedDate, {
-			method: "post",
-			body: {
-				dateStart,
-				dateEnd,
-				periodTitle,
-				restaurantId: activeRestaurantId.value,
-			},
-		});
-		if (data && data.value) blockedDatesList.value.push(data.value);
-	}
-
-	async function updateBlockedDate(
-		blockId: Block["id"],
-		dateStart: Block["dateStart"],
-		dateEnd: Block["dateEnd"]
-	) {
-		await useFetch<Block>(`${URL_blockedDate}/${blockId}`, {
-			method: "patch",
-			body: { dateStart, dateEnd },
-		});
-		const blockedDateToUpdateIndex = blockedDatesList.value.findIndex(
-			(e) => e.id === blockId
-		);
-		if (blockedDateToUpdateIndex !== -1) {
-			blockedDatesList.value[blockedDateToUpdateIndex].dateStart = dateStart;
-			blockedDatesList.value[blockedDateToUpdateIndex].dateEnd = dateEnd;
-		}
-	}
-
 	// ACTIONS - Block All
 	async function removeBlock(blockId: Block["id"]) {
 		await useFetch(`${URL_block}/${blockId}`, { method: "delete" });
@@ -221,6 +227,12 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	return {
+		// Block - 'One (or more) days period'
+		blockedDatesList,
+		blockedDatesListFullCalendar,
+		fetchBlockedDates,
+		addBlockedDate,
+		updateBlockedDate,
 		// Block - 'dayOfWeek'
 		blockedDaysOfWeekList,
 		fetchBlockedDaysOfWeek,
@@ -230,12 +242,6 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		fetchBlockedTimeRangeOnDate,
 		addBlockedTimeRangeOnDate,
 		updateBlockedTimeRangeOnDate,
-		// Block - 'One (or more) days period'
-		blockedDatesList,
-		blockedDatesListFullCalendar,
-		fetchBlockedDates,
-		addBlockedDate,
-		updateBlockedDate,
 		// Block - All
 		removeBlock,
 	};
