@@ -56,11 +56,11 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
 
 
 <template lang="pug">
-.relative.pt-3.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.overflow-hidden(
+.relative.text-grey-200.rounded.bg-grey-300.flex.items-center.justify-between.flex-col.overflow-hidden(
     class="min-h-[5rem]"
     :class="{ 'bg-transparent text-black border border-dashed border-black' : selectedDayOfWeek === 10, 'text-white' : selectedDayOfWeek !== 10 }")
 
-    .flex.items-center.justify-center
+    .flex.items-center.justify-center.py-3(:class="{ 'm-auto' : selectedDayOfWeek === 10 }")
         .mr-1: SVGIcon(svg="clock", :size="14")
         p {{ workTime.time }}
 
