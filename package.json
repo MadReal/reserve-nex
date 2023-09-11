@@ -15,7 +15,7 @@
 		"@nuxtjs/supabase": "1.1.0",
 		"@pinia-plugin-persistedstate/nuxt": "^1.1.1",
 		"@pinia/nuxt": "^0.4.11",
-		"@types/node": "20.5.9",
+		"@types/node": "20.6.0",
 		"@vueuse/components": "^10.4.1",
 		"autoprefixer": "^10.4.15",
 		"joi": "^17.10.1",
@@ -37,6 +37,6 @@
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/vue3": "^6.1.8",
 		"@prisma/client": "5.2.0",
-		"@vuepic/vue-datepicker": "^6.0.3"
+		"@vuepic/vue-datepicker": "6.1.0"
 	}
 }
