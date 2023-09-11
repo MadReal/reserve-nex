@@ -117,7 +117,7 @@ const handleDateClick = (dateClickInfo: any) => {
     const selectedDateFixed = new Date(dateClickInfo.dateStr)
 
     const currentDate = new Date(); // Get the current date and time
-    currentDate.setUTCHours(0, 0, 0, 0); // Set the time component to midnight for comparison
+    currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
 
     // Check if the selectedDate is inside the blockedDates array
     const isDateBlocked = blockedDates.value.some((blockedDate) => {
