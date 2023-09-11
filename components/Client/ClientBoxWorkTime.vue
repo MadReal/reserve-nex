@@ -23,7 +23,7 @@ const blockedTimesToday = computed(() => {
     // Use .filter() to create a new array with items that have the same date
     const filteredList = blockedTimeRangeOnDateList.value.filter(item => {
         const date = new Date(item.date!);
-        date.setHours(0, 0, 0, 0);
+        date.setUTCHours(0, 0, 0, 0);
         const itemDate = date.toISOString(); // Convert to ISO date for comparison
         return itemDate === props.dateSelected.toISOString();
     });

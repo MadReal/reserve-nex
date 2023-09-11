@@ -34,7 +34,7 @@ const handleDateSelect = async (selectInfo: any) => {
     // ********* if user clicks on "past" dates, exit function *********
     const selectedDate = selectInfo.start
     const currentDate = new Date(); // Get the current date and time
-    currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
+    currentDate.setUTCHours(0, 0, 0, 0); // Set the time component to midnight for comparison
     if (selectedDate < currentDate) return
     // ********* END *********
 

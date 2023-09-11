@@ -14,7 +14,7 @@ const storeBlocks = useBlocksStore()
 
 const disabledDates = computed(() => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+    today.setUTCHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
 
     const disabledDatesArray = [];
     for (let i = new Date(0); i < today; i.setDate(i.getDate() + 1)) {
