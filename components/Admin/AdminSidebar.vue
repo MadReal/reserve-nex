@@ -36,7 +36,7 @@ loadAdminInitData()
         .flex.items-center.h-16.border-b.border-grey-100.py-4.px-5.cursor-pointer(@click="toggleDropdown")
             div(class="mr-1.5")
                 .w-8.h-8.bg-red-300.rounded-full
-            p.text-sm.break-all(class="basis-3/5") {{ activeRestaurant?.name }}
+            p.text-sm(class="basis-3/5") {{ activeRestaurant?.name }}
             SVGIcon.ml-auto.text-grey-200.hover_text-grey-300(svg="arrow-down", :size="20")
 
         //- Dropdown
