@@ -58,11 +58,17 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 	}
 
 	async function addReservation(reservation: Partial<Reservation>) {
-		const body = {
-			...reservation,
-			personPhone: reservation.personPhone?.toString()
-		}
-		const { data, error } = await useFetch<Reservation>(URL, { method: "post", body, });
+		if (!reservation.date) return
+		// ********* TODO *********
+		// Recreate date object, so we can set flat hours (00:00:00) in database
+		const fixedDate = new Date(reservation.date);
+		// add 1 day becuase otherwise it gets set the day before in DB when setting hours to 00:00:00
+		fixedDate.setDate(fixedDate.getDate() + 1);
+		// set hours to 00:00:00
+		fixedDate.setUTCHours(0, 0, 0, 0)
+
+		const body = { ...reservation, personPhone: reservation.personPhone?.toString(), date: fixedDate }
+		const { data, error } = await useFetch<Reservation>(URL, { method: "post", body });
 		// if (data && data.value) return reservationsList.value.push(data.value);
 		if (data && data.value) return data.value;
 	}
