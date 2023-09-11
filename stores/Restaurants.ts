@@ -70,14 +70,12 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 			if (data && data.value)
 				restaurantsList.value[restuarantToUpdateIndex] = data.value;
 		} else {
-			const { data, error } = await useFetch<Restaurant>(URL, {
-				method: "post",
-				body: restaurant,
-			});
+			const { data, error } = await useFetch<Restaurant>(URL, { method: "post", body: restaurant });
 			if (data && data.value) {
 				restaurantsList.value.push(data.value);
 				activeRestaurantId.value = data.value.id;
 			}
+			if (error) throw error
 		}
 	}
 

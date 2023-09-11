@@ -48,7 +48,6 @@ const removeRestaurant = async () => {
 	.basis-full.mx-auto
 		p.text-lg.font-semibold.mb-4.text-center {{ selectedRestaurant ? 'Modifica Ristorante' : 'Aggiungi Ristorante'}}
 
-
 		.w-full.mb-2
 			label.text-xs.text-grey-200(for="name") Nome
 			input.w-full.h-10.text-xs.rounded-md.py-1.px-2.border.text-black.placeholder_text-grey-100.focus_border-grey-200.focus_outline-none(
