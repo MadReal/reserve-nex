@@ -25,7 +25,7 @@ modalRestaurant.value = initialEditedRestaurantName.value
 let modalError = ref('')
 const addOrUpdateRestaurant = async () => {
 	if (!modalRestaurant.value || !modalRestaurant.value.name || !modalRestaurant.value.name || !modalRestaurant.value.address || !modalRestaurant.value.city || !modalRestaurant.value.zipCode) {
-		return modalError.value = 'Completa tutte le field.';
+		return modalError.value = 'Completa tutte le opzioni.';
 	}
 	else {
 		try {
