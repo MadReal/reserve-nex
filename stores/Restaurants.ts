@@ -54,7 +54,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 		restaurantId: Restaurant["id"] | null
 	) {
 		if (restaurantId) {
-			const { data } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
+			const { data, error } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
 				method: "patch",
 				body: {
 					name: restaurant.name,
@@ -69,13 +69,16 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 			);
 			if (data && data.value)
 				restaurantsList.value[restuarantToUpdateIndex] = data.value;
+			else if (error) throw error.value
 		} else {
+			// is new restaurant name === a name that already exists in DB
+			if (restaurantsList.value.some(item => item.name === restaurant.name)) throw new Error('Esiste già un ristorante con questo nome.')
 			const { data, error } = await useFetch<Restaurant>(URL, { method: "post", body: restaurant });
 			if (data && data.value) {
 				restaurantsList.value.push(data.value);
 				activeRestaurantId.value = data.value.id;
 			}
-			if (error) throw error
+			else if (error) throw error.value
 		}
 	}
 

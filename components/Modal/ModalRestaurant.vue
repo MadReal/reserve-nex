@@ -28,9 +28,13 @@ const addOrUpdateRestaurant = async () => {
 		return modalError.value = 'Completa tutte le field.';
 	}
 	else {
-		await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id)
-		modalError.value = ''
-		storeModals.closeModal()
+		try {
+			await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id)
+			modalError.value = ''
+			storeModals.closeModal()
+		} catch (error) {
+			return modalError.value = String(error);
+		}
 	}
 }
 const removeRestaurant = async () => {
