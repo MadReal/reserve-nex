@@ -166,8 +166,9 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 
 <template lang="pug">
 .page.relative.z-0.h-screen
-    section.max-w-screen-xl.px-4.mx-auto.py-4.mb-12.md_py-40
-        .w-full.border.rounded.mx-auto.min-h-min(class="md_w-6/12")
+    ClientBackground
+    section.max-w-screen-xl.mx-auto.px-4.pt-8.pb-20.md_pt-36
+        .w-full.border.rounded-lg.mx-auto.min-h-min.overflow-hidden.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
             .grid.grid-cols-4.relative.border-b.bg-slate-50
                 //- line in the background
                 .mx-10.absolute.inset-x-0.inset-y-0.z-0
@@ -194,7 +195,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
                         SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="check", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
 
 
-            .bg-white
+            .bg-white.z-10.relative
                 div(v-if="activeSectionStep === 1")
                     .px-4.py-6.md_px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
