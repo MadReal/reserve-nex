@@ -14,7 +14,7 @@
 </template>
 
 
-<style scoped>
+<style lang="" scoped>
 svg {
 	position: fixed;
 	top: 0;
@@ -39,27 +39,31 @@ svg {
 	animation: rotate 20s linear infinite;
 	transform-origin: 13px 25px;
 	/* color: #9b5de5; */
-	@apply text-blue-100
+	/* @apply text-blue-100 */
+	@apply text-orange-50
 }
 
 .in-top {
 	animation: rotate 10s linear infinite;
 	transform-origin: 13px 25px;
 	/* color: #f15bb5; */
-	@apply text-sky-50
+	/* @apply text-sky-50 */
+	@apply text-orange-100
 }
 
 .out-bottom {
 	animation: rotate 25s linear infinite;
 	transform-origin: 84px 93px;
 	/* color: #00bbf9; */
-	@apply text-violet-50
+	/* @apply text-violet-50 */
+	@apply text-red-50
 }
 
 .in-bottom {
 	animation: rotate 15s linear infinite;
 	transform-origin: 84px 93px;
 	/* color: #00f5d4; */
-	@apply text-indigo-100
+	/* @apply text-indigo-100 */
+	@apply text-yellow-100
 }
 </style>
