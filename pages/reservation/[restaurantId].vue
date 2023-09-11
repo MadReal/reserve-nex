@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia';
 const route = useRoute();
 import { directive as VNumber } from '@coders-tm/vue-number-format'
-const number = { precision: 13, separator: '' }
+const number = { suffix: '', precision: 13, separator: '' }
 
 
 // route params
