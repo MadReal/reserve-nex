@@ -125,7 +125,7 @@ const handleDateClick = (dateClickInfo: any) => {
         const blockStartDate = new Date(blockedDate.dateStart);
         // @ts-ignore
         const blockEndDate = new Date(blockedDate.dateEnd);
-        return selectedDateFixed >= blockStartDate && selectedDateFixed <= blockEndDate;
+        return selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate;
     });
 
     //  if the selected date is before today's date or is inside blockedDates exit the function
