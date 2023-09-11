@@ -23,11 +23,11 @@ useHead({ title: 'Ristorante', })
                 </div>
 
                 <div class="hidden md_block md_basis-1/2 h-full relative">
-                    <NuxtImg class="absolute -top-20 -left-2 rounded-sm drop-shadow-lg" src="/images/header-plate3.jpg">
+                    <NuxtImg class="absolute -top-20 -left-2 rounded-sm drop-shadow-lg" src="/images/header-plate3.webp">
                     </NuxtImg>
-                    <NuxtImg class="absolute top-20 right-0 rounded-sm drop-shadow-lg" src="/images/header-plate2.jpg">
+                    <NuxtImg class="absolute top-20 right-0 rounded-sm drop-shadow-lg" src="/images/header-plate2.webp">
                     </NuxtImg>
-                    <NuxtImg class="absolute -bottom-20 left-32 rounded-sm drop-shadow-lg" src="/images/header-plate1.jpg">
+                    <NuxtImg class="absolute -bottom-20 left-32 rounded-sm drop-shadow-lg" src="/images/header-plate1.webp">
                     </NuxtImg>
                 </div>
             </div>

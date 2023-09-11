@@ -167,7 +167,7 @@ storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
 <template lang="pug">
 .page.relative.z-0.h-screen
     //- ClientBackground
-    .fixed.inset-0.z-0.h-full.bg-cover(class="bg-[url('/images/jason-leung.jpg')]")
+    .fixed.inset-0.z-0.h-full.bg-cover(class="bg-[url('/images/jason-leung.webp')]")
         .w-full.h-full.flex.justify-center.items-center(class="bg-black/40 backdrop-brightness-50")
 
 
