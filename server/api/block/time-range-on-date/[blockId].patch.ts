@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { schemaBlockedTimesOnDay } from "~/server/api/block/times-on-day/index.post";
+import { schemaBlockedTimesOnDay } from "~/server/api/block/time-range-on-date/index.post";
 
 const prisma = new PrismaClient();
 

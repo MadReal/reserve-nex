@@ -160,7 +160,7 @@ const calendarOptions = ref({
 
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
 storeBlocks.fetchBlockedDates(restaurantIdParam)
-storeBlocks.fetchBlockedTimesOnDay(restaurantIdParam)
+storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
 </script>
 
 

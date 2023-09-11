@@ -33,18 +33,18 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
     if (block === null || block.timeEnd === null || block.timeStart === null) return
 
     if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) block.timeEnd = block.timeStart = time;
-    updateBlockedTimeOnDay()
+    updateBlockedTimeRangeOnDate()
 };
 
-const updateBlockedTimeOnDay = () => {
-    storeBlocks.updateBlockedTimeOnDay(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
+const updateBlockedTimeRangeOnDate = () => {
+    storeBlocks.updateBlockedTimeRangeOnDate(props.blockTimePeriod.id, props.blockTimePeriod.timeStart, props.blockTimePeriod.timeEnd, props.blockTimePeriod.date)
 };
 
 // Data Picker dropdown
 const isDropdownCalendarOpen = ref(false);
 const toggleDropdownCalendar = () => {
     isDropdownCalendarOpen.value = !isDropdownCalendarOpen.value
-    updateBlockedTimeOnDay()
+    updateBlockedTimeRangeOnDate()
 }
 const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdownCalendarOpen.value = false }
 </script>
@@ -53,8 +53,8 @@ const closeDropdownCalendar = () => { if (isDropdownCalendarOpen.value) isDropdo
 <template lang="pug">
 .grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_3fr_min-content]", v-on-click-outside="closeDropdownCalendar")
     //- TIME From / To
-    AdminBlockedTimeOnDaySelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeOnDay="updateTimeSlot")
-    AdminBlockedTimeOnDaySelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeOnDay="updateTimeSlot")
+    AdminTimeRangeSelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeRangeOnDate="updateTimeSlot")
+    AdminTimeRangeSelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeRangeOnDate="updateTimeSlot")
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")

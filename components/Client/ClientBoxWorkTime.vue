@@ -16,12 +16,12 @@ import { useBlocksStore } from '~/stores/Blocks'
 import { useDiscountsStore } from '~/stores/Discounts'
 const storeBlocks = useBlocksStore()
 const storeDiscounts = useDiscountsStore();
-const { blockedTimesOnDayList } = storeToRefs(storeBlocks)
+const { blockedTimeRangeOnDateList } = storeToRefs(storeBlocks)
 const { discountsList } = storeToRefs(storeDiscounts)
 
 const blockedTimesToday = computed(() => {
     // Use .filter() to create a new array with items that have the same date
-    const filteredList = blockedTimesOnDayList.value.filter(item => {
+    const filteredList = blockedTimeRangeOnDateList.value.filter(item => {
         const date = new Date(item.date!);
         date.setHours(0, 0, 0, 0);
         const itemDate = date.toISOString(); // Convert to ISO date for comparison

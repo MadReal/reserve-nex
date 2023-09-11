@@ -3,7 +3,7 @@ import { useRestaurantsStore } from "~/stores/Restaurants";
 
 const URL_block = "/api/block";
 const URL_blockedDaysOfWeek = `${URL_block}/days-of-week`;
-const URL_blockedTimesOnDay = `${URL_block}/times-on-day`;
+const URL_blockedTimesOnDay = `${URL_block}/time-range-on-date`;
 const URL_blockedDate = `${URL_block}/dates`;
 
 // Sort week days ascendent (Monday, Tuesday)
@@ -23,7 +23,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	// STATE - Block 'dayOfWeek'
 	const blockedDaysOfWeekList = ref<Block[]>([]);
 	// STATE - Block - 'Time Period On Date'
-	const blockedTimesOnDayList = ref<Block[]>([]);
+	const blockedTimeRangeOnDateList = ref<Block[]>([]);
 	// STATE - Block - 'One (or more) days period'
 	const blockedDatesList = ref<Block[]>([]);
 
@@ -78,7 +78,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	// ACTIONS - Block - 'Time Period On Date'
-	async function fetchBlockedTimesOnDay(restaurantId?: Restaurant["id"]) {
+	async function fetchBlockedTimeRangeOnDate(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch<Block[]>(
 			URL_blockedTimesOnDay,
 			{
@@ -95,11 +95,11 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 					(a: Block, b: Block) =>
 						new Date(a.date!).getTime() - new Date(b.date!).getTime()
 				);
-			blockedTimesOnDayList.value = sortedBlocks;
+			blockedTimeRangeOnDateList.value = sortedBlocks;
 		}
 	}
 
-	async function addBlockedTimeOnDay(
+	async function addBlockedTimeRangeOnDate(
 		timeStart: Block["timeStart"],
 		timeEnd: Block["timeEnd"]
 	) {
@@ -116,10 +116,10 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			method: "post",
 			body: blockedTimeOnDay,
 		});
-		if (data.value) blockedTimesOnDayList.value.push(data.value);
+		if (data.value) blockedTimeRangeOnDateList.value.push(data.value);
 	}
 
-	async function updateBlockedTimeOnDay(
+	async function updateBlockedTimeRangeOnDate(
 		blockId: Block["id"],
 		timeStart: Block["timeStart"],
 		timeEnd: Block["timeEnd"],
@@ -136,16 +136,16 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			method: "patch",
 			body: blockedTimeOnDay,
 		});
-		const blockTimePeriodToUpdateIndex = blockedTimesOnDayList.value.findIndex(
+		const blockTimePeriodToUpdateIndex = blockedTimeRangeOnDateList.value.findIndex(
 			(e) => e.id === blockId
 		);
 		const newBlockTimePeriod = {
-			...blockedTimesOnDayList.value[blockTimePeriodToUpdateIndex],
+			...blockedTimeRangeOnDateList.value[blockTimePeriodToUpdateIndex],
 			timeStart,
 			timeEnd,
 			date,
 		};
-		blockedTimesOnDayList.value[blockTimePeriodToUpdateIndex] =
+		blockedTimeRangeOnDateList.value[blockTimePeriodToUpdateIndex] =
 			newBlockTimePeriod;
 	}
 
@@ -205,12 +205,12 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		if (blockedDayOfWeekToRemoveIndex !== -1)
 			blockedDaysOfWeekList.value.splice(blockedDayOfWeekToRemoveIndex, 1);
 
-		// blockedTimesOnDayList
-		const blockedTimeOnDayToRemoveIndex = blockedTimesOnDayList.value.findIndex(
+		// blockedTimeRangeOnDateList
+		const blockedTimeOnDayToRemoveIndex = blockedTimeRangeOnDateList.value.findIndex(
 			(e) => e.id === blockId
 		);
 		if (blockedTimeOnDayToRemoveIndex !== -1)
-			blockedTimesOnDayList.value.splice(blockedTimeOnDayToRemoveIndex, 1);
+			blockedTimeRangeOnDateList.value.splice(blockedTimeOnDayToRemoveIndex, 1);
 
 		// blockedDatesList // TODO: this never gets it. I think it's the watch inside 'blocked-days'
 		const blockedDateToRemoveIndex = blockedDatesList.value.findIndex(
@@ -226,10 +226,10 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		fetchBlockedDaysOfWeek,
 		addOrUpdateBlockedDayOfWeek,
 		// Block - 'Time Period On Date'
-		blockedTimesOnDayList,
-		fetchBlockedTimesOnDay,
-		addBlockedTimeOnDay,
-		updateBlockedTimeOnDay,
+		blockedTimeRangeOnDateList,
+		fetchBlockedTimeRangeOnDate,
+		addBlockedTimeRangeOnDate,
+		updateBlockedTimeRangeOnDate,
 		// Block - 'One (or more) days period'
 		blockedDatesList,
 		blockedDatesListFullCalendar,
