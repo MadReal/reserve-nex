@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
-const routePath = ref(useRoute().path)
+const routeName = computed(() => useRoute().name)
 
-const isRouteHome = ref(false)
-watchEffect(() => {
-    routePath.value = useRoute().path
-    isRouteHome.value = routePath.value === '/' ? true : false
-})
+const isRouteHome = computed(() => useRoute().path === '/')
+const isNavbarTextWhite = computed(() => routeName.value === 'reservation-restaurantId')
+
 
 let isMenuOpen = ref(false)
 function toggleMenu() {
@@ -19,14 +17,13 @@ function closeMenu() {
 
 
 <template>
-    <nav id="nav"
-        class="sticky md_fixed inset-x-0 top-0 flex flex-row justify-between z-40 text-black h-14 md_h-min md_bg-transparent"
-        :class="{ 'text-white': isRouteHome, 'bg-white': !isRouteHome }">
+    <nav id="nav" class="sticky md_fixed inset-x-0 top-0 flex flex-row justify-between z-40 h-14 md_h-min md_bg-transparent"
+        :class="{ 'text-white': isNavbarTextWhite || isRouteHome, 'bg-white text-black': !isNavbarTextWhite }">
 
         <div class="p-4">
             <div class="font-semibold text-xl">
-                <nuxt-link to="/"
-                    class=" text-black transition duration-300 hover_text-primary-100 focus_text-black">Ristorante</nuxt-link>
+                <nuxt-link to="/" class="text-black transition duration-300 hover_text-primary-100 focus_text-black"
+                    :class="{ 'text-white': isNavbarTextWhite }">Ristorante</nuxt-link>
             </div>
         </div>
 
