@@ -9,7 +9,6 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	const storeRestaurants = useRestaurantsStore();
 	const storeNotifications = useNotificationsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
-	const { activeNotification } = storeToRefs(storeNotifications);
 
 	// STATE
 	const discountAmountsList = ref<DiscountAmount[]>([]);

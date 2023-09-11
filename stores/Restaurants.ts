@@ -3,17 +3,14 @@ const URL = "/api/restaurants";
 import { useLoadAllData } from "~/composables/useLoadAllData";
 
 export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
+	const storeNotifications = useNotificationsStore();
+
 	// STATE
 	const restaurantsList = ref<Restaurant[]>([]);
 	let activeRestaurantId = ref<Restaurant["id"] | null>();
 
 	// GETTERS
-	const activeRestaurant = computed(
-		() =>
-			restaurantsList.value.filter(
-				(item) => item.id === activeRestaurantId.value
-			)[0]
-	);
+	const activeRestaurant = computed(() => restaurantsList.value.filter((item) => item.id === activeRestaurantId.value)[0]);
 
 	const restaurantsIsLiveList = computed(() => restaurantsList.value.filter((item) => item.isLive));
 
@@ -56,19 +53,15 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 		if (restaurantId) {
 			const { data, error } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
 				method: "patch",
-				body: {
-					name: restaurant.name,
-					address: restaurant.address,
-					city: restaurant.city,
-					zipCode: restaurant.zipCode,
-					isLive: restaurant.isLive,
-				},
+				body: { name: restaurant.name, address: restaurant.address, city: restaurant.city, zipCode: restaurant.zipCode, isLive: restaurant.isLive, },
 			});
 			const restuarantToUpdateIndex = restaurantsList.value.findIndex(
 				(e) => e.id === restaurantId
 			);
-			if (data && data.value)
+			if (data && data.value) {
 				restaurantsList.value[restuarantToUpdateIndex] = data.value;
+				storeNotifications.openNotification('Modifiche apportate.')
+			}
 			else if (error) throw error.value
 		} else {
 			// is new restaurant name === a name that already exists in DB
