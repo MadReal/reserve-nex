@@ -70,6 +70,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 			if (data && data.value) {
 				restaurantsList.value.push(data.value);
 				activeRestaurantId.value = data.value.id;
+				storeNotifications.openNotification('Ristorante creato.')
 			}
 			else if (error) throw error.value
 		}
