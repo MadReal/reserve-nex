@@ -23,7 +23,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 	}
 
 	async function fetchRestaurants() {
-		const { data }: any = await useFetch(URL);
+		const { data, error }: any = await useFetch(URL);
 		const fetchedRestaurants: Restaurant[] = data.value
 		if (fetchedRestaurants) {
 			restaurantsList.value = fetchedRestaurants;
@@ -34,16 +34,17 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 			// set active restaurant automatically if only 1 in the list
 			if (fetchedRestaurants.length === 1) activeRestaurantId.value = data.value[0].id;
 		}
+		else if (error) throw error.value
 	}
 
 	async function fetchSingleRestaurant(restaurantId: Restaurant["id"]) {
-		const { data } = await useFetch<Restaurant>(`${URL}/${restaurantId}`);
-
+		const { data, error } = await useFetch<Restaurant>(`${URL}/${restaurantId}`);
 		if (data && data.value) {
 			restaurantsList.value = [data.value];
 			activeRestaurantId.value = data.value.id;
 			return data.value;
 		}
+		else if (error) throw error.value
 	}
 
 	async function addOrUpdateRestaurant(

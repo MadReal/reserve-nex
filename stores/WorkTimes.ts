@@ -31,6 +31,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			params: { restaurantId: activeRestaurantId.value || restaurantId },
 		});
 		if (data.value) workTimesList.value = data.value;
+		else if (error) throw error.value
 	}
 
 	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
@@ -43,6 +44,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			},
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
+		else if (error) throw error.value
 	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {

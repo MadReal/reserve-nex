@@ -16,10 +16,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 
 	// ACTIONS
 	async function fetchReservations(searchQuery?: string) {
-		const queryParams = {
-			restaurantId: activeRestaurantId.value,
-			searchQuery: searchQuery,
-		};
+		const queryParams = { restaurantId: activeRestaurantId.value, searchQuery: searchQuery };
 
 		const { data, error } = await useFetch<Reservation[]>(URL, {
 			params: queryParams,
@@ -55,6 +52,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 			else reservationsList.value = reservationsSorted;
 			return reservationsSorted;
 		}
+		else if (error) throw error.value
 	}
 
 	async function addReservation(reservation: Partial<Reservation>) {
@@ -71,20 +69,24 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 		const { data, error } = await useFetch<Reservation>(URL, { method: "post", body });
 		// if (data && data.value) return reservationsList.value.push(data.value);
 		if (data && data.value) return data.value;
+		else if (error) throw error.value
 	}
 
 	async function updateReservation(
 		reservationId: Reservation["id"],
 		accepted: Reservation["accepted"]
 	) {
-		await useFetch(`${URL}/${reservationId}`, {
+		const { data, error } = await useFetch(`${URL}/${reservationId}`, {
 			method: "patch",
 			body: { accepted },
 		});
-		const reservationToUpdateIndex = reservationsList.value.findIndex(
-			(e) => e.id === reservationId
-		);
-		reservationsList.value[reservationToUpdateIndex].accepted = accepted;
+		if (data && data.value) {
+			const reservationToUpdateIndex = reservationsList.value.findIndex(
+				(e) => e.id === reservationId
+			);
+			reservationsList.value[reservationToUpdateIndex].accepted = accepted;
+		}
+		else if (error) throw error.value
 	}
 
 	return {

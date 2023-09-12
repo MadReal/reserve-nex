@@ -15,35 +15,31 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	const discountsList = ref<Discount[]>([]);
 
 	// GETTERS
-	const discountAmountsListOrdered = computed(() =>
-		discountAmountsList.value
-			.slice()
-			.sort((a: any, b: any) => a.value - b.value)
-	);
+	const discountAmountsListOrdered = computed(() => discountAmountsList.value.slice().sort((a: any, b: any) => a.value - b.value));
 
 	// ACTIONS
 	async function fetchDiscountAmounts(restaurantId?: Restaurant["id"]) {
-		const { data } = await useFetch<DiscountAmount[]>(URL_discountAmount, {
+		const { data, error } = await useFetch<DiscountAmount[]>(URL_discountAmount, {
 			params: { restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountAmountsList.value = data.value;
+		else if (error) throw error.value
 	}
 
 	async function fetchDiscounts(restaurantId?: Restaurant["id"]) {
-		const { data } = await useFetch<Discount[]>(URL_discount, {
+		const { data, error } = await useFetch<Discount[]>(URL_discount, {
 			params: { restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountsList.value = data.value;
+		else if (error) throw error.value
 	}
 
-	async function fetchDiscountsByDayOfWeek(
-		dayOfWeek: DayOfWeek,
-		restaurantId?: Restaurant["id"]
-	) {
-		const { data } = await useFetch<Discount[]>(URL_discount, {
+	async function fetchDiscountsByDayOfWeek(dayOfWeek: DayOfWeek, restaurantId?: Restaurant["id"]) {
+		const { data, error } = await useFetch<Discount[]>(URL_discount, {
 			params: { dayOfWeek, restaurantId: restaurantId || activeRestaurantId.value },
 		});
 		if (data?.value) discountsList.value = data.value;
+		else if (error) throw error.value
 	}
 
 	async function addDiscountAmount(value: DiscountAmount["value"]) {
@@ -52,38 +48,22 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			body: { value, restaurantId: activeRestaurantId.value },
 		});
 		if (data && data.value) discountAmountsList.value.push(data.value);
+		else if (error) throw error.value
 	}
 
-	async function addDiscount(
-		dayOfWeek: DayOfWeek,
-		workTimeId: WorkTime["id"],
-		discountAmountId: DiscountAmount["id"]
-	) {
+	async function addDiscount(dayOfWeek: DayOfWeek, workTimeId: WorkTime["id"], discountAmountId: DiscountAmount["id"]) {
 		const { data, error } = await useFetch<Discount>(URL_discount, {
 			method: "post",
-			body: {
-				dayOfWeek,
-				discountAmountId: discountAmountId,
-				workTimeId: workTimeId,
-				restaurantId: activeRestaurantId.value,
-			},
+			body: { dayOfWeek, discountAmountId: discountAmountId, workTimeId: workTimeId, restaurantId: activeRestaurantId.value, },
 		});
 		if (data && data.value) discountsList.value.push(data.value);
+		else if (error) throw error.value
 	}
 
-	async function addManyDiscounts(
-		dayOfWeek: DayOfWeek,
-		discountAmountId: DiscountAmount["id"],
-		workTimeId?: WorkTime["id"]
-	) {
+	async function addManyDiscounts(dayOfWeek: DayOfWeek, discountAmountId: DiscountAmount["id"], workTimeId?: WorkTime["id"]) {
 		const { data, error } = await useFetch<Discount[]>(URL_discountDayOfWeek, {
 			method: "post",
-			body: {
-				dayOfWeek,
-				discountAmountId: discountAmountId,
-				workTimeId,
-				restaurantId: activeRestaurantId.value,
-			},
+			body: { dayOfWeek, discountAmountId: discountAmountId, workTimeId, restaurantId: activeRestaurantId.value, },
 		});
 		if (data && data.value) {
 			// replace them all with the new list returned
@@ -95,74 +75,48 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			else {
 				discountsList.value
 					.filter((x) => x.dayOfWeek === dayOfWeek)
-					.forEach((x) =>
-						discountsList.value.splice(discountsList.value.indexOf(x), 1)
-					);
+					.forEach((x) => discountsList.value.splice(discountsList.value.indexOf(x), 1));
 
 				data.value.forEach((element) => discountsList.value.push(element));
 			}
 		}
+		else if (error) throw error.value
 	}
 
-	async function updateDiscount(
-		discountId: Discount["id"],
-		workTimeId: WorkTime["id"],
-		discountAmountId?: DiscountAmount["id"]
-	) {
-		const { data } = await useFetch<Discount>(`${URL_discount}/${discountId}`, {
+	async function updateDiscount(discountId: Discount["id"], workTimeId: WorkTime["id"], discountAmountId?: DiscountAmount["id"]) {
+		const { data, error } = await useFetch<Discount>(`${URL_discount}/${discountId}`, {
 			method: "patch",
-			body: {
-				discountAmountId: discountAmountId || null,
-				workTimeId: workTimeId,
-			},
+			body: { discountAmountId: discountAmountId || null, workTimeId: workTimeId },
 		});
 		if (data && data.value) {
-			const discountToUpdateIndex = discountsList.value.findIndex(
-				(e) => e.id === discountId
-			);
+			const discountToUpdateIndex = discountsList.value.findIndex((e) => e.id === discountId);
 			discountsList.value[discountToUpdateIndex] = data.value;
 		}
+		else if (error) throw error.value
 	}
 
 	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 		await useFetch(`${URL_discountAmount}/${discountAmountId}`, {
 			method: "delete",
 		});
-		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex(
-			(e) => e.id === discountAmountId
-		);
+		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex((e) => e.id === discountAmountId);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
-		// await fetchDiscounts();
 	}
 
 	async function deleteDiscount(discountId: Discount["id"]) {
 		await useFetch(`${URL_discount}/${discountId}`, {
 			method: "delete",
 		});
-		const discountToRemoveIndex = discountsList.value.findIndex(
-			(e) => e.id === discountId
-		);
+		const discountToRemoveIndex = discountsList.value.findIndex((e) => e.id === discountId);
 		discountsList.value.splice(discountToRemoveIndex, 1);
 	}
 
-	async function deleteAllDiscountsOnDayOfWeek(
-		dayOfWeek: Discount["dayOfWeek"]
-	) {
-		await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, {
-			method: "delete"
-		});
+	async function deleteAllDiscountsOnDayOfWeek(dayOfWeek: Discount["dayOfWeek"]) {
+		await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, { method: "delete" });
 		// remove locally, if ALL remove everything
-		if (dayOfWeek === 10) {
-			discountsList.value = [];
-			// refreshNuxtData(); // this causes bug and double FETCH, DELETE, POST
-		} // otherwises remove discount that have dayOfWeek === param.dayOfWeek
-		else {
-			discountsList.value
-				.filter((x) => x.dayOfWeek === dayOfWeek)
-				.forEach((x) =>
-					discountsList.value.splice(discountsList.value.indexOf(x), 1)
-				);
-		}
+		if (dayOfWeek === 10) discountsList.value = [];
+		// otherwises remove discount that have dayOfWeek === param.dayOfWeek
+		else discountsList.value.filter((x) => x.dayOfWeek === dayOfWeek).forEach((x) => discountsList.value.splice(discountsList.value.indexOf(x), 1));
 	}
 
 	return {
