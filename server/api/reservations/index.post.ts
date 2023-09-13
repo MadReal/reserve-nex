@@ -30,10 +30,19 @@ export default defineEventHandler(async (event) => {
       select: { name: true, address: true, city: true, zipCode: true },
     });
 
+    // Create a Date object for the original date and time
+    const originalDate = new Date(reservation.date);
+    // Extract the day, month, and year components
+    const day = originalDate.getDate();
+    const month = originalDate.getMonth() + 1; // Months are 0-based, so add 1
+    const year = originalDate.getFullYear();
+    // Format the components as "dd/mm/yyyy"
+    const reservationDateFormatted = `${day}/${month}/${year}`;
+
     const emailBody = {
       restaurant,
       reservationId: reservation.id,
-      date: reservation.date,
+      date: reservationDateFormatted,
       time: reservation.time,
       peopleAmount: reservation.peopleAmount,
       personEmail: reservation.personEmail,

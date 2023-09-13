@@ -119,7 +119,7 @@ img.g-img + div {
 <style>
 
 .primary{
-	background: #f3a333;
+	background: #7F90FC;
 }
 
 .bg_white{
@@ -140,7 +140,7 @@ img.g-img + div {
 }
 
 .text_primary {
-  color: #f3a333;
+  color: #7F90FC;
 }
 /*BUTTON*/
 .btn{
@@ -148,7 +148,7 @@ img.g-img + div {
 }
 .btn.btn-primary{
 	border-radius: 30px;
-	background: #f3a333;
+	background: #7F90FC;
 	color: #ffffff;
 }
 
@@ -169,7 +169,7 @@ body{
 }
 
 a{
-	color: #f3a333;
+	color: #7F90FC;
 }
 
 .italic {
@@ -239,7 +239,7 @@ table{
 	content: '';
 	width: 100%;
 	height: 2px;
-	background: #f3a333;
+	background: #7F90FC;
 	margin: 0 auto;
 }
 
@@ -354,7 +354,7 @@ table{
       <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
       	<tr>
           <td class="bg_white logo" style="padding: 0.5em 2.5em; text-align: center">
-            <h1><a href="#">RestoBar</a></h1>
+            <h1><a href="#">${body.restaurant.name}</a></h1>
           </td>
 	      </tr><!-- end tr -->
 				<tr>
