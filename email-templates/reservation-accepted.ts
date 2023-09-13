@@ -1,5 +1,5 @@
-const htmlContent = (body: any) => (`
-<strong>It works! Ordine: ${body.id}</strong>
-`);
+const htmlContent = (body: any) => `
+<strong>It works! Ordine: ${body.reservationId}</strong>
+`;
 
-export default htmlContent
+export default htmlContent;
