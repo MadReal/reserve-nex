@@ -69,3 +69,4 @@ declare interface Restaurant {
 }
 
 type ModalType = "restaurant" | "reservation";
+type EmailType = "accepted" | "refused";

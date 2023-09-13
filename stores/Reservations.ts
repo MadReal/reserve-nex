@@ -81,9 +81,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 			body: { accepted },
 		});
 		if (data && data.value) {
-			const reservationToUpdateIndex = reservationsList.value.findIndex(
-				(e) => e.id === reservationId
-			);
+			const reservationToUpdateIndex = reservationsList.value.findIndex((e) => e.id === reservationId);
 			reservationsList.value[reservationToUpdateIndex].accepted = accepted;
 		}
 		else if (error) throw error.value

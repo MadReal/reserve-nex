@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		// * REQUEST *
 		const reservation = await prisma.reservation.create({ data: value });
+		await sendEmail('accepted', reservation)
 		return reservation;
 	} catch (err) {
 		console.error(err);
