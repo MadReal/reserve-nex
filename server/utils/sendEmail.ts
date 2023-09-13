@@ -31,22 +31,14 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
       ? reservationAccepted(emailBody)
       : reservationRefused(emailBody);
 
-  console.log(emailSubject, emailBody.personEmail);
-  console.log(
-    emailBody.restaurant.city,
-    emailBody.restaurant.address,
-    emailBody.restaurant.zipCode,
-  );
-  console.log(emailBody);
-
   try {
-    // const data = await resend.emails.send({
-    //   from: emailFrom,
-    //   to: emailBody.personEmail,
-    //   subject: emailSubject,
-    //   html: emailHtml,
-    // });
-    // return data;
+    const data = await resend.emails.send({
+      from: emailFrom,
+      to: emailBody.personEmail,
+      subject: emailSubject,
+      html: emailHtml,
+    });
+    return data;
   } catch (err) {
     console.error(err);
     throw new Error();
