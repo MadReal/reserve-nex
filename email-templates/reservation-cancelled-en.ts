@@ -615,7 +615,8 @@ const htmlContent = (body: any) => `
                     <tr>
                       <td>
                         <img src="https://restaurant-reservation-ashy.vercel.app/images/email_reservation-cancelled.jpg"
-                          alt style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;" />
+                          alt
+                          style="width: 100%; max-width: 600px; height: 550px; margin: auto; display: block; object-fit: cover;" />
                       </td>
                     </tr>
                   </table>
