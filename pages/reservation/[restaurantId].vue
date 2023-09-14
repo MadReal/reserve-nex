@@ -5,12 +5,7 @@ import { directive as VNumber } from "@coders-tm/vue-number-format";
 const number = { suffix: "", precision: 13, separator: "" };
 
 // https://nuxt.com/modules/gtag
-// const { gtag } = useGtag();
-// // SSR-ready
-// gtag("event", "screen_view", {
-//   app_name: "My App",
-//   screen_name: "Home",
-// });
+const { gtag } = useGtag();
 
 // @ts-ignore
 import { VueTelInput } from "vue-tel-input";
@@ -151,6 +146,22 @@ async function addReservation() {
   const reservation = await storeReservations.addReservation(
     newReservation.value,
   );
+
+  // ******** UPDATE DEPENING ON RESTAURANT ********
+  const avgClientValueAmount = 20;
+  // calculate event value
+  const clientReservationValue =
+    avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
+  const discountAmountInEUR =
+    (newReservation.value?.discountAmount! / 100) * clientReservationValue;
+  const clientReservationValueMinusDiscount =
+    clientReservationValue - discountAmountInEUR;
+
+  gtag("event", "reservation_sent", {
+    event_category: "reservation",
+    event_action: "finished",
+    value: clientReservationValueMinusDiscount,
+  });
   // @ts-ignore
   newReservation.value = reservation;
   activeSectionStep.value++;
@@ -188,7 +199,6 @@ const handleDateClick = (dateClickInfo: any) => {
   if (selectedDate < currentDate || isDateBlocked) return;
 
   dateClickInfo.dayEl.style.backgroundColor = "rgb(0 143 220 / 30%)";
-  activeSectionStep.value++;
 
   let dayOfWeek = selectedDate.getDay();
   // adjust sunday, because it's 0 but 7 is app=s sunday
@@ -197,6 +207,12 @@ const handleDateClick = (dateClickInfo: any) => {
   newReservation.value.date = selectedDate;
   storeWorkTimes.fetchWorkTimes(restaurantIdParam);
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
+  // advance checkout step
+  activeSectionStep.value++;
+  gtag("event", "reservation_started", {
+    event_category: "reservation",
+    event_action: "started",
+  });
 };
 
 const calendarOptions = ref({
