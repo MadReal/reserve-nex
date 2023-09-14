@@ -8,10 +8,23 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const emailFrom = "PixelVision <info@pixelvisionagency.com>";
 
 export const sendEmail = async (emailType: EmailType, emailBody: any) => {
-  const emailSubject =
-    emailType === "accepted"
-      ? `Prenotazione Confermata - ${emailBody.restaurant.name}`
-      : `La tua Prenotazione è stata annullata - ${emailBody.restaurant.name}`;
+  const emailSubjects = {
+    accepted: {
+      it: `Prenotazione Confermata - ${emailBody.restaurant.name}`,
+      en: `Reservation Confirmed - ${emailBody.restaurant.name}`,
+    },
+    cancelled: {
+      it: `La tua Prenotazione è stata annullato - ${emailBody.restaurant.name}`,
+      en: `Your Reservation has been Cancelled - ${emailBody.restaurant.name}`,
+    },
+  };
+
+  // Determine language based on personPhone
+  const isItalian =
+    emailBody.personPhone.startsWith("+39") ||
+    emailBody.personPhone.startsWith("+41");
+  const language = isItalian ? "it" : "en";
+  const emailSubject = emailSubjects[emailType][language];
 
   // adjust date to be displayed correctly = "12/09/2023"
   if (emailBody.date) {
@@ -27,22 +40,13 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
   }
 
   function selectEmailHtml() {
-    let emailHtml;
-    if (
-      emailBody.personPhone.startsWith("+39") ||
-      emailBody.personPhone.startsWith("+41")
-    ) {
-      emailHtml =
-        emailType === "accepted"
-          ? reservationAcceptedIT(emailBody)
-          : reservationCancelledIT(emailBody);
-    } else {
-      emailHtml =
-        emailType === "accepted"
-          ? reservationAcceptedEN(emailBody)
-          : reservationCancelledEN(emailBody);
-    }
-    return emailHtml;
+    return emailType === "accepted"
+      ? language === "it"
+        ? reservationAcceptedIT(emailBody)
+        : reservationAcceptedEN(emailBody)
+      : language === "it"
+      ? reservationCancelledIT(emailBody)
+      : reservationCancelledEN(emailBody);
   }
 
   const emailHtml = selectEmailHtml();
