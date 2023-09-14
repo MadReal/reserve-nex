@@ -21,8 +21,8 @@ const noData = computed(() => !reservationsList.value.length);
 
     AdminNoData(v-if="noData", text="Nessuna prenotazione in elenco.")
 
-    .mb-8(v-else)
-        .py-4.flex.items-center.flex-wrap.font-medium.gap-5.border-b.group(v-for="item in reservationsList", :key="item.id")
+    ul.mb-8(v-else)
+        li.py-4.flex.items-center.flex-wrap.font-medium.gap-5.border-b.hover_bg-slate-50.group(v-for="item in reservationsList", :key="item.id")
             .basis-60.overflow-hidden
                 p.text-black.font-semibold.tracking-wide.whitespace-nowrap.truncate.underline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id)") {{ item.personName }}
                 p.text-grey-200.tracking-tight(class="text-[10px]") {{ `#${item.id}` }}

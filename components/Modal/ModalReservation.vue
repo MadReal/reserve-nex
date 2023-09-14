@@ -117,5 +117,5 @@ const updateReservation = async (
 			button.py-2.px-4.rounded.bg-success-200.text-white.text-sm.uppercase.font-medium.cursor-pointer(class="hover_bg-success-200/80", 
 				v-if="selectedReservation.accepted === null" @click="updateReservation(selectedReservation.id, true)") Accetta
 			button.py-2.px-4.rounded.bg-error-200.text-white.text-sm.uppercase.font-medium.cursor-pointer(class="hover_bg-error-200/80", 
-				v-if="selectedReservation.accepted !== false" @click="updateReservation(selectedReservation.id, false)") Rifiuta Prenotazione
+				v-if="selectedReservation.accepted !== false" @click="updateReservation(selectedReservation.id, false)") Cancella Prenotazione
 </template>
