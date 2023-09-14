@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
         personEmail: reservationToUpdate.personEmail,
         personPhone: reservationToUpdate.personPhone,
       };
-      sendEmail("cancelled", emailBody);
+      await sendEmail("cancelled", emailBody);
     }
 
     return reservationToUpdate;

@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
       personName: reservation.personName,
       personPhone: reservation.personPhone,
     };
-    sendEmail("accepted", emailBody);
+    await sendEmail("accepted", emailBody);
 
     return reservation;
   } catch (err) {
