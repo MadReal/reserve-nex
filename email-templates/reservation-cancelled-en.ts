@@ -4,19 +4,16 @@ const htmlContent = (body: any) => `
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <meta charset="utf-8" />
-  <!-- utf-8 works for most cases -->
-  <meta name="viewport" content="width=device-width" />
+  <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+  <meta name="viewport" content="width=device-width">
   <!-- Forcing initial-scale shouldn't be necessary -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Use the latest (edge) version of IE rendering engine -->
-  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="x-apple-disable-message-reformatting">
   <!-- Disable auto-scale in iOS 10 Mail entirely -->
   <title></title>
   <!-- The title tag shows in email notifications, like Android 4.4. -->
-
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
   <!-- CSS Reset : BEGIN -->
   <style>
     /* What it does: Remove spaces around the email design added by some email clients. */
@@ -607,45 +604,43 @@ const htmlContent = (body: any) => `
         </tr>
         <!-- end tr -->
         <tr>
-          <td valign="middle" class="hero bg_white">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <td valign="middle" class="hero"
+            style="background-image: url(https://restaurant-reservation-ashy.vercel.app/images/email_reservation-cancelled.jpg); background-size: cover; height: 240px;">
+            <table>
               <tr>
-                <td valign="middle" width="50%">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" height="100%">
-                    <tr>
-                      <td>
-                        <img src="https://restaurant-reservation-ashy.vercel.app/images/email_reservation-cancelled.jpg"
-                          alt
-                          style="width: 100%; max-width: 600px; height: 550px; margin: auto; display: block; object-fit: cover;" />
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td valign="middle" width="50%" class="primary">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      <td class="text" style="text-align: left; padding: 3em 1.8em">
-                        <h2>
-                          Sorry, <br />
-                          your reservation was cancelled.
-                        </h2>
-                        <p>
-                          We are sorry, your reservation of <strong>${body.date}</strong> at
-                          <strong>${body.time}</strong> was cancelled. Soon, we will reach out to you to re-schedule it.
-                          Otherwise, you can visit our website and select a new date and time.
-                        </p>
-                        <p>
-                          <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">Visit
-                            website</a>
-                        </p>
-                      </td>
-                    </tr>
-                  </table>
+                <td>
+                  <div class="text" style="padding: 0 3em; text-align: center;">
+                    <!-- <h2>We Serve Healthy &amp; Delicious Foods</h2> -->
+                  </div>
                 </td>
               </tr>
             </table>
           </td>
+        </tr><!-- end tr -->
+        <tr>
+          <td valign="middle" class="hero primary">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+              <tr>
+                <td class="text email-section" style="text-align: left;">
+                  <h2>
+                    Sorry, your reservation was cancelled.
+                  </h2>
+                  <p>
+                    We are sorry, your reservation of <strong>${body.date}</strong> at
+                    <strong>${body.time}</strong> was cancelled. Soon, we will reach out to you to re-schedule it.
+                    Otherwise, you can visit our website and select a new date and time.
+                  </p>
+                  <p>
+                    <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">Visit
+                      Website</a>
+                  </p>
+                </td>
+              </tr>
+              <!-- end: tr -->
+            </table>
+          </td>
         </tr>
+
         <!-- end tr -->
       </table>
 
