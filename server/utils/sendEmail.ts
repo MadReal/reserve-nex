@@ -15,7 +15,7 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
     },
     cancelled: {
       it: `La tua Prenotazione è stata annullata - ${emailBody.restaurant.name}`,
-      en: `Your Reservation has been Cancelled - ${emailBody.restaurant.name}`,
+      en: `Your Reservation was cancelled - ${emailBody.restaurant.name}`,
     },
   };
 
