@@ -28,7 +28,10 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
 
   function selectEmailHtml() {
     let emailHtml;
-    if (emailBody.personPhone.startsWith("+39")) {
+    if (
+      emailBody.personPhone.startsWith("+39") ||
+      emailBody.personPhone.startsWith("+41")
+    ) {
       emailHtml =
         emailType === "accepted"
           ? reservationAcceptedIT(emailBody)
