@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.sass"],
   modules: [
     "@nuxt/image",
+    "nuxt-gtag",
     "@nuxtjs/supabase",
     "@pinia-plugin-persistedstate/nuxt",
     ["@pinia/nuxt", { autoImports: ["defineStore", "acceptHMRUpdate"] }],
@@ -51,4 +52,5 @@ export default defineNuxtConfig({
   },
   supabase: { redirect: false },
   vite: { plugins: [svgLoader()] },
+  gtag: { id: "G-7WHW3K85WN" },
 });

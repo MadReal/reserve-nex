@@ -21,6 +21,7 @@
     "joi": "^17.10.1",
     "lodash.debounce": "^4.0.8",
     "nuxt": "3.7.1",
+    "nuxt-gtag": "^1.1.0",
     "pinia": "^2.1.6",
     "postcss": "^8.4.29",
     "prettier": "^3.0.3",

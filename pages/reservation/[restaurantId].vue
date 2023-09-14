@@ -1,181 +1,222 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from "pinia";
 const route = useRoute();
-import { directive as VNumber } from '@coders-tm/vue-number-format'
-const number = { suffix: '', precision: 13, separator: '' }
+import { directive as VNumber } from "@coders-tm/vue-number-format";
+const number = { suffix: "", precision: 13, separator: "" };
+
+// https://nuxt.com/modules/gtag
+// const { gtag } = useGtag();
+// // SSR-ready
+// gtag("event", "screen_view", {
+//   app_name: "My App",
+//   screen_name: "Home",
+// });
 
 // @ts-ignore
-import { VueTelInput } from 'vue-tel-input';
-import 'vue-tel-input/vue-tel-input.css';
+import { VueTelInput } from "vue-tel-input";
+import "vue-tel-input/vue-tel-input.css";
 
 const telOptions = {
-    id: "person-phone",
-    name: "person-phone",
-    placeholder: "Telefono*",
-    showDialCode: true,
-    required: true,
-    // maxlength: 20,
-}
-const preferredCountries = ['it', 'ch', 'gb', 'fr', 'de', 'us', 'cn',]
+  id: "person-phone",
+  name: "person-phone",
+  placeholder: "Telefono*",
+  showDialCode: true,
+  required: true,
+  // maxlength: 20,
+};
+const preferredCountries = ["it", "ch", "gb", "fr", "de", "us", "cn"];
 
 // route params
-const restaurantIdParam = parseInt(route.params.restaurantId[0])
+const restaurantIdParam = parseInt(route.params.restaurantId[0]);
 // logic to move between steps
-const activeSectionStep = ref(1)
-const activeSectionClass = 'after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent'
-const clickClass = computed(() => activeSectionStep.value === 4 ? 'cursor-default' : 'cursor-pointer')
-const isActiveSectionStepBiggerThen = (number: number): boolean => (activeSectionStep.value > number)
+const activeSectionStep = ref(1);
+const activeSectionClass =
+  "after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent";
+const clickClass = computed(() =>
+  activeSectionStep.value === 4 ? "cursor-default" : "cursor-pointer",
+);
+const isActiveSectionStepBiggerThen = (number: number): boolean =>
+  activeSectionStep.value > number;
 const goToStep = (stepToGo: number) => {
-    // if already finished, can't go back
-    if (activeSectionStep.value === 4) return
-    // always go to previous stepToGo
-    if (stepToGo < activeSectionStep.value) activeSectionStep.value = stepToGo
-    if (stepToGo === 3 && newReservation.value.time) activeSectionStep.value = stepToGo
-}
+  // if already finished, can't go back
+  if (activeSectionStep.value === 4) return;
+  // always go to previous stepToGo
+  if (stepToGo < activeSectionStep.value) activeSectionStep.value = stepToGo;
+  if (stepToGo === 3 && newReservation.value.time)
+    activeSectionStep.value = stepToGo;
+};
 
 // init reservation object
 const newReservation = ref<Partial<Reservation>>({
-    date: null!,
-    time: '',
-    discountAmount: null,
-    personName: undefined,
-    personEmail: undefined,
-    personPhone: undefined,
-    peopleAmount: 1,
-    personInstagram: null,
-    restaurantId: restaurantIdParam
-})
+  date: null!,
+  time: "",
+  discountAmount: null,
+  personName: undefined,
+  personEmail: undefined,
+  personPhone: undefined,
+  peopleAmount: 1,
+  personInstagram: null,
+  restaurantId: restaurantIdParam,
+});
 
 // step 1
 // ====================
-import { useBlocksStore } from '~/stores/Blocks'
-const storeBlocks = useBlocksStore()
-const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks)
-import { useRestaurantsStore } from '@/stores/Restaurants';
+import { useBlocksStore } from "~/stores/Blocks";
+const storeBlocks = useBlocksStore();
+const { blockedDatesListFullCalendar, blockedDaysOfWeekList } =
+  storeToRefs(storeBlocks);
+import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
-const { activeRestaurant } = storeToRefs(storeRestaurants)
+const { activeRestaurant } = storeToRefs(storeRestaurants);
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
 const daysClosedSentence = computed(() => {
-    const isActive = blockedDaysOfWeekList.value.length > 0
-    const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? 'Giorni' : 'Giorno';
-    const mainSentence = `${dayOrDaysWord} di chiusura: `
-    const listOfDays = blockedDaysOfWeekList.value.map(item => useTranslateDayOfWeek(item.dayOfWeek!)).join(', ')
-    return { isActive, mainSentence, listOfDays }
-})
-const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map(item => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)))
-const blockedDates = computed(() => blockedDatesListFullCalendar.value.map(item => ({ ...item, display: 'background' })))
-
+  const isActive = blockedDaysOfWeekList.value.length > 0;
+  const dayOrDaysWord =
+    blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
+  const mainSentence = `${dayOrDaysWord} di chiusura: `;
+  const listOfDays = blockedDaysOfWeekList.value
+    .map((item) => useTranslateDayOfWeek(item.dayOfWeek!))
+    .join(", ");
+  return { isActive, mainSentence, listOfDays };
+});
+const hiddenDaysOfWeek = computed(() =>
+  blockedDaysOfWeekList.value.map((item) =>
+    item.dayOfWeek === 7 ? 0 : item.dayOfWeek,
+  ),
+);
+const blockedDates = computed(() =>
+  blockedDatesListFullCalendar.value.map((item) => ({
+    ...item,
+    display: "background",
+  })),
+);
 
 // step 2
 // ====================
-import { useWorkTimesStore } from '~/stores/WorkTimes'
+import { useWorkTimesStore } from "~/stores/WorkTimes";
 const storeWorkTimes = useWorkTimesStore();
-const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
-import { useDiscountsStore } from '~/stores/Discounts'
+const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
+import { useDiscountsStore } from "~/stores/Discounts";
 const storeDiscounts = useDiscountsStore();
 //
-const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: number) => {
-    newReservation.value.time = time
-    newReservation.value.discountAmount = discountAmount
-    activeSectionStep.value++
-}
+const selectReservationTimeAndDiscountAmount = (
+  time: WorkTime["time"],
+  discountAmount: number,
+) => {
+  newReservation.value.time = time;
+  newReservation.value.discountAmount = discountAmount;
+  activeSectionStep.value++;
+};
 
 // step 3
 // ====================
-import { useReservationsStore } from '@/stores/Reservations';
+import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
-// 
+//
 const isFormEmpty = computed(() => {
-    const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
-    return Object.values(otherDetails).some(value => value === '' || value === null || value === undefined);
+  const {
+    id,
+    time,
+    date,
+    restaurantId,
+    discountAmount,
+    personInstagram,
+    ...otherDetails
+  } = newReservation.value;
+  return Object.values(otherDetails).some(
+    (value) => value === "" || value === null || value === undefined,
+  );
 });
 const errorOnInput = ref({
-    personEmail: false,
-    personPhone: false,
-})
+  personEmail: false,
+  personPhone: false,
+});
 function validateEmail(email: string | undefined) {
-    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return errorOnInput.value.personEmail = false
-    else return errorOnInput.value.personEmail = true
+  if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+    return (errorOnInput.value.personEmail = false);
+  else return (errorOnInput.value.personEmail = true);
 }
 function validatePhone(phoneNumber: number | undefined) {
-    if (!phoneNumber || phoneNumber.toString().length < 8) return errorOnInput.value.personPhone = true
-    else return errorOnInput.value.personPhone = false
+  if (!phoneNumber || phoneNumber.toString().length < 8)
+    return (errorOnInput.value.personPhone = true);
+  else return (errorOnInput.value.personPhone = false);
 }
 async function addReservation() {
-    // exit if there are any errors
-    validateEmail(newReservation.value.personEmail)
-    validatePhone(newReservation.value.personPhone)
-    if (errorOnInput.value.personEmail || errorOnInput.value.personPhone) return
+  // exit if there are any errors
+  validateEmail(newReservation.value.personEmail);
+  validatePhone(newReservation.value.personPhone);
+  if (errorOnInput.value.personEmail || errorOnInput.value.personPhone) return;
 
-    const reservation = await storeReservations.addReservation(newReservation.value);
-    // @ts-ignore
-    newReservation.value = reservation
-    activeSectionStep.value++
+  const reservation = await storeReservations.addReservation(
+    newReservation.value,
+  );
+  // @ts-ignore
+  newReservation.value = reservation;
+  activeSectionStep.value++;
 }
 
 //************
 // CALENDAR
 //************
 // https://github.com/fullcalendar/fullcalendar-vue
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction' // needed for dateClick(), to drag and create events
-import itLocale from '@fullcalendar/core/locales/it';
-
+import FullCalendar from "@fullcalendar/vue3";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction"; // needed for dateClick(), to drag and create events
+import itLocale from "@fullcalendar/core/locales/it";
 
 const handleDateClick = (dateClickInfo: any) => {
-    // Get the date as a string without the time
-    const selectedDate = dateClickInfo.date
-    const selectedDateFixed = new Date(dateClickInfo.dateStr)
+  // Get the date as a string without the time
+  const selectedDate = dateClickInfo.date;
+  const selectedDateFixed = new Date(dateClickInfo.dateStr);
 
-    const currentDate = new Date(); // Get the current date and time
-    currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
+  const currentDate = new Date(); // Get the current date and time
+  currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
 
-    // Check if the selectedDate is inside the blockedDates array
-    const isDateBlocked = blockedDates.value.some((blockedDate) => {
-        // @ts-ignore
-        const blockStartDate = new Date(blockedDate.dateStart);
-        // @ts-ignore
-        const blockEndDate = new Date(blockedDate.dateEnd);
-        return selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate;
-    });
+  // Check if the selectedDate is inside the blockedDates array
+  const isDateBlocked = blockedDates.value.some((blockedDate) => {
+    // @ts-ignore
+    const blockStartDate = new Date(blockedDate.dateStart);
+    // @ts-ignore
+    const blockEndDate = new Date(blockedDate.dateEnd);
+    return (
+      selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate
+    );
+  });
 
-    //  if the selected date is before today's date or is inside blockedDates exit the function
-    if (selectedDate < currentDate || isDateBlocked) return
+  //  if the selected date is before today's date or is inside blockedDates exit the function
+  if (selectedDate < currentDate || isDateBlocked) return;
 
-    dateClickInfo.dayEl.style.backgroundColor = 'rgb(0 143 220 / 30%)';
-    activeSectionStep.value++;
+  dateClickInfo.dayEl.style.backgroundColor = "rgb(0 143 220 / 30%)";
+  activeSectionStep.value++;
 
-    let dayOfWeek = selectedDate.getDay()
-    // adjust sunday, because it's 0 but 7 is app=s sunday
-    dayOfWeek === 0 ? dayOfWeek = 7 : dayOfWeek = dayOfWeek
+  let dayOfWeek = selectedDate.getDay();
+  // adjust sunday, because it's 0 but 7 is app=s sunday
+  dayOfWeek === 0 ? (dayOfWeek = 7) : (dayOfWeek = dayOfWeek);
 
-    newReservation.value.date = selectedDate;
-    storeWorkTimes.fetchWorkTimes(restaurantIdParam);
-    storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam)
-}
-
+  newReservation.value.date = selectedDate;
+  storeWorkTimes.fetchWorkTimes(restaurantIdParam);
+  storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
+};
 
 const calendarOptions = ref({
-    plugins: [dayGridPlugin, interactionPlugin],
-    locale: itLocale,
-    headerToolbar: { left: 'prev', center: 'title', right: 'next' },
-    initialView: 'dayGridMonth',
-    selectable: false,
-    dayMaxEvents: true,
-    contentHeight: 320,
-    progressiveEventRendering: true,
-    events: blockedDates,
-    hiddenDays: hiddenDaysOfWeek,
-    dateClick: handleDateClick
-})
+  plugins: [dayGridPlugin, interactionPlugin],
+  locale: itLocale,
+  headerToolbar: { left: "prev", center: "title", right: "next" },
+  initialView: "dayGridMonth",
+  selectable: false,
+  dayMaxEvents: true,
+  contentHeight: 320,
+  progressiveEventRendering: true,
+  events: blockedDates,
+  hiddenDays: hiddenDaysOfWeek,
+  dateClick: handleDateClick,
+});
 
-storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam)
-storeBlocks.fetchBlockedDates(restaurantIdParam)
-storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam)
+storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
+storeBlocks.fetchBlockedDates(restaurantIdParam);
+storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam);
 </script>
-
 
 <template lang="pug">
 .page.relative.z-0.h-screen
