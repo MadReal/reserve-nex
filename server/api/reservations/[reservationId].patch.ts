@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 
 export const schema = Joi.object({
   accepted: Joi.boolean().required(),
+  restaurantId: Joi.number().required(),
 });
 
 export default defineEventHandler(async (event) => {
@@ -18,13 +19,13 @@ export default defineEventHandler(async (event) => {
     // * REQUEST *
     const reservationToUpdate = await prisma.reservation.update({
       where: { id: reservationId },
-      data: { accepted, restaurantId },
+      data: { accepted },
     });
 
     // send email if the reservation is NOT accepted
     if (!accepted) {
       const restaurant = await prisma.restaurant.findUnique({
-        where: { id: value.restaurantId },
+        where: { id: restaurantId },
         select: { name: true, address: true, city: true, zipCode: true },
       });
 

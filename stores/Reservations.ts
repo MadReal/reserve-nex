@@ -87,7 +87,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
   ) {
     const { data, error } = await useFetch(`${URL}/${reservationId}`, {
       method: "patch",
-      body: { accepted },
+      body: { accepted, restaurantId: activeRestaurantId },
     });
     if (data && data.value) {
       const reservationToUpdateIndex = reservationsList.value.findIndex(
