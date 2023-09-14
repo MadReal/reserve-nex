@@ -52,4 +52,8 @@ export default defineNuxtConfig({
   supabase: { redirect: false },
   vite: { plugins: [svgLoader()] },
   gtag: { id: "G-7WHW3K85WN" },
+  image: {
+    format: ["webp"],
+    domains: ["avatars0.githubusercontent.com"],
+  },
 });
