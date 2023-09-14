@@ -42,6 +42,7 @@ export default defineNuxtConfig({
         display: "swap",
       },
     ],
+    "nuxt3-meta-pixel",
   ],
   postcss: {
     plugins: {
@@ -51,9 +52,15 @@ export default defineNuxtConfig({
   },
   supabase: { redirect: false },
   vite: { plugins: [svgLoader()] },
-  gtag: { id: "G-7WHW3K85WN" },
   image: {
     format: ["webp"],
     domains: ["avatars0.githubusercontent.com"],
+  },
+  gtag: { id: "G-7WHW3K85WN" },
+  facebook: {
+    track: "PageView",
+    pixelId: "632015775759638",
+    autoPageView: true,
+    disabled: false,
   },
 });

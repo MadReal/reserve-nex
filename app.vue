@@ -4,4 +4,3 @@ NuxtLayout
   ModalManager
   NotificationManager
 </template>
-
