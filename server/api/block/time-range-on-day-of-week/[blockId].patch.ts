@@ -11,11 +11,11 @@ export default defineEventHandler(async (event) => {
 	const { error, value } = schemaBlockedTimeRangeOnDayOfWeek.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
-		const { timeStart, timeEnd, date, restaurantId } = value;
+		const { timeStart, timeEnd, dayOfWeek, restaurantId } = value;
 		// * REQUEST *
 		const blockUpdated = await prisma.block.update({
 			where: { id: parseInt(blockId) },
-			data: { timeStart, timeEnd, date, restaurantId },
+			data: { timeStart, timeEnd, dayOfWeek, restaurantId },
 		});
 		return blockUpdated;
 	} catch (err) {

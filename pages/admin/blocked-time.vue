@@ -20,6 +20,11 @@ const addBlockedTimeRangeOnDate = () =>
     workTimesListsMerged.value[0].time,
     workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
   );
+const addBlockedTimeRangeOnDayOfWeek = () =>
+  storeBlocks.addBlockedTimeRangeOnDayOfWeek(
+    workTimesListsMerged.value[0].time,
+    workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
+  );
 storeBlocks.fetchBlockedTimeRangeOnDate();
 storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
 </script>
@@ -51,7 +56,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
           />
           <div
             class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
-            @click="addBlockedTimeRangeOnDate()"
+            @click="addBlockedTimeRangeOnDayOfWeek()"
           >
             <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
             <SVGIcon class="text-grey-300" svg="plus" :size="15"></SVGIcon>
