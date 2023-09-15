@@ -115,7 +115,6 @@
 			}
 		}
 	</style>
-
 	<!-- CSS Reset : END -->
 
 	<!-- Progressive Enhancements : BEGIN -->
@@ -141,26 +140,12 @@
 		}
 
 		.email-section {
-			padding: 2.5em;
-			padding-bottom: 4em;
+			padding: 2.5em 2em;
 		}
 
 		.text_primary {
 			color: #7F90FC;
 		}
-
-		/*BUTTON*/
-		.btn {
-			padding: 10px 15px;
-		}
-
-		.btn.btn-primary {
-			border-radius: 30px;
-			background: #7F90FC;
-			color: #ffffff;
-		}
-
-
 
 		h1,
 		h2,
@@ -187,23 +172,14 @@
 
 		.italic {
 			font-style: italic;
-
 		}
-
 
 		.footer {
 			color: rgba(255, 255, 255, .5);
 			font-size: 14px;
 		}
 
-		.email-section {
-			padding: 2.5em;
-		}
-
-		table {}
-
 		/*LOGO*/
-
 		.logo h1 {
 			margin: 0;
 		}
@@ -220,8 +196,6 @@
 			background-position: center;
 		}
 
-		.hero img {}
-
 		.hero .text {
 			color: rgba(255, 255, 255, .8);
 		}
@@ -232,10 +206,7 @@
 			margin-bottom: 0;
 		}
 
-
 		/*HEADING SECTION*/
-		.heading-section {}
-
 		.heading-section h2 {
 			color: #000000;
 			font-size: 28px;
@@ -264,109 +235,6 @@
 			background: #7F90FC;
 			margin: 0 auto;
 		}
-
-		.heading-section-white {
-			color: rgba(255, 255, 255, .8);
-		}
-
-		.heading-section-white h2 {
-			font-size: 28px;
-			line-height: 1;
-			padding-bottom: 0;
-		}
-
-		.heading-section-white h2 {
-			color: #ffffff;
-		}
-
-		.heading-section-white .subheading {
-			margin-bottom: 0;
-			display: inline-block;
-			font-size: 13px;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			color: rgba(255, 255, 255, .4);
-		}
-
-
-		.icon {
-			text-align: center;
-		}
-
-
-
-		/*SERVICES*/
-		.text-services {
-			padding: 10px 10px 0;
-			text-align: center;
-		}
-
-		.text-services h3 {
-			font-size: 20px;
-		}
-
-
-
-
-		/*VIDEO*/
-		.img {
-			width: 100%;
-			height: auto;
-			position: relative;
-		}
-
-		.img .icon {
-			position: absolute;
-			top: 50%;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin-top: -25px;
-		}
-
-		.img .icon a {
-			display: block;
-			width: 60px;
-			position: absolute;
-			top: 0;
-			left: 50%;
-			margin-left: -25px;
-		}
-
-
-
-		/*COUNTER*/
-		.counter-text {
-			text-align: center;
-		}
-
-		.counter-text .num {
-			display: block;
-			color: #ffffff;
-			font-size: 34px;
-			font-weight: 700;
-		}
-
-		.counter-text .name {
-			display: block;
-			color: rgba(255, 255, 255, .9);
-			font-size: 13px;
-		}
-
-
-		@media screen and (max-width: 500px) {
-
-			.icon {
-				text-align: left;
-			}
-
-			.text-services {
-				padding-left: 0;
-				padding-right: 20px;
-				text-align: left;
-			}
-
-		}
 	</style>
 </head>
 
@@ -386,36 +254,29 @@
 					</td>
 				</tr>
 				<!-- end tr -->
+
 				<tr>
 					<td valign="middle" class="hero"
 						style="background-image: url(https://www.investireoggi.it/news/wp-content/uploads/sites/12/2021/11/Nuovi-ristoranti-dItalia-ecco-la-top-ten-secondo-gli-esperti-di-The-Fork.jpeg); background-size: cover; height: 140px;">
-						<table>
-							<tr>
-								<td>
-									<div class="text" style="padding: 0 3em; text-align: center;">
-										<!-- <h2>We Serve Healthy &amp; Delicious Foods</h2> -->
-									</div>
-								</td>
-							</tr>
-						</table>
 					</td>
-				</tr><!-- end tr -->
+				</tr>
+				<!-- end tr -->
+
 				<tr>
 					<td class="bg_white">
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
 								<td class="bg_light email-section" style="text-align:center;">
-									<div class="heading-section heading-section-dark">
+									<div class="heading-section">
 										<span class="subheading">Prenotazione</span>
 										<h2>Confermata</h2>
 										<p>Gentile ${body.personName},<br>
 											Abbiamo il piacere di confermare la prenotazione del suo tavolo il
-											giorno
-											<strong>${body.date}</strong> alle ore <strong>${body.time}</strong>
-											per ${body.peopleAmount}
-											person${body.peopleAmount > 1 ? 'e' : 'a'}, come da lei richiesto.
+											giorno <strong>${body.date}</strong> alle ore <strong>${body.time}</strong>
+											per ${body.peopleAmount} person${body.peopleAmount > 1 ? 'e' : 'a'}, come da lei richiesto.
 										</p>
 										<p>Prenotazione: #${body.reservationId}</p>
+										${body.discountAmount ? `<p>Sconto: ${body.discountAmount}%</p>` : '' }
 										<p>La preghiamo di volerci segnalare eventuali intoralleranze e
 											allergie alimentari, in modo da
 											informare la cucina.</p>
@@ -429,8 +290,6 @@
 							</tr>
 							<!-- end: tr -->
 						</table>
-
-
 
 						<!-- footer -->
 						<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
@@ -454,8 +313,10 @@
 							</tr>
 						</table>
 						<!-- end: Footer -->
+
 					</td>
-				</tr><!-- end:tr -->
+				</tr>
+				<!-- end:tr -->
 		</div>
 	</center>
 </body>

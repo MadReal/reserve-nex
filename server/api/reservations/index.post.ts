@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
       personEmail: reservation.personEmail,
       personName: reservation.personName,
       personPhone: reservation.personPhone,
+      discountAmount: reservation.discountAmount,
     };
     await sendEmail("accepted", emailBody);
 
