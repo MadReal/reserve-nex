@@ -9,16 +9,11 @@ import { storeToRefs } from "pinia";
 import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
 
-const { blockedDaysOfWeekList, blockedDatesListFullCalendar } =
-  storeToRefs(storeBlocks);
+const { blockedDaysOfWeekList, blockedDatesListFullCalendar } = storeToRefs(storeBlocks);
 // used to dynamically set class
-const isblockedDaysOfWeekListShort = computed(
-  () => blockedDaysOfWeekList.value.length < 1,
-);
+const isblockedDaysOfWeekListShort = computed(() => blockedDaysOfWeekList.value.length < 1);
 // if all days are added
-const isBlockedDaysOfWeekListFull = computed(
-  () => blockedDaysOfWeekList.value.length > 6,
-);
+const isBlockedDaysOfWeekListFull = computed(() => blockedDaysOfWeekList.value.length > 6);
 
 //************
 // CALENDAR
@@ -31,9 +26,7 @@ import itLocale from "@fullcalendar/core/locales/it";
 
 const handleEventClick = async (clickInfo: any) => {
   const blockId: Block["id"] = clickInfo.event.id;
-  if (
-    confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)
-  ) {
+  if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
     await storeBlocks.removeBlock(blockId);
     clickInfo.event.remove();
   }
@@ -48,15 +41,7 @@ const handleDateSelect = async (selectInfo: any) => {
 
   let title = prompt("Inserisci un titolo per questo evento", "Blocco giorni");
   // Define an array of swear words to check against
-  const swearWords = [
-    "fanculo",
-    "troia",
-    "puttana",
-    "dio cane",
-    "diocane",
-    "porco dio",
-    "merda",
-  ];
+  const swearWords = ["fanculo", "troia", "puttana", "dio cane", "diocane", "porco dio", "merda"];
 
   if (title) {
     // Convert the user's input to lowercase to make the check case-insensitive
@@ -68,11 +53,7 @@ const handleDateSelect = async (selectInfo: any) => {
       return; // Exit the function
     }
 
-    const newblockDatesPeriod = await storeBlocks.addBlockedDate(
-      selectInfo.startStr,
-      selectInfo.endStr,
-      title,
-    );
+    const newblockDatesPeriod = await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title);
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
     calendarApi.addEvent({
@@ -90,11 +71,7 @@ const handleDateSelect = async (selectInfo: any) => {
 
 const handleDragAndResize = (info: any) => {
   const blockedDate = info.event;
-  storeBlocks.updateBlockedDate(
-    blockedDate.id,
-    blockedDate.start,
-    blockedDate.end,
-  );
+  storeBlocks.updateBlockedDate(blockedDate.id, blockedDate.start, blockedDate.end);
 };
 
 const calendarOptions = ref({
@@ -123,9 +100,9 @@ storeBlocks.fetchBlockedDates();
     AdminPageTitle(title="Blocco Giorni")
 
     .grid.border-b.lg_gap-6(:class="['lg_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")
-        .lg_mt-1.mb-8
-            h3.text-lg.text-grey-300 Giorno di Chiusura Settimanale
-            p.text-sm.text-grey-100.font-light Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.
+        AdminSectionTitle(
+          title="Giorno di Chiusura Settimanale"
+          subtitle="Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.") 
 
         //- Divider
         .hidden.lg_block.lg_h-full.lg_border-r
@@ -140,11 +117,11 @@ storeBlocks.fetchBlockedDates();
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
-    div                
-        .mt-8.mb-8
-            h3.text-lg.text-grey-300 Aggiungi Periodi di Chiusura o Vacanze
-            p.text-sm.text-grey-100.font-light Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. 
-                #br Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura.
+    div
+        AdminSectionTitle(
+          title="Aggiungi Periodi di Chiusura o Vacanze"
+          subtitle="Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. <br> Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
+          marginTop="mt-8")
 
         FullCalendar.calendar-admin.mt-10.lg_mt-8(:options="calendarOptions")
 </template>

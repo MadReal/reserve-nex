@@ -1,36 +1,79 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
-useHead({ title: 'Blocco Orari', })
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
+useHead({ title: "Blocco Orari" });
 
-import { storeToRefs } from 'pinia'
-import { useBlocksStore } from '~/stores/Blocks'
-import { useWorkTimesStore } from '~/stores/WorkTimes'
+import { storeToRefs } from "pinia";
+import { useBlocksStore } from "~/stores/Blocks";
+import { useWorkTimesStore } from "~/stores/WorkTimes";
 
-const storeBlocks = useBlocksStore()
+const storeBlocks = useBlocksStore();
 const storeWorkTimes = useWorkTimesStore();
 
-const { blockedTimeRangeOnDateList } = storeToRefs(storeBlocks)
-const { workTimesListsMerged } = storeToRefs(storeWorkTimes)
+const { blockedTimeRangeOnDateList } = storeToRefs(storeBlocks);
+const { workTimesListsMerged } = storeToRefs(storeWorkTimes);
 
-const noData = computed(() => (!workTimesListsMerged.value.length))
+const noData = computed(() => !workTimesListsMerged.value.length);
 
 // API CALLS
-const addBlockedTimeRangeOnDate = () => storeBlocks.addBlockedTimeRangeOnDate(workTimesListsMerged.value[0].time, workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time)
-storeBlocks.fetchBlockedTimeRangeOnDate()
+const addBlockedTimeRangeOnDate = () =>
+  storeBlocks.addBlockedTimeRangeOnDate(
+    workTimesListsMerged.value[0].time,
+    workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
+  );
+storeBlocks.fetchBlockedTimeRangeOnDate();
 </script>
 
+<template>
+  <div class="page__content">
+    <AdminPageTitle title="Blocco Orari" />
+    <AdminNoData
+      v-if="noData"
+      text="Aggiungi orari di apertura prima di poter creare blocchi orari."
+      buttonText="Aggiungi Orari"
+      linkPath="edit-time-open"
+    />
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Blocco Orari", subtitle="Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica.")
-    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter creare blocchi orari.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
+    <template v-else>
+      <div class="grid border-b md_grid-cols-[1fr_1px_2fr] md_gap-6">
+        <AdminSectionTitle
+          title="Giorno Settimanale"
+          subtitle="Restrizione delle prenotazioni per determinate fasce orarie nel giorno selezionato, settimanalmente."
+        />
 
-    .grid.gap-6.grid-cols-1fr(class="lg_grid-cols-[2fr_1px_2fr]", v-else)
-        div.mb-8
-            AdminBlockedTimeRangeOnDate(v-for="(item, index) in blockedTimeRangeOnDateList", :key="item.id", :blockTimePeriod="item")
+        <div class="hidden md_block md_h-full md_border-r"></div>
 
-            //- Empty Row - Add Hour Block
-            .flex.items-center.justify-between.border.border-dashed.border-grey-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(@click="addBlockedTimeRangeOnDate()")
-                p.leading-normal.text-grey-200 Aggiungi Blocco
-                SVGIcon.text-grey-300(svg="plus", :size="15")
+        <div class="mb-8 md_mb-6 md_mt-1">
+          <AdminBlockedTimeRangeOnDate v-for="item in blockedTimeRangeOnDateList" :key="item.id" :blockTimePeriod="item" />
+          <div
+            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
+            @click="addBlockedTimeRangeOnDate()"
+          >
+            <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
+            <SVGIcon class="text-grey-300" svg="plus" :size="15"></SVGIcon>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md_grid-cols-[1fr_1px_2fr] md_gap-6">
+        <AdminSectionTitle
+          title="Giorno Specifico"
+          subtitle="Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica."
+          marginTop="mt-8"
+        />
+
+        <div class="hidden md_block md_h-full md_border-r"></div>
+
+        <div class="mb-8 md_my-6">
+          <AdminBlockedTimeRangeOnDate v-for="item in blockedTimeRangeOnDateList" :key="item.id" :blockTimePeriod="item" />
+          <div
+            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
+            @click="addBlockedTimeRangeOnDate()"
+          >
+            <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
+            <SVGIcon class="text-grey-300" svg="plus" :size="15"></SVGIcon>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
