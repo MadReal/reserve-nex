@@ -278,8 +278,12 @@ const htmlContent = (body: any) => `
                         body.peopleAmount > 1 ? "e" : "a"
                       }, come da lei richiesto.
 										</p>
-										<p>Prenotazione: #${body.reservationId}</p>
-										${body.discountAmount ? `<p>Sconto: ${body.discountAmount}%</p>` : ""}
+										<p>Prenotazione: #${body.reservationId}
+											${
+                        body.discountAmount
+                          ? `<br><span style="color: #F06A6A;">Sconto: ${body.discountAmount}%</span>`
+                          : ""
+                      }</p>
 										<p>La preghiamo di volerci segnalare eventuali intoralleranze e
 											allergie alimentari, in modo da
 											informare la cucina.</p>
