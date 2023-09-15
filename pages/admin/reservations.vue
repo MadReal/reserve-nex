@@ -7,19 +7,45 @@ useHead({ title: "Prenotazioni" });
 
 import { storeToRefs } from "pinia";
 import { useReservationsStore } from "@/stores/Reservations";
-
 const storeReservations = useReservationsStore();
-const { reservationsList } = storeToRefs(storeReservations);
-const { openModal } = useOpenModal();
+const { reservationsList, reservationsAtDateList } =
+  storeToRefs(storeReservations);
+
+const isFilterAtDate = ref(false);
+
+const setDateFilterReservation = (date: Date) => {
+  if (date) {
+    isFilterAtDate.value = true;
+    storeReservations.fetchReservationsAtDate(date);
+  } else isFilterAtDate.value = false;
+};
+
+const reservationsListToRender = computed(() => {
+  if (isFilterAtDate.value) return reservationsAtDateList.value;
+  else return reservationsList.value;
+});
 
 const noData = computed(() => !reservationsList.value.length);
 </script>
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Prenotazioni")
-    AdminNoData(v-if="noData", text="Nessuna prenotazione in elenco.")
+<template>
+  <div class="page__content">
+    <AdminPageTitle title="Prenotazioni">
+      <div class="mt-1 flex items-center md_ml-12">
+        <SVGIcon class="text-grey-200" svg="filter" />
+        <AdminReservationFilterCalendar
+          @setDateFilterReservation="setDateFilterReservation"
+        />
+      </div>
+    </AdminPageTitle>
+    <AdminNoData v-if="noData" text="Nessuna prenotazione in elenco." />
 
-    ul.mb-8(v-else)
-        AdminReservationListItem(v-for="item in reservationsList", :key="item.id", :reservation="item")
+    <ul class="mb-8" v-else>
+      <AdminReservationListItem
+        v-for="item in reservationsListToRender"
+        :key="item.id"
+        :reservation="item"
+      />
+    </ul>
+  </div>
 </template>

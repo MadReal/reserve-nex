@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import { vOnClickOutside } from '@vueuse/components'
+import { vOnClickOutside } from "@vueuse/components";
 
-interface AdminBlockedDayOfWeekProps {
-    showTrash: boolean,
-    isUpdate: boolean // true: add new day - false: update day
-    blockedDaysOfWeekList: Block[]
-    blockedDay?: Block,
+interface AdminSelectDayOfWeekProps {
+  showTrash: boolean;
+  isUpdate: boolean; // true: add new day - false: update day
+  blockedDaysOfWeekList: Block[];
+  blockedDay?: Block;
 }
-const props = defineProps<AdminBlockedDayOfWeekProps>()
+const props = defineProps<AdminSelectDayOfWeekProps>();
 
 const isDropdownOpen = ref(false);
-const toggleDropdown = () => isDropdownOpen.value = !isDropdownOpen.value;
-const closeDropdown = () => isDropdownOpen.value = false
+const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
+const closeDropdown = () => (isDropdownOpen.value = false);
 
-const dayIsAlreadyInBlockedDaysList = (dayInt: number) => props.blockedDaysOfWeekList.some((e) => e.dayOfWeek === dayInt);
+const dayIsAlreadyInBlockedDaysList = (dayInt: number) =>
+  props.blockedDaysOfWeekList.some((e) => e.dayOfWeek === dayInt);
 // if there's a blocked day show the day's name || if there are other blockedDaysOfWeek add 'altro', otherwise empty
-const buttonText = computed(() => (props.blockedDay ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!) : `Seleziona ${props.blockedDaysOfWeekList?.length ? 'altro' : ''} giorno`))
+const buttonText = computed(() =>
+  props.blockedDay
+    ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!)
+    : `Seleziona ${props.blockedDaysOfWeekList?.length ? "altro" : ""} giorno`,
+);
 </script>
-
 
 <template lang="pug">
 .flex.items-center.justify-between.mb-2.relative.gap-3(v-on-click-outside="closeDropdown")

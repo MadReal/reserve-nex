@@ -9,7 +9,7 @@ const { openModal } = useOpenModal();
 
 <template>
   <li
-    class="group flex flex-wrap items-center gap-5 border-b py-4 font-medium hover_bg-slate-50"
+    class="group flex flex-wrap items-center gap-5 border-b py-3 font-medium hover_bg-slate-50"
   >
     <div class="basis-60 overflow-hidden">
       <p

@@ -132,11 +132,11 @@ storeBlocks.fetchBlockedDates();
 
         .mb-8.md_mb-6.md_mt-1
             //- Display for each day already "blocked"
-            AdminBlockedDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
+            AdminSelectDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", @removeDay="storeBlocks.removeBlock", 
                 :isUpdate="true", :showTrash="!isblockedDaysOfWeekListShort")
             //- Display the "empty" one, to add a new day
-            AdminBlockedDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
+            AdminSelectDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
                 @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
                 :isUpdate="false", :showTrash="false")
 
