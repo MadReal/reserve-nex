@@ -100,7 +100,7 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                 span.sr-only Open Menu
                 SVGIcon(svg="menu", :size="28")
 
-        AdminMenu.fixed.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden.pb-20.overflow-y-scroll.h-auto(class="min-h-[300px]", v-show="isMenuOpen", @toggleMenu="toggleMenu()")
+        AdminMenu.fixed.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden.pb-20.overflow-y-scroll.h-full(class="min-h-[300px]", v-show="isMenuOpen", @toggleMenu="toggleMenu()")
             .py-8.bg-primary-200.text-white
                 p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
                 .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
