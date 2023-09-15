@@ -9,7 +9,12 @@ export default defineEventHandler(async (event) => {
 	try {
 		// * REQUEST *
 		const block = await prisma.block.findMany({
-			where: { dayOfWeek: { not: null }, restaurantId: id },
+			where: {
+				dayOfWeek: { not: null },
+				timeStart: null,
+				timeEnd: null,
+				restaurantId: id
+			},
 			select: {
 				id: true,
 				dayOfWeek: true,

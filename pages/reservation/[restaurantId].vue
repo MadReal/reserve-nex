@@ -195,9 +195,10 @@ const calendarOptions = ref({
   dateClick: handleDateClick,
 });
 
-storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
 storeBlocks.fetchBlockedDates(restaurantIdParam);
+storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
 storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam);
+storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
 </script>
 
 <template lang="pug">
