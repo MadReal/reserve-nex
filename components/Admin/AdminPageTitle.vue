@@ -9,7 +9,7 @@ const props = defineProps<AdminPageTitleProps>();
 
 <template>
   <div class="mb-10">
-    <div class="flex flex-wrap items-center gap-2">
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
       <h1 class="text-2xl font-semibold text-black">{{ title }}</h1>
       <p class="-mb-1 font-light leading-7 text-grey-200" v-if="date">
         {{ `(${date})` }}
