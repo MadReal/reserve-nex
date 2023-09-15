@@ -46,7 +46,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
 
     <div
       v-show="isDropdownCalendarOpen"
-      class="absolute left-0 right-0 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_left-auto md_right-auto"
+      class="absolute right-0 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_-left-3"
     >
       <VueDatePicker
         v-model="selectedDate"
