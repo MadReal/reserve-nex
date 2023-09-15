@@ -116,7 +116,6 @@ const htmlContent = (body: any) => `
 			}
 		}
 	</style>
-
 	<!-- CSS Reset : END -->
 
 	<!-- Progressive Enhancements : BEGIN -->
@@ -126,11 +125,11 @@ const htmlContent = (body: any) => `
 		}
 
 		.bg_white {
-			background: #ffffff;
+			background: #fafafa;
 		}
 
 		.bg_light {
-			background: #fafafa;
+			background: #f1f1f1;
 		}
 
 		.bg_black {
@@ -142,26 +141,12 @@ const htmlContent = (body: any) => `
 		}
 
 		.email-section {
-			padding: 2.5em;
-			padding-bottom: 4em;
+			padding: 2.5em 2em;
 		}
 
 		.text_primary {
 			color: #7F90FC;
 		}
-
-		/*BUTTON*/
-		.btn {
-			padding: 10px 15px;
-		}
-
-		.btn.btn-primary {
-			border-radius: 30px;
-			background: #7F90FC;
-			color: #ffffff;
-		}
-
-
 
 		h1,
 		h2,
@@ -188,23 +173,14 @@ const htmlContent = (body: any) => `
 
 		.italic {
 			font-style: italic;
-
 		}
-
 
 		.footer {
 			color: rgba(255, 255, 255, .5);
 			font-size: 14px;
 		}
 
-		.email-section {
-			padding: 2.5em;
-		}
-
-		table {}
-
 		/*LOGO*/
-
 		.logo h1 {
 			margin: 0;
 		}
@@ -221,8 +197,6 @@ const htmlContent = (body: any) => `
 			background-position: center;
 		}
 
-		.hero img {}
-
 		.hero .text {
 			color: rgba(255, 255, 255, .8);
 		}
@@ -233,10 +207,7 @@ const htmlContent = (body: any) => `
 			margin-bottom: 0;
 		}
 
-
 		/*HEADING SECTION*/
-		.heading-section {}
-
 		.heading-section h2 {
 			color: #000000;
 			font-size: 28px;
@@ -265,109 +236,6 @@ const htmlContent = (body: any) => `
 			background: #7F90FC;
 			margin: 0 auto;
 		}
-
-		.heading-section-white {
-			color: rgba(255, 255, 255, .8);
-		}
-
-		.heading-section-white h2 {
-			font-size: 28px;
-			line-height: 1;
-			padding-bottom: 0;
-		}
-
-		.heading-section-white h2 {
-			color: #ffffff;
-		}
-
-		.heading-section-white .subheading {
-			margin-bottom: 0;
-			display: inline-block;
-			font-size: 13px;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			color: rgba(255, 255, 255, .4);
-		}
-
-
-		.icon {
-			text-align: center;
-		}
-
-
-
-		/*SERVICES*/
-		.text-services {
-			padding: 10px 10px 0;
-			text-align: center;
-		}
-
-		.text-services h3 {
-			font-size: 20px;
-		}
-
-
-
-
-		/*VIDEO*/
-		.img {
-			width: 100%;
-			height: auto;
-			position: relative;
-		}
-
-		.img .icon {
-			position: absolute;
-			top: 50%;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin-top: -25px;
-		}
-
-		.img .icon a {
-			display: block;
-			width: 60px;
-			position: absolute;
-			top: 0;
-			left: 50%;
-			margin-left: -25px;
-		}
-
-
-
-		/*COUNTER*/
-		.counter-text {
-			text-align: center;
-		}
-
-		.counter-text .num {
-			display: block;
-			color: #ffffff;
-			font-size: 34px;
-			font-weight: 700;
-		}
-
-		.counter-text .name {
-			display: block;
-			color: rgba(255, 255, 255, .9);
-			font-size: 13px;
-		}
-
-
-		@media screen and (max-width: 500px) {
-
-			.icon {
-				text-align: left;
-			}
-
-			.text-services {
-				padding-left: 0;
-				padding-right: 20px;
-				text-align: left;
-			}
-
-		}
 	</style>
 </head>
 
@@ -382,31 +250,27 @@ const htmlContent = (body: any) => `
 			<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
 				style="margin: auto;">
 				<tr>
-					<td class="bg_white logo" style="padding: 0.5em 2.5em; text-align: center">
-						<h1><a href="#">${body.restaurant.name}</a></h1>
+					<td class="bg_light logo" style="padding: 0.5em 2.5em; text-align: center">
+						<h1><a href="https://restaurant-reservation-ashy.vercel.app/">${
+              body.restaurant.name
+            }</a></h1>
 					</td>
 				</tr>
 				<!-- end tr -->
+
 				<tr>
 					<td valign="middle" class="hero"
 						style="background-image: url(https://www.investireoggi.it/news/wp-content/uploads/sites/12/2021/11/Nuovi-ristoranti-dItalia-ecco-la-top-ten-secondo-gli-esperti-di-The-Fork.jpeg); background-size: cover; height: 140px;">
-						<table>
-							<tr>
-								<td>
-									<div class="text" style="padding: 0 3em; text-align: center;">
-										<!-- <h2>We Serve Healthy &amp; Delicious Foods</h2> -->
-									</div>
-								</td>
-							</tr>
-						</table>
 					</td>
-				</tr><!-- end tr -->
+				</tr>
+				<!-- end tr -->
+
 				<tr>
 					<td class="bg_white">
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
-								<td class="bg_light email-section" style="text-align:center;">
-									<div class="heading-section heading-section-dark">
+								<td class="bg_white email-section" style="text-align:center;">
+									<div class="heading-section">
 										<span class="subheading">Reservation</span>
 										<h2>Confirmed</h2>
 										<p>Dear ${body.personName},<br>
@@ -417,19 +281,20 @@ const htmlContent = (body: any) => `
 											for ${body.peopleAmount}
 											person${body.peopleAmount > 1 ? "s" : ""}.
 										</p>
-										<p>Reservation ID: #${body.reservationId}</p>
+										<p>Reservation ID: #${body.reservationId}
+											${
+                        body.discountAmount
+                          ? `<br><span style="color: #F06A6A;">Discount:
+												${body.discountAmount}%</span>`
+                          : ""
+                      }</p>
 										<p>Please let us know any food intolerances or allergies, in order to inform the chef.</p>
 										<p class="italic text_primary">Your table will be reserved for 1 hour and 30min.</p>
-										<!-- <p class="footer">${body.restaurant.name} -
-											${body.restaurant.address}, ${body.restaurant.city}
-											${body.restaurant.zipCode}</p> -->
 									</div>
 								</td>
 							</tr>
 							<!-- end: tr -->
 						</table>
-
-
 
 						<!-- footer -->
 						<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
@@ -453,8 +318,10 @@ const htmlContent = (body: any) => `
 							</tr>
 						</table>
 						<!-- end: Footer -->
+
 					</td>
-				</tr><!-- end:tr -->
+				</tr>
+				<!-- end:tr -->
 		</div>
 	</center>
 </body>
