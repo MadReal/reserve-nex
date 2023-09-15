@@ -1,69 +1,74 @@
 <script setup lang="ts">
 // @ts-ignore
-import debounce from 'lodash.debounce';
-import { vOnClickOutside } from '@vueuse/components'
+import debounce from "lodash.debounce";
+import { vOnClickOutside } from "@vueuse/components";
 
-import { storeToRefs } from 'pinia'
-import { useRestaurantsStore } from '~/stores/Restaurants'
-import { useReservationsStore } from '~/stores/Reservations'
+import { storeToRefs } from "pinia";
+import { useRestaurantsStore } from "~/stores/Restaurants";
+import { useReservationsStore } from "~/stores/Reservations";
 const storeRestaurants = useRestaurantsStore();
-const { restaurantsList } = storeToRefs(storeRestaurants)
+const { restaurantsList } = storeToRefs(storeRestaurants);
 const storeReservations = useReservationsStore();
-const { reservationsSearchList } = storeToRefs(storeReservations)
+const { reservationsSearchList } = storeToRefs(storeReservations);
 // composables
-const { switchActiveRestaurant } = useSwitchActiveRestaurant()
+const { switchActiveRestaurant } = useSwitchActiveRestaurant();
 const { openModal } = useOpenModal();
 // component's logic
-const client = useSupabaseClient()
-const user = useSupabaseUser()
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 interface NavbarProps {
-    showSerch?: boolean
+  showSerch?: boolean;
 }
 const props = withDefaults(defineProps<NavbarProps>(), {
-    showSerch: true
+  showSerch: true,
 });
 
-let search = ref('')
-let showSearchError = ref(false)
-let isSearchDropdownOpen = ref(false)
+let search = ref("");
+let showSearchError = ref(false);
+let isSearchDropdownOpen = ref(false);
 
-let isMenuOpen = ref(false)
+let isMenuOpen = ref(false);
 function toggleMenu() {
-    isMenuOpen.value = !isMenuOpen.value
+  isMenuOpen.value = !isMenuOpen.value;
 }
 function closeMenu() {
-    isMenuOpen.value = false
+  isMenuOpen.value = false;
 }
-watch(() => isMenuOpen.value, () => {
-    if (isMenuOpen.value) document.body.classList.add('overflow-hidden')
-    else document.body.classList.remove('overflow-hidden')
-})
+watch(
+  () => isMenuOpen.value,
+  () => {
+    if (isMenuOpen.value) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
+  },
+);
 
 function closeSearchDropdown() {
-    isSearchDropdownOpen.value = !isSearchDropdownOpen.value
-    search.value = ''
+  isSearchDropdownOpen.value = !isSearchDropdownOpen.value;
+  search.value = "";
 }
 
 async function logout() {
-    const { error } = await client.auth.signOut()
-    if (error) throw new Error()
-    else return navigateTo("/");
+  const { error } = await client.auth.signOut();
+  if (error) throw new Error();
+  else return navigateTo("/");
 }
 
 // Use the debounce function to create a debounced version of your callback
 const delayedSearch = debounce(async (newSearch: string) => {
-    // Remove '#' character from string, in case
-    newSearch = newSearch.replace('#', '');
-    showSearchError.value = false
-    const data = await storeReservations.fetchReservations(newSearch)
-    if (!data || !data.length) { showSearchError.value = true }
-    else isSearchDropdownOpen.value = true
+  // Remove '#' character from string, in case
+  newSearch = newSearch.replace("#", "");
+  showSearchError.value = false;
+  const data = await storeReservations.fetchReservations(newSearch);
+  if (!data || !data.length) {
+    showSearchError.value = true;
+  } else isSearchDropdownOpen.value = true;
 }, 800);
 // Watch the search input and call the debounced function
-watch(search, (newSearch) => { delayedSearch(newSearch); });
+watch(search, (newSearch) => {
+  delayedSearch(newSearch);
+});
 </script>
-
 
 <template lang="pug">
 nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.lg_relative.lg_h-16
@@ -95,7 +100,7 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                 span.sr-only Open Menu
                 SVGIcon(svg="menu", :size="28")
 
-        AdminMenu.absolute.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden(v-show="isMenuOpen", @toggleMenu="toggleMenu()", class="overflow-y-scroll h-screen")
+        AdminMenu.absolute.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden.mb-12(v-show="isMenuOpen", @toggleMenu="toggleMenu()", class="overflow-y-scroll h-screen")
             .py-8.bg-primary-200.text-white.mb-16
                 p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
                 .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
