@@ -121,6 +121,6 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                     SVGIcon.text-grey-200.hidden.lg_block(svg="arrow-down", :size="20")
             //- dropdown
             .absolute.hidden.group-hover_block.right-0.-left-8.pt-2
-                .py-2.px-4.max-h-40.text-sm.bg-white.border.border-slate-100.rounded-lg.shadow-lg.overflow-y-scroll.z-10
+                .py-2.px-4.max-h-40.text-sm.bg-white.border.border-slate-100.rounded-lg.shadow-lg.z-10
                     p.py-2.leading-normal.text-grey-300.cursor-pointer.hover_text-grey-200(@click="logout") Logout        
 </template>
