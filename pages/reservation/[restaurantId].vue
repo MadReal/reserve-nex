@@ -5,7 +5,7 @@ import { directive as VNumber } from "@coders-tm/vue-number-format";
 const number = { suffix: "", precision: 13, separator: "" };
 
 // https://nuxt.com/modules/gtag
-const { gtag } = useGtag();
+// const { gtag } = useGtag();
 
 // @ts-ignore
 import { VueTelInput } from "vue-tel-input";
@@ -27,18 +27,14 @@ const restaurantIdParam = parseInt(route.params.restaurantId[0]);
 const activeSectionStep = ref(1);
 const activeSectionClass =
   "after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent";
-const clickClass = computed(() =>
-  activeSectionStep.value === 4 ? "cursor-default" : "cursor-pointer",
-);
-const isActiveSectionStepBiggerThen = (number: number): boolean =>
-  activeSectionStep.value > number;
+const clickClass = computed(() => (activeSectionStep.value === 4 ? "cursor-default" : "cursor-pointer"));
+const isActiveSectionStepBiggerThen = (number: number): boolean => activeSectionStep.value > number;
 const goToStep = (stepToGo: number) => {
   // if already finished, can't go back
   if (activeSectionStep.value === 4) return;
   // always go to previous stepToGo
   if (stepToGo < activeSectionStep.value) activeSectionStep.value = stepToGo;
-  if (stepToGo === 3 && newReservation.value.time)
-    activeSectionStep.value = stepToGo;
+  if (stepToGo === 3 && newReservation.value.time) activeSectionStep.value = stepToGo;
 };
 
 // init reservation object
@@ -58,8 +54,7 @@ const newReservation = ref<Partial<Reservation>>({
 // ====================
 import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
-const { blockedDatesListFullCalendar, blockedDaysOfWeekList } =
-  storeToRefs(storeBlocks);
+const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks);
 import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
 const { activeRestaurant } = storeToRefs(storeRestaurants);
@@ -67,19 +62,12 @@ storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
 const daysClosedSentence = computed(() => {
   const isActive = blockedDaysOfWeekList.value.length > 0;
-  const dayOrDaysWord =
-    blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
+  const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
   const mainSentence = `${dayOrDaysWord} di chiusura: `;
-  const listOfDays = blockedDaysOfWeekList.value
-    .map((item) => useTranslateDayOfWeek(item.dayOfWeek!))
-    .join(", ");
+  const listOfDays = blockedDaysOfWeekList.value.map((item) => useTranslateDayOfWeek(item.dayOfWeek!)).join(", ");
   return { isActive, mainSentence, listOfDays };
 });
-const hiddenDaysOfWeek = computed(() =>
-  blockedDaysOfWeekList.value.map((item) =>
-    item.dayOfWeek === 7 ? 0 : item.dayOfWeek,
-  ),
-);
+const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map((item) => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)));
 const blockedDates = computed(() =>
   blockedDatesListFullCalendar.value.map((item) => ({
     ...item,
@@ -95,10 +83,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 import { useDiscountsStore } from "~/stores/Discounts";
 const storeDiscounts = useDiscountsStore();
 //
-const selectReservationTimeAndDiscountAmount = (
-  time: WorkTime["time"],
-  discountAmount: number,
-) => {
+const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: number) => {
   newReservation.value.time = time;
   newReservation.value.discountAmount = discountAmount;
   activeSectionStep.value++;
@@ -110,31 +95,19 @@ import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
 //
 const isFormEmpty = computed(() => {
-  const {
-    id,
-    time,
-    date,
-    restaurantId,
-    discountAmount,
-    personInstagram,
-    ...otherDetails
-  } = newReservation.value;
-  return Object.values(otherDetails).some(
-    (value) => value === "" || value === null || value === undefined,
-  );
+  const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
+  return Object.values(otherDetails).some((value) => value === "" || value === null || value === undefined);
 });
 const errorOnInput = ref({
   personEmail: false,
   personPhone: false,
 });
 function validateEmail(email: string | undefined) {
-  if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
-    return (errorOnInput.value.personEmail = false);
+  if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return (errorOnInput.value.personEmail = false);
   else return (errorOnInput.value.personEmail = true);
 }
 function validatePhone(phoneNumber: number | undefined) {
-  if (!phoneNumber || phoneNumber.toString().length < 8)
-    return (errorOnInput.value.personPhone = true);
+  if (!phoneNumber || phoneNumber.toString().length < 8) return (errorOnInput.value.personPhone = true);
   else return (errorOnInput.value.personPhone = false);
 }
 async function addReservation() {
@@ -143,25 +116,20 @@ async function addReservation() {
   validatePhone(newReservation.value.personPhone);
   if (errorOnInput.value.personEmail || errorOnInput.value.personPhone) return;
 
-  const reservation = await storeReservations.addReservation(
-    newReservation.value,
-  );
+  const reservation = await storeReservations.addReservation(newReservation.value);
 
   // ******** UPDATE DEPENING ON RESTAURANT ********
   const avgClientValueAmount = 20;
   // calculate event value
-  const clientReservationValue =
-    avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
-  const discountAmountInEUR =
-    (newReservation.value?.discountAmount! / 100) * clientReservationValue;
-  const clientReservationValueMinusDiscount =
-    clientReservationValue - discountAmountInEUR;
+  const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
+  const discountAmountInEUR = (newReservation.value?.discountAmount! / 100) * clientReservationValue;
+  const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
 
-  gtag("event", "reservation_sent", {
-    event_category: "reservation",
-    event_action: "finished",
-    value: clientReservationValueMinusDiscount,
-  });
+  // gtag("event", "reservation_sent", {
+  //   event_category: "reservation",
+  //   event_action: "finished",
+  //   value: clientReservationValueMinusDiscount,
+  // });
   // @ts-ignore
   newReservation.value = reservation;
   activeSectionStep.value++;
@@ -190,9 +158,7 @@ const handleDateClick = (dateClickInfo: any) => {
     const blockStartDate = new Date(blockedDate.dateStart);
     // @ts-ignore
     const blockEndDate = new Date(blockedDate.dateEnd);
-    return (
-      selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate
-    );
+    return selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate;
   });
 
   //  if the selected date is before today's date or is inside blockedDates exit the function
@@ -209,10 +175,10 @@ const handleDateClick = (dateClickInfo: any) => {
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance checkout step
   activeSectionStep.value++;
-  gtag("event", "reservation_started", {
-    event_category: "reservation",
-    event_action: "started",
-  });
+  // gtag("event", "reservation_started", {
+  //   event_category: "reservation",
+  //   event_action: "started",
+  // });
 };
 
 const calendarOptions = ref({
