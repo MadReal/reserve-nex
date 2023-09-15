@@ -54,22 +54,43 @@ const toggleDropdownCalendar = () => {
 const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
 </script>
 
-<template lang="pug">
-.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr_1px_3fr_min-content]", v-on-click-outside="closeDropdownCalendar")
-    //- TIME From / To
-    AdminSelectTimeRange(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeRangeOnDate="updateTimeSlot")
-    AdminSelectTimeRange(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeRangeOnDate="updateTimeSlot")
-    .h-full.border-r
-    //- DATE
-    .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")
-        p.leading-normal.text-grey-300 {{ useDateFormatting(blockTimePeriod.date) }}
-        //- Dropdown
-        .absolute.top-12.right-0.lg_right-auto.lg_left-0.h-fit.bg-white.rounded-lg.shadow-lg.z-10(v-show="isDropdownCalendarOpen")
-            VueDatePicker(v-model="blockTimePeriod.date", locale="it", :month-change-on-scroll="false", :enable-time-picker="false", 
-                inline auto-apply, :state="true", @update:model-value="toggleDropdownCalendar()", :disabled-dates="disabledDates")
+<template>
+  <div
+    class="mb-2 grid grid-cols-[1fr_1fr_2fr_min-content] items-center justify-between rounded-lg border xl_grid-cols-[1fr_1fr_3fr_min-content]"
+    v-on-click-outside="closeDropdownCalendar"
+  >
+    <AdminSelectTimeRange :isTimeFrom="true" :time="blockTimePeriod.timeStart!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
+    <AdminSelectTimeRange :isTimeFrom="false" :time="blockTimePeriod.timeEnd!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
 
-    .flex.items-center.py-2.px-2.lg_px-3
-        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="storeBlocks.removeBlock(blockTimePeriod.id)")
+    <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 lg_px-3" @click="toggleDropdownCalendar()">
+      <p class="leading-normal text-grey-300">{{ useDateFormatting(blockTimePeriod.date!) }}</p>
+      <div
+        class="absolute right-0 top-12 z-10 h-fit rounded-lg bg-white shadow-lg lg_left-0 lg_right-auto"
+        v-show="isDropdownCalendarOpen"
+      >
+        <VueDatePicker
+          v-model="blockTimePeriod.date"
+          locale="it"
+          :month-change-on-scroll="false"
+          :enable-time-picker="false"
+          inline
+          auto-apply
+          :state="true"
+          @update:model-value="toggleDropdownCalendar()"
+          :disabled-dates="disabledDates"
+        ></VueDatePicker>
+      </div>
+    </div>
+
+    <div class="flex items-center px-2 py-2 lg_px-3">
+      <SVGIcon
+        class="cursor-pointer text-grey-300 hover_text-error-200"
+        svg="trash"
+        :size="15"
+        @click="storeBlocks.removeBlock(blockTimePeriod.id)"
+      ></SVGIcon>
+    </div>
+  </div>
 </template>
 
 <style>

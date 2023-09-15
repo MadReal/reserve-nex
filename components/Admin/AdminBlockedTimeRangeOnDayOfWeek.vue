@@ -51,7 +51,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 
 <template>
   <div
-    class="mb-2 grid grid-cols-[1fr_1fr_3fr_min-content] items-center justify-between rounded-lg border"
+    class="mb-2 grid grid-cols-[1fr_1fr_2fr_min-content] items-center justify-between rounded-lg border xl_grid-cols-[1fr_1fr_3fr_min-content]"
     v-on-click-outside="closeDropdown"
   >
     <AdminSelectTimeRange

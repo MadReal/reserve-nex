@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div :class="[marginTop, marginBottom]">
+  <div :class="[marginBottom, marginTop]">
     <h3 class="text-lg text-grey-300">{{ title }}</h3>
     <p class="text-sm font-light text-grey-100" v-html="subtitle"></p>
   </div>

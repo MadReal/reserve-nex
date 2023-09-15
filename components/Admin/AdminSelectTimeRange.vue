@@ -19,11 +19,12 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 </script>
 
 <template>
-  <div class="" v-on-click-outside="closeDropdown">
+  <div class="min-w-[100%]" v-on-click-outside="closeDropdown">
     <div class="relative flex cursor-pointer items-center justify-stretch gap-1 px-2 py-2 md_px-3" @click="toggleDropdown()">
       <p class="pr-1 text-xxs leading-normal text-grey-200">{{ isTimeFrom ? "From" : "To" }}</p>
       <p class="leading-normal text-grey-300">{{ time }}</p>
-      <SVGIcon class="text-grey-300" svg="arrow-down" :size="15" />
+      <div><SVGIcon class="text-grey-300" svg="arrow-down" :size="15" /></div>
+
       <div
         class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg"
         v-show="isDropdownOpen"

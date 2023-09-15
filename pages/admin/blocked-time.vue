@@ -14,6 +14,13 @@ const { workTimesListsMerged } = storeToRefs(storeWorkTimes);
 
 const noData = computed(() => !workTimesListsMerged.value.length);
 
+const canAddBlocksOnTimeRangeOnDayOfWeek = computed(() => {
+  const daysOfWeek = [1, 2, 3, 4, 5, 6, 7];
+  const usedDaysOfWeek = blockedTimeRangeOnDayOfWeekList.value.map((item) => item.dayOfWeek);
+  const allDaysUsed = daysOfWeek.every((day) => usedDaysOfWeek.includes(day));
+  return !allDaysUsed;
+});
+
 // API CALLS
 const addBlockedTimeRangeOnDate = () =>
   storeBlocks.addBlockedTimeRangeOnDate(
@@ -48,14 +55,15 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
 
         <div class="hidden md_block md_h-full md_border-r"></div>
 
-        <div class="mb-8 md_mb-6 md_mt-1">
+        <div class="mb-6 md_mt-1">
           <AdminBlockedTimeRangeOnDayOfWeek
             v-for="item in blockedTimeRangeOnDayOfWeekList"
             :key="item.id"
             :blockTimeTimeRangeOnDayOfWeek="item"
           />
           <div
-            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
+            v-if="canAddBlocksOnTimeRangeOnDayOfWeek"
+            class="flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
             @click="addBlockedTimeRangeOnDayOfWeek()"
           >
             <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
@@ -68,15 +76,15 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
         <AdminSectionTitle
           title="Giorno Specifico"
           subtitle="Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica."
-          marginTop="mt-8"
+          marginTop="mt-7"
         />
 
         <div class="hidden md_block md_h-full md_border-r"></div>
 
-        <div class="mb-8 md_my-6">
+        <div class="my-6">
           <AdminBlockedTimeRangeOnDate v-for="item in blockedTimeRangeOnDateList" :key="item.id" :blockTimePeriod="item" />
           <div
-            class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
+            class="flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
             @click="addBlockedTimeRangeOnDate()"
           >
             <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
