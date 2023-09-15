@@ -30,14 +30,9 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
   else block.timeEnd = time;
 
   // exit function if nulls
-  if (block === null || block.timeEnd === null || block.timeStart === null)
-    return;
+  if (block === null || block.timeEnd === null || block.timeStart === null) return;
 
-  if (
-    (isTimeFrom && block.timeEnd < time) ||
-    (!isTimeFrom && block.timeStart > time)
-  )
-    block.timeEnd = block.timeStart = time;
+  if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) block.timeEnd = block.timeStart = time;
   updateBlockedTimeRangeOnDate();
 };
 
@@ -60,10 +55,10 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
 </script>
 
 <template lang="pug">
-.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr__1px_3fr_min-content]", v-on-click-outside="closeDropdownCalendar")
+.grid.items-center.justify-between.border.rounded-lg.mb-2(class="grid-cols-[1fr_1fr_1px_3fr_min-content]", v-on-click-outside="closeDropdownCalendar")
     //- TIME From / To
-    AdminTimeRangeSelect(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeRangeOnDate="updateTimeSlot")
-    AdminTimeRangeSelect(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeRangeOnDate="updateTimeSlot")
+    AdminSelectTimeRange(:isTimeFrom="true", :time="blockTimePeriod.timeStart", @updateBlockedTimeRangeOnDate="updateTimeSlot")
+    AdminSelectTimeRange(:isTimeFrom="false", :time="blockTimePeriod.timeEnd", @updateBlockedTimeRangeOnDate="updateTimeSlot")
     .h-full.border-r
     //- DATE
     .flex.items-center.py-2.px-2.lg_px-3.gap-1.cursor-pointer.relative(@click="toggleDropdownCalendar()")

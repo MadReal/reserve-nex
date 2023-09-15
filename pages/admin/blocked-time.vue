@@ -9,7 +9,7 @@ import { useWorkTimesStore } from "~/stores/WorkTimes";
 const storeBlocks = useBlocksStore();
 const storeWorkTimes = useWorkTimesStore();
 
-const { blockedTimeRangeOnDateList } = storeToRefs(storeBlocks);
+const { blockedTimeRangeOnDateList, blockedTimeRangeOnDayOfWeekList } = storeToRefs(storeBlocks);
 const { workTimesListsMerged } = storeToRefs(storeWorkTimes);
 
 const noData = computed(() => !workTimesListsMerged.value.length);
@@ -21,6 +21,7 @@ const addBlockedTimeRangeOnDate = () =>
     workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
   );
 storeBlocks.fetchBlockedTimeRangeOnDate();
+storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
 </script>
 
 <template>
@@ -43,7 +44,11 @@ storeBlocks.fetchBlockedTimeRangeOnDate();
         <div class="hidden md_block md_h-full md_border-r"></div>
 
         <div class="mb-8 md_mb-6 md_mt-1">
-          <AdminBlockedTimeRangeOnDate v-for="item in blockedTimeRangeOnDateList" :key="item.id" :blockTimePeriod="item" />
+          <AdminBlockedTimeRangeOnDayOfWeek
+            v-for="item in blockedTimeRangeOnDayOfWeekList"
+            :key="item.id"
+            :blockTimeTimeRangeOnDayOfWeek="item"
+          />
           <div
             class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
             @click="addBlockedTimeRangeOnDate()"

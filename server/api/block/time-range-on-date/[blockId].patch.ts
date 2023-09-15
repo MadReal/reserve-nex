@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { PrismaClient } from "@prisma/client";
-import { schemaBlockedTimesOnDay } from "~/server/api/block/time-range-on-date/index.post";
+import { schemaBlockedTimeRangeOnDate } from "~/server/api/block/time-range-on-date/index.post";
 
 const prisma = new PrismaClient();
 
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
 	// validate body
-	const { error, value } = schemaBlockedTimesOnDay.validate(body);
+	const { error, value } = schemaBlockedTimeRangeOnDate.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {
 		const { timeStart, timeEnd, date, restaurantId } = value;
