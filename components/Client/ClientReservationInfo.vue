@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface Props {
-  reservationDate: Date | string;
+  reservationDate: Date;
   reservationTime?: string;
-  reservationDiscountAmount?: number;
+  reservationDiscountAmount?: number | null;
   restaurant?: Partial<Restaurant>;
 }
 const props = defineProps<Props>();
@@ -11,7 +11,7 @@ const props = defineProps<Props>();
 <template>
   <div class="mb-5 border-b pb-5 md_mb-0">
     <div class="flex flex-wrap items-center gap-x-3 gap-y-2 md_gap-x-5">
-      <div class="flex items-center gap-1">
+      <div class="flex items-center gap-1" v-if="reservationDate">
         <SVGIcon class="text-grey-100" svg="calendar" :size="18"></SVGIcon>
         <p class="text-sm text-grey-300">{{ useDateFormatting(reservationDate) }}</p>
       </div>

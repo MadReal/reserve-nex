@@ -1,8 +1,6 @@
 <script setup lang="ts">
-type ActiveStepRange = 1 | 2 | 3 | 4;
-
 interface Props {
-  activeStep: ActiveStepRange;
+  activeStep: number;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(["goToStep"]);
