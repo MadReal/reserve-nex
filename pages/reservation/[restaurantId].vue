@@ -56,7 +56,7 @@ const storeRestaurants = useRestaurantsStore();
 const { activeRestaurant } = storeToRefs(storeRestaurants);
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
-const daysClosedSentence = computed(() => {
+const daysClosed = computed(() => {
   const isActive = blockedDaysOfWeekList.value.length > 0;
   const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
   const mainSentence = `${dayOrDaysWord} di chiusura: `;
@@ -115,17 +115,17 @@ async function addReservation() {
   const reservation = await storeReservations.addReservation(newReservation.value);
 
   // ******** UPDATE DEPENING ON RESTAURANT ********
-  const avgClientValueAmount = 20;
-  // calculate event value
-  const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
-  const discountAmountInEUR = (newReservation.value?.discountAmount! / 100) * clientReservationValue;
-  const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
-
+  // const avgClientValueAmount = 20;
+  // // calculate event value
+  // const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
+  // const discountAmountInEUR = (newReservation.value?.discountAmount! / 100) * clientReservationValue;
+  // const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
   // gtag("event", "reservation_sent", {
   //   event_category: "reservation",
   //   event_action: "finished",
   //   value: clientReservationValueMinusDiscount,
   // });
+
   // @ts-ignore
   newReservation.value = reservation;
   activeStep.value++;
@@ -212,14 +212,11 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
                 div(v-if="activeStep === 1")
                     .px-4.py-6.md_px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
-                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
+                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosed.isActive") {{ daysClosed.mainSentence }} {{ daysClosed.listOfDays }}
 
                 div(v-if="activeStep === 2")
                     .px-4.py-6.md_px-10
-                        .flex.items-center.gap-1.pb-5.border-b.mb-5.md_mb-0
-                            SVGIcon.text-grey-100(svg="calendar", :size="18")
-                            p.-mb-1.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
-
+                        ClientReservationInfo(:reservationDate="newReservation.date")
                         .md_my-6(v-if="lunchWorkTimesList.length")
                             p.mb-4 Pranzo
                             .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
@@ -234,18 +231,11 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
 
                 div(v-if="activeStep === 3")
                     .px-4.py-6.md_px-10
-                        .pb-5.border-b.mb-5.md_mb-0
-                            .flex.items-center.gap-x-3.gap-y-2.md_gap-x-5.flex-wrap
-                                .flex.items-center.gap-1
-                                    SVGIcon.text-grey-100(svg="calendar", :size="18")
-                                    p.text-sm.text-grey-300 {{ useDateFormatting(newReservation.date) }}
-                                .flex.items-center.gap-1
-                                    SVGIcon.text-grey-100(svg="clock", :size="16")
-                                    p.text-sm.text-grey-300 {{ newReservation.time }}
-                                .flex.items-center.gap-1.whitespace-nowrap(v-if="newReservation.discountAmount")
-                                    SVGIcon.text-red-500(svg="discount", :size="16")
-                                    p.text-sm.text-red-400 #[span(class="text-xs tracking-tight") Sconto] {{ newReservation.discountAmount }}%
-                            p.text-xs.pt-3.text-grey-100 Stai prenotando per {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
+                        ClientReservationInfo(
+                          :reservationDate="newReservation.date", 
+                          :reservationTime="newReservation.time", 
+                          :reservationDiscountAmount="newReservation.discountAmount", 
+                          :restaurant="activeRestaurant")
 
                         .md_mt-6
                             .flex.mb-2.gap-4
@@ -270,10 +260,6 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
                                 :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
                                 v-model="newReservation.personPhone", v-number="number", mode="international", :inputOptions="telOptions", :preferredCountries="preferredCountries")
 
-                            //- input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
-                            //-     :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
-                            //-     v-model.number="newReservation.personPhone", v-number="number", name="person-phone", id="person-phone", type="tel", maxlength="13", placeholder="Telefono*", autocomplete="tel" required)
-
                             label.text-xs(for="person-instagram") Instagram (opzionale)
                             input.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.border-grey-100.bg-transparent.text-black.placeholder_text-grey-100.focus_border-grey-300.focus_outline-none(
                                 v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
@@ -289,15 +275,6 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
                             p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
                             p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
 
-
                 //- footer
-                .px-4.pb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeStep !== 4")
-                    div
-                        p {{ activeRestaurant.name }} 
-                        p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
-                    .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
-                        button.p-2.bg-black.text-white.rounded(v-if="activeStep === 1" @click="navigateTo('/reservation')") Torna Indietro
-                        button.p-2.bg-black.text-white.rounded(v-else-if="activeStep !== 4" @click="activeStep = 1") {{ activeStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                        button.p-2.bg-primary-100.text-white.rounded(v-if="activeStep === 3 && activeStep !== 4", :disabled="isFormEmpty", 
-                            :class="{ 'disabled_opacity-25' : isFormEmpty }", @click="addReservation()") Conferma
+                ClientReservationFooter(:restaurant="activeRestaurant", :activeStep="activeStep", :isButtonDisabled="isFormEmpty" @goBack="activeStep = 1", @addReservation="addReservation")
 </template>
