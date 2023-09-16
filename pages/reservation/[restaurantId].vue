@@ -256,7 +256,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
                                 v-model="newReservation.personEmail", name="person-email", id="person-email", type="email", placeholder="Email*", autocomplete="email" required)
 
                             label.text-xs(for="person-phone") Telefono
-                            VueTelInput.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
+                            VueTelInput.w-full.h-10.text-xs.rounded-md.mb-2.py-1.px-2.pl-0.border.bg-transparent.text-black.focus_border-grey-300.focus_outline-none(
                                 :class="{ 'border-grey-100 placeholder_text-grey-100' : !errorOnInput.personPhone, 'border-error-200 placeholder_text-error-100' : errorOnInput.personPhone }",
                                 v-model="newReservation.personPhone", v-number="number", mode="international", :inputOptions="telOptions", :preferredCountries="preferredCountries")
 
