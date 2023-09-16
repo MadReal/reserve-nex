@@ -9,7 +9,7 @@ interface ClientBoxWorkTimeProps {
 const props = withDefaults(defineProps<ClientBoxWorkTimeProps>(), {
   isSelected: false,
 });
-const emit = defineEmits(["selectTime"]);
+const emit = defineEmits(["handleSelectTime"]);
 
 import { useBlocksStore } from "~/stores/Blocks";
 import { useDiscountsStore } from "~/stores/Discounts";
@@ -76,9 +76,9 @@ const discountAmountOnTime = computed(
   () => discountsList.value.find((item) => item.workTime.time === props.time)?.discountAmount?.value,
 );
 
-function selectTime(time: string) {
+function handleSelectTime(time: string) {
   if (isTimeBlocked || isTimePast) return;
-  else emit("selectTime", time, discountAmountOnTime.value);
+  else emit("handleSelectTime", time, discountAmountOnTime.value);
 }
 
 const boxClasses = ref({
@@ -92,7 +92,7 @@ const boxClasses = ref({
   <div
     class="group flex min-h-[4rem] flex-col items-center justify-center rounded-lg border border-gray-100 px-2 text-grey-200"
     :class="boxClasses"
-    @click="selectTime(time)"
+    @click="handleSelectTime(time)"
   >
     <div
       class="flex items-center justify-center"

@@ -3,13 +3,26 @@ import { storeToRefs } from "pinia";
 const route = useRoute();
 import { directive as VNumber } from "@coders-tm/vue-number-format";
 const number = { suffix: "", precision: 13, separator: "" };
-
-// https://nuxt.com/modules/gtag
-// const { gtag } = useGtag();
-
 // @ts-ignore
 import { VueTelInput } from "vue-tel-input";
 import "vue-tel-input/vue-tel-input.css";
+
+// *************
+// STORE IMPORTS
+// *************
+import { useRestaurantsStore } from "@/stores/Restaurants";
+const storeRestaurants = useRestaurantsStore();
+import { useWorkTimesStore } from "~/stores/WorkTimes";
+const storeWorkTimes = useWorkTimesStore();
+import { useDiscountsStore } from "~/stores/Discounts";
+const storeDiscounts = useDiscountsStore();
+import { useBlocksStore } from "~/stores/Blocks";
+const storeBlocks = useBlocksStore();
+import { useReservationsStore } from "@/stores/Reservations";
+const storeReservations = useReservationsStore();
+
+// https://nuxt.com/modules/gtag
+// const { gtag } = useGtag();
 
 const telOptions = {
   id: "person-phone",
@@ -48,12 +61,10 @@ const newReservation = ref<Partial<Reservation>>({
 
 // step 1
 // ====================
-import { useBlocksStore } from "~/stores/Blocks";
-const storeBlocks = useBlocksStore();
-import { useRestaurantsStore } from "@/stores/Restaurants";
-const storeRestaurants = useRestaurantsStore();
 const { activeRestaurant } = storeToRefs(storeRestaurants);
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
+storeBlocks.fetchBlockedDates(restaurantIdParam);
+storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
 //
 function setReservationDate(date: Date) {
   newReservation.value.date = date;
@@ -71,13 +82,7 @@ function setReservationDate(date: Date) {
 
 // step 2
 // ====================
-import { useWorkTimesStore } from "~/stores/WorkTimes";
-const storeWorkTimes = useWorkTimesStore();
-const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
-import { useDiscountsStore } from "~/stores/Discounts";
-const storeDiscounts = useDiscountsStore();
-//
-const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: number) => {
+const setReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: DiscountAmount["value"]) => {
   newReservation.value.time = time;
   newReservation.value.discountAmount = discountAmount;
   activeStep.value++;
@@ -85,8 +90,7 @@ const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discount
 
 // step 3
 // ====================
-import { useReservationsStore } from "@/stores/Reservations";
-const storeReservations = useReservationsStore();
+
 //
 const isFormEmpty = computed(() => {
   const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
@@ -128,9 +132,6 @@ async function addReservation() {
   newReservation.value = reservation;
   activeStep.value++;
 }
-
-storeBlocks.fetchBlockedDates(restaurantIdParam);
-storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
 </script>
 
 <template lang="pug">
@@ -143,24 +144,9 @@ storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
         .w-full.mx-auto.min-h-min.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
 
             ClientReservationSteps(:activeStep="activeStep" @goToStep="goToStep")
-
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
                 ClientReservationCalendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
-
-                div(v-if="activeStep === 2")
-                    .px-4.py-6.md_px-10
-                        ClientReservationInfo(:reservationDate="newReservation.date")
-                        .md_my-6(v-if="lunchWorkTimesList.length")
-                            p.mb-4 Pranzo
-                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in lunchWorkTimesList", :key="workTime.id",
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
-
-                        .md_my-6(v-if="dinnerWorkTimesList.length")
-                            p.mb-4 Cena
-                            .grid.grid-cols-3.md_grid-cols-5.my-3.gap-2
-                                ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
-                                    :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
+                ClientReservationTime(v-else-if="activeStep === 2" :reservation="newReservation" @setReservationTimeAndDiscountAmount="setReservationTimeAndDiscountAmount")
 
                 div(v-if="activeStep === 3")
                     .px-4.py-6.md_px-10
