@@ -44,7 +44,6 @@ const goToStep = (stepToGo: number) => {
   if (activeStep.value === 4) return;
   // always go to previous stepToGo
   if (stepToGo < activeStep.value) activeStep.value = stepToGo;
-  if (stepToGo === 3 && newReservation.value.time) activeStep.value = stepToGo;
 };
 
 // init reservation object
