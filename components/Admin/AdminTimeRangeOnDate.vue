@@ -62,10 +62,10 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
     <AdminSelectTimeRange :isTimeFrom="true" :time="blockTimePeriod.timeStart!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
     <AdminSelectTimeRange :isTimeFrom="false" :time="blockTimePeriod.timeEnd!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
 
-    <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 lg_px-3" @click="toggleDropdownCalendar()">
+    <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 md_px-3" @click="toggleDropdownCalendar()">
       <p class="leading-normal text-grey-300">{{ useDateFormatting(blockTimePeriod.date!) }}</p>
       <div
-        class="absolute right-0 top-12 z-10 h-fit rounded-lg bg-white shadow-lg lg_left-0 lg_right-auto"
+        class="absolute right-0 top-12 z-10 h-fit rounded-lg bg-white shadow-lg md_left-0 md_right-auto"
         v-show="isDropdownCalendarOpen"
       >
         <VueDatePicker
@@ -82,7 +82,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
       </div>
     </div>
 
-    <div class="flex items-center px-2 py-2 lg_px-3">
+    <div class="flex items-center px-2 py-2 md_px-3">
       <SVGIcon
         class="cursor-pointer text-grey-300 hover_text-error-200"
         svg="trash"

@@ -42,7 +42,7 @@ const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !stor
 
     AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
     AdminContainerGrid2ColsBorder(v-else)
-        .lg_mb-6
+        .md_mb-6
             p.mb-4.mt-1 Pranzo #[span.text-sm.text-grey-200 (totale: {{ lunchReservationsPeopleAmount }})]
             AdminContainerGrid4Cols
                 AdminBoxReservation(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id"                    
@@ -50,7 +50,7 @@ const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !stor
 
         AdminContainerDivider
 
-        .lg_mb-6
+        .md_mb-6
             p.mb-4.mt-1 Cena #[span.text-sm.text-grey-200 (totale: {{ dinnerReservationsPeopleAmount }})]
             AdminContainerGrid4Cols
                 AdminBoxReservation(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id"                    

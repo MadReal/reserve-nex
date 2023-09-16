@@ -34,7 +34,7 @@ loadAdminInitData();
 </script>
 
 <template>
-  <div class="hidden bg-[#F1F2F7] lg_block lg_min-h-screen lg_basis-60">
+  <div class="hidden bg-[#F1F2F7] md_block md_min-h-screen md_basis-60">
     <div class="relative" v-on-click-outside="closeDropdown">
       <div class="flex h-16 cursor-pointer items-center border-b border-grey-100 px-5 py-4" @click="toggleDropdown">
         <div class="mr-1.5">

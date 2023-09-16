@@ -1,12 +1,9 @@
-<script setup lang="ts">
-
-</script>
-
+<script setup lang="ts"></script>
 
 <template lang="pug">
-.lg_py-6.lg_px-4
+.md_py-6.md_px-4
     .mb-8
-        p.hidden.px-4.mb-3.text-xs.tracking-widest.text-grey-200.lg_px-3.lg_block MENU
+        p.hidden.px-4.mb-3.text-xs.tracking-widest.text-grey-200.md_px-3.md_block MENU
 
         NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/reservations" class="", @click="$emit('toggleMenu')")
             SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="check", :size="20")

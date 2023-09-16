@@ -10,14 +10,11 @@ const { activeNotification } = storeToRefs(storeNotifications);
 <template>
   <Transition>
     <div
-      class="NotificationManager absolute inset-x-2 bottom-4 z-50 flex w-auto items-center rounded-lg bg-green-400 px-3 py-2 text-white shadow md_bottom-10 md_left-auto md_right-7 md_px-4 lg_min-w-[300px]"
+      class="NotificationManager absolute inset-x-2 bottom-4 z-50 flex w-auto items-center rounded-lg bg-green-400 px-3 py-2 text-white shadow md_bottom-10 md_left-auto md_right-7 md_min-w-[300px] md_px-4"
       v-if="activeNotification !== null"
     >
       <p class="text-sm">{{ activeNotification?.text }}</p>
-      <div
-        class="ml-auto cursor-pointer rounded-lg p-1 hover_bg-green-500"
-        @click="storeNotifications.closeNotification()"
-      >
+      <div class="ml-auto cursor-pointer rounded-lg p-1 hover_bg-green-500" @click="storeNotifications.closeNotification()">
         <SVGIcon class="" svg="close" :size="24" />
       </div>
     </div>

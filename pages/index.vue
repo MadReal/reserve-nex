@@ -10,16 +10,11 @@ useHead({ title: "Ristorante" });
         class="relative z-20 mx-auto flex h-screen max-w-screen-xl items-center justify-center px-4 py-28 md_h-screen md_py-48"
       >
         <div class="relative z-20 md_basis-1/2">
-          <h1
-            class="mb-2 text-4xl font-extrabold text-black lg_text-7xl lg_leading-[5rem]"
-          >
+          <h1 class="mb-2 text-4xl font-extrabold text-black md_text-7xl md_leading-[5rem]">
             Rilassati in un'atmosfera calda e raffinata
           </h1>
-          <p
-            class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[10px] lg_text-lg"
-          >
-            L'unione tra i migliori prodotti gastronomici del Mediterraneo e
-            l'arte del sushi giapponese.
+          <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_text-lg md_leading-10 md_tracking-[10px]">
+            L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese.
           </p>
           <NuxtLink
             class="mr-3 inline-flex justify-center rounded bg-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-white hover_bg-primary-200"

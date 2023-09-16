@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useRestaurantsStore } from '@/stores/Restaurants';
+import { storeToRefs } from "pinia";
+import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
-const { restaurantsIsLiveList } = storeToRefs(storeRestaurants)
+const { restaurantsIsLiveList } = storeToRefs(storeRestaurants);
 
 storeRestaurants.fetchRestaurants();
 </script>
-
 
 <template lang="pug">
 .page.relative.-mt-16.z-0
     section
         .max-w-screen-xl.px-4.py-40.mt-6.md_mt-24.mx-auto
-            h1.mb-12.text-4xl.lg_text-5xl.text-center.font-semibold.text-black Seleziona il ristornate
+            h1.mb-12.text-4xl.md_text-5xl.text-center.font-semibold.text-black Seleziona il ristornate
 
             .grid.md_grid-cols-2.gap-4
                 NuxtLink.relative.border.p-8.overflow-hidden.flex.items-center.justify-center.bg-black.cursor-pointer.group(

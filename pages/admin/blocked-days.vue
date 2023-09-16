@@ -99,13 +99,13 @@ storeBlocks.fetchBlockedDates();
 .page__content
     AdminPageTitle(title="Blocco Giorni")
 
-    .grid.border-b.lg_gap-6(:class="['lg_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")
+    .grid.border-b.md_gap-6(:class="['md_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")
         AdminSectionTitle(
           title="Giorno di Chiusura Settimanale"
           subtitle="Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.") 
 
         //- Divider
-        .hidden.lg_block.lg_h-full.lg_border-r
+        .hidden.md_block.md_h-full.md_border-r
 
         .mb-8.md_mb-6.md_mt-1
             //- Display for each day already "blocked"
@@ -123,5 +123,5 @@ storeBlocks.fetchBlockedDates();
           subtitle="Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. <br> Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
           marginTop="mt-8")
 
-        FullCalendar.calendar-admin.mt-10.lg_mt-8(:options="calendarOptions")
+        FullCalendar.calendar-admin.mt-10.md_mt-8(:options="calendarOptions")
 </template>

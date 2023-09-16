@@ -14,7 +14,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
     <AdminPageTitle title="Gestione Orari" />
 
     <AdminContainerGrid2ColsBorder>
-      <div class="lg_mb-6">
+      <div class="md_mb-6">
         <p class="mb-4 mt-1">Pranzo</p>
         <AdminAddDeleteWorkTime
           :workTimes="lunchWorkTimesList"
@@ -26,7 +26,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 
       <AdminContainerDivider />
 
-      <div class="lg_mb-6">
+      <div class="md_mb-6">
         <p class="mb-4 mt-1">Cena</p>
         <AdminAddDeleteWorkTime
           :workTimes="dinnerWorkTimesList"

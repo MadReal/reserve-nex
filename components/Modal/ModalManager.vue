@@ -21,23 +21,14 @@ watch(
     v-if="activeModal !== null"
   >
     <div
-      class="relative w-11/12 overflow-y-clip rounded-lg border border-slate-100 bg-white px-6 py-8 md_p-12 md_pb-16 lg_w-4/12 lg_min-w-[36rem]"
+      class="relative w-11/12 overflow-y-clip rounded-lg border border-slate-100 bg-white px-6 py-8 md_w-4/12 md_min-w-[36rem] md_p-12 md_pb-16"
       v-on-click-outside="storeModals.closeModal"
     >
-      <div
-        class="absolute right-3 top-3 cursor-pointer rounded-full border border-black p-0.5 hover_bg-slate-100"
-      >
-        <SVGIcon
-          class="text-black"
-          svg="close"
-          :size="24"
-          @click="storeModals.closeModal()"
-        />
+      <div class="absolute right-3 top-3 cursor-pointer rounded-full border border-black p-0.5 hover_bg-slate-100">
+        <SVGIcon class="text-black" svg="close" :size="24" @click="storeModals.closeModal()" />
       </div>
       <ModalRestaurant v-if="activeModal === 'restaurant'"></ModalRestaurant>
-      <ModalReservation
-        v-else-if="activeModal === 'reservation'"
-      ></ModalReservation>
+      <ModalReservation v-else-if="activeModal === 'reservation'"></ModalReservation>
     </div>
   </div>
 </template>
