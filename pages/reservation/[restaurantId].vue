@@ -90,8 +90,6 @@ const setReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmo
 
 // step 3
 // ====================
-
-//
 const isFormEmpty = computed(() => {
   const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
   return Object.values(otherDetails).some((value) => value === "" || value === null || value === undefined);
@@ -139,11 +137,11 @@ async function addReservation() {
     .fixed.inset-0.z-0.h-full.bg-cover(class="bg-[url('/images/jason-leung.webp')]")
         .w-full.h-full.flex.justify-center.items-center(class="bg-black/40 backdrop-brightness-50")
 
-
     section.max-w-screen-xl.mx-auto.px-4.pt-8.pb-20.md_pt-36
         .w-full.mx-auto.min-h-min.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
 
             ClientReservationSteps(:activeStep="activeStep" @goToStep="goToStep")
+            
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
                 ClientReservationCalendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
                 ClientReservationTime(v-else-if="activeStep === 2" :reservation="newReservation" @setReservationTimeAndDiscountAmount="setReservationTimeAndDiscountAmount")
@@ -185,15 +183,7 @@ async function addReservation() {
 
                             p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
 
-                div(v-if="activeStep === 4")
-                    .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
-                        div.text-center
-                            SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
-                            p.text-base.md_text-lg Congratulazioni {{ newReservation.personName }},
-                            p.mt-1.text-sm.md_text-base ti aspettiamo il {{ useDateFormatting(newReservation.date) }} alle {{ newReservation.time }}
-                            p.mt-4.text-xs.text-primary-100.leading-relaxed Ordine ID: #[span.bg-slate-100.rounded.p-1 {{ newReservation.id }}]
-                            p.mt-5.pt-4.border-t.text-sm.text-grey-200 {{ activeRestaurant.name }} - {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
-
+                ClientReservationEnd(v-if="activeStep === 4", :restaurant="activeRestaurant", :reservation="newReservation")
                 //- footer
                 ClientReservationFooter(:restaurant="activeRestaurant", :activeStep="activeStep", :isButtonDisabled="isFormEmpty" @goBack="activeStep = 1", @addReservation="addReservation")
 </template>
