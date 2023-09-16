@@ -1,76 +1,76 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ['auth', 'empty-restaurants-list'], layout: 'admin-default' })
-useHead({ title: 'Gestione Sconti', })
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
+useHead({ title: "Gestione Sconti" });
 
-import { directive as VNumber } from '@coders-tm/vue-number-format'
-const number = { suffix: '% ', precision: 2, max: 99 }
+import { directive as VNumber } from "@coders-tm/vue-number-format";
+const number = { suffix: "% ", precision: 2, max: 99 };
 
-import { storeToRefs } from 'pinia'
-import { useWorkTimesStore } from '~/stores/WorkTimes'
-import { useDiscountsStore } from '~/stores/Discounts'
+import { storeToRefs } from "pinia";
+import { useWorkTimesStore } from "~/stores/WorkTimes";
+import { useDiscountsStore } from "~/stores/Discounts";
 
 const storeWorkTimes = useWorkTimesStore();
-const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
+const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 
 const storeDiscounts = useDiscountsStore();
-storeDiscounts.fetchDiscountAmounts()
-storeDiscounts.fetchDiscounts()
-const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts)
+storeDiscounts.fetchDiscountAmounts();
+storeDiscounts.fetchDiscounts();
+const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts);
 
-const noData = computed(() => (!storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length))
+const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length);
 
-const selectedDayOfWeek = ref(1)
-let newDiscountAmount = ref()
-const newDiscountAmountError = ref(false)
+const selectedDayOfWeek = ref(1);
+let newDiscountAmount = ref();
+const newDiscountAmountError = ref(false);
 
 const discountOnWorkTime = (workTimeId: WorkTime["id"]) => {
-    return discountsList.value.find(item => item.dayOfWeek === selectedDayOfWeek.value && item.workTime.id === workTimeId)
-}
+  return discountsList.value.find((item) => item.dayOfWeek === selectedDayOfWeek.value && item.workTime.id === workTimeId);
+};
 
 function validateInput() {
-    if (isNaN(newDiscountAmount.value)) newDiscountAmountError.value = true
-    else newDiscountAmountError.value = false;
+  if (isNaN(newDiscountAmount.value)) newDiscountAmountError.value = true;
+  else newDiscountAmountError.value = false;
 }
 async function addDiscountAmount() {
-    const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
-    if (alreadyPresent || newDiscountAmount.value === 0) newDiscountAmountError.value = true
-    else {
-        await storeDiscounts.addDiscountAmount(newDiscountAmount.value)
-        newDiscountAmountError.value = false
-    }
-    newDiscountAmount.value = null
+  const alreadyPresent = discountAmountsListOrdered.value.some((e) => e.value === newDiscountAmount.value);
+  if (alreadyPresent || newDiscountAmount.value === 0) newDiscountAmountError.value = true;
+  else {
+    await storeDiscounts.addDiscountAmount(newDiscountAmount.value);
+    newDiscountAmountError.value = false;
+  }
+  newDiscountAmount.value = null;
 }
 async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
-    await storeDiscounts.deleteDiscountAmount(discountAmountId)
-    // window.location.reload()
-    newDiscountAmountError.value = false
-    newDiscountAmount.value = null
+  await storeDiscounts.deleteDiscountAmount(discountAmountId);
+  // window.location.reload()
+  newDiscountAmountError.value = false;
+  newDiscountAmount.value = null;
 }
 const deleteDiscount = (discountId: Discount["id"]) => {
-    storeDiscounts.deleteDiscount(discountId)
-}
+  storeDiscounts.deleteDiscount(discountId);
+};
 const deleteAllDiscountsOnDayOfWeek = async (selectedDayOfWeek: number) => {
-    const sentence = selectedDayOfWeek === 10 ? 'Sicuro di voler eliminare tutti gli sconti impostati?' : `Sicuro di voler eliminare gli sconti di ${useTranslateDayOfWeek(selectedDayOfWeek)}?`
-    if (confirm(sentence)) {
-        await storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)
-    }
-}
-
+  const sentence =
+    selectedDayOfWeek === 10
+      ? "Sicuro di voler eliminare tutti gli sconti impostati?"
+      : `Sicuro di voler eliminare gli sconti di ${useTranslateDayOfWeek(selectedDayOfWeek)}?`;
+  if (confirm(sentence)) {
+    await storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek);
+  }
+};
 
 const startDrag = (event: any, discountId: Discount["id"], discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
-    event.dataTransfer.effectAllowed = effectAllowed
-    event.dataTransfer.dropEffect = effectAllowed
-    event.dataTransfer.setData('discountId', discountId)
-    event.dataTransfer.setData('discountAmountId', discountAmountId)
-}
+  event.dataTransfer.effectAllowed = effectAllowed;
+  event.dataTransfer.dropEffect = effectAllowed;
+  event.dataTransfer.setData("discountId", discountId);
+  event.dataTransfer.setData("discountAmountId", discountAmountId);
+};
 const onDrop = (event: any) => {
-    const discountAmountId = parseInt(event.dataTransfer.getData('discountAmountId'))
-    // drags on 1 DAY - ALL TIME || ALL DAYS - 1 TIME 
-    storeDiscounts.addManyDiscounts(selectedDayOfWeek.value, discountAmountId)
-}
-
+  const discountAmountId = parseInt(event.dataTransfer.getData("discountAmountId"));
+  // drags on 1 DAY - ALL TIME || ALL DAYS - 1 TIME
+  storeDiscounts.addManyDiscounts(selectedDayOfWeek.value, discountAmountId);
+};
 </script>
-
 
 <template lang="pug">
 .page__content
@@ -92,14 +92,14 @@ const onDrop = (event: any) => {
                     p.mb-4.mt-1 Pranzo
 
                     AdminContainerGrid4Cols
-                        AdminDiscountBox(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
                 AdminContainerDivider
 
                 .md_py-6
                     p.mb-4.mt-1 Cena
                     AdminContainerGrid4Cols
-                        AdminDiscountBox(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
 
             .w-full.my-8.pt-6.inline-flex.gap-3.border-t.md_my-6.md_pt-0.md_border-t-0
                 button.w-fit.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200(
@@ -131,46 +131,45 @@ const onDrop = (event: any) => {
                 @drop="onDrop($event)", @dragenter.prevent, @dragover.prevent) Trascina per applicare sconto a tutti gli orari del giorno selezionato
 </template>
 
-
 <style>
 @keyframes shakeError {
-    0% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
 
-    15% {
-        transform: translateX(0.375rem);
-    }
+  15% {
+    transform: translateX(0.375rem);
+  }
 
-    30% {
-        transform: translateX(-0.375rem);
-    }
+  30% {
+    transform: translateX(-0.375rem);
+  }
 
-    45% {
-        transform: translateX(0.375rem);
-    }
+  45% {
+    transform: translateX(0.375rem);
+  }
 
-    60% {
-        transform: translateX(-0.375rem);
-    }
+  60% {
+    transform: translateX(-0.375rem);
+  }
 
-    75% {
-        transform: translateX(0.375rem);
-    }
+  75% {
+    transform: translateX(0.375rem);
+  }
 
-    90% {
-        transform: translateX(-0.375rem);
-    }
+  90% {
+    transform: translateX(-0.375rem);
+  }
 
-    100% {
-        transform: translateX(0);
-    }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .input--error {
-    animation-name: shakeError;
-    animation-fill-mode: forwards;
-    animation-duration: .6s;
-    animation-timing-function: ease-in-out;
+  animation-name: shakeError;
+  animation-fill-mode: forwards;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
 }
 </style>

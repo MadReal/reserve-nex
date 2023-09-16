@@ -19,16 +19,8 @@ const selectedTime = ref(null);
 function computedReservationsTotalPeople(timeArray: string[]) {
   return computed(() =>
     reservationsList.value
-      .filter(
-        (item) =>
-          timeArray.includes(item.time) &&
-          item.accepted &&
-          useDateFormatting(item.date) === todaysDate,
-      )
-      .reduce(
-        (totalPeopleAmount, item) => totalPeopleAmount + item.peopleAmount,
-        0,
-      ),
+      .filter((item) => timeArray.includes(item.time) && item.accepted && useDateFormatting(item.date) === todaysDate)
+      .reduce((totalPeopleAmount, item) => totalPeopleAmount + item.peopleAmount, 0),
   );
 }
 
@@ -37,18 +29,11 @@ const lunchReservationsPeopleAmount = computedReservationsTotalPeople(lunch);
 const dinnerReservationsPeopleAmount = computedReservationsTotalPeople(dinner);
 const reservationsListAtSelectedTime = computed(() =>
   reservationsList.value.filter(
-    (item) =>
-      item.accepted &&
-      item.time === selectedTime.value &&
-      useDateFormatting(item.date) === todaysDate,
+    (item) => item.accepted && item.time === selectedTime.value && useDateFormatting(item.date) === todaysDate,
   ),
 );
 
-const noData = computed(
-  () =>
-    !storeWorkTimes.lunchWorkTimesList.length &&
-    !storeWorkTimes.dinnerWorkTimesList.length,
-);
+const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length);
 </script>
 
 <template lang="pug">
@@ -60,7 +45,7 @@ const noData = computed(
         .lg_mb-6
             p.mb-4.mt-1 Pranzo #[span.text-sm.text-grey-200 (totale: {{ lunchReservationsPeopleAmount }})]
             AdminContainerGrid4Cols
-                AdminReservationBox(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id"                    
+                AdminBoxReservation(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id"                    
                     :workTime="workTime", :todaysDate="todaysDate", @click="selectedTime = workTime.time", :isSelected="selectedTime === workTime.time")
 
         AdminContainerDivider
@@ -68,7 +53,7 @@ const noData = computed(
         .lg_mb-6
             p.mb-4.mt-1 Cena #[span.text-sm.text-grey-200 (totale: {{ dinnerReservationsPeopleAmount }})]
             AdminContainerGrid4Cols
-                AdminReservationBox(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id"                    
+                AdminBoxReservation(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id"                    
                     :workTime="workTime", :todaysDate="todaysDate", @click="selectedTime = workTime.time", :isSelected="selectedTime === workTime.time")
 
     .mt-8(v-if="lunchReservationsPeopleAmount > 0 || dinnerReservationsPeopleAmount > 0")

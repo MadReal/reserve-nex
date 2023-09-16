@@ -1,27 +1,33 @@
 <script setup lang="ts">
 interface Props {
-    value: number | null
-    isTrash?: boolean
+  value: number | null;
+  isTrash?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
-    isTrash: false
+  isTrash: false,
 });
-const emit = defineEmits(['updateOrDelete', 'dragstart', 'dragleave', 'dragend'])
+const emit = defineEmits(["updateOrDelete", "dragstart", "dragleave", "dragend"]);
 </script>
 
+<template>
+  <div
+    class="group relative z-10 flex h-8 w-full items-center justify-center overflow-hidden text-center text-sm text-white"
+    :class="{ 'bg-transparent': !value, 'cursor-grab bg-red-500': value }"
+    :draggable="value ? true : false"
+    @dragstart="$emit('dragstart', $event)"
+    @dragleave="$emit('dragleave', $event)"
+    @dragend="$emit('dragend', $event)"
+    @dragenter.prevent
+    @dragover.prevent
+  >
+    <p :class="{ 'group-hover_mr-2': value }">{{ value }}{{ value ? "%" : "-" }}</p>
 
-<template lang="pug">
-.relative.z-10.h-8.w-full.overflow-hidden.flex.items-center.justify-center.bg-red-500.text-white.text-sm.text-center.group(
-    :class="{ 'bg-transparent' : !value, 'cursor-grab' : value }"    
-    draggable="true", 
-    @dragstart="$emit('dragstart', $event)",
-    @dragleave="$emit('dragleave', $event)",
-    @dragend="$emit('dragend', $event)",
-    @dragenter.prevent, 
-    @dragover.prevent)
-
-    p(:class="{ 'group-hover_mr-2' : value }") {{ value }}{{ value ? '%' : '-' }}
-
-    .absolute.px-1.hidden.z-10.inset-y-0.right-0.bg-error-300.items-center.group-hover_flex.hover_text-gray-200.cursor-pointer(v-if="value", @click="$emit('updateOrDelete')")
-        SVGIcon(:svg="isTrash ? 'trash' : 'close'", :size="14")          
+    <div
+      v-if="value"
+      class="absolute inset-y-0 right-0 z-10 hidden cursor-pointer items-center bg-error-300 px-1 hover_text-gray-200 group-hover_flex"
+      @click="$emit('updateOrDelete')"
+    >
+      <SVGIcon :svg="isTrash ? 'trash' : 'close'" :size="14" />
+    </div>
+  </div>
 </template>
