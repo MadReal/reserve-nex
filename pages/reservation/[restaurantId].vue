@@ -39,6 +39,7 @@ const restaurantIdParam = parseInt(route.params.restaurantId[0]);
 // logic to move between steps
 const activeStep = ref(1);
 const goToStep = (stepToGo: number) => {
+  newReservation.value.time = "";
   // if already finished, can't go back
   if (activeStep.value === 4) return;
   // always go to previous stepToGo
@@ -141,11 +142,9 @@ async function addReservation() {
         .w-full.mx-auto.min-h-min.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
 
             ClientReservationSteps(:activeStep="activeStep" @goToStep="goToStep")
-            
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
-                ClientReservationCalendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
-                ClientReservationTime(v-else-if="activeStep === 2" :reservation="newReservation" @setReservationTimeAndDiscountAmount="setReservationTimeAndDiscountAmount")
-
+                ClientReservation1Calendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
+                ClientReservation2Time(v-else-if="activeStep === 2" :reservation="newReservation" @setReservationTimeAndDiscountAmount="setReservationTimeAndDiscountAmount")
                 div(v-if="activeStep === 3")
                     .px-4.py-6.md_px-10
                         ClientReservationInfo(
@@ -153,7 +152,6 @@ async function addReservation() {
                           :reservationTime="newReservation.time", 
                           :reservationDiscountAmount="newReservation.discountAmount", 
                           :restaurant="activeRestaurant")
-
                         .md_mt-6
                             .flex.mb-2.gap-4
                                 .flex-grow
@@ -182,8 +180,7 @@ async function addReservation() {
                                 v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
 
                             p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
-
-                ClientReservationEnd(v-if="activeStep === 4", :restaurant="activeRestaurant", :reservation="newReservation")
+                ClientReservation4End(v-if="activeStep === 4", :restaurant="activeRestaurant", :reservation="newReservation")
                 //- footer
-                ClientReservationFooter(:restaurant="activeRestaurant", :activeStep="activeStep", :isButtonDisabled="isFormEmpty" @goBack="activeStep = 1", @addReservation="addReservation")
+                ClientReservationFooter(:restaurant="activeRestaurant", :activeStep="activeStep", :isButtonDisabled="isFormEmpty" @goBack="goToStep(1)", @addReservation="addReservation")
 </template>

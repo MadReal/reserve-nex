@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  reservationDate: Date;
+  reservationDate: Date | string;
   reservationTime?: string;
   reservationDiscountAmount?: number;
   restaurant?: Partial<Restaurant>;
