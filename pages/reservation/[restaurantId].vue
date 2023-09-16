@@ -145,7 +145,7 @@ async function addReservation() {
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
                 ClientReservation1Calendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
                 ClientReservation2Time(v-else-if="activeStep === 2" :reservation="newReservation" @setReservationTimeAndDiscountAmount="setReservationTimeAndDiscountAmount")
-                div(v-if="activeStep === 3")
+                div(v-else-if="activeStep === 3")
                     .px-4.py-6.md_px-10
                         ClientReservationInfo(
                           :reservationDate="newReservation.date", 
@@ -180,7 +180,7 @@ async function addReservation() {
                                 v-model="newReservation.personInstagram", name="person-instagram", id="person-instagram", type="text", placeholder="@username")
 
                             p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
-                ClientReservation4End(v-if="activeStep === 4", :restaurant="activeRestaurant", :reservation="newReservation")
+                ClientReservation4End(v-else-if="activeStep === 4", :restaurant="activeRestaurant", :reservation="newReservation")
                 //- footer
                 ClientReservationFooter(:restaurant="activeRestaurant", :activeStep="activeStep", :isButtonDisabled="isFormEmpty" @goBack="goToStep(1)", @addReservation="addReservation")
 </template>
