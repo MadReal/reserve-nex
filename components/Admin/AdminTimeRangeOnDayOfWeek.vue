@@ -67,6 +67,8 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 
     <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 lg_px-3" @click="toggleDropdown()">
       <p class="leading-normal text-grey-300">{{ useTranslateDayOfWeek(blockTimeTimeRangeOnDayOfWeek.dayOfWeek!) }}</p>
+      <SVGIcon class="text-grey-300" svg="arrow-down" :size="15" />
+
       <ul class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg" v-show="isDropdownOpen">
         <li
           class="px-3 py-2 text-sm"

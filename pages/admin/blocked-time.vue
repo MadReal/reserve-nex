@@ -61,14 +61,11 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
             :key="item.id"
             :blockTimeTimeRangeOnDayOfWeek="item"
           />
-          <div
+          <AdminButtonAdd
             v-if="canAddBlocksOnTimeRangeOnDayOfWeek"
-            class="flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
+            text="Aggiungi Blocco"
             @click="addBlockedTimeRangeOnDayOfWeek()"
-          >
-            <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
-            <SVGIcon class="text-grey-300" svg="plus" :size="15"></SVGIcon>
-          </div>
+          />
         </div>
       </div>
 
@@ -83,13 +80,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
 
         <div class="my-6">
           <AdminTimeRangeOnDate v-for="item in blockedTimeRangeOnDateList" :key="item.id" :blockTimePeriod="item" />
-          <div
-            class="flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-grey-100 px-3 py-2 hover_bg-slate-50"
-            @click="addBlockedTimeRangeOnDate()"
-          >
-            <p class="leading-normal text-grey-200">Aggiungi Blocco</p>
-            <SVGIcon class="text-grey-300" svg="plus" :size="15"></SVGIcon>
-          </div>
+          <AdminButtonAdd text="Aggiungi Blocco" @click="addBlockedTimeRangeOnDate()" />
         </div>
       </div>
     </template>
