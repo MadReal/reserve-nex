@@ -50,26 +50,24 @@ const newReservation = ref<Partial<Reservation>>({
 // ====================
 import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
-const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks);
 import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
 const { activeRestaurant } = storeToRefs(storeRestaurants);
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 //
-const daysClosed = computed(() => {
-  const isActive = blockedDaysOfWeekList.value.length > 0;
-  const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
-  const mainSentence = `${dayOrDaysWord} di chiusura: `;
-  const listOfDays = blockedDaysOfWeekList.value.map((item) => useTranslateDayOfWeek(item.dayOfWeek!)).join(", ");
-  return { isActive, mainSentence, listOfDays };
-});
-const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map((item) => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)));
-const blockedDates = computed(() =>
-  blockedDatesListFullCalendar.value.map((item) => ({
-    ...item,
-    display: "background",
-  })),
-);
+function setReservationDate(date: Date) {
+  newReservation.value.date = date;
+  let dayOfWeek = date.getDay();
+  // adjust sunday, because it's 0 but 7 is app=s sunday
+  dayOfWeek === 0 ? (dayOfWeek = 7) : (dayOfWeek = dayOfWeek);
+  // api calls
+  storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam);
+  storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
+  storeWorkTimes.fetchWorkTimes(restaurantIdParam);
+  storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
+  // advance activeStep
+  activeStep.value++;
+}
 
 // step 2
 // ====================
@@ -131,70 +129,8 @@ async function addReservation() {
   activeStep.value++;
 }
 
-//************
-// CALENDAR
-//************
-// https://github.com/fullcalendar/fullcalendar-vue
-import FullCalendar from "@fullcalendar/vue3";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction"; // needed for dateClick(), to drag and create events
-import itLocale from "@fullcalendar/core/locales/it";
-
-const handleDateClick = (dateClickInfo: any) => {
-  // Get the date as a string without the time
-  const selectedDate = dateClickInfo.date;
-  const selectedDateFixed = new Date(dateClickInfo.dateStr);
-
-  const currentDate = new Date(); // Get the current date and time
-  currentDate.setHours(0, 0, 0, 0); // Set the time component to midnight for comparison
-
-  // Check if the selectedDate is inside the blockedDates array
-  const isDateBlocked = blockedDates.value.some((blockedDate) => {
-    // @ts-ignore
-    const blockStartDate = new Date(blockedDate.dateStart);
-    // @ts-ignore
-    const blockEndDate = new Date(blockedDate.dateEnd);
-    return selectedDateFixed >= blockStartDate && selectedDateFixed < blockEndDate;
-  });
-
-  //  if the selected date is before today's date or is inside blockedDates exit the function
-  if (selectedDate < currentDate || isDateBlocked) return;
-
-  dateClickInfo.dayEl.style.backgroundColor = "rgb(0 143 220 / 30%)";
-
-  let dayOfWeek = selectedDate.getDay();
-  // adjust sunday, because it's 0 but 7 is app=s sunday
-  dayOfWeek === 0 ? (dayOfWeek = 7) : (dayOfWeek = dayOfWeek);
-
-  newReservation.value.date = selectedDate;
-  storeWorkTimes.fetchWorkTimes(restaurantIdParam);
-  storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
-  // advance checkout step
-  activeStep.value++;
-  // gtag("event", "reservation_started", {
-  //   event_category: "reservation",
-  //   event_action: "started",
-  // });
-};
-
-const calendarOptions = ref({
-  plugins: [dayGridPlugin, interactionPlugin],
-  locale: itLocale,
-  headerToolbar: { left: "prev", center: "title", right: "next" },
-  initialView: "dayGridMonth",
-  selectable: false,
-  dayMaxEvents: true,
-  contentHeight: 320,
-  progressiveEventRendering: true,
-  events: blockedDates,
-  hiddenDays: hiddenDaysOfWeek,
-  dateClick: handleDateClick,
-});
-
 storeBlocks.fetchBlockedDates(restaurantIdParam);
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
-storeBlocks.fetchBlockedTimeRangeOnDate(restaurantIdParam);
-storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
 </script>
 
 <template lang="pug">
@@ -209,10 +145,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
             ClientReservationSteps(:activeStep="activeStep" @goToStep="goToStep")
 
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
-                div(v-if="activeStep === 1")
-                    .px-4.py-6.md_px-10
-                        FullCalendar.calendar-client(:options="calendarOptions")
-                        p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosed.isActive") {{ daysClosed.mainSentence }} {{ daysClosed.listOfDays }}
+                ClientReservationCalendar(v-if="activeStep === 1" @setReservationDate="setReservationDate")
 
                 div(v-if="activeStep === 2")
                     .px-4.py-6.md_px-10
