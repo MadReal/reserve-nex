@@ -24,17 +24,13 @@ const preferredCountries = ["it", "ch", "gb", "fr", "de", "us", "cn"];
 // route params
 const restaurantIdParam = parseInt(route.params.restaurantId[0]);
 // logic to move between steps
-const activeSectionStep = ref(1);
-const activeSectionClass =
-  "after_bottom-0 after_absolute after_border-8 after_border-b-gray-300 after_border-t-transparent after_border-x-transparent";
-const clickClass = computed(() => (activeSectionStep.value === 4 ? "cursor-default" : "cursor-pointer"));
-const isActiveSectionStepBiggerThen = (number: number): boolean => activeSectionStep.value > number;
+const activeStep = ref(1);
 const goToStep = (stepToGo: number) => {
   // if already finished, can't go back
-  if (activeSectionStep.value === 4) return;
+  if (activeStep.value === 4) return;
   // always go to previous stepToGo
-  if (stepToGo < activeSectionStep.value) activeSectionStep.value = stepToGo;
-  if (stepToGo === 3 && newReservation.value.time) activeSectionStep.value = stepToGo;
+  if (stepToGo < activeStep.value) activeStep.value = stepToGo;
+  if (stepToGo === 3 && newReservation.value.time) activeStep.value = stepToGo;
 };
 
 // init reservation object
@@ -86,7 +82,7 @@ const storeDiscounts = useDiscountsStore();
 const selectReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmount: number) => {
   newReservation.value.time = time;
   newReservation.value.discountAmount = discountAmount;
-  activeSectionStep.value++;
+  activeStep.value++;
 };
 
 // step 3
@@ -132,7 +128,7 @@ async function addReservation() {
   // });
   // @ts-ignore
   newReservation.value = reservation;
-  activeSectionStep.value++;
+  activeStep.value++;
 }
 
 //************
@@ -174,7 +170,7 @@ const handleDateClick = (dateClickInfo: any) => {
   storeWorkTimes.fetchWorkTimes(restaurantIdParam);
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance checkout step
-  activeSectionStep.value++;
+  activeStep.value++;
   // gtag("event", "reservation_started", {
   //   event_category: "reservation",
   //   event_action: "started",
@@ -210,39 +206,15 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
     section.max-w-screen-xl.mx-auto.px-4.pt-8.pb-20.md_pt-36
         .w-full.mx-auto.min-h-min.shadow-xl.relative.z-10(class="md_w-6/12 shadow-[rgba(0,0,0,0.03)]")
 
-            .grid.grid-cols-4.relative.border.bg-slate-50.rounded-t-lg
-                //- line in the background
-                .mx-10.absolute.inset-x-0.inset-y-0.z-0
-                    .absolute.border-b.w-full.h-1.inset-x-0(class="top-1/2")
-
-                .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(:class="activeSectionStep === 1 ? activeSectionClass : ''", @click="goToStep(1)")
-                    .p-3.md_p-5.rounded-full.border.bg-white(
-                        :class="[{ 'border-primary-100' : activeSectionStep === 1, 'border-grey-200' : isActiveSectionStepBiggerThen(1)}, clickClass]")
-                        SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="calendar", :class="{ 'text-primary-100' : activeSectionStep === 1, 'text-grey-200' : isActiveSectionStepBiggerThen(1) }")
-
-                .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
-                    :class="[activeSectionStep === 2 ? activeSectionClass : '', clickClass]", @click="goToStep(2)")
-                    .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 2, 'border-grey-200' : isActiveSectionStepBiggerThen(2) }")
-                        SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="clock", :class="{ 'text-primary-100' : activeSectionStep === 2, 'text-grey-200' : isActiveSectionStepBiggerThen(2) }")
-
-                .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
-                    :class="[activeSectionStep === 3 ? activeSectionClass : '', clickClass]", @click="goToStep(3)")
-                    .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 3, 'border-grey-200' : isActiveSectionStepBiggerThen(3) }")
-                        SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="users-filled", :class="{ 'text-primary-100' : activeSectionStep === 3, 'text-grey-200' : isActiveSectionStepBiggerThen(3) }")
-
-                .flex.items-center.justify-center.w-20.h-20.mx-auto.my-2.md_my-6.z-10(
-                    :class="[activeSectionStep === 4 ? activeSectionClass : '', clickClass]", @click="goToStep(4)")
-                    .p-3.md_p-5.rounded-full.border.bg-white(:class="{ 'border-primary-100' : activeSectionStep === 4 }")
-                        SVGIcon.w-5.h-5.md_w-7.md_h-7.text-grey-100(svg="check", :class="{ 'text-primary-100' : activeSectionStep === 4 }")
-
+            ClientReservationSteps(:activeStep="activeStep" @goToStep="goToStep")
 
             .bg-white.z-10.relative.rounded-b-lg.border.border-t-0
-                div(v-if="activeSectionStep === 1")
+                div(v-if="activeStep === 1")
                     .px-4.py-6.md_px-10
                         FullCalendar.calendar-client(:options="calendarOptions")
                         p.bg-slate-50.py-1.text-center.text-xs.text-grey-100.w-full.whitespace-nowrap.tracking-wide(v-show="daysClosedSentence.isActive") {{ daysClosedSentence.mainSentence }} {{ daysClosedSentence.listOfDays }}
 
-                div(v-if="activeSectionStep === 2")
+                div(v-if="activeStep === 2")
                     .px-4.py-6.md_px-10
                         .flex.items-center.gap-1.pb-5.border-b.mb-5.md_mb-0
                             SVGIcon.text-grey-100(svg="calendar", :size="18")
@@ -260,7 +232,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
                                 ClientBoxWorkTime(v-for="workTime in dinnerWorkTimesList", :key="workTime.id",
                                     :time="workTime.time", :dateSelected="newReservation.date", :isSelected="workTime.time === newReservation.time", @selectTime="selectReservationTimeAndDiscountAmount")
 
-                div(v-if="activeSectionStep === 3")
+                div(v-if="activeStep === 3")
                     .px-4.py-6.md_px-10
                         .pb-5.border-b.mb-5.md_mb-0
                             .flex.items-center.gap-x-3.gap-y-2.md_gap-x-5.flex-wrap
@@ -308,7 +280,7 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
 
                             p.mt-2.text-sm.text-error-200.text-center(v-show="errorOnInput.personEmail || errorOnInput.personPhone") Compila le field con dati validi.
 
-                div(v-if="activeSectionStep === 4")
+                div(v-if="activeStep === 4")
                     .py-16.px-4.md_py-24.md_px-10.flex.items-center.justify-center.gap-5
                         div.text-center
                             SVGIcon.text-primary-100.mx-auto.mb-4(svg="check", :size="60")
@@ -319,13 +291,13 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek(restaurantIdParam);
 
 
                 //- footer
-                .px-4.pb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeSectionStep !== 4")
+                .px-4.pb-10.md_px-10.flex.items-center.flex-col.md_flex-row(v-if="activeStep !== 4")
                     div
                         p {{ activeRestaurant.name }} 
                         p.text-xs.-mt-1.text-gray-500 {{ activeRestaurant.address }}, {{ activeRestaurant.city }} {{ activeRestaurant.zipCode }}
                     .inline-flex.gap-2.mt-4.md_mt-0.md_ml-auto
-                        button.p-2.bg-black.text-white.rounded(v-if="activeSectionStep === 1" @click="navigateTo('/reservation')") Torna Indietro
-                        button.p-2.bg-black.text-white.rounded(v-else-if="activeSectionStep !== 4" @click="activeSectionStep = 1") {{ activeSectionStep === 1 ? 'Torna Indietro' : 'Annulla' }}
-                        button.p-2.bg-primary-100.text-white.rounded(v-if="activeSectionStep === 3 && activeSectionStep !== 4", :disabled="isFormEmpty", 
+                        button.p-2.bg-black.text-white.rounded(v-if="activeStep === 1" @click="navigateTo('/reservation')") Torna Indietro
+                        button.p-2.bg-black.text-white.rounded(v-else-if="activeStep !== 4" @click="activeStep = 1") {{ activeStep === 1 ? 'Torna Indietro' : 'Annulla' }}
+                        button.p-2.bg-primary-100.text-white.rounded(v-if="activeStep === 3 && activeStep !== 4", :disabled="isFormEmpty", 
                             :class="{ 'disabled_opacity-25' : isFormEmpty }", @click="addReservation()") Conferma
 </template>
