@@ -1,13 +1,10 @@
 export const useNotificationsStore = defineStore("NotificationsStore", () => {
 	// STATE
-	const activeNotification = ref<{ text: string, color: string | null } | null>(null);
+	const activeNotification = ref<{ text: string, isSuccess: boolean } | null>(null);
 
 	// ACTIONS
-	function openNotification(text: string, color?: string) {
-		activeNotification.value = {
-			text,
-			color: color || null
-		}
+	function openNotification(text: string, isSuccess: boolean = true) {
+		activeNotification.value = { text, isSuccess }
 		setTimeout(() => closeNotification(), 5000);
 	};
 

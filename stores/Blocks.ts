@@ -1,12 +1,10 @@
-import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "~/stores/Restaurants";
-import { useAuthStore } from "~/stores/Auth";
-
 const URL_BLOCK = "/api/block";
 const URL_BLOCKED_DATE = `${URL_BLOCK}/dates`;
 const URL_BLOCKED_DAY_OF_WEEK = `${URL_BLOCK}/days-of-week`;
 const URL_BLOCKED_TIME_RANGE_ON_DATE = `${URL_BLOCK}/time-range-on-date`;
 const URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK = `${URL_BLOCK}/time-range-on-day-of-week`;
+
+import { storeToRefs } from "pinia";
 
 // Sort week days ascendent (Monday, Tuesday)
 function sortblockedDaysOfWeek(array: Block[]) {
@@ -19,6 +17,8 @@ function sortblockedDaysOfWeek(array: Block[]) {
 }
 
 export const useBlocksStore = defineStore("BlocksStore", () => {
+
+	const storeNotifications = useNotificationsStore();
 	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 	const storeAuth = useAuthStore();
@@ -203,7 +203,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	// ***********************************
 	async function removeBlock(blockId: Block["id"]) {
 		const { status } = await useFetch(`${URL_BLOCK}/${blockId}`, { method: "delete", headers: { Authorization: authToken.value }, });
-		if (status.value === 'error') return
+		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 		// try to find the index in each state, remove the one that works
 
 		// blockedDaysOfWeekList

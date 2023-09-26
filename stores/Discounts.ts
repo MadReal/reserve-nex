@@ -3,14 +3,13 @@ const URL_discount = "/api/discounts";
 const URL_discountDayOfWeek = `${URL_discount}/day-of-week`;
 
 import { storeToRefs } from "pinia";
-import { DiscountAmount } from "@prisma/client";
-import { useAuthStore } from "~/stores/Auth";
 
 export const useDiscountsStore = defineStore("DiscountsStore", () => {
+
 	const storeNotifications = useNotificationsStore();
 	const storeRestaurants = useRestaurantsStore();
-	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 	const storeAuth = useAuthStore();
+	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 	const { authToken } = storeToRefs(storeAuth);
 
 	// STATE
@@ -104,7 +103,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 		const { status } = await useFetch(`${URL_discountAmount}/${discountAmountId}`, { method: "delete", headers: { Authorization: authToken.value } });
-		if (status.value === 'error') return
+		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
 		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex((e) => e.id === discountAmountId);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
@@ -112,7 +111,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function deleteDiscount(discountId: Discount["id"]) {
 		const { status } = await useFetch(`${URL_discount}/${discountId}`, { method: "delete", headers: { Authorization: authToken.value } });
-		if (status.value === 'error') return
+		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
 		const discountToRemoveIndex = discountsList.value.findIndex((e) => e.id === discountId);
 		discountsList.value.splice(discountToRemoveIndex, 1);
@@ -120,7 +119,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function deleteAllDiscountsOnDayOfWeek(dayOfWeek: Discount["dayOfWeek"]) {
 		const { status } = await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, { method: "delete", headers: { Authorization: authToken.value } });
-		if (status.value === 'error') return
+		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
 		// remove locally, if ALL remove everything
 		if (dayOfWeek === 10) discountsList.value = [];

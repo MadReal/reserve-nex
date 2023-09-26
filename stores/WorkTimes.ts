@@ -1,15 +1,16 @@
-import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "~/stores/Restaurants";
-import { useAuthStore } from "~/stores/Auth";
-
 const URL = "/api/work-times";
 
+import { storeToRefs } from "pinia";
+
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
+
+	const storeNotifications = useNotificationsStore();
 	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
 	const storeAuth = useAuthStore();
 	const { authToken } = storeToRefs(storeAuth);
 
+	// STATE
 	const workTimesList = ref<WorkTime[]>([]);
 
 	// GETTERS
@@ -53,7 +54,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
 		const { status } = await useFetch(`${URL}/${timeId}`, { method: "delete", headers: { Authorization: authToken.value }, });
-		if (status.value === 'error') return
+		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
 		workTimesList.value.splice(workTimeIndex, 1);

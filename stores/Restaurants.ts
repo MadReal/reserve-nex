@@ -1,11 +1,11 @@
 const URL = "/api/restaurants";
 
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "~/stores/Auth";
 
-import { useLoadAllData } from "~/composables/useLoadAllData";
+// import { useLoadAllData } from "~/composables/useLoadAllData";
 
 export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
+
   const storeNotifications = useNotificationsStore();
   const storeAuth = useAuthStore();
   const { authToken } = storeToRefs(storeAuth);
@@ -80,7 +80,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 
   async function removeRestaurant(restaurantId: Restaurant["id"]) {
     const { status } = await useFetch(`${URL}/${restaurantId}`, { method: "delete", headers: { Authorization: authToken.value } });
-    if (status.value === 'error') return
+    if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
     const RestaurantToRemoveIndex = restaurantsList.value.findIndex(e => e.id === restaurantId,);
     restaurantsList.value.splice(RestaurantToRemoveIndex, 1);
