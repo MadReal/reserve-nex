@@ -56,7 +56,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
     if (restaurantId) {
       const { data, error } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
         method: "patch",
-        headers: { Authorization: authToken.value },
+        headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
         body: { name: restaurant.name, address: restaurant.address, city: restaurant.city, zipCode: restaurant.zipCode, isLive: restaurant.isLive },
       },
       );
@@ -79,7 +79,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
   }
 
   async function removeRestaurant(restaurantId: Restaurant["id"]) {
-    const { status } = await useFetch(`${URL}/${restaurantId}`, { method: "delete", headers: { Authorization: authToken.value } });
+    const { status } = await useFetch(`${URL}/${restaurantId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' } });
     if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
     const RestaurantToRemoveIndex = restaurantsList.value.findIndex(e => e.id === restaurantId,);

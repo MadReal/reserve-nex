@@ -41,7 +41,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
 		const { data, error } = await useFetch<WorkTime>(URL, {
 			method: "post",
-			headers: { Authorization: authToken.value },
+			headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
 			body: {
 				mealType: isLunch ? "LUNCH" : "DINNER",
 				time: newTime,
@@ -53,7 +53,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
-		const { status } = await useFetch(`${URL}/${timeId}`, { method: "delete", headers: { Authorization: authToken.value }, });
+		const { status } = await useFetch(`${URL}/${timeId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, });
 		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
 
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);

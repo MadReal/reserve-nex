@@ -112,7 +112,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
   ) {
     const { data, error } = await useFetch(`${URL}/${reservationId}`, {
       method: "patch",
-      headers: { Authorization: authToken.value },
+      headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
       body: { accepted, restaurantId: activeRestaurantId },
     });
     if (data && data.value) {
