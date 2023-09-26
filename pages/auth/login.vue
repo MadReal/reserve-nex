@@ -1,15 +1,13 @@
 <script setup lang="ts">
 // https://medium.com/@ngoctranfire/using-prisma-with-supabase-row-level-security-and-multi-schema-7c53418adba3
-
 definePageMeta({ layout: false });
 useHead({ title: "Login" });
 
-import { storeToRefs } from "pinia";
-const supabase = useSupabaseClient();
-// const user = useSupabaseUser()
-
 import { useAuthStore } from "~/stores/Auth";
 const storeAuth = useAuthStore();
+
+const supabase = useSupabaseClient();
+// const user = useSupabaseUser()
 
 let email = ref("admin");
 let password = ref("admin");

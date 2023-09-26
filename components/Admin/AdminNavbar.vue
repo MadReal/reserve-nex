@@ -117,7 +117,7 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                 SVGIcon.order-3.text-grey-200.md_hidden(svg="arrow-down", :size="20")
                 a.flex.items-center.cursor-pointer.order-1
                     //- p.text-sm {{ user?.user_metadata?.full_name }}
-                    p.text-sm {{ user ? 'Admin' : '' }}
+                    p.text-sm {{ client ? 'Admin' : '' }}
                     SVGIcon.text-grey-200.hidden.md_block(svg="arrow-down", :size="20")
             //- dropdown
             .absolute.hidden.group-hover_block.right-0.-left-8.pt-2
