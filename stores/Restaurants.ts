@@ -69,7 +69,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
       // is new restaurant name === a name that already exists in DB
       if (restaurantsList.value.some((item) => item.name === restaurant.name))
         throw new Error("Esiste già un ristorante con questo nome.");
-      const { data, error } = await useFetch<Restaurant>(URL, { method: "post", body: restaurant });
+      const { data, error } = await useFetch<Restaurant>(URL, { method: "post", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, body: restaurant });
       if (data && data.value) {
         restaurantsList.value.push(data.value);
         activeRestaurantId.value = data.value.id;

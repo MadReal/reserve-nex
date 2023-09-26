@@ -1,51 +1,59 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useModalsStore } from '~/stores/Modals'
-import { useRestaurantsStore } from '~/stores/Restaurants'
+import { storeToRefs } from "pinia";
+import { useModalsStore } from "~/stores/Modals";
+import { useRestaurantsStore } from "~/stores/Restaurants";
 
-const storeModals = useModalsStore()
-const storeRestaurants = useRestaurantsStore()
-const { activeModalOption } = storeToRefs(storeModals)
-const { restaurantsList } = storeToRefs(storeRestaurants)
+const storeModals = useModalsStore();
+const storeRestaurants = useRestaurantsStore();
+const { activeModalOption } = storeToRefs(storeModals);
+const { restaurantsList } = storeToRefs(storeRestaurants);
 
 const modalRestaurant = ref();
 
-const selectedRestaurant = ref(restaurantsList.value.filter((item: Restaurant) => item.id === activeModalOption.value)[0])
+const selectedRestaurant = ref(restaurantsList.value.filter((item: Restaurant) => item.id === activeModalOption.value)[0]);
 // Set the initial value of modalRestaurant based on activeRestaurant
-const initialEditedRestaurantName = computed(() => selectedRestaurant.value || {
-	name: '',
-	address: '',
-	city: '',
-	zipCode: null,
-	isLive: false,
-});
+const initialEditedRestaurantName = computed(
+  () =>
+    selectedRestaurant.value || {
+      name: "",
+      address: "",
+      city: "",
+      zipCode: null,
+      isLive: false,
+    },
+);
 
-modalRestaurant.value = initialEditedRestaurantName.value
+modalRestaurant.value = initialEditedRestaurantName.value;
 
-let modalError = ref('')
+let modalError = ref("");
 const addOrUpdateRestaurant = async () => {
-	if (!modalRestaurant.value || !modalRestaurant.value.name || !modalRestaurant.value.name || !modalRestaurant.value.address || !modalRestaurant.value.city || !modalRestaurant.value.zipCode) {
-		return modalError.value = 'Completa tutte le opzioni.';
-	}
-	else {
-		try {
-			await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id)
-			modalError.value = ''
-			storeModals.closeModal()
-		} catch (error) {
-			return modalError.value = String(error);
-		}
-	}
-}
+  if (
+    !modalRestaurant.value ||
+    !modalRestaurant.value.name ||
+    !modalRestaurant.value.name ||
+    !modalRestaurant.value.address ||
+    !modalRestaurant.value.city ||
+    !modalRestaurant.value.zipCode
+  ) {
+    return (modalError.value = "Completa tutte le opzioni.");
+  } else {
+    try {
+      await storeRestaurants.addOrUpdateRestaurant(modalRestaurant.value, selectedRestaurant?.value?.id);
+      modalError.value = "";
+      storeModals.closeModal();
+    } catch (error) {
+      return (modalError.value = String(error));
+    }
+  }
+};
 const removeRestaurant = async () => {
-	if (confirm('Sicuro di voler eliminare il ristorante?')) {
-		await storeRestaurants.removeRestaurant(selectedRestaurant.value.id)
-		modalError.value = ''
-		storeModals.closeModal()
-	}
-}
+  if (confirm("Sicuro di voler eliminare il ristorante?")) {
+    await storeRestaurants.removeRestaurant(selectedRestaurant.value.id);
+    modalError.value = "";
+    storeModals.closeModal();
+  }
+};
 </script>
-
 
 <template lang="pug">
 .flex.items-center.justify-center.h-full
@@ -83,7 +91,7 @@ const removeRestaurant = async () => {
 
 		p.mt-2.text-sm.text-error-200.text-center {{ modalError || '' }}
 
-		.flex.items-center.justify-center.gap-3.mt-5.text-sm.md_text-base
-			button.p-2.bg-primary-200.text-white.rounded.hover_shadow(@click="addOrUpdateRestaurant") {{ selectedRestaurant ? 'Salva Modifiche' : 'Aggiungi' }}
-			button.p-2.bg-error-200.text-white.rounded.hover_shadow(v-if="selectedRestaurant", @click="removeRestaurant") Elimina Ristorante
+		.flex.items-center.justify-center.gap-3.mt-5
+			button.py-2.px-3.text-sm.bg-primary-200.text-white.rounded.hover_shadow(@click="addOrUpdateRestaurant") {{ selectedRestaurant ? 'Salva Modifiche' : 'Aggiungi' }}
+			button.py-2.px-3.text-sm.bg-error-200.text-white.rounded.hover_shadow(v-if="selectedRestaurant", @click="removeRestaurant") Elimina Ristorante
 </template>
