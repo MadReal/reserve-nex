@@ -11,15 +11,9 @@ export const useNotificationsStore = defineStore("NotificationsStore", () => {
 		setTimeout(() => closeNotification(), 5000);
 	};
 
-	function closeNotification() {
-		activeNotification.value = null;
-	}
+	function closeNotification() { activeNotification.value = null }
 
-	return {
-		activeNotification,
-		openNotification,
-		closeNotification,
-	};
+	return { activeNotification, openNotification, closeNotification, };
 });
 
 if (import.meta.hot) {

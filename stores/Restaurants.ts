@@ -1,9 +1,14 @@
 const URL = "/api/restaurants";
 
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "~/stores/Auth";
+
 import { useLoadAllData } from "~/composables/useLoadAllData";
 
 export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
   const storeNotifications = useNotificationsStore();
+  const storeAuth = useAuthStore();
+  const { authToken } = storeToRefs(storeAuth);
 
   // STATE
   const restaurantsList = ref<Restaurant[]>([]);
@@ -51,6 +56,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
     if (restaurantId) {
       const { data, error } = await useFetch<Restaurant>(`${URL}/${restaurantId}`, {
         method: "patch",
+        headers: { Authorization: authToken.value },
         body: { name: restaurant.name, address: restaurant.address, city: restaurant.city, zipCode: restaurant.zipCode, isLive: restaurant.isLive },
       },
       );
@@ -73,11 +79,14 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
   }
 
   async function removeRestaurant(restaurantId: Restaurant["id"]) {
-    await useFetch(`${URL}/${restaurantId}`, { method: "delete" });
+    const { status } = await useFetch(`${URL}/${restaurantId}`, { method: "delete", headers: { Authorization: authToken.value } });
+    if (status.value === 'error') return
+
     const RestaurantToRemoveIndex = restaurantsList.value.findIndex(e => e.id === restaurantId,);
     restaurantsList.value.splice(RestaurantToRemoveIndex, 1);
     // set another Active Restaurant // TODO; redirect if there are no more
     activeRestaurantId.value = restaurantsList.value[0].id;
+
   }
 
   return {

@@ -7,10 +7,7 @@ export const useAuthStore = defineStore("AuthStore", () => {
     if (token) authToken.value = token;
   }
 
-  return {
-    authToken,
-    setAuthToken,
-  };
+  return { authToken, setAuthToken };
 },
   {
     persist: {

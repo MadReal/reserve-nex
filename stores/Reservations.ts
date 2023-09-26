@@ -1,5 +1,7 @@
 import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
+import { useAuthStore } from "~/stores/Auth";
+
 
 const URL = "/api/reservations";
 const URL_AT_DATE = "/api/reservations/at-date";
@@ -36,6 +38,8 @@ function sortReservationsByDateAndTime(
 export const useReservationsStore = defineStore("ReservationsStore", () => {
   const storeRestaurants = useRestaurantsStore();
   const { activeRestaurantId } = storeToRefs(storeRestaurants);
+  const storeAuth = useAuthStore();
+  const { authToken } = storeToRefs(storeAuth);
 
   // STATE
   const reservationsList = ref<Reservation[]>([]);
@@ -108,6 +112,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
   ) {
     const { data, error } = await useFetch(`${URL}/${reservationId}`, {
       method: "patch",
+      headers: { Authorization: authToken.value },
       body: { accepted, restaurantId: activeRestaurantId },
     });
     if (data && data.value) {

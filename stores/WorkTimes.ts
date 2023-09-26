@@ -6,8 +6,8 @@ const URL = "/api/work-times";
 
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	const storeRestaurants = useRestaurantsStore();
-	const storeAuth = useAuthStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+	const storeAuth = useAuthStore();
 	const { authToken } = storeToRefs(storeAuth);
 
 	const workTimesList = ref<WorkTime[]>([]);
@@ -52,7 +52,9 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
-		await useFetch(`${URL}/${timeId}`, { method: "delete" });
+		const { status } = await useFetch(`${URL}/${timeId}`, { method: "delete", headers: { Authorization: authToken.value }, });
+		if (status.value === 'error') return
+
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
 		workTimesList.value.splice(workTimeIndex, 1);
 	}

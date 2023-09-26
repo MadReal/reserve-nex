@@ -2,13 +2,16 @@ const URL_discountAmount = "/api/discount-amounts";
 const URL_discount = "/api/discounts";
 const URL_discountDayOfWeek = `${URL_discount}/day-of-week`;
 
-import { DiscountAmount } from "@prisma/client";
 import { storeToRefs } from "pinia";
+import { DiscountAmount } from "@prisma/client";
+import { useAuthStore } from "~/stores/Auth";
 
 export const useDiscountsStore = defineStore("DiscountsStore", () => {
-	const storeRestaurants = useRestaurantsStore();
 	const storeNotifications = useNotificationsStore();
+	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+	const storeAuth = useAuthStore();
+	const { authToken } = storeToRefs(storeAuth);
 
 	// STATE
 	const discountAmountsList = ref<DiscountAmount[]>([]);
@@ -45,6 +48,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function addDiscountAmount(value: DiscountAmount["value"]) {
 		const { data, error } = await useFetch<DiscountAmount>(URL_discountAmount, {
 			method: "post",
+			headers: { Authorization: authToken.value },
 			body: { value, restaurantId: activeRestaurantId.value },
 		});
 		if (data && data.value) discountAmountsList.value.push(data.value);
@@ -54,6 +58,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function addDiscount(dayOfWeek: DayOfWeek, workTimeId: WorkTime["id"], discountAmountId: DiscountAmount["id"]) {
 		const { data, error } = await useFetch<Discount>(URL_discount, {
 			method: "post",
+			headers: { Authorization: authToken.value },
 			body: { dayOfWeek, discountAmountId: discountAmountId, workTimeId: workTimeId, restaurantId: activeRestaurantId.value, },
 		});
 		if (data && data.value) discountsList.value.push(data.value);
@@ -63,6 +68,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function addManyDiscounts(dayOfWeek: DayOfWeek, discountAmountId: DiscountAmount["id"], workTimeId?: WorkTime["id"]) {
 		const { data, error } = await useFetch<Discount[]>(URL_discountDayOfWeek, {
 			method: "post",
+			headers: { Authorization: authToken.value },
 			body: { dayOfWeek, discountAmountId: discountAmountId, workTimeId, restaurantId: activeRestaurantId.value, },
 		});
 		if (data && data.value) {
@@ -86,6 +92,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	async function updateDiscount(discountId: Discount["id"], workTimeId: WorkTime["id"], discountAmountId?: DiscountAmount["id"]) {
 		const { data, error } = await useFetch<Discount>(`${URL_discount}/${discountId}`, {
 			method: "patch",
+			headers: { Authorization: authToken.value },
 			body: { discountAmountId: discountAmountId || null, workTimeId: workTimeId },
 		});
 		if (data && data.value) {
@@ -96,23 +103,25 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	}
 
 	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
-		await useFetch(`${URL_discountAmount}/${discountAmountId}`, {
-			method: "delete",
-		});
+		const { status } = await useFetch(`${URL_discountAmount}/${discountAmountId}`, { method: "delete", headers: { Authorization: authToken.value } });
+		if (status.value === 'error') return
+
 		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex((e) => e.id === discountAmountId);
 		discountAmountsList.value.splice(discountAmountToRemoveIndex, 1);
 	}
 
 	async function deleteDiscount(discountId: Discount["id"]) {
-		await useFetch(`${URL_discount}/${discountId}`, {
-			method: "delete",
-		});
+		const { status } = await useFetch(`${URL_discount}/${discountId}`, { method: "delete", headers: { Authorization: authToken.value } });
+		if (status.value === 'error') return
+
 		const discountToRemoveIndex = discountsList.value.findIndex((e) => e.id === discountId);
 		discountsList.value.splice(discountToRemoveIndex, 1);
 	}
 
 	async function deleteAllDiscountsOnDayOfWeek(dayOfWeek: Discount["dayOfWeek"]) {
-		await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, { method: "delete" });
+		const { status } = await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, { method: "delete", headers: { Authorization: authToken.value } });
+		if (status.value === 'error') return
+
 		// remove locally, if ALL remove everything
 		if (dayOfWeek === 10) discountsList.value = [];
 		// otherwises remove discount that have dayOfWeek === param.dayOfWeek

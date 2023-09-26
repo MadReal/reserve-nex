@@ -1,5 +1,6 @@
 import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
+import { useAuthStore } from "~/stores/Auth";
 
 const URL_BLOCK = "/api/block";
 const URL_BLOCKED_DATE = `${URL_BLOCK}/dates`;
@@ -20,6 +21,8 @@ function sortblockedDaysOfWeek(array: Block[]) {
 export const useBlocksStore = defineStore("BlocksStore", () => {
 	const storeRestaurants = useRestaurantsStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+	const storeAuth = useAuthStore();
+	const { authToken } = storeToRefs(storeAuth);
 
 	// STATE - Block 'Dates' (One (or more) days period, vacation)
 	const blockedDatesList = ref<Block[]>([]);
@@ -55,6 +58,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	async function addBlockedDate(dateStart: Block["dateStart"], dateEnd: Block["dateEnd"], periodTitle: Block["periodTitle"]) {
 		const { data, error } = await useFetch<Block>(URL_BLOCKED_DATE, {
 			method: "post",
+			headers: { Authorization: authToken.value },
 			body: {
 				dateStart,
 				dateEnd,
@@ -69,6 +73,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	async function updateBlockedDate(blockId: Block["id"], dateStart: Block["dateStart"], dateEnd: Block["dateEnd"]) {
 		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_DATE}/${blockId}`, {
 			method: "patch",
+			headers: { Authorization: authToken.value },
 			body: { dateStart, dateEnd },
 		});
 		if (data && data.value) {
@@ -98,6 +103,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		if (isUpdate) {
 			const { data, error } = await useFetch<Block>(`${URL_BLOCKED_DAY_OF_WEEK}/${oldDayOfWeekId}`, {
 				method: "patch",
+				headers: { Authorization: authToken.value },
 				body: { dayOfWeek: newDayOfWeek, restaurantId: activeRestaurantId.value },
 			});
 			if (data && data.value) {
@@ -108,6 +114,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		} else {
 			const { data, error } = await useFetch<Block>(URL_BLOCKED_DAY_OF_WEEK, {
 				method: "post",
+				headers: { Authorization: authToken.value },
 				body: { dayOfWeek: newDayOfWeek, restaurantId: activeRestaurantId.value },
 			});
 			if (data && data.value) {
@@ -137,7 +144,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		todayMidnight.setUTCHours(0, 0, 0, 0);
 
 		const blockedTimeOnDay = { timeStart, timeEnd, date: todayMidnight, restaurantId: activeRestaurantId.value };
-		const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DATE, { method: "post", body: blockedTimeOnDay, });
+		const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DATE, { method: "post", headers: { Authorization: authToken.value }, body: blockedTimeOnDay, });
 		if (data.value) blockedTimeRangeOnDateList.value.push(data.value);
 		else if (error) throw error.value
 	}
@@ -145,7 +152,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	async function updateBlockedTimeRangeOnDate(blockId: Block["id"], timeStart: Block["timeStart"], timeEnd: Block["timeEnd"], date: Block["date"]) {
 		const blockedTimeOnDay = { timeStart, timeEnd, date, restaurantId: activeRestaurantId.value, };
 
-		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_TIME_RANGE_ON_DATE}/${blockId}`, { method: "patch", body: blockedTimeOnDay, });
+		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_TIME_RANGE_ON_DATE}/${blockId}`, { method: "patch", headers: { Authorization: authToken.value }, body: blockedTimeOnDay, });
 		if (data.value) {
 			const blockTimePeriodToUpdateIndex = blockedTimeRangeOnDateList.value.findIndex((e) => e.id === blockId);
 			const newBlockTimePeriod = { ...blockedTimeRangeOnDateList.value[blockTimePeriodToUpdateIndex], timeStart, timeEnd, date };
@@ -173,7 +180,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		);
 		if (availableDayOfWeek[0]) {
 			const block = { timeStart, timeEnd, dayOfWeek: availableDayOfWeek[0], restaurantId: activeRestaurantId.value };
-			const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK, { method: "post", body: block, });
+			const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK, { method: "post", headers: { Authorization: authToken.value }, body: block, });
 			if (data.value) blockedTimeRangeOnDayOfWeekList.value.push(data.value);
 			else if (error) throw error.value
 		} else return
@@ -182,7 +189,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	async function updateBlockedTimeRangeOnDayOfWeek(blockId: Block["id"], timeStart: Block["timeStart"], timeEnd: Block["timeEnd"], dayOfWeek: Block["dayOfWeek"]) {
 		const block = { timeStart, timeEnd, dayOfWeek, restaurantId: activeRestaurantId.value, };
 
-		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK}/${blockId}`, { method: "patch", body: block, });
+		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK}/${blockId}`, { method: "patch", headers: { Authorization: authToken.value }, body: block, });
 		if (data.value) {
 			const blockToUpdateIndex = blockedTimeRangeOnDayOfWeekList.value.findIndex((e) => e.id === blockId);
 			const newBlock = { ...blockedTimeRangeOnDateList.value[blockToUpdateIndex], timeStart, timeEnd, dayOfWeek };
@@ -195,8 +202,8 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	// ACTIONS - Block - ALL
 	// ***********************************
 	async function removeBlock(blockId: Block["id"]) {
-		await useFetch(`${URL_BLOCK}/${blockId}`, { method: "delete" });
-
+		const { status } = await useFetch(`${URL_BLOCK}/${blockId}`, { method: "delete", headers: { Authorization: authToken.value }, });
+		if (status.value === 'error') return
 		// try to find the index in each state, remove the one that works
 
 		// blockedDaysOfWeekList

@@ -14,12 +14,7 @@ export const useModalsStore = defineStore("ModalsStore", () => {
 		activeModalOption.value = null;
 	}
 
-	return {
-		activeModal,
-		activeModalOption,
-		openModal,
-		closeModal,
-	};
+	return { activeModal, activeModalOption, openModal, closeModal };
 });
 
 if (import.meta.hot) {
