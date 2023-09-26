@@ -10,8 +10,10 @@ const schema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
-	const body = await readBody(event);
+	verifyAuthToken(event)
+
 	// validate body
+	const body = await readBody(event);
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
 	try {

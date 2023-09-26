@@ -1,6 +1,5 @@
 import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
-import { lunch, dinner } from "~/data/work-times-available.json";
 
 const URL = "/api/reservations";
 const URL_AT_DATE = "/api/reservations/at-date";

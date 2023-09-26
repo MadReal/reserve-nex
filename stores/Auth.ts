@@ -12,13 +12,13 @@ export const useAuthStore = defineStore("AuthStore", () => {
     setAuthToken,
   };
 },
-  // {
-  // 	persist: {
-  // 		// key: 'auth',
-  // 		storage: persistedState.cookies,
-  // 		paths: ["authToken",],
-  // 	},
-  // }
+  {
+    persist: {
+      key: 'auth',
+      storage: persistedState.cookies,
+      paths: ["authToken"]
+    },
+  }
 );
 
 if (import.meta.hot) {

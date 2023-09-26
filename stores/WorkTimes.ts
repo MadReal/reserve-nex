@@ -1,11 +1,14 @@
 import { storeToRefs } from "pinia";
 import { useRestaurantsStore } from "~/stores/Restaurants";
+import { useAuthStore } from "~/stores/Auth";
 
 const URL = "/api/work-times";
 
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	const storeRestaurants = useRestaurantsStore();
+	const storeAuth = useAuthStore();
 	const { activeRestaurantId } = storeToRefs(storeRestaurants);
+	const { authToken } = storeToRefs(storeAuth);
 
 	const workTimesList = ref<WorkTime[]>([]);
 
@@ -37,6 +40,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
 		const { data, error } = await useFetch<WorkTime>(URL, {
 			method: "post",
+			headers: { Authorization: authToken.value },
 			body: {
 				mealType: isLunch ? "LUNCH" : "DINNER",
 				time: newTime,

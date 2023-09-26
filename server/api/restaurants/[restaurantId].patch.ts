@@ -5,6 +5,8 @@ import { restaurantSchema } from "./index.post";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const { restaurantId } = event.context.params as { restaurantId: string };
 	const body = await readBody(event);
 	// validate body
