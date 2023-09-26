@@ -1,6 +1,44 @@
 <script setup lang="ts">
 // definePageMeta({ layout: false, })
 useHead({ title: "Ristorante" });
+
+const img1 = ref<string>();
+const img2 = ref<string>();
+const img3 = ref<string>();
+
+const isMouseOver = ref(false); // Track mouse hover state
+
+// Define maximum movement values (adjust these values according to your preference)
+const maxMoveX = 5;
+const maxMoveY = 2;
+
+function onMousemove(e: MouseEvent) {
+  const container = e.currentTarget as HTMLDivElement;
+
+  // Calculate the percentage of mouse position within the container
+  const mouseX = (e.clientX - container.offsetLeft) / container.clientWidth;
+  const mouseY = (e.clientY - container.offsetTop) / container.clientHeight;
+
+  // Calculate the movement values within the specified range
+  const moveX = mouseX * 2 * maxMoveX - maxMoveX;
+  const moveY = mouseY * 2 * maxMoveY - maxMoveY;
+
+  // Apply the movement to the images
+  img1.value = `translate(${moveX * 3.3}px, ${moveY * 0.6}px)`;
+  img2.value = `translate(${moveX * 1.5}px, ${moveY * 2.8}px)`;
+  img3.value = `translate(${moveX * 0.5}px, ${moveY * 4.1}px)`;
+}
+
+function onMouseleave(e: MouseEvent) {
+  isMouseOver.value = true;
+  // Apply the movement to the images
+  img1.value = `translate(0px, 0px)`;
+  img2.value = `translate(0px, 0px)`;
+  img3.value = `translate(0px, 0px)`;
+  setTimeout(() => {
+    isMouseOver.value = false;
+  }, 700);
+}
 </script>
 
 <template>
@@ -13,7 +51,7 @@ useHead({ title: "Ristorante" });
           <h1 class="mb-2 text-4xl font-extrabold text-black md_text-7xl md_leading-[5rem]">
             Rilassati in un'atmosfera calda e raffinata
           </h1>
-          <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_text-lg md_leading-10 md_tracking-[10px]">
+          <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[10px]">
             L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese.
           </p>
           <NuxtLink
@@ -28,30 +66,36 @@ useHead({ title: "Ristorante" });
           >
         </div>
 
-        <div class="relative hidden h-full md_block md_basis-1/2">
+        <div class="relative hidden h-full md_block md_basis-1/2" @mousemove="onMousemove" @mouseleave="onMouseleave">
           <NuxtImg
+            :style="{ transform: img1 }"
             fit="cover"
             loading="lazy"
             placeholder
-            class="absolute -left-2 -top-20 rounded-sm drop-shadow-lg"
+            class="absolute -left-2 -top-20 rounded-sm drop-shadow-lg transition-transform duration-100"
+            :class="{ 'duration-700': isMouseOver }"
             src="/images/header-plate3.webp"
             width="288px"
           >
           </NuxtImg>
           <NuxtImg
+            :style="{ transform: img2 }"
             fit="cover"
             loading="lazy"
             placeholder
-            class="absolute right-0 top-20 rounded-sm drop-shadow-lg"
+            class="absolute right-0 top-20 rounded-sm drop-shadow-lg transition-transform duration-100"
+            :class="{ 'duration-700': isMouseOver }"
             src="/images/header-plate2.webp"
             width="330px"
           >
           </NuxtImg>
           <NuxtImg
+            :style="{ transform: img3 }"
             fit="cover"
             loading="lazy"
             placeholder
-            class="absolute -bottom-20 left-32 rounded-sm drop-shadow-lg"
+            class="absolute -bottom-20 left-32 rounded-sm drop-shadow-lg transition-transform duration-100"
+            :class="{ 'duration-700': isMouseOver }"
             src="/images/header-plate1.webp"
             width="400px"
           >
