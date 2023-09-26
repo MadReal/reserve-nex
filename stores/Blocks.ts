@@ -249,6 +249,4 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	};
 });
 
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useBlocksStore, import.meta.hot));
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useBlocksStore, import.meta.hot));

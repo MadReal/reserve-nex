@@ -17,6 +17,4 @@ export const useModalsStore = defineStore("ModalsStore", () => {
 	return { activeModal, activeModalOption, openModal, closeModal };
 });
 
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useModalsStore, import.meta.hot));
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useModalsStore, import.meta.hot));

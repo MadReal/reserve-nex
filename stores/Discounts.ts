@@ -144,6 +144,4 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	};
 });
 
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useRestaurantsStore, import.meta.hot));
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useDiscountsStore, import.meta.hot));

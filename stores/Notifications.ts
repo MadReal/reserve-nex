@@ -13,6 +13,4 @@ export const useNotificationsStore = defineStore("NotificationsStore", () => {
 	return { activeNotification, openNotification, closeNotification, };
 });
 
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useNotificationsStore, import.meta.hot));
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useNotificationsStore, import.meta.hot));

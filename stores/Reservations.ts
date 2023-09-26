@@ -1,10 +1,7 @@
-import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "~/stores/Restaurants";
-import { useAuthStore } from "~/stores/Auth";
-
-
 const URL = "/api/reservations";
 const URL_AT_DATE = "/api/reservations/at-date";
+
+import { storeToRefs } from "pinia";
 
 // Define a reusable function
 function sortReservationsByDateAndTime(
@@ -36,6 +33,7 @@ function sortReservationsByDateAndTime(
 }
 
 export const useReservationsStore = defineStore("ReservationsStore", () => {
+
   const storeRestaurants = useRestaurantsStore();
   const { activeRestaurantId } = storeToRefs(storeRestaurants);
   const storeAuth = useAuthStore();
@@ -48,14 +46,9 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
 
   // ACTIONS
   async function fetchReservations(searchQuery?: string) {
-    const queryParams = {
-      restaurantId: activeRestaurantId.value,
-      searchQuery: searchQuery,
-    };
+    const queryParams = { restaurantId: activeRestaurantId.value, searchQuery: searchQuery };
 
-    const { data, error } = await useFetch<Reservation[]>(URL, {
-      params: queryParams,
-    });
+    const { data, error } = await useFetch<Reservation[]>(URL, { params: queryParams });
     if (data && data.value) {
       // Sort the list by date and time
       const reservationsSorted = sortReservationsByDateAndTime(data.value);
@@ -70,9 +63,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
     const formattedDate = date.toISOString().split('T')[0]; // Extract the date part
     const queryParams = { restaurantId: activeRestaurantId.value, date: formattedDate };
 
-    const { data, error } = await useFetch<Reservation[]>(URL_AT_DATE, {
-      params: queryParams,
-    });
+    const { data, error } = await useFetch<Reservation[]>(URL_AT_DATE, { params: queryParams });
     if (data && data.value) {
       // Sort the list by date and time
       const reservationsSorted = sortReservationsByDateAndTime(data.value);
@@ -97,28 +88,19 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
       personPhone: reservation.personPhone?.toString(),
       date: fixedDate,
     };
-    const { data, error } = await useFetch<Reservation>(URL, {
-      method: "post",
-      body,
-    });
-    // if (data && data.value) return reservationsList.value.push(data.value);
+    const { data, error } = await useFetch<Reservation>(URL, { method: "post", body });
     if (data && data.value) return data.value;
     else if (error) throw error.value;
   }
 
-  async function updateReservation(
-    reservationId: Reservation["id"],
-    accepted: Reservation["accepted"],
-  ) {
+  async function updateReservation(reservationId: Reservation["id"], accepted: Reservation["accepted"]) {
     const { data, error } = await useFetch(`${URL}/${reservationId}`, {
       method: "patch",
       headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
       body: { accepted, restaurantId: activeRestaurantId },
     });
     if (data && data.value) {
-      const reservationToUpdateIndex = reservationsList.value.findIndex(
-        (e) => e.id === reservationId,
-      );
+      const reservationToUpdateIndex = reservationsList.value.findIndex((e) => e.id === reservationId);
       reservationsList.value[reservationToUpdateIndex].accepted = accepted;
     } else if (error) throw error.value;
   }
@@ -134,8 +116,4 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
   };
 });
 
-if (import.meta.hot) {
-  import.meta.hot.accept(
-    acceptHMRUpdate(useReservationsStore, import.meta.hot),
-  );
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useReservationsStore, import.meta.hot));

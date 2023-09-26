@@ -71,6 +71,4 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	};
 });
 
-if (import.meta.hot) {
-	import.meta.hot.accept(acceptHMRUpdate(useWorkTimesStore, import.meta.hot));
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useWorkTimesStore, import.meta.hot));
