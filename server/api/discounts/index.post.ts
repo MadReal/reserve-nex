@@ -12,6 +12,8 @@ export const discountSchema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const body = await readBody(event);
 	// Validate body
 	const { error, value } = discountSchema.validate(body);

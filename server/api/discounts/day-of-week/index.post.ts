@@ -12,6 +12,8 @@ export const schema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const body = await readBody(event);
 	const { error, value } = schema.validate(body); // Validate body
 	if (error) throw createError({ statusMessage: error.message });

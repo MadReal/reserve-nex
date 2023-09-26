@@ -5,6 +5,8 @@ import { schemaBlockedTimeRangeOnDayOfWeek } from "~/server/api/block/time-range
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
 	// validate body

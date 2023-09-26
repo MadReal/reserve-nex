@@ -9,6 +9,8 @@ export const schemaBlockedDaysOfWeek = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const body = await readBody(event);
 	// validate body
 	const { error, value } = schemaBlockedDaysOfWeek.validate(body);

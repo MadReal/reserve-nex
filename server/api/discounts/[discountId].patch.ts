@@ -10,6 +10,8 @@ export const schema = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const { discountId } = event.context.params as { discountId: string };
 	const body = await readBody(event);
 	// validate body

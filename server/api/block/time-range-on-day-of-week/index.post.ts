@@ -11,6 +11,8 @@ export const schemaBlockedTimeRangeOnDayOfWeek = Joi.object({
 });
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const body = await readBody(event);
 	// Validate body
 	const { error, value } = schemaBlockedTimeRangeOnDayOfWeek.validate(body);

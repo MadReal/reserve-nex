@@ -5,6 +5,8 @@ import { schemaBlockedDaysOfWeek } from "~/server/api/block/days-of-week/index.p
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
+	verifyAuthToken(event)
+
 	const { blockId } = event.context.params as { blockId: string };
 	const body = await readBody(event);
 	// validate body
