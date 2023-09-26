@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { vOnClickOutside } from "@vueuse/components";
-import { useBlocksStore } from "~/stores/Blocks";
 
 interface SelectTimePeriodProps {
   blockTimeTimeRangeOnDayOfWeek: Block;

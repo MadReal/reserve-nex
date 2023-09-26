@@ -13,8 +13,7 @@ const isDropdownOpen = ref(false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
 const closeDropdown = () => (isDropdownOpen.value = false);
 
-const dayIsAlreadyInBlockedDaysList = (dayInt: number) =>
-  props.blockedDaysOfWeekList.some((e) => e.dayOfWeek === dayInt);
+const dayIsAlreadyInBlockedDaysList = (dayInt: number) => props.blockedDaysOfWeekList.some((e) => e.dayOfWeek === dayInt);
 // if there's a blocked day show the day's name || if there are other blockedDaysOfWeek add 'altro', otherwise empty
 const buttonText = computed(() =>
   props.blockedDay
@@ -23,17 +22,40 @@ const buttonText = computed(() =>
 );
 </script>
 
-<template lang="pug">
-.flex.items-center.justify-between.mb-2.relative.gap-3(v-on-click-outside="closeDropdown")
-    .flex.items-center.justify-between.grow.py-2.px-3.border.rounded-lg.cursor-pointer.hover_bg-slate-50(@click="toggleDropdown()")
-        p.leading-normal.text-grey-200.text-sm {{ buttonText }}
-        SVGIcon.text-primary-100(svg="arrow-down", :size="15")
-        //- Dropdown
-        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3.text-sm(v-for="dayInt in 7", :key="dayInt", @click="$emit('addOrUpdateDay', blockedDay?.id, dayInt, isUpdate)",
-                :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : dayIsAlreadyInBlockedDaysList(dayInt), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !dayIsAlreadyInBlockedDaysList(dayInt) }") 
-                | {{ useTranslateDayOfWeek(dayInt) }}
-
-    .w-4
-        SVGIcon.text-grey-200.cursor-pointer.hover_text-error-200(svg="trash", :size="15", v-if="showTrash", @click="$emit('removeDay', blockedDay?.id)")
+<template>
+  <div class="relative mb-2 flex items-center justify-between gap-3" v-on-click-outside="closeDropdown">
+    <div
+      class="flex grow cursor-pointer items-center justify-between rounded-lg border px-3 py-2 hover_bg-slate-50"
+      @click="toggleDropdown()"
+    >
+      <p class="text-sm leading-normal text-grey-200">{{ buttonText }}</p>
+      <SVGIcon class="text-primary-100" svg="arrow-down" :size="15"></SVGIcon>
+      <div
+        class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg"
+        v-show="isDropdownOpen"
+      >
+        <p
+          class="px-3 py-2 text-sm"
+          v-for="dayInt in 7"
+          :key="dayInt"
+          @click="$emit('addOrUpdateDay', blockedDay?.id, dayInt, isUpdate)"
+          :class="{
+            'cursor-not-allowed bg-gray-50\ttext-gray-200 line-through': dayIsAlreadyInBlockedDaysList(dayInt),
+            'cursor-pointer text-grey-300 hover_bg-gray-100': !dayIsAlreadyInBlockedDaysList(dayInt),
+          }"
+        >
+          {{ useTranslateDayOfWeek(dayInt) }}
+        </p>
+      </div>
+    </div>
+    <div class="w-4">
+      <SVGIcon
+        class="cursor-pointer text-grey-200 hover_text-error-200"
+        svg="trash"
+        :size="15"
+        v-if="showTrash"
+        @click="$emit('removeDay', blockedDay?.id)"
+      ></SVGIcon>
+    </div>
+  </div>
 </template>

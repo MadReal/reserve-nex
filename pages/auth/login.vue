@@ -3,9 +3,7 @@
 definePageMeta({ layout: false });
 useHead({ title: "Login" });
 
-import { useAuthStore } from "~/stores/Auth";
 const storeAuth = useAuthStore();
-
 const supabaseClient = useSupabaseClient();
 // const user = useSupabaseUser()
 

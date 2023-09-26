@@ -4,8 +4,6 @@ import debounce from "lodash.debounce";
 import { vOnClickOutside } from "@vueuse/components";
 
 import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "~/stores/Restaurants";
-import { useReservationsStore } from "~/stores/Reservations";
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants);
 const storeReservations = useReservationsStore();
@@ -15,26 +13,19 @@ const { switchActiveRestaurant } = useSwitchActiveRestaurant();
 const { openModal } = useOpenModal();
 // component's logic
 const supabaseClient = useSupabaseClient();
-const user = useSupabaseUser();
 
-interface NavbarProps {
+interface Props {
   showSerch?: boolean;
 }
-const props = withDefaults(defineProps<NavbarProps>(), {
-  showSerch: true,
-});
+const props = withDefaults(defineProps<Props>(), { showSerch: true });
 
 let search = ref("");
 let showSearchError = ref(false);
 let isSearchDropdownOpen = ref(false);
 
 let isMenuOpen = ref(false);
-function toggleMenu() {
-  isMenuOpen.value = !isMenuOpen.value;
-}
-function closeMenu() {
-  isMenuOpen.value = false;
-}
+const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+const closeMenu = () => (isMenuOpen.value = false);
 watch(
   () => isMenuOpen.value,
   () => {
@@ -65,9 +56,7 @@ const delayedSearch = debounce(async (newSearch: string) => {
   } else isSearchDropdownOpen.value = true;
 }, 800);
 // Watch the search input and call the debounced function
-watch(search, (newSearch) => {
-  delayedSearch(newSearch);
-});
+watch(search, (newSearch) => delayedSearch(newSearch));
 </script>
 
 <template lang="pug">
@@ -116,7 +105,6 @@ nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-
                 SVGIcon.ml-2.order-2.md_mr-2.md_order-1(svg="user-filled", :size="30")
                 SVGIcon.order-3.text-grey-200.md_hidden(svg="arrow-down", :size="20")
                 a.flex.items-center.cursor-pointer.order-1
-                    //- p.text-sm {{ user?.user_metadata?.full_name }}
                     p.text-sm {{ supabaseClient ? 'Admin' : '' }}
                     SVGIcon.text-grey-200.hidden.md_block(svg="arrow-down", :size="20")
             //- dropdown

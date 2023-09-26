@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template lang="pug">
 .md_py-6.md_px-4
     .mb-8

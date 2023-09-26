@@ -5,7 +5,6 @@ import { vOnClickOutside } from "@vueuse/components";
 // ==============================================
 // Store
 import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "~/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsList, activeRestaurant } = storeToRefs(storeRestaurants);
 // composables
@@ -61,6 +60,7 @@ loadAdminInitData();
               @click="openModalMethod('restaurant', restaurant.id)"
             ></SVGIcon>
           </div>
+
           <div
             class="mt-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-primary-100 p-3 hover_bg-slate-50"
             @click="openModalMethod('restaurant')"

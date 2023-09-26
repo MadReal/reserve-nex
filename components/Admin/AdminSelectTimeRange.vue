@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { vOnClickOutside } from "@vueuse/components";
 import { storeToRefs } from "pinia";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
 
 interface Props {
   isTimeFrom: boolean;
