@@ -10,19 +10,11 @@ import "vue-tel-input/vue-tel-input.css";
 // *************
 // STORE IMPORTS
 // *************
-import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
-import { useWorkTimesStore } from "~/stores/WorkTimes";
 const storeWorkTimes = useWorkTimesStore();
-import { useDiscountsStore } from "~/stores/Discounts";
 const storeDiscounts = useDiscountsStore();
-import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
-import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
-
-// https://nuxt.com/modules/gtag
-// const { gtag } = useGtag();
 
 const telOptions = {
   id: "person-phone",
@@ -142,6 +134,7 @@ async function addReservation() {
         <ClientReservationSteps :activeStep="activeStep" @goToStep="goToStep" />
         <div class="relative z-10 rounded-b-lg border border-t-0 bg-white">
           <ClientReservation1Calendar v-if="activeStep === 1" @setReservationDate="setReservationDate" />
+
           <ClientReservation2Time
             v-else-if="activeStep === 2"
             :reservation="newReservation"
@@ -227,7 +220,9 @@ async function addReservation() {
               </div>
             </div>
           </div>
+
           <ClientReservation4End v-else-if="activeStep === 4" :reservation="newReservation" :restaurant="activeRestaurant" />
+
           <ClientReservationFooter
             :restaurant="activeRestaurant"
             :activeStep="activeStep"

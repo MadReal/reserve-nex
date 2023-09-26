@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "@/stores/Restaurants";
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsListFilterIsLive } = storeToRefs(storeRestaurants);
 
