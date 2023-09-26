@@ -13,10 +13,16 @@ export default defineEventHandler(async (event) => {
 	// Validate body
 	const { error, value } = schema.validate(body);
 	if (error) throw createError({ statusMessage: error.message });
+
 	try {
-		// * REQUEST *
-		const discountAmount = await prisma.discountAmount.create({ data: value });
-		return discountAmount;
+		// Check if a record with the same "value," and "restaurantId" already exists
+		const existingDiscountAmount = await prisma.discountAmount.findFirst({ where: { value: value.value, restaurantId: value.restaurantId } });
+		if (existingDiscountAmount) return existingDiscountAmount
+		else {
+			// * REQUEST *
+			const discountAmount = await prisma.discountAmount.create({ data: value });
+			return discountAmount;
+		}
 	} catch (err) {
 		console.error(err);
 		throw new Error();

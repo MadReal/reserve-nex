@@ -17,13 +17,16 @@ export default defineEventHandler(async (event) => {
 	try {
 		const { mealType, time, restaurantId } = value;
 		// convert mealType to the enum
-		let mealTypeValidated: MealType =
-			mealType === "LUNCH" ? MealType.LUNCH : MealType.DINNER;
-		// * REQUEST *
-		const workTime = await prisma.workTime.create({
-			data: { mealType: mealTypeValidated, time, restaurantId },
-		});
-		return workTime;
+		let mealTypeValidated: MealType = mealType === "LUNCH" ? MealType.LUNCH : MealType.DINNER;
+
+		// Check if a record with the same "time," "mealType," and "restaurantId" already exists
+		const existingWorkTime = await prisma.workTime.findFirst({ where: { mealType, time, restaurantId } });
+		if (existingWorkTime) return existingWorkTime
+		else {
+			// * REQUEST *
+			const workTime = await prisma.workTime.create({ data: { mealType: mealTypeValidated, time, restaurantId }, });
+			return workTime;
+		}
 	} catch (err) {
 		console.error(err);
 		throw new Error();
