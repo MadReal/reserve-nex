@@ -1,5 +1,3 @@
-import { useRestaurantsStore } from "~/stores/Restaurants";
-
 export function useSwitchActiveRestaurant() {
 	const storeRestaurants = useRestaurantsStore();
 
@@ -9,7 +7,5 @@ export function useSwitchActiveRestaurant() {
 		navigateTo("/admin/reservations");
 	}
 
-	return {
-		switchActiveRestaurant,
-	};
+	return { switchActiveRestaurant };
 }
