@@ -6,7 +6,7 @@ useHead({ title: "Login" });
 import { useAuthStore } from "~/stores/Auth";
 const storeAuth = useAuthStore();
 
-const supabase = useSupabaseClient();
+const supabaseClient = useSupabaseClient();
 // const user = useSupabaseUser()
 
 let email = ref("admin");
@@ -15,7 +15,7 @@ let errorMessage = ref("");
 
 async function loginWithEmail() {
   let adjustedEmail = email.value === "admin" ? "admin@admin.com" : email.value;
-  const { data, error } = await supabase.auth.signInWithPassword({ email: adjustedEmail, password: password.value });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email: adjustedEmail, password: password.value });
 
   if (error) {
     errorMessage.value = error.toString();
@@ -24,7 +24,7 @@ async function loginWithEmail() {
   } else {
     errorMessage.value = "";
     // TODO: handle the error better, in case data.session.access_token is null or undefined, don't proceed
-    const { data } = await supabase.auth.getSession();
+    const { data } = await supabaseClient.auth.getSession();
     const authToken: string = data.session ? data.session.access_token : "";
 
     storeAuth.setAuthToken(authToken);
@@ -33,7 +33,7 @@ async function loginWithEmail() {
 }
 
 // const loginWithGoogle = async () => {
-//     const { data, error } = await supabase.auth.signInWithOAuth({
+//     const { data, error } = await supabaseClient.auth.signInWithOAuth({
 //         provider: 'google',
 //     })
 //     if (error) console.error(error);
