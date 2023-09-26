@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 datasource db {
-//   provider       = "postgresql"
-//   url            = env("DATABASE_URL")
-//	 directUrl      = env("DIRECT_URL")
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")  
@@ -25,12 +22,12 @@ enum MealType {
 // }
 
 model User {
-	id					String					@id @default(uuid())
-	createdAt			DateTime				@default(now())
-	email				String					@unique
-	name				String?
-	isAdmin				Boolean					@default(false)
-	// jobs				UserJob[]
+	id								String					@id @default(uuid())
+	createdAt					DateTime				@default(now())
+	email							String					@unique
+	name							String?
+	isAdmin						Boolean					@default(false)
+	// jobs							UserJob[]
 }
 
 // model UserJob {
@@ -43,87 +40,87 @@ model User {
 // }
 
 model Restaurant {
-	id					Int						@id @default(autoincrement())
-	name				String					@unique
-	address				String         
-	city				String         
-	zipCode				Int         
-	isLive				Boolean					@default(false)
+	id								Int						@id @default(autoincrement())
+	name							String					@unique
+	address						String         
+	city							String         
+	zipCode						Int         
+	isLive						Boolean					@default(false)
 	// relations
-	reservation			Reservation[]
-	workTime			WorkTime[]
+	reservation				Reservation[]
+	workTime					WorkTime[]
 	discountAmount		DiscountAmount[]
-	discount			Discount[]
-	block				Block[]
-	// jobs				UserJob[]
+	discount					Discount[]
+	block							Block[]
+	// jobs							UserJob[]
 }
 
 // hours in which the restaurant is open during the day, repeats every day
 model WorkTime {
-	id					Int						@id @default(autoincrement())
-	time				String					
-	mealType			MealType
-	discount			Discount[]
+	id								Int						@id @default(autoincrement())
+	time							String					
+	mealType					MealType
+	discount					Discount[]
 	// relations
-	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId		Int
+	restaurant				Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId			Int
 }
 
 // discounts set by hour and by day of the week
 model DiscountAmount {
-	id					Int						@id @default(autoincrement())
-	value				Int						
+	id								Int						@id @default(autoincrement())
+	value							Int						
 	// relations
-	discount			Discount[]	
-	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId		Int	
+	discount					Discount[]	
+	restaurant				Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId			Int	
 }
 
 // discounts set by hour and by day of the week
 model Discount {
-	id					Int						@id @default(autoincrement())
-	dayOfWeek			Int
+	id								Int						@id @default(autoincrement())
+	dayOfWeek					Int
 	// relations
 	discountAmount		DiscountAmount			@relation(fields: [discountAmountId], references: [id], onDelete: Cascade)
 	discountAmountId	Int
-	workTime			WorkTime				@relation(fields: [workTimeId], references: [id], onDelete: Cascade)
-	workTimeId			Int			   
-	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId		Int
+	workTime					WorkTime				@relation(fields: [workTimeId], references: [id], onDelete: Cascade)
+	workTimeId				Int			   
+	restaurant				Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId			Int
 }
 
 // used to block days of the week, time slots, day slots
 model Block  {
-	id					Int						@id @default(autoincrement())
+	id								Int						@id @default(autoincrement())
 	// day during the week (every week) in which the restaurant is closed
-	dayOfWeek			Int?					
+	dayOfWeek					Int?					
 	// if the resturant needs to adjust their open-time on a certain day
-	timeStart			String?
-	timeEnd				String?
-	date				DateTime?
+	timeStart					String?
+	timeEnd						String?
+	date							DateTime?
 	// day(s) in which the restaurant is closed - vacation, holidays
-	dateStart			DateTime?
-	dateEnd				DateTime?
-	periodTitle			String?
+	dateStart					DateTime?
+	dateEnd						DateTime?
+	periodTitle				String?
 	// relations
-	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId		Int
+	restaurant				Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId			Int
 }
 
 // when client reserve a table at the restaurant
 model Reservation {
-	id					String					@id @default(uuid())
-	createdAt			DateTime				@default(now())
-	time				String
-	date				DateTime
-	personName			String
-	personPhone			String
-	personEmail			String
-	peopleAmount		Int
+	id								String					@id @default(uuid())
+	createdAt					DateTime				@default(now())
+	time							String
+	date							DateTime
+	personName				String
+	personPhone				String
+	personEmail				String
+	peopleAmount			Int
 	personInstagram		String?
 	discountAmount		Int?
-	accepted			Boolean?
+	accepted					Boolean?
 	// relations
-	restaurant			Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-	restaurantId		Int
+	restaurant				Restaurant				@relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+	restaurantId			Int
 }
