@@ -35,7 +35,7 @@ const telOptions = {
 const preferredCountries = ["it", "ch", "gb", "fr", "de", "us", "cn"];
 
 // route params
-const restaurantIdParam = parseInt(route.params.restaurantId[0]);
+const restaurantIdParam = parseInt(route.params.restaurantId.toString());
 // logic to move between steps
 const activeStep = ref(1);
 const goToStep = (stepToGo: number) => {
