@@ -1,5 +1,3 @@
-import { useNuxtApp } from '#app';
-
 // ********************** FACEBOOK EVENTS **********************
 // https://www.facebook.com/business/help/402791146561655?id=1205376682832142
 // *************************************************************
@@ -7,6 +5,7 @@ import { useNuxtApp } from '#app';
 // ***************** GOOGLE ANALYTICS PACKAGE ******************
 // https://github.com/johannschopplich/nuxt-gtag
 // *************************************************************
+import { useNuxtApp } from '#app';
 
 export function useEventTracking() {
 
