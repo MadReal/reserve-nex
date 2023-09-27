@@ -42,6 +42,7 @@ export default defineNuxtConfig({
         display: "swap",
       },
     ],
+    'nuxt3-meta-pixel'
   ],
   postcss: {
     plugins: {
@@ -56,4 +57,12 @@ export default defineNuxtConfig({
     domains: ["avatars0.githubusercontent.com"],
   },
   gtag: { id: "G-7WHW3K85WN" },
+  facebook: {
+    /* module options */
+    track: 'PageView',
+    pixelId: '868772751506596',
+    autoPageView: true,
+    disabled: false,
+    debug: true
+  },
 });

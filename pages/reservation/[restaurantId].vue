@@ -57,6 +57,7 @@ const { activeRestaurant } = storeToRefs(storeRestaurants);
 storeRestaurants.fetchSingleRestaurant(restaurantIdParam);
 storeBlocks.fetchBlockedDates(restaurantIdParam);
 storeBlocks.fetchBlockedDaysOfWeek(restaurantIdParam);
+const { trackEvent } = useEventTracking();
 //
 function setReservationDate(date: Date) {
   newReservation.value.date = date;
@@ -70,6 +71,7 @@ function setReservationDate(date: Date) {
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance activeStep
   activeStep.value++;
+  trackEvent();
 }
 
 // step 2
