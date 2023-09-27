@@ -28,10 +28,10 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	const blockedDatesList = ref<Block[]>([]);
 	// STATE - Block 'dayOfWeek'
 	const blockedDaysOfWeekList = ref<Block[]>([]);
+	// STATE - Block - 'Time Range On Day Of Week'
+	const blockedTimeRangeOnDayOfWeekList = ref<Block[]>([]);
 	// STATE - Block - 'Time Range On Date'
 	const blockedTimeRangeOnDateList = ref<Block[]>([]);
-	// STATE - Block - 'Time Range On Date'
-	const blockedTimeRangeOnDayOfWeekList = ref<Block[]>([]);
 
 	// GETTERS - Block - 'One (or more) days period'
 	const blockedDatesListFullCalendar = computed(() =>
@@ -162,7 +162,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	// ***********************************
-	// ACTIONS - Block - 'Time Range On Date'
+	// ACTIONS - Block - 'Time Range On Day Of Week'
 	// ***********************************
 	async function fetchBlockedTimeRangeOnDayOfWeek(restaurantId?: Restaurant["id"]) {
 		const { data, error }: any = await useFetch<Block[]>(URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK, { params: { restaurantId: restaurantId || activeRestaurantId.value }, });
@@ -187,15 +187,18 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	async function updateBlockedTimeRangeOnDayOfWeek(blockId: Block["id"], timeStart: Block["timeStart"], timeEnd: Block["timeEnd"], dayOfWeek: Block["dayOfWeek"]) {
-		const block = { timeStart, timeEnd, dayOfWeek, restaurantId: activeRestaurantId.value, };
+		const block = { timeStart, timeEnd, dayOfWeek, restaurantId: activeRestaurantId.value };
 
 		const { data, error } = await useFetch<Block>(`${URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK}/${blockId}`, { method: "patch", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, body: block, });
 		if (data.value) {
 			const blockToUpdateIndex = blockedTimeRangeOnDayOfWeekList.value.findIndex((e) => e.id === blockId);
-			const newBlock = { ...blockedTimeRangeOnDateList.value[blockToUpdateIndex], timeStart, timeEnd, dayOfWeek };
-			blockedTimeRangeOnDateList.value[blockToUpdateIndex] = newBlock;
+			const newBlock = { ...blockedTimeRangeOnDayOfWeekList.value[blockToUpdateIndex], timeStart, timeEnd, dayOfWeek };
+			blockedTimeRangeOnDayOfWeekList.value[blockToUpdateIndex] = newBlock;
 		}
-		else if (error) throw error.value
+		else if (error) {
+			storeNotifications.openNotification("Errore nell'eseguire questa azione, riprova più tardi.", false)
+			throw error.value
+		}
 	}
 
 	// ***********************************

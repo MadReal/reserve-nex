@@ -27,10 +27,25 @@ const updateTimeSlot = (isTimeFrom: boolean, time: string) => {
   if (isTimeFrom) block.timeStart = time;
   else block.timeEnd = time;
 
-  // exit function if nulls
-  if (block === null || block.timeEnd === null || block.timeStart === null) return;
+  const [hour, minute] = time.split(":").map(Number);
+  const timeValue = hour * 60 + minute; // Convert time to minutes for comparison
 
-  if ((isTimeFrom && block.timeEnd < time) || (!isTimeFrom && block.timeStart > time)) block.timeEnd = block.timeStart = time;
+  // Convert block.timeEnd and block.timeStart to numbers
+  const blockTimeStart = block.timeStart ? block.timeStart.split(":").map(Number) : [0, 0];
+  const blockTimeEnd = block.timeEnd ? block.timeEnd.split(":").map(Number) : [0, 0];
+
+  const blockTimeStartValue = blockTimeStart[0] * 60 + blockTimeStart[1];
+  const blockTimeEndValue = blockTimeEnd[0] * 60 + blockTimeEnd[1];
+
+  // Exit function if nulls
+  if (!block || !block.timeEnd || !block.timeStart) return;
+
+  // Compare time values numerically
+  if ((isTimeFrom && timeValue > blockTimeEndValue) || (!isTimeFrom && timeValue < blockTimeStartValue)) {
+    block.timeEnd = block.timeStart = time;
+  }
+
+  // Call the update function if needed
   updateBlockedTimeRangeOnDate();
 };
 
@@ -57,8 +72,8 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
     class="mb-2 grid grid-cols-[1fr_1fr_2fr_min-content] items-center justify-between rounded-lg border xl_grid-cols-[1fr_1fr_3fr_min-content]"
     v-on-click-outside="closeDropdownCalendar"
   >
-    <AdminSelectTimeRange :isTimeFrom="true" :time="blockTimePeriod.timeStart!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
-    <AdminSelectTimeRange :isTimeFrom="false" :time="blockTimePeriod.timeEnd!" @updateBlockedTimeRangeOnDate="updateTimeSlot" />
+    <AdminSelectTimeRange :isTimeFrom="true" :time="blockTimePeriod.timeStart!" @updateBlockedTimeRange="updateTimeSlot" />
+    <AdminSelectTimeRange :isTimeFrom="false" :time="blockTimePeriod.timeEnd!" @updateBlockedTimeRange="updateTimeSlot" />
 
     <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 md_px-3" @click="toggleDropdownCalendar()">
       <p class="leading-normal text-grey-300">{{ useDateFormatting(blockTimePeriod.date!) }}</p>

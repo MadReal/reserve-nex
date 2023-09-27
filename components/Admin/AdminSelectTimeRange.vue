@@ -7,7 +7,7 @@ interface Props {
   time: string;
 }
 const props = defineProps<Props>();
-const emit = defineEmits(["updateBlockedTimeRangeOnDate"]);
+const emit = defineEmits(["updateBlockedTimeRange"]);
 
 const storeWorkTimes = useWorkTimesStore();
 const { workTimesListsSorted } = storeToRefs(storeWorkTimes);
@@ -32,7 +32,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
           class="px-3 py-2"
           v-for="workTime in workTimesListsSorted"
           :key="workTime.id"
-          @click="$emit('updateBlockedTimeRangeOnDate', isTimeFrom, workTime.time)"
+          @click="$emit('updateBlockedTimeRange', isTimeFrom, workTime.time)"
           :class="{
             'cursor-not-allowed bg-gray-50 text-gray-200 line-through': workTime.time === time,
             'cursor-pointer text-grey-300 hover_bg-gray-100': workTime.time !== time,
