@@ -43,7 +43,10 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 			body: { time: newTime, restaurantId: activeRestaurantId.value }
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
-		else if (error) throw error.value
+		else if (error) {
+			storeNotifications.openNotification("Errore nell'aggiunta dell'orario, riprova più tardi.", false)
+			throw error.value
+		}
 	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {

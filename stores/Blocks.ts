@@ -175,8 +175,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 
 	async function addBlockedTimeRangeOnDayOfWeek(timeStart: Block["timeStart"], timeEnd: Block["timeEnd"]) {
 		const daysOfWeek = [1, 2, 3, 4, 5, 6, 7]
-		const availableDayOfWeek = daysOfWeek.filter(day =>
-			!blockedTimeRangeOnDayOfWeekList.value.some(item => item.dayOfWeek === day)
+		const availableDayOfWeek = daysOfWeek.filter(day => !blockedTimeRangeOnDayOfWeekList.value.some(item => item.dayOfWeek === day)
 		);
 		if (availableDayOfWeek[0]) {
 			const block = { timeStart, timeEnd, dayOfWeek: availableDayOfWeek[0], restaurantId: activeRestaurantId.value };

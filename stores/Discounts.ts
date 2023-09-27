@@ -51,7 +51,10 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			body: { value, restaurantId: activeRestaurantId.value },
 		});
 		if (data && data.value) discountAmountsList.value.push(data.value);
-		else if (error) throw error.value
+		else if (error) {
+			storeNotifications.openNotification("Errore nell'aggiunta sconto, riprova più tardi.", false)
+			throw error.value
+		}
 	}
 
 	async function addDiscount(dayOfWeek: DayOfWeek, workTimeId: WorkTime["id"], discountAmountId: DiscountAmount["id"]) {
@@ -61,7 +64,10 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			body: { dayOfWeek, discountAmountId: discountAmountId, workTimeId: workTimeId, restaurantId: activeRestaurantId.value, },
 		});
 		if (data && data.value) discountsList.value.push(data.value);
-		else if (error) throw error.value
+		else if (error) {
+			storeNotifications.openNotification("Errore nell'aggiunta sconto, riprova più tardi.", false)
+			throw error.value
+		}
 	}
 
 	async function addManyDiscounts(dayOfWeek: DayOfWeek, discountAmountId: DiscountAmount["id"], workTimeId?: WorkTime["id"]) {
@@ -98,7 +104,10 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			const discountToUpdateIndex = discountsList.value.findIndex((e) => e.id === discountId);
 			discountsList.value[discountToUpdateIndex] = data.value;
 		}
-		else if (error) throw error.value
+		else if (error) {
+			storeNotifications.openNotification("Errore nella modifica sconto, riprova più tardi.", false)
+			throw error.value
+		}
 	}
 
 	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {

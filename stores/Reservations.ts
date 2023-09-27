@@ -4,9 +4,7 @@ const URL_AT_DATE = "/api/reservations/at-date";
 import { storeToRefs } from "pinia";
 
 // Define a reusable function
-function sortReservationsByDateAndTime(
-  reservations: Reservation[],
-): Reservation[] {
+function sortReservationsByDateAndTime(reservations: Reservation[]): Reservation[] {
   return reservations.sort((a: Reservation, b: Reservation) => {
     // Parse dates as Date objects
     const dateA = new Date(a.date);
@@ -34,6 +32,7 @@ function sortReservationsByDateAndTime(
 
 export const useReservationsStore = defineStore("ReservationsStore", () => {
 
+  const storeNotifications = useNotificationsStore();
   const storeRestaurants = useRestaurantsStore();
   const { activeRestaurantId } = storeToRefs(storeRestaurants);
   const storeAuth = useAuthStore();
@@ -102,7 +101,10 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
     if (data && data.value) {
       const reservationToUpdateIndex = reservationsList.value.findIndex((e) => e.id === reservationId);
       reservationsList.value[reservationToUpdateIndex].accepted = accepted;
-    } else if (error) throw error.value;
+    } else if (error) {
+      storeNotifications.openNotification("Errore nella modifica della prenotazione, riprova più tardi.", false)
+      throw error.value;
+    }
   }
 
   return {

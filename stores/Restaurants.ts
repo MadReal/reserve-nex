@@ -64,7 +64,10 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
       if (data && data.value) {
         restaurantsList.value[restuarantToUpdateIndex] = data.value;
         storeNotifications.openNotification("Modifiche apportate.");
-      } else if (error) throw error.value;
+      } else if (error) {
+        storeNotifications.openNotification("Errore nella modifica del ristorante, riprova più tardi.", false)
+        throw error.value;
+      }
     } else {
       // is new restaurant name === a name that already exists in DB
       if (restaurantsList.value.some((item) => item.name === restaurant.name))
@@ -74,7 +77,10 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
         restaurantsList.value.push(data.value);
         activeRestaurantId.value = data.value.id;
         storeNotifications.openNotification("Ristorante creato.");
-      } else if (error) throw error.value;
+      } else if (error) {
+        storeNotifications.openNotification("Errore nell'aggiunta del ristorante, riprova più tardi.", false)
+        throw error.value;
+      }
     }
   }
 
