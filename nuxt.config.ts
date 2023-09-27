@@ -43,6 +43,6 @@ export default defineNuxtConfig({
     pixelId: '868772751506596',
     autoPageView: true,
     disabled: false,
-    debug: true
+    // debug: true
   },
 });

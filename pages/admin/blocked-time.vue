@@ -10,9 +10,9 @@ const storeBlocks = useBlocksStore();
 const storeWorkTimes = useWorkTimesStore();
 
 const { blockedTimeRangeOnDateList, blockedTimeRangeOnDayOfWeekList } = storeToRefs(storeBlocks);
-const { workTimesListsMerged } = storeToRefs(storeWorkTimes);
+const { workTimesListsSorted } = storeToRefs(storeWorkTimes);
 
-const noData = computed(() => !workTimesListsMerged.value.length);
+const noData = computed(() => !workTimesListsSorted.value.length);
 
 const canAddBlocksOnTimeRangeOnDayOfWeek = computed(() => {
   const daysOfWeek = [1, 2, 3, 4, 5, 6, 7];
@@ -24,13 +24,13 @@ const canAddBlocksOnTimeRangeOnDayOfWeek = computed(() => {
 // API CALLS
 const addBlockedTimeRangeOnDate = () =>
   storeBlocks.addBlockedTimeRangeOnDate(
-    workTimesListsMerged.value[0].time,
-    workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
+    workTimesListsSorted.value[0].time,
+    workTimesListsSorted.value[workTimesListsSorted.value.length - 1].time,
   );
 const addBlockedTimeRangeOnDayOfWeek = () =>
   storeBlocks.addBlockedTimeRangeOnDayOfWeek(
-    workTimesListsMerged.value[0].time,
-    workTimesListsMerged.value[workTimesListsMerged.value.length - 1].time,
+    workTimesListsSorted.value[0].time,
+    workTimesListsSorted.value[workTimesListsSorted.value.length - 1].time,
   );
 storeBlocks.fetchBlockedTimeRangeOnDate();
 storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();

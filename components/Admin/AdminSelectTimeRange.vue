@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 const emit = defineEmits(["updateBlockedTimeRangeOnDate"]);
 
 const storeWorkTimes = useWorkTimesStore();
-const { workTimesListsMerged } = storeToRefs(storeWorkTimes);
+const { workTimesListsSorted } = storeToRefs(storeWorkTimes);
 
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
@@ -30,7 +30,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
       >
         <p
           class="px-3 py-2"
-          v-for="workTime in workTimesListsMerged"
+          v-for="workTime in workTimesListsSorted"
           :key="workTime.id"
           @click="$emit('updateBlockedTimeRangeOnDate', isTimeFrom, workTime.time)"
           :class="{

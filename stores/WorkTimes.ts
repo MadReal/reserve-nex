@@ -2,6 +2,15 @@ const URL = "/api/work-times";
 
 import { storeToRefs } from "pinia";
 
+// Shared filtering function for time range
+function filterByTimeRange(items: WorkTime[], startTime: number, endTime: number): WorkTime[] {
+	return items.filter((item) => {
+		const [hour, minute] = item.time.split(":").map(Number);
+		const timeValue = hour * 60 + minute; // Convert time to minutes for comparison
+		return timeValue >= (startTime * 60) && timeValue <= (endTime * 60);
+	});
+}
+
 export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 
 	const storeNotifications = useNotificationsStore();
@@ -13,40 +22,25 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 	// STATE
 	const workTimesList = ref<WorkTime[]>([]);
 
-	// GETTERS
-	const lunchWorkTimesList = computed(() =>
-		useSortWorkTimes(
-			workTimesList.value.filter((item: WorkTime) => item.mealType === "LUNCH")
-		)
-	);
-	const dinnerWorkTimesList = computed(() =>
-		useSortWorkTimes(
-			workTimesList.value.filter((item: WorkTime) => item.mealType === "DINNER")
-		)
-	);
 
-	const workTimesListsMerged = computed(() =>
-		useSortWorkTimes(lunchWorkTimesList.value.concat(dinnerWorkTimesList.value))
-	);
+	// GETTERS
+	const lunchWorkTimesList = computed(() => useSortWorkTimes(filterByTimeRange(workTimesList.value, 0, 16.5))); // from 00:00 until 16:30
+	const dinnerWorkTimesList = computed(() => useSortWorkTimes(filterByTimeRange(workTimesList.value, 17, 23.5))); // from 17:00 until 23:30
+	const workTimesListsSorted = computed(() => useSortWorkTimes(workTimesList.value));
+
 
 	// ACTIONS
 	async function fetchWorkTimes(restaurantId?: Restaurant["id"]) {
-		const { data, error } = await useFetch<WorkTime[]>(URL, {
-			params: { restaurantId: activeRestaurantId.value || restaurantId },
-		});
+		const { data, error } = await useFetch<WorkTime[]>(URL, { params: { restaurantId: activeRestaurantId.value || restaurantId } });
 		if (data.value) workTimesList.value = data.value;
 		else if (error) throw error.value
 	}
 
-	async function addNewWorkTime(newTime: WorkTime["time"], isLunch: boolean) {
+	async function addNewWorkTime(newTime: WorkTime["time"]) {
 		const { data, error } = await useFetch<WorkTime>(URL, {
 			method: "post",
 			headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
-			body: {
-				mealType: isLunch ? "LUNCH" : "DINNER",
-				time: newTime,
-				restaurantId: activeRestaurantId.value,
-			},
+			body: { time: newTime, restaurantId: activeRestaurantId.value }
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
 		else if (error) throw error.value
@@ -64,7 +58,7 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		workTimesList,
 		lunchWorkTimesList,
 		dinnerWorkTimesList,
-		workTimesListsMerged,
+		workTimesListsSorted,
 		fetchWorkTimes,
 		addNewWorkTime,
 		removeWorkTime,

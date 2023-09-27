@@ -20,7 +20,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 
 const addNewTime = (newTime: WorkTime["time"]) => {
   if (isTimeUsed(newTime)) return;
-  emit("addNewTime", newTime, props.isLunch);
+  emit("addNewTime", newTime);
   isSelectVisible.value = false;
   isDropdownOpen.value = false;
 };
@@ -35,10 +35,6 @@ div
         p.leading-normal.text-grey-300 {{ time.time }}
         SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTime(time.id)")
     //- ADD
-    //- .flex.items-center.justify-between.border.border-dashed.border-primary-100.rounded-lg.py-2.px-3.mb-2.cursor-pointer.hover_bg-slate-50(
-    //-     v-if="!isSelectVisible && isHoursStillAvailableToFill", @click="toggleSelect()")
-    //-     p.leading-normal.text-primary-100 Aggiungi Orario
-    //-     SVGIcon.text-primary-100(svg="plus", :size="15")
     AdminButtonAdd(v-if="!isSelectVisible && isHoursStillAvailableToFill", text="Aggiungi Orario" @click="toggleSelect()")
     //- SELECT
     .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(

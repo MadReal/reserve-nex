@@ -1,10 +1,3 @@
-declare interface WorkTime {
-  id: number;
-  mealType: string;
-  time: string;
-  restaurantId: Restaurant["id"];
-}
-
 enum DayOfWeek {
   MONDAY = 1,
   TUESDAY = 2,
@@ -14,6 +7,12 @@ enum DayOfWeek {
   SATURDAY = 6,
   SUNDAY = 7,
   ALL = 10,
+}
+
+declare interface WorkTime {
+  id: number;
+  time: string;
+  restaurantId: Restaurant["id"];
 }
 
 declare interface DiscountAmount {
