@@ -71,7 +71,7 @@ function setReservationDate(date: Date) {
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance activeStep
   activeStep.value++;
-  trackEvent();
+  trackEvent("InitiateCheckout");
 }
 
 // step 2
