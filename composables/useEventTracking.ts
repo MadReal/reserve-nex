@@ -4,13 +4,23 @@ import { useNuxtApp } from '#app';
 // https://www.facebook.com/business/help/402791146561655?id=1205376682832142
 // *************************************************************
 
+// ***************** GOOGLE ANALYTICS PACKAGE ******************
+// https://github.com/johannschopplich/nuxt-gtag
+// *************************************************************
+
 export function useEventTracking() {
 
 	function trackEvent(eventName: string, eventParams?: any) {
 		const nuxtApp = useNuxtApp()
-		console.log('trackEvent');
+		const { gtag } = useGtag()
+
 		// @ts-ignore
 		nuxtApp.$fb.track(eventName, eventParams)
+
+		gtag('event', 'screen_view', {
+			app_name: 'My App',
+			screen_name: 'Home'
+		})
 	}
 
 	return { trackEvent };
