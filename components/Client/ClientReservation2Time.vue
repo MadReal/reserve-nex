@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 interface Props {
   reservation: Partial<Reservation>;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(["setReservationTimeAndDiscountAmount"]);
 
-import { storeToRefs } from "pinia";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 </script>

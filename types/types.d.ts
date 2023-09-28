@@ -50,7 +50,7 @@ declare interface Reservation {
   time: string;
   discountAmount: number | null;
   personName: string;
-  personPhone: number;
+  personPhone: string;
   personEmail: string;
   peopleAmount: number;
   personInstagram: string | null;

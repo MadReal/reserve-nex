@@ -63,7 +63,7 @@ const calendarOptions = ref({
   // progressiveEventRendering: true,
   events: blockedDates,
   hiddenDays: hiddenDaysOfWeek,
-  // dateClick: handleDateClick,
+  dateClick: handleDateClick,
 });
 </script>
 

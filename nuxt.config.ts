@@ -34,7 +34,15 @@ export default defineNuxtConfig({
   ],
   postcss: { plugins: { tailwindcss: {}, autoprefixer: {} } },
   supabase: { redirect: false },
-  vite: { plugins: [svgLoader()] },
+  vite: {
+    plugins: [svgLoader()],
+    vue: {
+      script: {
+        defineModel: true,
+        propsDestructure: true
+      }
+    }
+  },
   image: { format: ["webp"], domains: ["avatars0.githubusercontent.com"] },
   // events tracking Google Analytics, Facebook
   gtag: { id: "G-7WHW3K85WN" },
