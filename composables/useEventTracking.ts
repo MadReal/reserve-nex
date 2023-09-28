@@ -9,18 +9,57 @@ import { useNuxtApp } from '#app';
 
 export function useEventTracking() {
 
-	function trackEvent(eventName: string, eventParams?: any) {
+	// function trackFacebookEvent(eventName: string, eventParams?: any) {
+	// 	const nuxtApp = useNuxtApp()
+	// 	// @ts-ignore
+	// 	nuxtApp.$fb.track(eventName, eventParams)
+	// }
+
+	// function trackGoogleEvent(eventName: string, eventParams?: any) {
+	// 	const { gtag } = useGtag()
+
+	// 	gtag('event', 'screen_view', {
+	// 		app_name: 'My App',
+	// 		screen_name: 'Home'
+	// 	})
+	// }
+
+	function trackEventReservationStarted(restaurantName: string) {
 		const nuxtApp = useNuxtApp()
-		// const { gtag } = useGtag()
-
 		// @ts-ignore
-		nuxtApp.$fb.track(eventName, eventParams)
+		nuxtApp.$fb.track("InitiateCheckout", { restaurant: restaurantName })
 
-		// gtag('event', 'screen_view', {
-		// 	app_name: 'My App',
-		// 	screen_name: 'Home'
-		// })
+		const { gtag } = useGtag()
+		gtag("event", "reservation_started", {
+			event_category: "reservation",
+			event_action: "started",
+		});
 	}
 
-	return { trackEvent };
+	function trackEventReservationFinished(restaurantName: string, value: number) {
+		const nuxtApp = useNuxtApp()
+		// @ts-ignore
+		nuxtApp.$fb.track("Schedule", { restaurant: restaurantName, currency: "EUR", value })
+
+		const { gtag } = useGtag()
+		gtag("event", "reservation_finished", {
+			event_category: "reservation",
+			event_action: "finished",
+			value
+		});
+	}
+
+	// return { trackFacebookEvent, trackGoogleEvent, trackEventReservationStarted, trackEventReservationFinished };
+	return { trackEventReservationStarted, trackEventReservationFinished };
 }
+
+// gtag("event", "reservation_started", {
+// 	event_category: "reservation",
+// 	event_action: "started",
+// });
+
+// gtag("event", "reservation_sent", {
+// 	event_category: "reservation",
+// 	event_action: "finished",
+// 	value: clientReservationValueMinusDiscount,
+// });
