@@ -11,15 +11,15 @@ export function useEventTracking() {
 
 	function trackEvent(eventName: string, eventParams?: any) {
 		const nuxtApp = useNuxtApp()
-		const { gtag } = useGtag()
+		// const { gtag } = useGtag()
 
 		// @ts-ignore
 		nuxtApp.$fb.track(eventName, eventParams)
 
-		gtag('event', 'screen_view', {
-			app_name: 'My App',
-			screen_name: 'Home'
-		})
+		// gtag('event', 'screen_view', {
+		// 	app_name: 'My App',
+		// 	screen_name: 'Home'
+		// })
 	}
 
 	return { trackEvent };

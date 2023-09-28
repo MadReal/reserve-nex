@@ -57,7 +57,7 @@ function setReservationDate(date: Date) {
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance activeStep
   activeStep.value++;
-  trackEvent("InitiateCheckout");
+  trackEvent("InitiateCheckout", { restaurant: activeRestaurant.value.name });
 }
 
 // step 2
@@ -90,16 +90,17 @@ async function addReservation() {
   const reservation = await storeReservations.addReservation(newReservation.value);
 
   // ******** UPDATE DEPENING ON RESTAURANT ********
-  // const avgClientValueAmount = 20;
+  const avgClientValueAmount = 20;
   // // calculate event value
-  // const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
-  // const discountAmountInEUR = (newReservation.value?.discountAmount! / 100) * clientReservationValue;
-  // const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
+  const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
+  const discountAmountInEUR = (newReservation.value?.discountAmount! / 100) * clientReservationValue;
+  const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
   // gtag("event", "reservation_sent", {
   //   event_category: "reservation",
   //   event_action: "finished",
   //   value: clientReservationValueMinusDiscount,
   // });
+  trackEvent("Schedule", { restaurant: activeRestaurant.value.name, value: clientReservationValueMinusDiscount });
 
   // @ts-ignore
   newReservation.value = reservation;

@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   gtag: { id: "G-7WHW3K85WN" },
   facebook: {
     track: 'PageView',
-    pixelId: '868772751506596',
+    pixelId: '632015775759638',
     autoPageView: true,
     disabled: false,
     // debug: true
