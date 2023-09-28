@@ -25,10 +25,10 @@ import interactionPlugin from "@fullcalendar/interaction"; // needed for dateCli
 import itLocale from "@fullcalendar/core/locales/it";
 
 const handleEventClick = async (clickInfo: any) => {
-  const blockId: Block["id"] = clickInfo.event.id;
+  const blockId: Block["id"] = parseInt(clickInfo.event.id);
   if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
     await storeBlocks.removeBlock(blockId);
-    clickInfo.event.remove();
+    // clickInfo.event.remove();
   }
 };
 const handleDateSelect = async (selectInfo: any) => {
@@ -37,7 +37,7 @@ const handleDateSelect = async (selectInfo: any) => {
   const currentDate = new Date(); // Get the current date and time
   currentDate.setUTCHours(0, 0, 0, 0); // Set the time component to midnight for comparison
   if (selectedDate < currentDate) return;
-  // ********* END *********
+  // ****************************** END ******************************
 
   let title = prompt("Inserisci un titolo per questo evento", "Blocco giorni");
   // Define an array of swear words to check against
@@ -49,23 +49,19 @@ const handleDateSelect = async (selectInfo: any) => {
     // Check if the user's input contains any swear words
     if (swearWords.some((word) => lowercasedTitle.includes(word))) {
       // Display an alert message if a swear word is found
-      alert("Per favore, evita di utilizzare linguaggio offensivo.");
-      return; // Exit the function
+      return alert("Per favore, evita di utilizzare linguaggio offensivo.");
     }
 
     const newblockDatesPeriod = await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title);
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
-    calendarApi.addEvent({
-      // @ts-ignore
-      id: newblockDatesPeriod.id,
-      title,
-      // @ts-ignore
-      start: newblockDatesPeriod?.dateStart,
-      // @ts-ignore
-      end: newblockDatesPeriod?.dateEnd,
-      allDay: selectInfo.allDay,
-    });
+    // calendarApi.addEvent({
+    //   id: newblockDatesPeriod?.id,
+    //   title,
+    //   start: newblockDatesPeriod?.dateStart,
+    //   end: newblockDatesPeriod?.dateEnd,
+    //   allDay: selectInfo.allDay,
+    // });
   }
 };
 

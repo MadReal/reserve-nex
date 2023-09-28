@@ -56,17 +56,16 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 	}
 
 	async function addBlockedDate(dateStart: Block["dateStart"], dateEnd: Block["dateEnd"], periodTitle: Block["periodTitle"]) {
+		const restaurantId = activeRestaurantId.value
 		const { data, error } = await useFetch<Block>(URL_BLOCKED_DATE, {
 			method: "post",
 			headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },
-			body: {
-				dateStart,
-				dateEnd,
-				periodTitle,
-				restaurantId: activeRestaurantId.value,
-			},
+			body: { dateStart, dateEnd, periodTitle, restaurantId }
 		});
-		if (data && data.value) blockedDatesList.value.push(data.value);
+		if (data && data.value) {
+			blockedDatesList.value.push(data.value);
+			// return data.value
+		}
 		else if (error) {
 			storeNotifications.openNotification("Errore nell'aggiunta del blocco, riprova più tardi.", false)
 			throw error.value
@@ -233,7 +232,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		const blockedDayOfWeekToRemoveIndex = blockedDaysOfWeekList.value.findIndex((e) => e.id === blockId);
 		if (blockedDayOfWeekToRemoveIndex !== -1) blockedDaysOfWeekList.value.splice(blockedDayOfWeekToRemoveIndex, 1);
 
-		// blockedDatesList // TODO: this never gets it. I think it's the watch inside 'blocked-days'
+		// blockedDatesList
 		const blockedDateToRemoveIndex = blockedDatesList.value.findIndex((e) => e.id === blockId);
 		if (blockedDateToRemoveIndex !== -1) blockedDatesList.value.splice(blockedDateToRemoveIndex, 1);
 
@@ -241,7 +240,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		const blockedTimeRangeOnDateToRemoveIndex = blockedTimeRangeOnDateList.value.findIndex((e) => e.id === blockId);
 		if (blockedTimeRangeOnDateToRemoveIndex !== -1) blockedTimeRangeOnDateList.value.splice(blockedTimeRangeOnDateToRemoveIndex, 1);
 
-		// blockedTimeRangeOnDateList
+		// blockedTimeRangeOnDayOfWeekList
 		const blockedTimeRangeOnDayOfWeekToRemoveIndex = blockedTimeRangeOnDayOfWeekList.value.findIndex((e) => e.id === blockId);
 		if (blockedTimeRangeOnDayOfWeekToRemoveIndex !== -1) blockedTimeRangeOnDayOfWeekList.value.splice(blockedTimeRangeOnDayOfWeekToRemoveIndex, 1);
 	}
