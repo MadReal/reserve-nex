@@ -24,7 +24,7 @@ declare interface DiscountAmount {
 declare interface Discount {
   id?: number;
   dayOfWeek: DayOfWeek;
-  discountAmount?: DiscountAmount;
+  discountAmount: DiscountAmount;
   discountAmountId?: DiscountAmount["id"];
   workTime: WorkTime;
   workTimeId?: WorkTime["id"];
