@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 export function verifyAuthToken(event: any) {
 	const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET
-	// const SUPABASE_JWT_SECRET = "2UDLWiz/Mm6agUtteHQg4apcH3rdrGVdcXon166q2HMaQCiKkHHEgYDrYl/nbxp/zEMeBjJpwE0rwAkuM79tsQ=="
 
 	if (!SUPABASE_JWT_SECRET) {
 		throw new Error("SUPABASE_JWT_SECRET is not defined in environment variables.");
