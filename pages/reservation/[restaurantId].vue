@@ -100,7 +100,7 @@ async function addReservation() {
   //   event_action: "finished",
   //   value: clientReservationValueMinusDiscount,
   // });
-  trackEvent("Schedule", { restaurant: activeRestaurant.value.name, value: clientReservationValueMinusDiscount });
+  trackEvent("Schedule", { restaurant: activeRestaurant.value.name, value: "100", currency: "EUR" });
 
   // @ts-ignore
   newReservation.value = reservation;
