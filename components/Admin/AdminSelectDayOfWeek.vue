@@ -8,6 +8,7 @@ interface AdminSelectDayOfWeekProps {
   blockedDay?: Block;
 }
 const props = defineProps<AdminSelectDayOfWeekProps>();
+const emit = defineEmits(["addOrUpdateDay", "removeDay"]);
 
 const isDropdownOpen = ref(false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
@@ -20,6 +21,10 @@ const buttonText = computed(() =>
     ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!)
     : `Seleziona ${props.blockedDaysOfWeekList?.length ? "altro" : ""} giorno`,
 );
+const addOrUpdateDay = (dayInt: number) => {
+  if (dayIsAlreadyInBlockedDaysList(dayInt)) return;
+  emit("addOrUpdateDay", props.blockedDay?.id, dayInt, props.isUpdate);
+};
 </script>
 
 <template>
@@ -38,7 +43,7 @@ const buttonText = computed(() =>
           class="px-3 py-2 text-sm"
           v-for="dayInt in 7"
           :key="dayInt"
-          @click="$emit('addOrUpdateDay', blockedDay?.id, dayInt, isUpdate)"
+          @click="addOrUpdateDay(dayInt)"
           :class="{
             'cursor-not-allowed bg-gray-50\ttext-gray-200 line-through': dayIsAlreadyInBlockedDaysList(dayInt),
             'cursor-pointer text-grey-300 hover_bg-gray-100': !dayIsAlreadyInBlockedDaysList(dayInt),
