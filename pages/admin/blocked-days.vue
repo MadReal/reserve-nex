@@ -52,16 +52,9 @@ const handleDateSelect = async (selectInfo: any) => {
       return alert("Per favore, evita di utilizzare linguaggio offensivo.");
     }
 
-    const newblockDatesPeriod = await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title);
-    let calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect(); // clear date selection
-    // calendarApi.addEvent({
-    //   id: newblockDatesPeriod?.id,
-    //   title,
-    //   start: newblockDatesPeriod?.dateStart,
-    //   end: newblockDatesPeriod?.dateEnd,
-    //   allDay: selectInfo.allDay,
-    // });
+    await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title);
+    // let calendarApi = selectInfo.view.calendar;
+    // calendarApi.unselect(); // clear date selection
   }
 };
 
