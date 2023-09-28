@@ -51,7 +51,7 @@ function onMouseleave(e: MouseEvent) {
           <h1 class="mb-2 text-4xl font-extrabold text-black md_text-7xl md_leading-[5rem]">
             Rilassati in un'atmosfera calda e raffinata
           </h1>
-          <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[10px]">
+          <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[8px]">
             L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese.
           </p>
           <NuxtLink

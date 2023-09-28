@@ -88,20 +88,15 @@ const isFormEmpty = computed(() => {
   const { id, time, date, restaurantId, discountAmount, personInstagram, ...otherDetails } = newReservation.value;
   return Object.values(otherDetails).some((value) => value === "" || value === null || value === undefined);
 });
-const errorOnInput = ref({
-  personEmail: false,
-  personPhone: false,
-});
+const errorOnInput = ref({ personEmail: false, personPhone: false });
 function validateEmail(email: string | undefined) {
-  if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) return (errorOnInput.value.personEmail = false);
-  else return (errorOnInput.value.personEmail = true);
+  errorOnInput.value.personEmail = email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ? false : true;
 }
 function validatePhone(phoneNumber: number | undefined) {
-  if (!phoneNumber || phoneNumber.toString().length < 8) return (errorOnInput.value.personPhone = true);
-  else return (errorOnInput.value.personPhone = false);
+  errorOnInput.value.personPhone = !phoneNumber || phoneNumber.toString().length < 8 ? true : false;
 }
 async function addReservation() {
-  // exit if there are any errors
+  // validate fiels and exit if there are any errors
   validateEmail(newReservation.value.personEmail);
   validatePhone(newReservation.value.personPhone);
   if (errorOnInput.value.personEmail || errorOnInput.value.personPhone) return;
