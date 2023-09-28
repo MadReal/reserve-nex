@@ -8,12 +8,11 @@ import interactionPlugin from "@fullcalendar/interaction"; // needed for dateCli
 import itLocale from "@fullcalendar/core/locales/it";
 
 import { storeToRefs } from "pinia";
-import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
 const { blockedDatesListFullCalendar, blockedDaysOfWeekList } = storeToRefs(storeBlocks);
 
-const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map((item) => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)));
 const blockedDates = computed(() => blockedDatesListFullCalendar.value.map((item) => ({ ...item, display: "background" })));
+const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map((item) => (item.dayOfWeek === 7 ? 0 : item.dayOfWeek)));
 
 const daysClosed = computed(() => {
   const isActive = blockedDaysOfWeekList.value.length > 0;
@@ -50,11 +49,6 @@ const handleDateClick = (dateClickInfo: any) => {
   dayOfWeek === 0 ? (dayOfWeek = 7) : (dayOfWeek = dayOfWeek);
 
   emit("setReservationDate", selectedDate);
-  // props.newReservation = selectedDate;
-  // storeWorkTimes.fetchWorkTimes(restaurantIdParam);
-  // storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
-  // // advance checkout step
-  // activeStep.value++;
 };
 
 const calendarOptions = ref({
@@ -62,13 +56,14 @@ const calendarOptions = ref({
   locale: itLocale,
   headerToolbar: { left: "prev", center: "title", right: "next" },
   initialView: "dayGridMonth",
+  editable: false,
   selectable: false,
   dayMaxEvents: true,
   contentHeight: 320,
-  progressiveEventRendering: true,
+  // progressiveEventRendering: true,
   events: blockedDates,
   hiddenDays: hiddenDaysOfWeek,
-  dateClick: handleDateClick,
+  // dateClick: handleDateClick,
 });
 </script>
 

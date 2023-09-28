@@ -20,9 +20,7 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
   };
 
   // Determine language based on personPhone
-  const isItalian =
-    emailBody.personPhone.startsWith("+39") ||
-    emailBody.personPhone.startsWith("+41");
+  const isItalian = emailBody.personPhone.startsWith("+39") || emailBody.personPhone.startsWith("+41");
   const language = isItalian ? "it" : "en";
   const emailSubject = emailSubjects[emailType][language];
 
@@ -41,12 +39,8 @@ export const sendEmail = async (emailType: EmailType, emailBody: any) => {
 
   function selectEmailHtml() {
     return emailType === "accepted"
-      ? language === "it"
-        ? reservationAcceptedIT(emailBody)
-        : reservationAcceptedEN(emailBody)
-      : language === "it"
-      ? reservationCancelledIT(emailBody)
-      : reservationCancelledEN(emailBody);
+      ? language === "it" ? reservationAcceptedIT(emailBody) : reservationAcceptedEN(emailBody)
+      : language === "it" ? reservationCancelledIT(emailBody) : reservationCancelledEN(emailBody);
   }
 
   const emailHtml = selectEmailHtml();

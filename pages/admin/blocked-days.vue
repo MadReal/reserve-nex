@@ -60,7 +60,7 @@ const handleDateSelect = async (selectInfo: any) => {
 
 const handleDragAndResize = (info: any) => {
   const blockedDate = info.event;
-  storeBlocks.updateBlockedDate(blockedDate.id, blockedDate.start, blockedDate.end);
+  storeBlocks.updateBlockedDate(parseInt(blockedDate.id), blockedDate.start, blockedDate.end);
 };
 
 const calendarOptions = ref({
@@ -75,7 +75,6 @@ const calendarOptions = ref({
   events: blockedDatesListFullCalendar,
   select: handleDateSelect,
   eventClick: handleEventClick,
-  // eventsSet: handleEvents
   eventDrop: handleDragAndResize,
   eventResize: handleDragAndResize,
 });
@@ -84,33 +83,49 @@ storeBlocks.fetchBlockedDaysOfWeek();
 storeBlocks.fetchBlockedDates();
 </script>
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Blocco Giorni")
+<template>
+  <div class="page__content">
+    <AdminPageTitle title="Blocco Giorni" />
 
-    .grid.border-b.md_gap-6(:class="['md_grid-cols-[2fr_1px_1fr]', {'items-center' : isblockedDaysOfWeekListShort }]")
-        AdminSectionTitle(
-          title="Giorno di Chiusura Settimanale"
-          subtitle="Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana.") 
+    <div class="grid border-b md_gap-6" :class="['md_grid-cols-[2fr_1px_1fr]', { 'items-center': isblockedDaysOfWeekListShort }]">
+      <AdminSectionTitle
+        title="Giorno di Chiusura Settimanale"
+        subtitle="Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana."
+      />
 
-        //- Divider
-        .hidden.md_block.md_h-full.md_border-r
+      <!-- divider -->
+      <div class="hidden md_block md_h-full md_border-r"></div>
 
-        .mb-8.md_mb-6.md_mt-1
-            //- Display for each day already "blocked"
-            AdminSelectDayOfWeek(v-for="day in blockedDaysOfWeekList" :key="day.id" :blockedDaysOfWeekList="blockedDaysOfWeekList", :blockedDay="day",
-                @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", @removeDay="storeBlocks.removeBlock", 
-                :isUpdate="true", :showTrash="!isblockedDaysOfWeekListShort")
-            //- Display the "empty" one, to add a new day
-            AdminSelectDayOfWeek(v-if="!isBlockedDaysOfWeekListFull", :blockedDaysOfWeekList="blockedDaysOfWeekList", 
-                @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek", 
-                :isUpdate="false", :showTrash="false")
+      <div class="mb-8 md_mb-6 md_mt-1">
+        <!-- list of already added ones -->
+        <AdminSelectDayOfWeek
+          v-for="day in blockedDaysOfWeekList"
+          :key="day.id"
+          :blockedDaysOfWeekList="blockedDaysOfWeekList"
+          :blockedDay="day"
+          @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek"
+          @removeDay="storeBlocks.removeBlock"
+          :isUpdate="true"
+          :showTrash="!isblockedDaysOfWeekListShort"
+        />
+        <!-- empty, where you can select new one -->
+        <AdminSelectDayOfWeek
+          v-if="!isBlockedDaysOfWeekListFull"
+          :blockedDaysOfWeekList="blockedDaysOfWeekList"
+          @addOrUpdateDay="storeBlocks.addOrUpdateBlockedDayOfWeek"
+          :isUpdate="false"
+          :showTrash="false"
+        />
+      </div>
+    </div>
 
-    div
-        AdminSectionTitle(
-          title="Aggiungi Periodi di Chiusura o Vacanze"
-          subtitle="Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. <br> Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
-          marginTop="mt-8")
-
-        FullCalendar.calendar-admin.mt-10.md_mt-8(:options="calendarOptions")
+    <div>
+      <AdminSectionTitle
+        title="Aggiungi Periodi di Chiusura o Vacanze"
+        subtitle="Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. &lt;br&gt; Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
+        marginTop="mt-8"
+      />
+      <FullCalendar class="calendar-admin mt-10 md_mt-8" :options="calendarOptions" />
+    </div>
+  </div>
 </template>
