@@ -35,7 +35,7 @@ loadAdminInitData();
 <template>
   <div class="hidden bg-[#F1F2F7] md_block md_min-h-screen md_basis-60">
     <div class="relative" v-on-click-outside="closeDropdown">
-      <div class="flex h-16 cursor-pointer items-center border-b border-grey-100 px-5 py-4" @click="toggleDropdown">
+      <div class="flex h-16 cursor-pointer items-center border-b border-grey-100 px-4 py-4" @click="toggleDropdown">
         <div class="mr-1.5">
           <div class="h-8 w-8 rounded-full bg-red-300"></div>
         </div>
@@ -44,12 +44,12 @@ loadAdminInitData();
       </div>
 
       <div
-        class="absolute left-2 right-2 top-14 z-10 overflow-y-scroll rounded-lg bg-white text-xs shadow-lg"
+        class="absolute left-2 right-2 top-14 z-30 overflow-y-scroll rounded-lg bg-white text-xs shadow-[0_2px_15px_-2px_rgba(0,0,0,0.1)]"
         v-show="isDropdownOpen"
       >
-        <p class="mb-2 border-b px-5 py-3 text-xs tracking-widest text-grey-200">RISTORANTI</p>
-        <div class="mx-3 mb-5 mt-3">
-          <div class="flex items-center justify-between p-3" v-for="restaurant in restaurantsList" :key="restaurant.id">
+        <p class="border-b bg-slate-50 px-4 py-3 text-xs tracking-widest text-grey-200">RISTORANTI</p>
+        <div class="mx-4 mb-5 mt-2">
+          <div class="flex items-center justify-between py-3 pl-px" v-for="restaurant in restaurantsList" :key="restaurant.id">
             <p class="cursor-pointer hover_underline" @click="switchActiveRestaurantMethod(restaurant.id)">
               {{ restaurant.name }}
             </p>
@@ -62,7 +62,7 @@ loadAdminInitData();
           </div>
 
           <div
-            class="mt-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-primary-100 p-3 hover_bg-slate-50"
+            class="mt-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-primary-100 px-3 py-2 hover_bg-slate-50"
             @click="openModalMethod('restaurant')"
           >
             <p class="leading-normal text-primary-100">Aggiungi ristorante</p>

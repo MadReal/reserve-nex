@@ -61,7 +61,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
 
 <template lang="pug">
 nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.md_relative.md_h-16
-    .flex.items-center.justify-between.h-full.mx-auto.p-4.md_p-2.md_px-3(v-on-click-outside="closeMenu")
+    .flex.items-center.justify-between.h-full.mx-auto.p-4.md_p-2.md_px-4(v-on-click-outside="closeMenu")
         //- Search Input
         .hidden.md_flex.items-center(v-if="showSerch")
             .relative
