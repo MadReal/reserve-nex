@@ -60,7 +60,7 @@ const calendarOptions = ref({
   selectable: false,
   dayMaxEvents: true,
   contentHeight: 320,
-  // progressiveEventRendering: true,
+  progressiveEventRendering: true,
   events: blockedDates,
   hiddenDays: hiddenDaysOfWeek,
   dateClick: handleDateClick,
