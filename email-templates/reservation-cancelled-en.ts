@@ -1,4 +1,4 @@
-const htmlContent = (body: any) => `
+const htmlContent = (body: any) => /* HTML */`
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -131,7 +131,7 @@ const htmlContent = (body: any) => `
     }
 
     .bg_light {
-      background: #fafafa;
+      background: #f1f1f1;
     }
 
     .bg_black {
@@ -598,7 +598,7 @@ const htmlContent = (body: any) => `
       <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
         style="margin: auto">
         <tr>
-          <td class="bg_white logo" style="padding: 0.5em 2.5em; text-align: center">
+          <td class="bg_light logo" style="padding: 0.5em 2.5em; text-align: center">
             <h1><a href="#">${body.restaurant.name}</a></h1>
           </td>
         </tr>

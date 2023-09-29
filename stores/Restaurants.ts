@@ -16,7 +16,6 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 
   // GETTERS
   const activeRestaurant = computed(() => restaurantsList.value.filter((item) => item.id === activeRestaurantId.value,)[0]);
-
   const restaurantsListFilterIsLive = computed(() => restaurantsList.value.filter((item) => item.isLive));
 
   // ACTIONS

@@ -1,4 +1,4 @@
-const htmlContent = (body: any) => `
+const htmlContent = (body: any) => /* HTML */`
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -131,7 +131,7 @@ const htmlContent = (body: any) => `
     }
 
     .bg_light {
-      background: #fafafa;
+      background: #f1f1f1;
     }
 
     .bg_black {

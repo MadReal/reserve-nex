@@ -8,11 +8,7 @@ const storeReservations = useReservationsStore();
 const { activeModalOption } = storeToRefs(storeModals);
 const { reservationsList } = storeToRefs(storeReservations);
 
-const selectedReservation = ref(
-  reservationsList.value.filter(
-    (item: Reservation) => item.id === activeModalOption.value,
-  )[0],
-);
+const selectedReservation = ref(reservationsList.value.filter((item: Reservation) => item.id === activeModalOption.value)[0]);
 const instagramName = ref(
   selectedReservation.value.personInstagram
     ? selectedReservation.value.personInstagram.includes("@")
@@ -21,15 +17,8 @@ const instagramName = ref(
     : "-",
 );
 
-const updateReservation = async (
-  reservationId: Reservation["id"],
-  isAccepted: boolean,
-) => {
-  if (
-    confirm(
-      "Sicuro di voler rifiutare la prenotazione? \nSe procedi, il cliente verrà informato della cancellazione.",
-    )
-  ) {
+const updateReservation = async (reservationId: Reservation["id"], isAccepted: boolean) => {
+  if (confirm("Sicuro di voler rifiutare la prenotazione? \nSe procedi, il cliente verrà informato della cancellazione.")) {
     await storeReservations.updateReservation(reservationId, isAccepted);
     storeModals.closeModal();
   }

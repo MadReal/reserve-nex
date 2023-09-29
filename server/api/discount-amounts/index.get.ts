@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		// * REQUEST *
 		const discountAmounts = await prisma.discountAmount.findMany({
-			where: { restaurantId: id },
+			where: { restaurantId: id }
 		});
 		return discountAmounts;
 	} catch (err) {
