@@ -97,7 +97,7 @@ function onMouseleave(e: MouseEvent) {
       ></div>
     </section>
 
-    <section class="bg-slate-200 px-4 py-28">
+    <section class="bg-slate-200 px-4 py-20">
       <div class="mx-auto max-w-screen-md text-center">
         <h2 class="mb-2 text-4xl font-semibold text-black">Come funziona il sito</h2>
         <p class="text-grey-200">
@@ -121,7 +121,7 @@ function onMouseleave(e: MouseEvent) {
     </section>
 
     <section class="bg-slate-50 px-4 py-px">
-      <div class="mx-auto my-24 flex max-w-screen-lg gap-8">
+      <div class="mx-auto my-20 flex max-w-screen-lg gap-8">
         <div class="basis-3/6">
           <NuxtImg
             class="shadow-lg shadow-slate-200"

@@ -8,6 +8,7 @@ const isNavTextWhite = computed(
   () => routeName.value === "reservation-restaurantId" || (isRouteHome.value && !hasScrolled.value),
 );
 const isNavTextBlack = computed(() => !isRouteHome.value || (isRouteHome.value && hasScrolled.value));
+const isNavBgTransp = computed(() => !hasScrolled.value || routeName.value === "reservation-restaurantId");
 
 let isMenuOpen = ref(false);
 const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
@@ -26,10 +27,11 @@ onMounted(() => {
 <template>
   <nav
     id="nav"
-    class="sticky inset-x-0 top-0 z-40 flex h-14 flex-row justify-between transition duration-100 md_fixed md_h-min md_bg-transparent"
+    class="sticky inset-x-0 top-0 z-40 flex h-14 flex-row justify-between transition duration-100 md_fixed md_h-min"
     :class="{
       'text-white ': isNavTextWhite,
       'bg-white text-black': isNavTextBlack,
+      'md_bg-transparent': isNavBgTransp,
     }"
   >
     <div class="p-4">
