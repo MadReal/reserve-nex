@@ -631,8 +631,7 @@ const htmlContent = (body: any) => /* HTML */`
                     Otherwise, you can visit our website and select a new date and time.
                   </p>
                   <p>
-                    <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">Visit
-                      Website</a>
+                    <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">VisitWebsite</a>
                   </p>
                 </td>
               </tr>

@@ -251,8 +251,7 @@ const htmlContent = (body: any) => /* HTML */`
 				style="margin: auto;">
 				<tr>
 					<td class="bg_light logo" style="padding: 0.5em 2.5em; text-align: center">
-						<h1><a href="https://restaurant-reservation-ashy.vercel.app/">${body.restaurant.name
-	}</a></h1>
+						<h1><a href="https://restaurant-reservation-ashy.vercel.app/">${body.restaurant.name}</a></h1>
 					</td>
 				</tr>
 				<!-- end tr -->
@@ -273,18 +272,14 @@ const htmlContent = (body: any) => /* HTML */`
 										<span class="subheading">Reservation</span>
 										<h2>Confirmed</h2>
 										<p>Dear ${body.personName},<br>
-											We are pleased to confirm your reservation for the day <strong>${body.date
-	}</strong> at
+											We are pleased to confirm your reservation for the day <strong>${body.date}</strong> at
 											<strong>${body.time}</strong>
 											for ${body.peopleAmount}
 											person${body.peopleAmount > 1 ? "s" : ""}.
 										</p>
 										<p>Reservation ID: #${body.reservationId}
-											${body.discountAmount
-		? `<br><span style="color: #F06A6A;">Discount:
-												${body.discountAmount}%</span>`
-		: ""
-	}</p>
+											${body.discountAmount ? `<br><span style="color: #F06A6A;">Discount: ${body.discountAmount}%</span>` : ""}
+										</p>
 										<p>Please let us know any food intolerances or allergies, in order to inform the chef.</p>
 										<p class="italic text_primary">Your table will be reserved for 1 hour and 30min.</p>
 									</div>

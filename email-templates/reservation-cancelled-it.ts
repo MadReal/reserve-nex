@@ -635,8 +635,7 @@ const htmlContent = (body: any) => /* HTML */`
                     selezionare un giorno e un orario alternativo.
                   </p>
                   <p>
-                    <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">Visita
-                      Sito</a>
+                    <a href="https://restaurant-reservation-ashy.vercel.app/" class="btn btn-black">Visita Sito</a>
                   </p>
                 </td>
               </tr>

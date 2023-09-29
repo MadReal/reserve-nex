@@ -251,8 +251,7 @@ const htmlContent = (body: any) => /* HTML */`
 				style="margin: auto;">
 				<tr>
 					<td class="bg_light logo" style="padding: 0.5em 2.5em; text-align: center">
-						<h1><a href="https://restaurant-reservation-ashy.vercel.app/">${body.restaurant.name
-	}</a></h1>
+						<h1><a href="https://restaurant-reservation-ashy.vercel.app/">${body.restaurant.name}</a></h1>
 					</td>
 				</tr>
 				<!-- end tr -->
@@ -275,19 +274,13 @@ const htmlContent = (body: any) => /* HTML */`
 										<p>Gentile ${body.personName},<br>
 											Abbiamo il piacere di confermare la prenotazione del suo tavolo il
 											giorno <strong>${body.date}</strong> alle ore <strong>${body.time}</strong>
-											per ${body.peopleAmount} person${body.peopleAmount > 1 ? "e" : "a"
-	}, come da lei richiesto.
+											per ${body.peopleAmount} person${body.peopleAmount > 1 ? "e" : "a"}, come da lei richiesto.
 										</p>
 										<p>Prenotazione: #${body.reservationId}
-											${body.discountAmount
-		? `<br><span style="color: #F06A6A;">Sconto: ${body.discountAmount}%</span>`
-		: ""
-	}</p>
-										<p>La preghiamo di volerci segnalare eventuali intoralleranze e
-											allergie alimentari, in modo da
-											informare la cucina.</p>
-										<p class="italic text_primary">Il tavolo sarà garantito per 1h e 30
-											minuti.</p>
+											${body.discountAmount ? `<br><span style="color: #F06A6A;">Sconto: ${body.discountAmount}%</span>` : ""}
+										</p>
+										<p>La preghiamo di volerci segnalare eventuali intoralleranze e allergie alimentari, in modo da informare la cucina.</p>
+										<p class="italic text_primary">Il tavolo sarà garantito per 1h e 30 minuti.</p>
 									</div>
 								</td>
 							</tr>
