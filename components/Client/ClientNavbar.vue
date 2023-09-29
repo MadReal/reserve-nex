@@ -26,9 +26,9 @@ onMounted(() => {
 <template>
   <nav
     id="nav"
-    class="sticky inset-x-0 top-0 z-40 flex h-14 flex-row justify-between transition duration-100 md_fixed md_h-min"
+    class="sticky inset-x-0 top-0 z-40 flex h-14 flex-row justify-between transition duration-100 md_fixed md_h-min md_bg-transparent"
     :class="{
-      'text-white': isNavTextWhite,
+      'text-white ': isNavTextWhite,
       'bg-white text-black': isNavTextBlack,
     }"
   >

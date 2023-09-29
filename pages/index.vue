@@ -97,38 +97,88 @@ function onMouseleave(e: MouseEvent) {
       ></div>
     </section>
 
-    <section class="bg-slate-50 px-4 py-28">
+    <section class="bg-slate-200 px-4 py-28">
       <div class="mx-auto max-w-screen-md text-center">
-        <h2 class="text-4xl font-semibold text-black">Come funziona il sito</h2>
+        <h2 class="mb-2 text-4xl font-semibold text-black">Come funziona il sito</h2>
         <p class="text-grey-200">
           Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur.
           Labore in magna adipisicing duis anim sunt ullamco nostrud.
         </p>
-      </div>
 
+        <div class="mt-8">
+          <iframe
+            class="mx-auto"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/nJTsbZojero?si=GVI_Sulfv93ZyEHx"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-slate-50 px-4 py-px">
       <div class="mx-auto my-24 flex max-w-screen-lg gap-8">
         <div class="basis-3/6">
-          <NuxtImg class="drop-shadow-lg" loading="lazy" placeholder src="/images/admin-dashboard1.webp" width="500px" />
+          <NuxtImg
+            class="shadow-lg shadow-slate-200"
+            loading="lazy"
+            placeholder
+            src="/images/admin-dashboard1.webp"
+            width="500px"
+          />
         </div>
         <div class="mt-14 basis-3/6">
-          <h2 class="text-xl font-semibold text-black">Come funziona il sito</h2>
-          <p class="text-grey-200">
-            Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur.
-            Labore in magna adipisicing duis anim sunt ullamco nostrud.
+          <h2 class="mb-2 text-xl font-semibold text-black">Vedi e gestisci le prenotazioni del ristorante</h2>
+          <p class="font-light text-grey-200">
+            Aliqua consequat qui occaecat minim enim incididunt. Qui aute commodo labore amet fugiat fugiat ipsum minim ullamco
+            dolore enim. Nulla ea mollit velit non dolor non labore deserunt dolor labore ex duis. Dolore in nostrud aliqua minim
+            ex. Non minim consequat quis laboris labore.
           </p>
         </div>
       </div>
 
       <div class="mx-auto my-24 flex max-w-screen-lg gap-8">
         <div class="mt-14 basis-3/6">
-          <h2 class="text-xl font-semibold text-black">Come funziona il sito</h2>
-          <p class="text-grey-200">
-            Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur.
-            Labore in magna adipisicing duis anim sunt ullamco nostrud.
+          <h2 class="mb-2 text-xl font-semibold text-black">Amet voluptate elit magna reprehenderit.</h2>
+          <p class="font-light text-grey-200">
+            Est nulla adipisicing qui non veniam dolore ullamco cillum commodo eu sit. Quis duis magna sunt non non ullamco mollit
+            eiusmod qui proident nulla ipsum proident. Incididunt exercitation ad ullamco elit consequat fugiat qui dolore
+            reprehenderit ut. Ad irure nisi magna ad consequat labore.
           </p>
         </div>
         <div class="basis-3/6">
-          <NuxtImg class="drop-shadow-lg" loading="lazy" placeholder src="/images/admin-dashboard2.webp" width="500px" />
+          <NuxtImg
+            class="shadow-lg shadow-slate-200"
+            loading="lazy"
+            placeholder
+            src="/images/admin-dashboard3.webp"
+            width="500px"
+          />
+        </div>
+      </div>
+
+      <div class="mx-auto my-24 flex max-w-screen-lg gap-8">
+        <div class="basis-3/6">
+          <NuxtImg
+            class="shadow-lg shadow-slate-200"
+            loading="lazy"
+            placeholder
+            src="/images/online-campaign-tracking.jpg"
+            width="500px"
+          />
+        </div>
+        <div class="mt-14 basis-3/6">
+          <h2 class="mb-2 text-xl font-semibold text-black">Meta Pixel e Google Analytics installati</h2>
+          <p class="font-light text-grey-200">
+            L'installazione di Meta Pixel e Google Analytics consente di monitorare attentamente l'attività dei visitatori sul
+            sito web. Questo fornisce dati preziosi per ottimizzare le campagne pubblicitarie, raggiungendo il pubblico giusto in
+            modo più efficiente e riducendo i costi pubblicitari. In sintesi, questi strumenti consentono di prendere decisioni
+            informate basate su dati concreti per migliorare le performance online.
+          </p>
         </div>
       </div>
     </section>
