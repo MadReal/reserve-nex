@@ -48,9 +48,9 @@ onMounted(() => {
     <!-- Nav Items Working on Tablet & Bigger Sceen -->
     <div class="hidden flex-row justify-between p-4 text-lg font-semibold md_flex">
       <nuxt-link to="/" class="navbar-item">Home</nuxt-link>
-      <a href="#about" class="navbar-item">Menu</a>
-      <a href="#contactus" class="navbar-item">Contatti </a>
-      <nuxt-link to="/admin" class="navbar-item-admin">Admin</nuxt-link>
+      <nuxt-link :to="{ path: '/', hash: '#come-funziona' }" :prefetch="false" class="navbar-item">Come funziona</nuxt-link>
+      <nuxt-link :to="{ path: '/', hash: '#vantaggi' }" :prefetch="false" class="navbar-item">Vantaggi</nuxt-link>
+      <nuxt-link to="/admin" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
     </div>
 
     <!-- Burger Nav Button on Mobile -->
@@ -78,9 +78,11 @@ onMounted(() => {
         <div class="text-black">
           <ul class="mb-8 mt-1">
             <li class="py-3" @click="toggleMenu()"><nuxt-link to="/" class="navbar-item">Home</nuxt-link></li>
-            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Menu</a></li>
-            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Contatti </a></li>
-            <li class="py-3" @click="toggleMenu()"><nuxt-link to="/admin" class="navbar-item-admin">Admin</nuxt-link></li>
+            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Come funziona</a></li>
+            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Vantaggi </a></li>
+            <li class="py-3" @click="toggleMenu()">
+              <nuxt-link to="/admin" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -88,7 +90,7 @@ onMounted(() => {
   </nav>
 </template>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .navbar-default
     @apply mx-4 border-b-2 transition duration-200 hover_border-b-2
 .navbar-item
