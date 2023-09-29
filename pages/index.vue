@@ -44,7 +44,7 @@ function onMouseleave(e: MouseEvent) {
         class="relative z-20 mx-auto flex h-screen max-w-screen-xl items-center justify-center px-4 py-28 md_h-screen md_py-48"
       >
         <div class="relative z-20 md_basis-1/2">
-          <h1 class="mb-2 text-4xl font-extrabold text-black md_text-7xl md_leading-[5rem]">
+          <h1 class="mb-2 text-4xl font-extrabold text-black drop-shadow-lg md_text-7xl md_leading-[4.8rem]">
             Rilassati in un'atmosfera calda e raffinata
           </h1>
           <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[8px]">
