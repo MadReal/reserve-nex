@@ -105,7 +105,7 @@ const onDrop = (event: any) => {
 
         <AdminContainerGrid2ColsBorder class="md_pr-6">
           <div class="md_py-6">
-            <p class="mb-4 mt-1 capitalize">{{ $t("admin.lunch") }}</p>
+            <p class="mb-4 mt-1 capitalize">{{ $t("lunch") }}</p>
             <AdminContainerGrid4Cols>
               <AdminBoxDiscount
                 v-for="workTime in lunchWorkTimesList"
@@ -119,7 +119,7 @@ const onDrop = (event: any) => {
           <AdminContainerDivider />
 
           <div class="md_py-6">
-            <p class="mb-4 mt-1 capitalize">{{ $t("admin.dinner") }}</p>
+            <p class="mb-4 mt-1 capitalize">{{ $t("dinner") }}</p>
             <AdminContainerGrid4Cols>
               <AdminBoxDiscount
                 v-for="workTime in dinnerWorkTimesList"

@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { vOnClickOutside } from "@vueuse/components";
 const routeName = computed(() => useRoute().name);
-const { setLocale } = useI18n();
+const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
+const isIT = computed(() => locale.value === "it");
 
 const hasScrolled = ref(); // obtain the reference
 const isRouteHome = computed(() => useRoute().path === "/");
-const isNavTextWhite = computed(
-  () => routeName.value === "reservation-restaurantId" || (isRouteHome.value && !hasScrolled.value),
-);
-const isNavTextBlack = computed(() => !isRouteHome.value || (isRouteHome.value && hasScrolled.value));
-const isNavBgTransp = computed(() => !hasScrolled.value || routeName.value === "reservation-restaurantId");
+const isNavTextWhite = computed(() => !hasScrolled.value && routeName.value !== "reservation");
+const isNavTextBlack = computed(() => hasScrolled.value || routeName.value === "reservation");
+const isNavBgTransp = computed(() => !hasScrolled.value);
 
 let isMenuOpen = ref(false);
 const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
@@ -50,19 +49,33 @@ onMounted(() => {
     <!-- Nav Items Working on Tablet & Bigger Sceen -->
     <div class="hidden flex-row justify-between p-4 text-lg font-semibold md_flex">
       <nuxt-link :to="localePath('/')" class="navbar-item">Home</nuxt-link>
-      <nuxt-link :to="{ path: localePath('/'), hash: '#how' }" :prefetch="false" class="navbar-item">Come funziona</nuxt-link>
-      <nuxt-link :to="{ path: localePath('/'), hash: '#benefits' }" :prefetch="false" class="navbar-item">Vantaggi</nuxt-link>
-      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
+      <nuxt-link :to="{ path: localePath('/'), hash: '#how' }" :prefetch="false" class="navbar-item">
+        {{ $t("home.navbar.how_it_works") }}
+      </nuxt-link>
+      <nuxt-link :to="{ path: localePath('/'), hash: '#benefits' }" :prefetch="false" class="navbar-item">
+        {{ $t("home.navbar.benefits") }}
+      </nuxt-link>
+      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin">
+        {{ $t("home.navbar.admin") }}
+      </nuxt-link>
 
       <div
-        class="flex items-center rounded-md border"
+        class="flex items-center overflow-hidden rounded-md border"
         :class="{ 'border-white/20 text-white': isNavTextWhite, 'border-black/20 text-black': isNavTextBlack }"
       >
-        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('it')">
+        <div
+          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
+          :class="{ 'bg-black/10': isIT && isNavTextBlack, 'bg-white/10': isIT && isNavTextWhite }"
+          @click.prevent.stop="setLocale('it')"
+        >
           <p>IT</p>
         </div>
         <div class="h-full w-px" :class="{ 'bg-white/20': isNavTextWhite, 'bg-black/20': isNavTextBlack }"></div>
-        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('en')">
+        <div
+          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
+          :class="{ 'bg-black/10': !isIT && isNavTextBlack, 'bg-white/10': !isIT && isNavTextWhite }"
+          @click.prevent.stop="setLocale('en')"
+        >
           <p>EN</p>
         </div>
       </div>

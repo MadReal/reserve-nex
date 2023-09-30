@@ -15,20 +15,20 @@ const emit = defineEmits(["goBack", "addReservation"]);
       <p class="-mt-1 text-xs text-gray-500">{{ restaurant.address }}, {{ restaurant.city }} {{ restaurant.zipCode }}</p>
     </div>
     <div class="mt-4 inline-flex gap-2 md_ml-auto md_mt-0">
-      <button class="rounded bg-black p-2 text-white" v-if="activeStep === 1" @click="navigateTo('/reservation')">
-        Torna Indietro
+      <button class="rounded bg-black p-2 capitalize text-white" v-if="activeStep === 1" @click="navigateTo('/reservation')">
+        {{ $t("client_reservation.btn_go_back") }}
       </button>
-      <button class="rounded bg-black p-2 text-white" v-else-if="activeStep !== 4" @click="$emit('goBack')">
-        {{ activeStep === 1 ? "Torna Indietro" : "Annulla" }}
+      <button class="rounded bg-black p-2 capitalize text-white" v-else-if="activeStep !== 4" @click="$emit('goBack')">
+        {{ activeStep === 1 ? $t("client_reservation.btn_go_back") : $t("client_reservation.btn_cancel") }}
       </button>
       <button
-        class="rounded bg-primary-100 p-2 text-white"
+        class="rounded bg-primary-100 p-2 capitalize text-white"
         v-if="activeStep === 3"
         :disabled="isButtonDisabled"
         :class="{ 'disabled_opacity-25': isButtonDisabled }"
         @click="$emit('addReservation')"
       >
-        Conferma
+        {{ $t("client_reservation.btn_confirm") }}
       </button>
     </div>
   </div>

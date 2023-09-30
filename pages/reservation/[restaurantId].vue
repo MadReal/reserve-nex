@@ -17,9 +17,10 @@ const restaurantIdParam = parseInt(route.params.restaurantId.toString());
 // logic to move between steps
 const activeStep = ref(1);
 const goToStep = (stepToGo: number) => {
-  newReservation.value.time = "";
-  // if already finished, can't go back
-  if (activeStep.value === 4) return;
+  // if already finished or click is on 4, exit
+  if (stepToGo === 4 || activeStep.value === 4) return;
+  // always reset time, but when on step 3
+  if (stepToGo !== 3 && activeStep.value !== 3) newReservation.value.time = "";
   // always go to previous stepToGo
   if (stepToGo < activeStep.value) activeStep.value = stepToGo;
 };
@@ -114,6 +115,7 @@ async function addReservation() {
     <section class="mx-auto max-w-screen-xl px-4 pb-20 pt-8 md_pt-36">
       <div class="relative z-10 mx-auto min-h-min w-full shadow-xl shadow-[rgba(0,0,0,0.03)] md_w-6/12">
         <ClientReservationSteps :activeStep="activeStep" @goToStep="goToStep" />
+
         <div class="relative z-10 rounded-b-lg border border-t-0 bg-white">
           <ClientReservation1Calendar v-if="activeStep === 1" @setReservationDate="setReservationDate" />
 

@@ -1,8 +1,16 @@
 {
+  "lunch": "Lunch",
+  "dinner": "Dinner",
+  "total": "total",
   "home": {
+    "navbar": {
+      "how_it_works": "How It Works",
+      "benefits": "Benefits",
+      "admin": "See Dashboard"
+    },
     "header": {
       "title": "Reservation Manager",
-      "description": "L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese",
+      "description": "qualcosa in inglese che è poi da scrivere bene fabio",
       "btn1": "Test Reservation",
       "btn2": "See Dashboard"
     },
@@ -15,10 +23,24 @@
       "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
     }
   },
+  "client_reservation": {
+    "select_restaurant": "Select Restaurant",
+    "days_closed": "Closed Day",
+    "booking_at": "You are booking for",
+    "discount": "Discount",
+    "input_name": "Name",
+    "input_people_amount": "People #",
+    "input_phone": "Phone",
+    "input_instagram": "optional",
+    "btn_go_back": "Go Back",
+    "btn_cancel": "Cancel",
+    "btn_confirm": "Confirm",
+    "congrats": "Congratulations",
+    "wait_on_day": "we're expecting you on",
+    "at_time": "at",
+    "order": "Order"
+  },
   "admin": {
-    "lunch": "Lunch",
-    "dinner": "Dinner",
-    "total": "total",
     "input_search_placeholder": "Search reservation",
     "restaurants": {
       "page_name": "Restaurants",

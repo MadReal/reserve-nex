@@ -111,7 +111,10 @@ const boxClasses = ref({
       class="flex h-5 items-center justify-center whitespace-nowrap rounded-sm bg-red-500 px-1 text-center text-sm text-white"
       :class="{ 'opacity-10': isTimeBlocked || isTimePast }"
     >
-      <p class="text-xs"><span class="relative -top-px text-[9px] tracking-tight">Sconto</span> {{ discountAmountOnTime }}%</p>
+      <p class="text-xs capitalize">
+        <span class="relative -top-px text-[9px] tracking-tight"> {{ $t("client_reservation.discount") }} </span>
+        {{ discountAmountOnTime }}%
+      </p>
     </div>
   </div>
 </template>

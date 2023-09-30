@@ -23,11 +23,13 @@ const props = defineProps<Props>();
 
       <div class="flex items-center gap-1 whitespace-nowrap" v-if="reservationDiscountAmount">
         <SVGIcon class="text-red-500" svg="discount" :size="16" />
-        <p class="text-sm text-red-400"><span class="text-xs tracking-tight">Sconto</span> {{ reservationDiscountAmount }}%</p>
+        <p class="text-sm text-red-400">
+          <span class="text-xs tracking-tight">{{ $t("client_reservation.discount") }}</span> {{ reservationDiscountAmount }}%
+        </p>
       </div>
     </div>
     <p class="pt-3 text-xs text-grey-100" v-if="restaurant">
-      Stai prenotando per {{ restaurant.name }} - {{ restaurant.address }}, {{ restaurant.city }}
+      {{ $t("client_reservation.booking_at") }} {{ restaurant.name }} - {{ restaurant.address }}, {{ restaurant.city }}
       {{ restaurant.zipCode }}
     </p>
   </div>

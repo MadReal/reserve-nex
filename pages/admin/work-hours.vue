@@ -15,7 +15,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 
     <AdminContainerGrid2ColsBorder>
       <div class="md_mb-6">
-        <p class="mb-4 mt-1 capitalize">{{ $t("admin.lunch") }}</p>
+        <p class="mb-4 mt-1 capitalize">{{ $t("lunch") }}</p>
         <AdminAddDeleteWorkTime
           :workTimes="lunchWorkTimesList"
           :isLunch="true"
@@ -27,7 +27,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
       <AdminContainerDivider />
 
       <div class="md_mb-6">
-        <p class="mb-4 mt-1 capitalize">{{ $t("admin.dinner") }}</p>
+        <p class="mb-4 mt-1 capitalize">{{ $t("dinner") }}</p>
         <AdminAddDeleteWorkTime
           :workTimes="dinnerWorkTimesList"
           :isLunch="false"

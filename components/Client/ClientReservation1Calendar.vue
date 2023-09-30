@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const emit = defineEmits(["setReservationDate"]);
 
+const { locale } = useI18n();
+const isIT = computed(() => locale.value === "it");
+
 // https://github.com/fullcalendar/fullcalendar-vue
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -16,8 +19,10 @@ const hiddenDaysOfWeek = computed(() => blockedDaysOfWeekList.value.map((item) =
 
 const daysClosed = computed(() => {
   const isActive = blockedDaysOfWeekList.value.length > 0;
-  const dayOrDaysWord = blockedDaysOfWeekList.value.length > 1 ? "Giorni" : "Giorno";
-  const mainSentence = `${dayOrDaysWord} di chiusura: `;
+  const isMultipleDays = blockedDaysOfWeekList.value.length > 1;
+  const mainSentence = isIT.value
+    ? `${isMultipleDays ? "Giorni" : "Giorno"} di chiusura: `
+    : `Closed Day${isMultipleDays ? "s" : ""}:`;
   const listOfDays = blockedDaysOfWeekList.value.map((item) => useTranslateDayOfWeek(item.dayOfWeek!)).join(", ");
   return { isActive, mainSentence, listOfDays };
 });
@@ -53,7 +58,7 @@ const handleDateClick = (dateClickInfo: any) => {
 
 const calendarOptions = ref({
   plugins: [dayGridPlugin, interactionPlugin],
-  locale: itLocale,
+  locale: isIT.value ? itLocale : "",
   headerToolbar: { left: "prev", center: "title", right: "next" },
   initialView: "dayGridMonth",
   editable: false,

@@ -9,7 +9,7 @@ import "vue-tel-input/vue-tel-input.css";
 const telOptions = {
   id: "person-phone",
   name: "person-phone",
-  placeholder: "Telefono*",
+  placeholder: "0409128503*",
   showDialCode: true,
   required: true,
   // maxlength: 20,
@@ -42,20 +42,20 @@ const { activeRestaurant } = storeToRefs(storeRestaurants);
     <div class="md_mt-6">
       <div class="mb-2 flex gap-4">
         <div class="flex-grow">
-          <label class="text-xs" for="person-name">Nome</label>
+          <label class="text-xs" for="person-name">{{ $t("client_reservation.input_name") }}</label>
           <input
             class="h-10 w-full rounded-md border border-grey-100 bg-transparent px-2 py-1 text-xs text-black placeholder_text-grey-100 focus_border-grey-300 focus_outline-none"
             v-model="personName"
             name="person-name"
             id="person-name"
             type="text"
-            placeholder="Nome*"
+            :placeholder="`${$t('client_reservation.input_name')}*`"
             autocomplete="name"
             required
           />
         </div>
         <div class="basis-20">
-          <label class="text-xs" for="people-amount">Persone</label>
+          <label class="text-xs" for="people-amount">{{ $t("client_reservation.input_people_amount") }}</label>
           <div class="flex h-10 w-full rounded-md border border-grey-100 bg-transparent text-xs">
             <select
               class="w-full border-r-4 border-transparent bg-transparent px-2 py-1 focus_border-transparent focus_ring-transparent"
@@ -82,7 +82,7 @@ const { activeRestaurant } = storeToRefs(storeRestaurants);
         placeholder="Email*"
         autocomplete="email"
         required
-      /><label class="text-xs" for="person-phone">Telefono</label>
+      /><label class="text-xs" for="person-phone">{{ $t("client_reservation.input_phone") }}</label>
       <VueTelInput
         class="mb-2 h-10 w-full rounded-md border bg-transparent px-2 py-1 pl-0 text-xs text-black focus_border-grey-300 focus_outline-none"
         :class="{
@@ -95,7 +95,7 @@ const { activeRestaurant } = storeToRefs(storeRestaurants);
         :inputOptions="telOptions"
         :preferredCountries="preferredCountries"
       />
-      <label class="text-xs" for="person-instagram">Instagram (opzionale)</label>
+      <label class="text-xs" for="person-instagram">Instagram ({{ $t("client_reservation.input_instagram") }})</label>
       <input
         class="mb-2 h-10 w-full rounded-md border border-grey-100 bg-transparent px-2 py-1 text-xs text-black placeholder_text-grey-100 focus_border-grey-300 focus_outline-none"
         v-model="personInstagram"

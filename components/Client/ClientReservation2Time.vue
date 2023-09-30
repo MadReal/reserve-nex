@@ -14,7 +14,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
   <div class="px-4 py-6 md_px-10" v-if="reservation && reservation.date">
     <ClientReservationInfo :reservationDate="reservation.date" />
     <div class="md_my-6" v-if="lunchWorkTimesList.length">
-      <p class="mb-4">Pranzo</p>
+      <p class="mb-4 capitalize">{{ $t("lunch") }}</p>
       <div class="my-3 grid grid-cols-3 gap-2 md_grid-cols-5">
         <ClientBoxWorkTime
           v-for="workTime in lunchWorkTimesList"
@@ -28,7 +28,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
     </div>
 
     <div class="md_my-6" v-if="dinnerWorkTimesList.length">
-      <p class="mb-4">Cena</p>
+      <p class="mb-4 capitalize">{{ $t("dinner") }}</p>
       <div class="my-3 grid grid-cols-3 gap-2 md_grid-cols-5">
         <ClientBoxWorkTime
           v-for="workTime in dinnerWorkTimesList"

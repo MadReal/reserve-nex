@@ -1,5 +1,13 @@
 {
+  "lunch": "Pranzo",
+  "dinner": "Cena",
+  "total": "totale",
   "home": {
+    "navbar": {
+      "how_it_works": "Come Funziona",
+      "benefits": "Vantaggi",
+      "admin": "Vedi Gestionale"
+    },
     "header": {
       "title": "Gestionale di Prenotazione",
       "description": "L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese",
@@ -15,10 +23,24 @@
       "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
     }
   },
+  "client_reservation": {
+    "select_restaurant": "Seleziona il Ristorante",
+    "days_closed": "Giorno di chiusura",
+    "booking_at": "Stai prenotando per",
+    "discount": "Sconto",
+    "input_name": "Name",
+    "input_people_amount": "Persone #",
+    "input_phone": "Telefono",
+    "input_instagram": "opzionale",
+    "btn_go_back": "torna indietro",
+    "btn_cancel": "annulla",
+    "btn_confirm": "conferma",
+    "congrats": "Congratulazioni",
+    "wait_on_day": "ti aspettiamo il",
+    "at_time": "alle",
+    "order": "Ordine"
+  },
   "admin": {
-    "lunch": "Pranzo",
-    "dinner": "Cena",
-    "total": "totale",
     "input_search_placeholder": "Cerca prenotazione",
     "restaurants": {
       "page_name": "Ristoranti",
