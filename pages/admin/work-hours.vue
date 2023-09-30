@@ -11,7 +11,7 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 
 <template>
   <div class="page__content">
-    <AdminPageTitle :title="$t('admin.work_hours.page_name')" />
+    <AdminPageTitle :title="$t('admin.work_hours.page_name')" :subtitle="$t('admin.work_hours.page_subtitle')" />
 
     <AdminContainerGrid2ColsBorder>
       <div class="md_mb-6">

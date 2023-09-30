@@ -2,7 +2,9 @@
 // @ts-ignore
 import debounce from "lodash.debounce";
 import { vOnClickOutside } from "@vueuse/components";
-const { setLocale } = useI18n();
+const { locale, setLocale } = useI18n();
+const localePath = useLocalePath();
+const isIT = computed(() => locale.value === "it");
 
 import { storeToRefs } from "pinia";
 const storeRestaurants = useRestaurantsStore();
@@ -62,7 +64,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
 
 <template>
   <nav class="sticky left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
-    <div class="mx-auto flex h-full items-stretch justify-between p-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
+    <div class="mx-auto flex h-full items-stretch justify-between px-2 py-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
       <div v-if="showSerch" class="hidden items-center md_flex">
         <div class="relative">
           <input
@@ -166,13 +168,21 @@ watch(search, (newSearch) => delayedSearch(newSearch));
       </AdminMenu>
 
       <div
-        class="ml-auto mr-2 flex h-full min-h-[30px] items-center self-center rounded-md border border-black/20 text-black md_h-4/6"
+        class="ml-auto mr-3 flex h-full min-h-[30px] items-center self-center overflow-hidden rounded-md border border-black/20 text-black md_h-4/6"
       >
-        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('it')">
+        <div
+          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
+          :class="{ 'bg-slate-100/80': isIT }"
+          @click.prevent.stop="setLocale('it')"
+        >
           <p>IT</p>
         </div>
         <div class="h-full w-px bg-black/20"></div>
-        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('en')">
+        <div
+          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
+          :class="{ 'bg-slate-100/80': !isIT }"
+          @click.prevent.stop="setLocale('en')"
+        >
           <p>EN</p>
         </div>
       </div>

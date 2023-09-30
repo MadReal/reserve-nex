@@ -55,6 +55,7 @@
     },
     "work_hours": {
       "page_name": "Work Hours",
+      "page_subtitle": "Enter your restaurant's opening hours, during which customers can make reservations. You'll be able to block specific hours or days on other pages later.",
       "btn_add_work_hour": "add time",
       "btn_select_work_hour": "select time"
     },

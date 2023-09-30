@@ -17,7 +17,7 @@ const props = defineProps<AdminPageTitleProps>();
 
       <slot />
     </div>
-    <p class="mt-1 text-sm font-light text-grey-200 opacity-60" v-if="subtitle">
+    <p class="mt-1 text-sm font-light text-grey-200 opacity-60 md_w-8/12" v-if="subtitle">
       {{ subtitle }}
     </p>
   </div>

@@ -55,6 +55,7 @@
     },
     "work_hours": {
       "page_name": "Gestione Orari",
+      "page_subtitle": "Inserisci gli orari di apertura del tuo ristorante, durante i quali i clienti possono effettuare prenotazioni. Potrai bloccare specifiche ore o giorni in seguito su altre pagine.",
       "btn_add_work_hour": "aggiungi orario",
       "btn_select_work_hour": "seleziona orario"
     },
