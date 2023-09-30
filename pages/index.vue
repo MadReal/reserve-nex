@@ -40,20 +40,20 @@ function onMouseleave(e: MouseEvent) {
       >
         <div class="relative z-20 md_basis-1/2">
           <h1 class="mb-2 text-4xl font-extrabold text-black drop-shadow-lg md_text-7xl md_leading-[4.8rem]">
-            Gestionale di Prenotazione
+            {{ $t("home.header.title") }}
           </h1>
           <p class="mb-4 font-light text-grey-300 md_mb-6 md_text-lg md_leading-10 md_tracking-[8px]">
-            L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese.
+            {{ $t("home.header.description") }}
           </p>
           <NuxtLink
             class="mr-3 inline-flex justify-center rounded bg-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-white hover_bg-primary-200"
             to="/reservation"
-            >Prova Prenotazione
+            >{{ $t("home.header.btn1") }}
           </NuxtLink>
           <NuxtLink
             class="inline-flex justify-center rounded border border-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-primary-100 hover_bg-primary-100/10"
             to="/admin"
-            >Vedi Gestionale
+            >{{ $t("home.header.btn2") }}
           </NuxtLink>
         </div>
 
@@ -92,7 +92,7 @@ function onMouseleave(e: MouseEvent) {
       ></div>
     </section>
 
-    <section class="bg-slate-200 px-4 py-20" id="come-funziona">
+    <section class="bg-slate-200 px-4 py-20" id="how">
       <div class="mx-auto max-w-screen-md text-center">
         <h2 class="mb-2 text-4xl font-semibold text-black">Come funziona il sito</h2>
         <p class="text-grey-200">
@@ -115,7 +115,7 @@ function onMouseleave(e: MouseEvent) {
       </div>
     </section>
 
-    <section class="bg-slate-50 px-4 py-px" id="vantaggi">
+    <section class="bg-slate-50 px-4 py-px" id="benefits">
       <div class="mx-auto my-20 max-w-screen-md text-center">
         <h2 class="mb-2 text-4xl font-semibold text-black">Vantaggi</h2>
         <p class="text-grey-200">

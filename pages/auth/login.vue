@@ -47,7 +47,7 @@ async function loginWithEmail() {
       <div class="text-center">
         <p class="text-2xl font-semibold text-white">Ciao, Admin!</p>
         <p class="mb-5 text-base font-light tracking-wide text-white">Entra nel tuo account</p>
-        <form>
+        <form id="reservation" name="reservation">
           <input
             class="mb-2 w-full rounded-md border border-primary-100 bg-transparent p-3 text-sm text-white placeholder_text-grey-100 focus_border-white focus_outline-none"
             v-model="email"

@@ -1,0 +1,36 @@
+{
+  "navbar": {},
+  "home": {
+    "header": {
+      "title": "Gestionale di Prenotazione",
+      "description": "L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese",
+      "btn1": "Prova Prenotazione",
+      "btn2": "Vedi Gestionale"
+    },
+    "section1": {
+      "title": "Come funziona il sito",
+      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+    },
+    "section2": {
+      "title": "Vantaggi",
+      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+    }
+  },
+  "admin": {
+    "sidebar_links": {
+      "reservations": "Prenotazioni",
+      "day_summary": "Riepilogo Giorno",
+      "manage_work_hours": "Gestione Orari",
+      "manage_discounts": "Gestione Sconti",
+      "blocks": "Gestione Blocchi",
+      "blocked_days": "Blocco Giorni",
+      "blocked_time": "Blocco Orari",
+      "restaurants": "RISTORANTI",
+      "add_restaurant": "Aggiungi ristorante"
+    }
+  },
+  "404": {
+    "title": "Oops!",
+    "subtitle": "Non troviamo la pagina che stai cercando."
+  }
+}

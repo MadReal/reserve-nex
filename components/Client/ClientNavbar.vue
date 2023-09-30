@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { vOnClickOutside } from "@vueuse/components";
 const routeName = computed(() => useRoute().name);
+const { setLocale } = useI18n();
+const localePath = useLocalePath();
 
 const hasScrolled = ref(); // obtain the reference
 const isRouteHome = computed(() => useRoute().path === "/");
@@ -47,10 +49,23 @@ onMounted(() => {
 
     <!-- Nav Items Working on Tablet & Bigger Sceen -->
     <div class="hidden flex-row justify-between p-4 text-lg font-semibold md_flex">
-      <nuxt-link to="/" class="navbar-item">Home</nuxt-link>
-      <nuxt-link :to="{ path: '/', hash: '#come-funziona' }" :prefetch="false" class="navbar-item">Come funziona</nuxt-link>
-      <nuxt-link :to="{ path: '/', hash: '#vantaggi' }" :prefetch="false" class="navbar-item">Vantaggi</nuxt-link>
-      <nuxt-link to="/admin" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
+      <nuxt-link :to="localePath('/')" class="navbar-item">Home</nuxt-link>
+      <nuxt-link :to="{ path: localePath('/'), hash: '#how' }" :prefetch="false" class="navbar-item">Come funziona</nuxt-link>
+      <nuxt-link :to="{ path: localePath('/'), hash: '#benefits' }" :prefetch="false" class="navbar-item">Vantaggi</nuxt-link>
+      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
+
+      <div
+        class="flex items-center rounded-md border"
+        :class="{ 'border-white/20 text-white': isNavTextWhite, 'border-black/20 text-black': isNavTextBlack }"
+      >
+        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('it')">
+          <p>IT</p>
+        </div>
+        <div class="h-full w-px" :class="{ 'bg-white/20': isNavTextWhite, 'bg-black/20': isNavTextBlack }"></div>
+        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('en')">
+          <p>EN</p>
+        </div>
+      </div>
     </div>
 
     <!-- Burger Nav Button on Mobile -->
@@ -77,7 +92,7 @@ onMounted(() => {
       <div class="absolute inset-x-0 top-14 z-10 border-b bg-white" v-show="isMenuOpen">
         <div class="text-black">
           <ul class="mb-8 mt-1">
-            <li class="py-3" @click="toggleMenu()"><nuxt-link to="/" class="navbar-item">Home</nuxt-link></li>
+            <li class="py-3" @click="toggleMenu()"><nuxt-link :to="localePath('/')" class="navbar-item">Home</nuxt-link></li>
             <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Come funziona</a></li>
             <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Vantaggi </a></li>
             <li class="py-3" @click="toggleMenu()">
@@ -92,7 +107,7 @@ onMounted(() => {
 
 <style lang="sass" scoped>
 .navbar-default
-    @apply mx-4 border-b-2 transition duration-200 hover_border-b-2
+    @apply mx-4 border-b-2 transition duration-200 hover_border-b-2 cursor-pointer
 .navbar-item
     @apply navbar-default border-transparent hover_border-primary-200
 .navbar-item-admin

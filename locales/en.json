@@ -1,0 +1,22 @@
+{
+  "home": {
+    "header": {
+      "title": "Reservation Manager",
+      "description": "L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese",
+      "btn1": "Test Reservation",
+      "btn2": "See Dashboard"
+    },
+    "section1": {
+      "title": "How does it work?",
+      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+    },
+    "section2": {
+      "title": "Vantaggi",
+      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+    }
+  },
+  "404": {
+    "title": "Oops!",
+    "subtitle": "Non troviamo la pagina che stai cercando."
+  }
+}

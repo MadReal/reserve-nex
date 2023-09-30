@@ -47,7 +47,9 @@ loadAdminInitData();
         class="absolute left-2 right-2 top-14 z-30 overflow-y-scroll rounded-lg bg-white text-xs shadow-[0_2px_15px_-2px_rgba(0,0,0,0.1)]"
         v-show="isDropdownOpen"
       >
-        <p class="border-b bg-slate-50 px-4 py-3 text-xs tracking-widest text-grey-200">RISTORANTI</p>
+        <p class="border-b bg-slate-50 px-4 py-3 text-xs uppercase tracking-widest text-grey-200">
+          {{ $t("admin.sidebar_links.restaurants") }}
+        </p>
         <div class="mx-4 mb-5 mt-2">
           <div class="flex items-center justify-between py-3 pl-px" v-for="restaurant in restaurantsList" :key="restaurant.id">
             <p class="cursor-pointer hover_underline" @click="switchActiveRestaurantMethod(restaurant.id)">
@@ -65,7 +67,7 @@ loadAdminInitData();
             class="mt-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-primary-100 px-3 py-2 hover_bg-slate-50"
             @click="openModalMethod('restaurant')"
           >
-            <p class="leading-normal text-primary-100">Aggiungi ristorante</p>
+            <p class="capitalize leading-normal text-primary-100">{{ $t("admin.sidebar_links.add_restaurant") }}</p>
             <SVGIcon class="text-primary-100" svg="plus" :size="15"></SVGIcon>
           </div>
         </div>
