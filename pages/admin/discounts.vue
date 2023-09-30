@@ -99,7 +99,7 @@ const onDrop = (event: any) => {
             :class="{ '!border-orange-500 bg-orange-500/10': selectedDayOfWeek === 10 }"
             @click="selectedDayOfWeek = 10"
           >
-            Tutti i Giorni
+            {{ useTranslateDayOfWeek(10) }}
           </div>
         </div>
 

@@ -34,7 +34,7 @@
       "select_day": "Select day",
       "discount_title": "Discounts",
       "discount_description": "Add new discounts and drag them to the desired time.",
-      "discount_dropbox": "Drag to apply the discount to all time slots of the selected day",
+      "discount_dropbox": "Drag to apply the discount to all time slots on the chosen day",
       "btn_reset_day": "Reset Day",
       "btn_reset_all": "Reset All"
     },

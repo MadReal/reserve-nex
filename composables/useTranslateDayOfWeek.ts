@@ -1,20 +1,25 @@
 export default function useTranslateDayOfWeek(dayOfWeek: DayOfWeek): string {
+	const { locale } = useI18n();
+	const isIT = locale.value === 'it';
+
 	switch (dayOfWeek) {
 		case 1:
-			return "Lunedì";
+			return isIT ? 'Lunedì' : 'Monday';
 		case 2:
-			return "Martedì";
+			return isIT ? 'Martedì' : 'Tuesday';
 		case 3:
-			return "Mercoledì";
+			return isIT ? 'Mercoledì' : 'Wednesday';
 		case 4:
-			return "Giovedì";
+			return isIT ? 'Giovedì' : 'Thursday';
 		case 5:
-			return "Venerdì";
+			return isIT ? 'Venerdì' : 'Friday';
 		case 6:
-			return "Sabato";
+			return isIT ? 'Sabato' : 'Saturday';
 		case 7:
-			return "Domenica";
+			return isIT ? 'Domenica' : 'Sunday';
+		case 10:
+			return isIT ? 'Tutti i Giorni' : 'Every Day';
 		default:
-			throw new Error("Invalid day of week");
+			throw new Error('Invalid day of the week');
 	}
 }

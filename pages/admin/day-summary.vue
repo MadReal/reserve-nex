@@ -47,8 +47,8 @@ const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !stor
     />
     <AdminContainerGrid2ColsBorder v-else>
       <div class="md_mb-6">
-        <p class="mb-4 mt-1">
-          Pranzo <span class="text-sm text-grey-200">(totale: {{ lunchReservationsPeopleAmount }})</span>
+        <p class="mb-4 mt-1 capitalize">
+          {{ $t("admin.lunch") }} <span class="text-sm text-grey-200">(totale: {{ lunchReservationsPeopleAmount }})</span>
         </p>
         <AdminContainerGrid4Cols>
           <AdminBoxReservation
@@ -61,10 +61,10 @@ const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !stor
           />
         </AdminContainerGrid4Cols>
       </div>
-      <AdminContainerDivider></AdminContainerDivider>
+      <AdminContainerDivider />
       <div class="md_mb-6">
-        <p class="mb-4 mt-1">
-          Cena <span class="text-sm text-grey-200">(totale: {{ dinnerReservationsPeopleAmount }})</span>
+        <p class="mb-4 mt-1 capitalize">
+          {{ $t("admin.dinner") }} <span class="text-sm text-grey-200">(totale: {{ dinnerReservationsPeopleAmount }})</span>
         </p>
         <AdminContainerGrid4Cols>
           <AdminBoxReservation
