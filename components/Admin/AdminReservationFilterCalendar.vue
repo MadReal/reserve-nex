@@ -32,7 +32,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
       {{ selectedDate ? useDateFormatting(selectedDate) : "Seleziona data" }}
     </p>
     <div class="p-1 hover_text-grey-300" @click="removeDate()" v-if="selectedDate">
-      <SVGIcon svg="close"></SVGIcon>
+      <SVGIcon svg="close" />
     </div>
 
     <div v-show="isDropdownCalendarOpen" class="absolute right-0 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_-left-3">

@@ -40,7 +40,7 @@ loadAdminInitData();
           <div class="h-8 w-8 rounded-full bg-red-300"></div>
         </div>
         <p class="basis-3/5 text-sm">{{ activeRestaurant?.name }}</p>
-        <SVGIcon class="ml-auto text-grey-200 hover_text-grey-300" svg="arrow-down" :size="20"></SVGIcon>
+        <SVGIcon class="ml-auto text-grey-200 hover_text-grey-300" svg="arrow-down" :size="20" />
       </div>
 
       <div
@@ -60,7 +60,7 @@ loadAdminInitData();
               svg="edit"
               :size="15"
               @click="openModalMethod('restaurant', restaurant.id)"
-            ></SVGIcon>
+            />
           </div>
 
           <div
@@ -68,7 +68,7 @@ loadAdminInitData();
             @click="openModalMethod('restaurant')"
           >
             <p class="capitalize leading-normal text-primary-100">{{ $t("admin.sidebar_links.add_restaurant") }}</p>
-            <SVGIcon class="text-primary-100" svg="plus" :size="15"></SVGIcon>
+            <SVGIcon class="text-primary-100" svg="plus" :size="15" />
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const emit = defineEmits([]);
 <template>
   <div class="flex items-center justify-center gap-5 px-4 py-16 md_px-10 md_py-24">
     <div class="text-center">
-      <SVGIcon class="mx-auto mb-4 text-primary-100" svg="check" :size="60"></SVGIcon>
+      <SVGIcon class="mx-auto mb-4 text-primary-100" svg="check" :size="60" />
       <p class="text-base md_text-lg">Congratulazioni {{ reservation.personName }},</p>
       <p class="mt-1 text-sm md_text-base">
         ti aspettiamo il {{ useDateFormatting(reservation.date!) }} alle {{ reservation.time }}

@@ -41,7 +41,7 @@ async function loginWithEmail() {
 <template>
   <div class="page__content relative !my-0 h-screen bg-primary-200">
     <NuxtLink class="absolute right-3 top-3" to="/">
-      <SVGIcon class="text-white" svg="close" :size="34"></SVGIcon>
+      <SVGIcon class="text-white" svg="close" :size="34" />
     </NuxtLink>
     <div class="flex h-full items-center justify-center">
       <div class="text-center">

@@ -2,6 +2,7 @@
 // @ts-ignore
 import debounce from "lodash.debounce";
 import { vOnClickOutside } from "@vueuse/components";
+const { setLocale } = useI18n();
 
 import { storeToRefs } from "pinia";
 const storeRestaurants = useRestaurantsStore();
@@ -59,56 +60,137 @@ const delayedSearch = debounce(async (newSearch: string) => {
 watch(search, (newSearch) => delayedSearch(newSearch));
 </script>
 
-<template lang="pug">
-nav.bg-white.sticky.md_fixed.w-full.h-12.z-20.top-0.left-0.border-b.border-gray-200.md_relative.md_h-16
-    .flex.items-center.justify-between.h-full.mx-auto.p-4.md_p-2.md_px-4(v-on-click-outside="closeMenu")
-        //- Search Input
-        .hidden.md_flex.items-center(v-if="showSerch")
-            .relative
-                input.w-96.text-sm.rounded-md.p-3.placeholder_text-grey-100.focus_outline-none.focus_text-black(v-model="search", name="search", class="bg-[#F6F6FB]", placeholder="Cerca prenotazione", autocomplete="off")        
-                span.absolute.inset-y-0.right-0.flex.items-center.pr-3
-                    SVGIcon.text-grey-100(svg="search", v-show="!search.length")
-                    SVGIcon.text-grey-100.cursor-pointer(svg="close", v-show="search.length", @click="search = ''")
+<template>
+  <nav class="sticky left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
+    <div class="mx-auto flex h-full items-stretch justify-between p-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
+      <div class="hidden items-center md_flex" v-if="showSerch">
+        <div class="relative">
+          <input
+            class="w-96 rounded-md bg-[#F6F6FB] p-3 text-sm placeholder_text-grey-100 focus_text-black focus_outline-none"
+            v-model="search"
+            name="search"
+            placeholder="Cerca prenotazione"
+            autocomplete="off"
+          />
+          <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+            <SVGIcon class="text-grey-100" svg="search" v-show="!search.length" />
+            <SVGIcon class="cursor-pointer text-grey-100" svg="close" v-show="search.length" @click="search = ''" />
+          </span>
+          <div
+            class="absolute inset-x-0 top-12 z-10 overflow-y-auto rounded-lg bg-white shadow md_max-h-[20rem]"
+            v-if="search.length &gt; 0 &amp;&amp; isSearchDropdownOpen"
+          >
+            <div class="flex items-center gap-5 border-b p-4" v-if="showSearchError">
+              <p class="pr-1 text-grey-100">Nessun risultato...</p>
+            </div>
+            <div
+              class="flex items-center gap-5 border-b p-4 font-medium hover_bg-slate-50"
+              v-else
+              v-for="item in reservationsSearchList"
+              :key="item.id"
+            >
+              <div
+                class="inline cursor-pointer hover_opacity-80"
+                @click="
+                  openModal('reservation', item.id);
+                  closeSearchDropdown();
+                "
+              >
+                <p class="pr-1 font-semibold text-black">{{ item.personName }}</p>
+                <p class="text-xs tracking-tight text-grey-200">{{ `#${item.id}` }}</p>
+              </div>
+              <p class="-mb-px text-sm antialiased">{{ useDateFormatting(item.date) }}</p>
+              <a
+                class="ml-auto cursor-pointer rounded bg-primary-100 px-3 py-1 text-xs text-white hover_shadow-md"
+                @click="
+                  openModal('reservation', item.id);
+                  closeSearchDropdown();
+                "
+                >APRI</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
 
-                .absolute.bg-white.z-10.inset-x-0.top-12.rounded-lg.shadow.overflow-y-auto(class="md_max-h-[20rem]" v-if="search.length > 0 && isSearchDropdownOpen")
-                    //- show "error" on search
-                    .flex.items-center.gap-5.p-4.border-b(v-if="showSearchError")
-                        p.pr-1.text-grey-100 Nessun risultato...
-                    //- show results
-                    .flex.items-center.gap-5.p-4.border-b.font-medium.hover_bg-slate-50(v-else, v-for="item in reservationsSearchList", :key="item.id")
-                        .inline.cursor-pointer.hover_opacity-80(@click="openModal('reservation', item.id); closeSearchDropdown()")
-                            p.pr-1.text-black.font-semibold {{ item.personName }}
-                            p.text-grey-200.text-xs.tracking-tight {{ `#${item.id}` }}
-                        p.antialiased.text-sm.-mb-px {{ useDateFormatting(item.date) }}
-                        a.ml-auto.py-1.px-3.text-xs.rounded.bg-primary-100.text-white.cursor-pointer.hover_shadow-md(@click="openModal('reservation', item.id); closeSearchDropdown()") APRI
+      <div class="flex md_order-2 md_hidden">
+        <button
+          class="hover:text-grey-100 focus:outline-none focus:ring-2 focus:ring-gray-200 inline-flex items-center justify-center rounded-lg text-sm text-grey-200"
+          type="button"
+          @click="toggleMenu()"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open Menu</span>
+          <SVGIcon svg="menu" :size="28" />
+        </button>
+      </div>
 
-        //- Mobile - Menu Icon
-        .flex.md_order-2.md_hidden
-            button.inline-flex.items-center.justify-center.text-sm.text-grey-200.rounded-lg(type="button", @click="toggleMenu()",
-                class="hover:text-grey-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-expanded="false")
-                span.sr-only Open Menu
-                SVGIcon(svg="menu", :size="28")
+      <AdminMenu
+        class="fixed inset-x-0 top-12 z-20 h-full min-h-[300px] overflow-y-scroll border-b bg-white pb-20 md_hidden"
+        v-show="isMenuOpen"
+        @toggleMenu="toggleMenu()"
+      >
+        <div class="bg-primary-200 py-8 text-white">
+          <p class="mb-3 px-3 text-xs font-medium tracking-widest">RISTORANTI</p>
+          <div class="flex items-center justify-between p-4" v-for="restaurant in restaurantsList" :key="restaurant.id">
+            <p
+              class="cursor-pointer text-sm hover_underline"
+              @click="
+                switchActiveRestaurant(restaurant.id);
+                closeMenu();
+              "
+            >
+              {{ restaurant.name }}
+            </p>
+            <SVGIcon
+              class="cursor-pointer hover_text-grey-300"
+              svg="edit"
+              :size="15"
+              @click="
+                openModal('restaurant', restaurant.id);
+                closeMenu();
+              "
+            />
+          </div>
 
-        AdminMenu.fixed.bg-white.z-20.inset-x-0.top-12.border-b.md_hidden.pb-20.overflow-y-scroll.h-full(class="min-h-[300px]", v-show="isMenuOpen", @toggleMenu="toggleMenu()")
-            .py-8.bg-primary-200.text-white
-                p.mb-3.px-3.text-xs.tracking-widest.font-medium RISTORANTI
-                .p-4.flex.items-center.justify-between(v-for="restaurant in restaurantsList" :key="restaurant.id")
-                    p.text-sm.cursor-pointer.hover_underline(@click="switchActiveRestaurant(restaurant.id); closeMenu()") {{ restaurant.name }}
-                    SVGIcon.cursor-pointer.hover_text-grey-300(svg="edit", :size="15" @click="openModal('restaurant', restaurant.id); closeMenu()")
-                .mt-2.mx-3.p-3.flex.items-center.justify-between.border.border-dashed.border-white.rounded-lg.cursor-pointer(@click="openModal('restaurant'); closeMenu()")
-                    p.text-sm.leading-normal Aggiungi ristorante
-                    SVGIcon(svg="plus", :size="15")
+          <div
+            class="mx-3 mt-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed border-white p-3"
+            @click="
+              openModal('restaurant');
+              closeMenu();
+            "
+          >
+            <p class="text-sm leading-normal">Aggiungi ristorante</p>
+            <SVGIcon svg="plus" :size="15" />
+          </div>
+        </div>
+      </AdminMenu>
 
-        //- Admin/Profile - Logout
-        .relative.group.ml-auto
-            .flex.items-center.text-grey-300
-                SVGIcon.ml-2.order-2.md_mr-2.md_order-1(svg="user-filled", :size="30")
-                SVGIcon.order-3.text-grey-200.md_hidden(svg="arrow-down", :size="20")
-                a.flex.items-center.cursor-pointer.order-1
-                    p.text-sm {{ supabaseClient ? 'Admin' : '' }}
-                    SVGIcon.text-grey-200.hidden.md_block(svg="arrow-down", :size="20")
-            //- dropdown
-            .absolute.hidden.group-hover_block.right-0.-left-8.pt-2
-                .py-2.px-4.max-h-40.text-sm.bg-white.border.border-slate-100.rounded-lg.shadow-lg.z-10
-                    p.py-2.leading-normal.text-grey-300.cursor-pointer.hover_text-grey-200(@click="logout") Logout        
+      <div class="ml-auto mr-2 flex h-4/6 items-center self-center rounded-md border border-black/20 text-black">
+        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('it')">
+          <p>IT</p>
+        </div>
+        <div class="h-full w-px bg-black/20"></div>
+        <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('en')">
+          <p>EN</p>
+        </div>
+      </div>
+
+      <div class="group relative self-center">
+        <div class="flex items-center text-grey-300">
+          <SVGIcon class="order-2 ml-2 md_order-1 md_mr-2" svg="user-filled" :size="30" />
+          <SVGIcon class="order-3 text-grey-200 md_hidden" svg="arrow-down" :size="20" />
+          <a class="order-1 flex cursor-pointer items-center">
+            <p class="text-sm">{{ supabaseClient ? "Admin" : "" }}</p>
+            <SVGIcon class="hidden text-grey-200 md_block" svg="arrow-down" :size="20" />
+          </a>
+        </div>
+        <div class="absolute -left-8 right-0 hidden pt-2 group-hover_block">
+          <div class="z-10 max-h-40 rounded-lg border border-slate-100 bg-white px-4 py-2 text-sm shadow-lg">
+            <p class="cursor-pointer py-2 leading-normal text-grey-300 hover_text-grey-200" @click="logout">Logout</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>

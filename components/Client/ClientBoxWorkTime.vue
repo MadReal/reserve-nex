@@ -102,7 +102,7 @@ const boxClasses = ref({
         'cursor-not-allowed text-grey-100 hover_text-grey-100 group-hover_text-grey-100 ': isTimeBlocked || isTimePast,
       }"
     >
-      <SVGIcon class="mr-1" svg="clock" :size="15"></SVGIcon>
+      <SVGIcon class="mr-1" svg="clock" :size="15" />
       <p>{{ time }}</p>
     </div>
 

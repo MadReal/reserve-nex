@@ -79,7 +79,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
         svg="trash"
         :size="15"
         @click="storeBlocks.removeBlock(blockTimePeriod.id)"
-      ></SVGIcon>
+      />
     </div>
   </div>
 </template>

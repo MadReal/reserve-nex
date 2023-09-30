@@ -34,7 +34,7 @@ const addOrUpdateDay = (dayInt: number) => {
       @click="toggleDropdown()"
     >
       <p class="text-sm leading-normal text-grey-200">{{ buttonText }}</p>
-      <SVGIcon class="text-primary-100" svg="arrow-down" :size="15"></SVGIcon>
+      <SVGIcon class="text-primary-100" svg="arrow-down" :size="15" />
       <div
         class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg"
         v-show="isDropdownOpen"
@@ -60,7 +60,7 @@ const addOrUpdateDay = (dayInt: number) => {
         :size="15"
         v-if="showTrash"
         @click="$emit('removeDay', blockedDay?.id)"
-      ></SVGIcon>
+      />
     </div>
   </div>
 </template>

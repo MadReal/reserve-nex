@@ -23,15 +23,15 @@ const { openModal } = useOpenModal();
     <div class="h-full w-px border-l"></div>
     <p class="antialiased">{{ useDateFormatting(reservation.date) }}</p>
     <div class="flex items-center text-primary-100 antialiased">
-      <SVGIcon class="pr-1" svg="users-filled" :size="20"></SVGIcon>
+      <SVGIcon class="pr-1" svg="users-filled" :size="20" />
       <p>{{ reservation.peopleAmount }}</p>
     </div>
     <div class="flex items-center text-grey-100">
-      <SVGIcon class="pr-1" svg="clock" :size="20"></SVGIcon>
+      <SVGIcon class="pr-1" svg="clock" :size="20" />
       <p>{{ reservation.time }}</p>
     </div>
     <div class="flex items-center text-red-500 antialiased" v-if="reservation.discountAmount">
-      <SVGIcon class="pr-1" svg="discount" :size="20"></SVGIcon>
+      <SVGIcon class="pr-1" svg="discount" :size="20" />
       <p>
         {{ reservation.discountAmount }}%
         <span class="text-[11px] tracking-tight">Sconto</span>
@@ -41,7 +41,7 @@ const { openModal } = useOpenModal();
       <p class="rounded p-1 text-success-200" v-if="reservation.accepted === true">Accettata</p>
       <p class="rounded p-1 text-error-200" v-if="reservation.accepted === false">Rifiutata</p>
       <a class="hidden cursor-pointer p-1 text-grey-200 hover_text-grey-300 group-hover_block">
-        <SVGIcon svg="edit" @click="openModal('reservation', reservation.id)"></SVGIcon>
+        <SVGIcon svg="edit" @click="openModal('reservation', reservation.id)" />
       </a>
     </div>
   </li>

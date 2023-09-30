@@ -83,7 +83,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
         svg="trash"
         :size="15"
         @click="storeBlocks.removeBlock(blockTimeTimeRangeOnDayOfWeek.id)"
-      ></SVGIcon>
+      />
     </div>
   </div>
 </template>
