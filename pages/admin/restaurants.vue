@@ -1,34 +1,51 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ['auth'], layout: 'admin-no-sidebar' })
-useHead({ title: 'Ristoranti', })
+definePageMeta({ middleware: ["auth"], layout: "admin-no-sidebar" });
+useHead({ title: "Ristoranti" });
 
-import { storeToRefs } from 'pinia'
-import { useRestaurantsStore } from '@/stores/Restaurants';
+import { storeToRefs } from "pinia";
+import { useRestaurantsStore } from "@/stores/Restaurants";
 
 const storeRestaurants = useRestaurantsStore();
-const { restaurantsList } = storeToRefs(storeRestaurants)
-const { switchActiveRestaurant } = useSwitchActiveRestaurant()
+const { restaurantsList } = storeToRefs(storeRestaurants);
+const { switchActiveRestaurant } = useSwitchActiveRestaurant();
 const { openModal } = useOpenModal();
 
-storeRestaurants.fetchRestaurants()
+storeRestaurants.fetchRestaurants();
 </script>
 
+<template>
+  <div class="page__content">
+    <AdminPageTitle :title="$t('admin.restaurants.page_name')" />
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Ristoranti")
+    <div class="grid grid-cols-1 gap-5 text-xl md_grid-cols-4">
+      <div
+        class="relative flex min-h-[8rem] cursor-pointer items-center justify-center rounded border border-gray-200 hover_bg-slate-50"
+        v-for="item in restaurantsList"
+        :key="item.id"
+      >
+        <div class="w-full py-4 text-center md_px-4 md_py-10" @click="switchActiveRestaurant(item.id)">
+          <p @click="switchActiveRestaurant(item.id)">{{ item.name }}</p>
+          <p class="text-sm text-grey-200" @click="switchActiveRestaurant(item.id)">{{ item.address }}, {{ item.city }}</p>
+        </div>
 
-    .grid.grid-cols-1.md_grid-cols-4.gap-5.text-xl
-        .flex.items-center.justify-center.border.border-gray-200.rounded.relative.cursor-pointer.hover_bg-slate-50(
-            class="min-h-[8rem]", v-for="item in restaurantsList", :key="item.id")            
-            .w-full.py-4.md_py-10.md_px-4.text-center(@click="switchActiveRestaurant(item.id)")
-                p(@click="switchActiveRestaurant(item.id)") {{ item.name }}
-                p.text-sm.text-grey-200(@click="switchActiveRestaurant(item.id)") {{ item.address }}, {{ item.city }}
-            .absolute.bottom-3.right-3.flex.items-center
-                SVGIcon.text-grey-200.cursor-pointer.hover_text-grey-300(svg="edit", :size="20" @click="openModal('restaurant', item.id)")
+        <div class="absolute bottom-3 right-3 flex items-center">
+          <SVGIcon
+            class="cursor-pointer text-grey-200 hover_text-grey-300"
+            svg="edit"
+            :size="20"
+            @click="openModal('restaurant', item.id)"
+          />
+        </div>
+      </div>
 
-        .flex.items-center.justify-center.border.border-dashed.border-primary-100.rounded.cursor-pointer.hover_bg-slate-50(class="min-h-[8rem]")
-            .w-full.p-4.md_p-10.text-center(@click="openModal('restaurant')")
-                SVGIcon.text-primary-100.mx-auto.mb-2(svg="plus", :size="28")
-                p.text-primary-100 Aggiungi Ristorante
+      <div
+        class="flex min-h-[8rem] cursor-pointer items-center justify-center rounded border border-dashed border-primary-100 hover_bg-slate-50"
+      >
+        <div class="w-full p-4 text-center md_p-10" @click="openModal('restaurant')">
+          <SVGIcon class="mx-auto mb-2 text-primary-100" svg="plus" :size="28" />
+          <p class="text-primary-100">{{ $t("admin.restaurants.btn_add_restaurant") }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

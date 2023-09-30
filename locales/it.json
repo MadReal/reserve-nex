@@ -1,5 +1,4 @@
 {
-  "navbar": {},
   "home": {
     "header": {
       "title": "Gestionale di Prenotazione",
@@ -17,10 +16,17 @@
     }
   },
   "admin": {
-    "lunch": "pranzo",
-    "dinner": "cena",
+    "lunch": "Pranzo",
+    "dinner": "Cena",
+    "total": "totale",
+    "input_search_placeholder": "Cerca prenotazione",
+    "restaurants": {
+      "page_name": "Ristoranti",
+      "btn_add_restaurant": "Aggiungi Ristorante"
+    },
     "reservations": {
-      "page_name": "Prenotazioni"
+      "page_name": "Prenotazioni",
+      "select_date": "Seleziona Data"
     },
     "day_summary": {
       "page_name": "Riepilogo Giorno"
@@ -48,12 +54,45 @@
       "btn_select_another_day": "Seleziona altro giorno"
     },
     "blocked_times": {
-      "page_name": "Blocco Orari"
+      "page_name": "Blocco Orari",
+      "title1": "Giorno Settimanale",
+      "subtitle1": "Restrizione delle prenotazioni per determinate fasce orarie nel giorno selezionato, settimanalmente.",
+      "title2": "Giorno Specifico",
+      "subtitle2": "Gestisci la restrizione delle prenotazioni per determinate fasce orarie in una data specifica.",
+      "btn_add_block": "Aggiungi Blocco"
     },
     "sidebar_links": {
       "blocks": "Gestione Blocchi",
       "restaurants": "RISTORANTI",
       "add_restaurant": "Aggiungi ristorante"
+    }
+  },
+  "modal": {
+    "restaurant": {
+      "title_add": "Aggiungi Ristorante",
+      "title_edit": "Modifica Ristorante",
+      "input_name": "Nome",
+      "input_city": "Città",
+      "input_address": "Indirizzo",
+      "input_zip": "CAP",
+      "input_is_live": "Visibile ai Clienti",
+      "btn_add_restaurant": "Aggiungi Ristorante",
+      "btn_edit_restaurant": "Salva Modifiche",
+      "btn_delete_restaurant": "Elimina Ristorante"
+    },
+    "reservation": {
+      "title": "prenotazione",
+      "date": "date",
+      "time": "orario",
+      "people_amount": "persone",
+      "discount": "sconto",
+      "name": "nome",
+      "phone": "telefono",
+      "status": "stato",
+      "status_accepted": "accettata",
+      "status_cancelled": "rifiutata",
+      "btn_accept": "accetta prenotazione",
+      "btn_cancel": "cancella prenotazione"
     }
   },
   "404": {

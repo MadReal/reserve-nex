@@ -1,4 +1,5 @@
-<template lang="pug">
-.grid.grid-cols-3.md_grid-cols-4.gap-2
-    slot
+<template>
+  <div class="grid grid-cols-3 gap-2 md_grid-cols-4">
+    <slot />
+  </div>
 </template>

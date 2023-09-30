@@ -8,7 +8,7 @@ const { openModal } = useOpenModal();
 </script>
 
 <template>
-  <li class="group flex flex-wrap items-center gap-5 border-b py-3 font-medium hover_bg-slate-50">
+  <li class="group flex flex-wrap items-center gap-x-5 gap-y-1 border-b py-3 font-medium hover_bg-slate-50">
     <div class="basis-60 overflow-hidden">
       <p
         class="cursor-pointer truncate whitespace-nowrap font-semibold tracking-wide text-black underline hover_opacity-80"
@@ -32,14 +32,18 @@ const { openModal } = useOpenModal();
     </div>
     <div class="flex items-center text-red-500 antialiased" v-if="reservation.discountAmount">
       <SVGIcon class="pr-1" svg="discount" :size="20" />
-      <p>
+      <p class="capitalize">
         {{ reservation.discountAmount }}%
-        <span class="text-[11px] tracking-tight">Sconto</span>
+        <span class="text-[11px] tracking-tight">{{ $t("modal.reservation.discount") }}</span>
       </p>
     </div>
-    <div class="flex items-center gap-2 md_ml-auto">
-      <p class="rounded p-1 text-success-200" v-if="reservation.accepted === true">Accettata</p>
-      <p class="rounded p-1 text-error-200" v-if="reservation.accepted === false">Rifiutata</p>
+    <div class="flex items-center gap-2 capitalize md_ml-auto">
+      <p class="rounded p-1 text-success-200" v-if="reservation.accepted === true">
+        {{ $t("modal.reservation.status_accepted") }}
+      </p>
+      <p class="rounded p-1 text-error-200" v-if="reservation.accepted === false">
+        {{ $t("modal.reservation.status_cancelled") }}
+      </p>
       <a class="hidden cursor-pointer p-1 text-grey-200 hover_text-grey-300 group-hover_block">
         <SVGIcon svg="edit" @click="openModal('reservation', reservation.id)" />
       </a>

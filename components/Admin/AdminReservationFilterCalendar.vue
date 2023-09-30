@@ -28,8 +28,9 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
     :class="{ 'text-grey-100': !selectedDate, 'rounded-md bg-slate-50 pl-1 text-grey-200': selectedDate }"
     v-on-click-outside="closeDropdownCalendar"
   >
-    <p class="px-1 py-1 text-sm leading-normal hover_text-grey-300" @click="toggleDropdownCalendar()">
-      {{ selectedDate ? useDateFormatting(selectedDate) : "Seleziona data" }}
+    <p class="inline-flex items-center px-1 py-1 text-sm leading-normal hover_text-grey-300" @click="toggleDropdownCalendar()">
+      {{ selectedDate ? useDateFormatting(selectedDate) : $t("admin.reservations.select_date") }}
+      <SVGIcon v-show="!selectedDate" svg="arrow-down" :size="14" />
     </p>
     <div class="p-1 hover_text-grey-300" @click="removeDate()" v-if="selectedDate">
       <SVGIcon svg="close" />

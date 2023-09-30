@@ -63,13 +63,13 @@ watch(search, (newSearch) => delayedSearch(newSearch));
 <template>
   <nav class="sticky left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
     <div class="mx-auto flex h-full items-stretch justify-between p-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
-      <div class="hidden items-center md_flex" v-if="showSerch">
+      <div v-if="showSerch" class="hidden items-center md_flex">
         <div class="relative">
           <input
             class="w-96 rounded-md bg-[#F6F6FB] p-3 text-sm placeholder_text-grey-100 focus_text-black focus_outline-none"
             v-model="search"
             name="search"
-            placeholder="Cerca prenotazione"
+            :placeholder="$t('admin.input_search_placeholder')"
             autocomplete="off"
           />
           <span class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -78,7 +78,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
           </span>
           <div
             class="absolute inset-x-0 top-12 z-10 overflow-y-auto rounded-lg bg-white shadow md_max-h-[20rem]"
-            v-if="search.length &gt; 0 && isSearchDropdownOpen"
+            v-if="search.length > 0 && isSearchDropdownOpen"
           >
             <div class="flex items-center gap-5 border-b p-4" v-if="showSearchError">
               <p class="pr-1 text-grey-100">Nessun risultato...</p>
@@ -116,7 +116,6 @@ watch(search, (newSearch) => delayedSearch(newSearch));
       <div class="flex md_order-2 md_hidden">
         <button
           class="hover:text-grey-100 focus:outline-none focus:ring-2 focus:ring-gray-200 inline-flex items-center justify-center rounded-lg text-sm text-grey-200"
-          type="button"
           @click="toggleMenu()"
           aria-expanded="false"
         >
@@ -166,7 +165,9 @@ watch(search, (newSearch) => delayedSearch(newSearch));
         </div>
       </AdminMenu>
 
-      <div class="ml-auto mr-2 flex h-4/6 items-center self-center rounded-md border border-black/20 text-black">
+      <div
+        class="ml-auto mr-2 flex h-full min-h-[30px] items-center self-center rounded-md border border-black/20 text-black md_h-4/6"
+      >
         <div class="cursor-pointer px-2 text-xs hover_text-primary-100" @click.prevent.stop="setLocale('it')">
           <p>IT</p>
         </div>

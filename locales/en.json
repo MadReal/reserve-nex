@@ -16,10 +16,17 @@
     }
   },
   "admin": {
-    "lunch": "lunch",
-    "dinner": "dinner",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "total": "total",
+    "input_search_placeholder": "Search reservation",
+    "restaurants": {
+      "page_name": "Restaurants",
+      "btn_add_restaurant": "Add Restaurant"
+    },
     "reservations": {
-      "page_name": "Reservations"
+      "page_name": "Reservations",
+      "select_date": "Select Date"
     },
     "day_summary": {
       "page_name": "Day Summary"
@@ -47,12 +54,45 @@
       "btn_select_another_day": "Select Another Day"
     },
     "blocked_times": {
-      "page_name": "Blocked Times"
+      "page_name": "Blocked Times",
+      "title1": "Weekly Day",
+      "subtitle1": "Restrict reservations for specific time slots on the selected day, weekly.",
+      "title2": "Specific Day",
+      "subtitle2": "Manage reservation restrictions for specific time slots on a particular date.",
+      "btn_add_block": "Add Block"
     },
     "sidebar_links": {
       "blocks": "Blocks",
       "restaurants": "RESTAURANTS",
       "add_restaurant": "Add Restaurant"
+    }
+  },
+  "modal": {
+    "restaurant": {
+      "title_add": "Add Restaurant",
+      "title_edit": "Edit Restaurant",
+      "input_name": "Name",
+      "input_city": "City",
+      "input_address": "Address",
+      "input_zip": "ZIP Code",
+      "input_is_live": "Visible to Customers",
+      "btn_add_restaurant": "Add Restaurant",
+      "btn_edit_restaurant": "Save Changes",
+      "btn_delete_restaurant": "Delete Restaurant"
+    },
+    "reservation": {
+      "title": "reservation",
+      "date": "date",
+      "time": "time",
+      "people_amount": "people",
+      "discount": "discount",
+      "name": "name",
+      "phone": "phone",
+      "status": "status",
+      "status_accepted": "accepted",
+      "status_cancelled": "cancelled",
+      "btn_accept": "accept reservation",
+      "btn_cancel": "cancel reservation"
     }
   },
   "404": {
