@@ -44,7 +44,7 @@ declare interface Block {
 }
 
 declare interface Reservation {
-  id?: number;
+  id?: string;
   createdAt?: Date;
   date: Date;
   time: string;

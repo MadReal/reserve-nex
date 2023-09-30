@@ -99,7 +99,7 @@ async function addReservation() {
     : 0;
   const clientReservationValueMinusDiscount = clientReservationValue - discountAmountInEUR;
   // send event
-  trackEventReservationFinished(activeRestaurant.value.name, clientReservationValueMinusDiscount);
+  trackEventReservationFinished(activeRestaurant.value.name, clientReservationValueMinusDiscount, reservation?.id!);
   // @ts-ignore
   newReservation.value = reservation;
   activeStep.value++;

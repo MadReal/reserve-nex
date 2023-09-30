@@ -36,7 +36,7 @@ export function useEventTracking() {
 		});
 	}
 
-	function trackEventReservationFinished(restaurantName: string, value: number) {
+	function trackEventReservationFinished(restaurantName: string, value: number, reservationId: string) {
 		const nuxtApp = useNuxtApp()
 		// @ts-ignore
 		nuxtApp.$fb.track("Schedule", { 'restaurant': restaurantName, content_name: restaurantName, currency: "EUR", value })
@@ -45,6 +45,11 @@ export function useEventTracking() {
 		gtag("event", "reservation_finished", {
 			event_category: "reservation",
 			event_action: "finished",
+			value,
+			currency: 'EUR',
+		});
+		gtag("event", "purchase", {
+			transaction_id: reservationId,
 			value,
 			currency: 'EUR',
 		});
