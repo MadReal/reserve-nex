@@ -5,6 +5,9 @@ definePageMeta({
 });
 useHead({ title: "Blocco Giorni" });
 
+const { locale } = useI18n();
+const isIT = locale.value === "it";
+
 import { storeToRefs } from "pinia";
 import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
@@ -65,7 +68,7 @@ const handleDragAndResize = (info: any) => {
 
 const calendarOptions = ref({
   plugins: [dayGridPlugin, interactionPlugin],
-  locale: itLocale,
+  locale: isIT ? itLocale : "",
   headerToolbar: { left: "prev", center: "title", right: "next" },
   initialView: "dayGridMonth",
   editable: true,
@@ -88,10 +91,7 @@ storeBlocks.fetchBlockedDates();
     <AdminPageTitle :title="$t('admin.blocked_days.page_name')" />
 
     <div class="grid border-b md_gap-6" :class="['md_grid-cols-[2fr_1px_1fr]', { 'items-center': isblockedDaysOfWeekListShort }]">
-      <AdminSectionTitle
-        title="Giorno di Chiusura Settimanale"
-        subtitle="Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana."
-      />
+      <AdminSectionTitle :title="$t('admin.blocked_days.title1')" :subtitle="$t('admin.blocked_days.subtitle1')" />
 
       <!-- divider -->
       <div class="hidden md_block md_h-full md_border-r"></div>
@@ -121,9 +121,10 @@ storeBlocks.fetchBlockedDates();
 
     <div>
       <AdminSectionTitle
-        title="Aggiungi Periodi di Chiusura o Vacanze"
-        subtitle="Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. &lt;br&gt; Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
+        :title="$t('admin.blocked_days.title2')"
+        :subtitle="$t('admin.blocked_days.subtitle2')"
         marginTop="mt-8"
+        subtitleSmallerWidth
       />
       <FullCalendar class="calendar-admin mt-10 md_mt-8" :options="calendarOptions" />
     </div>
