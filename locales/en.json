@@ -15,6 +15,31 @@
       "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
     }
   },
+  "admin": {
+    "reservations": {
+      "page_name": "Reservations"
+    },
+    "day_summary": {
+      "page_name": "Day Summary"
+    },
+    "work_hours": {
+      "page_name": "Work Hours"
+    },
+    "discounts": {
+      "page_name": "Discounts"
+    },
+    "blocked_days": {
+      "page_name": "Blocked Days"
+    },
+    "blocked_times": {
+      "page_name": "Blocked Times"
+    },
+    "sidebar_links": {
+      "blocks": "Blocks",
+      "restaurants": "RESTAURANTS",
+      "add_restaurant": "Add Restaurant"
+    }
+  },
   "404": {
     "title": "Oops!",
     "subtitle": "Non troviamo la pagina che stai cercando."

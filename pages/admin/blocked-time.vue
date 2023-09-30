@@ -38,12 +38,12 @@ storeBlocks.fetchBlockedTimeRangeOnDayOfWeek();
 
 <template>
   <div class="page__content">
-    <AdminPageTitle title="Blocco Orari" />
+    <AdminPageTitle :title="$t('admin.blocked_times.page_name')" />
     <AdminNoData
       v-if="noData"
       text="Aggiungi orari di apertura prima di poter creare blocchi orari."
       buttonText="Aggiungi Orari"
-      linkPath="edit-time-open"
+      linkPath="work-hours"
     />
 
     <template v-else>

@@ -85,7 +85,7 @@ storeBlocks.fetchBlockedDates();
 
 <template>
   <div class="page__content">
-    <AdminPageTitle title="Blocco Giorni" />
+    <AdminPageTitle :title="$t('admin.blocked_days.page_name')" />
 
     <div class="grid border-b md_gap-6" :class="['md_grid-cols-[2fr_1px_1fr]', { 'items-center': isblockedDaysOfWeekListShort }]">
       <AdminSectionTitle

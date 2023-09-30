@@ -72,63 +72,128 @@ const onDrop = (event: any) => {
 };
 </script>
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Gestione Sconti")
-    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter creare e applicare sconti.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
+<template>
+  <div class="page__content">
+    <AdminPageTitle :title="$t('admin.discounts.page_name')" />
+    <AdminNoData
+      v-if="noData"
+      text="Aggiungi orari di apertura prima di poter creare e applicare sconti."
+      buttonText="Aggiungi Orari"
+      linkPath="work-hours"
+    />
+    <div class="grid grid-rows-[1fr_1px] md_grid-cols-[4fr_1px_1fr] md_grid-rows-none" v-else>
+      <div>
+        <p class="mb-2 mt-1 text-sm text-grey-200">Seleziona giorno:</p>
+        <div class="mb-6 flex flex-wrap items-center gap-2 border-b pb-6 md_mb-0">
+          <div
+            class="cursor-pointer rounded-md border px-2 py-1 text-sm text-black hover_border-grey-200"
+            v-for="dayInt in 7"
+            :key="dayInt"
+            :class="{ 'border border-primary-100 bg-primary-100/10 text-primary-100': selectedDayOfWeek === dayInt }"
+            @click="selectedDayOfWeek = dayInt"
+          >
+            {{ useTranslateDayOfWeek(dayInt) }}
+          </div>
+          <div
+            class="cursor-pointer rounded-md border border-orange-200 px-2 py-1 text-sm text-orange-500 hover_border-orange-500"
+            :class="{ '!border-orange-500 bg-orange-500/10': selectedDayOfWeek === 10 }"
+            @click="selectedDayOfWeek = 10"
+          >
+            Tutti i Giorni
+          </div>
+        </div>
 
-    .grid(class="grid-rows-[1fr_1px] md_grid-rows-none md_grid-cols-[4fr_1px_1fr]", v-else)
-        div
-            p.mt-1.mb-2.text-sm.text-grey-200 Seleziona giorno:
-            .flex.items-center.flex-wrap.pb-6.gap-2.border-b.mb-6.md_mb-0
-                .py-1.px-2.text-black.text-sm.border.rounded-md.hover_border-grey-200.cursor-pointer(v-for="dayInt in 7", :key="dayInt", 
-                    :class="{ 'border border-primary-100 text-primary-100 bg-primary-100/10' : selectedDayOfWeek === dayInt }"
-                    @click="selectedDayOfWeek = dayInt") {{ useTranslateDayOfWeek(dayInt) }}
-                .py-1.px-2.text-orange-500.text-sm.border.border-orange-200.rounded-md.hover_border-orange-500.cursor-pointer(:class="{ '!border-orange-500 bg-orange-500/10' : selectedDayOfWeek === 10 }"
-                    @click="selectedDayOfWeek = 10") Tutti i Giorni
+        <AdminContainerGrid2ColsBorder class="md_pr-6">
+          <div class="md_py-6">
+            <p class="mb-4 mt-1">Pranzo</p>
+            <AdminContainerGrid4Cols>
+              <AdminBoxDiscount
+                v-for="workTime in lunchWorkTimesList"
+                :key="workTime.id"
+                :workTime="workTime"
+                :selectedDayOfWeek="selectedDayOfWeek"
+              />
+            </AdminContainerGrid4Cols>
+          </div>
 
-            AdminContainerGrid2ColsBorder
-                .md_py-6
-                    p.mb-4.mt-1 Pranzo
+          <AdminContainerDivider />
 
-                    AdminContainerGrid4Cols
-                        AdminBoxDiscount(v-for="workTime in lunchWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+          <div class="md_py-6">
+            <p class="mb-4 mt-1">Cena</p>
+            <AdminContainerGrid4Cols>
+              <AdminBoxDiscount
+                v-for="workTime in dinnerWorkTimesList"
+                :key="workTime.id"
+                :workTime="workTime"
+                :selectedDayOfWeek="selectedDayOfWeek"
+              />
+            </AdminContainerGrid4Cols>
+          </div>
+        </AdminContainerGrid2ColsBorder>
 
-                AdminContainerDivider
+        <div class="my-8 inline-flex w-full gap-3 border-t pt-6 md_my-6 md_border-t-0 md_pt-0">
+          <button
+            class="w-fit rounded border border-grey-200 p-2 text-center text-xs text-grey-200"
+            :disabled="selectedDayOfWeek === 10"
+            :class="{
+              'cursor-not-allowed opacity-20': selectedDayOfWeek === 10,
+              'cursor-pointer hover_bg-grey-200 hover_text-white': selectedDayOfWeek !== 10,
+            }"
+            @click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)"
+          >
+            Reset giorno
+          </button>
 
-                .md_py-6
-                    p.mb-4.mt-1 Cena
-                    AdminContainerGrid4Cols
-                        AdminBoxDiscount(v-for="workTime in dinnerWorkTimesList", :key="workTime.id", :workTime="workTime", :selectedDayOfWeek="selectedDayOfWeek")
+          <button
+            class="w-fit cursor-pointer rounded border border-red-400 p-2 text-center text-xs text-red-400 hover_bg-red-300 hover_text-red-700"
+            @click="deleteAllDiscountsOnDayOfWeek(10)"
+          >
+            Reset Tutto
+          </button>
+        </div>
+      </div>
 
-            .w-full.my-8.pt-6.inline-flex.gap-3.border-t.md_my-6.md_pt-0.md_border-t-0
-                button.w-fit.p-2.border.border-grey-200.rounded.text-xs.text-center.text-grey-200(
-                    :disabled="selectedDayOfWeek === 10", 
-                    :class="{ 'opacity-20 cursor-not-allowed' : selectedDayOfWeek === 10, 'cursor-pointer hover_bg-grey-200 hover_text-white' : selectedDayOfWeek !== 10 }",
-                    @click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)") Reset giorno
-                button.w-fit.p-2.border.border-red-400.rounded.text-xs.text-center.text-red-400.cursor-pointer.hover_bg-red-300.hover_text-red-700(@click="deleteAllDiscountsOnDayOfWeek(10)") Reset Tutto
+      <AdminContainerDivider class="hidden md_block" />
 
-        AdminContainerDivider.hidden.md_block
+      <div class="my-6 h-max md_mb-6 md_mt-1 md_pl-6">
+        <p>Sconti</p>
+        <p class="mb-4 text-sm text-grey-100">Aggiungi nuovi sconti e trascinali nell'ora che desideri.</p>
+        <div class="grid grid-cols-2 gap-2">
+          <AdminDiscountAmount
+            class="rounded"
+            v-for="discountAmount in discountAmountsListOrdered"
+            :key="discountAmount.id"
+            :value="discountAmount.value"
+            isTrash
+            @updateOrDelete="deleteDiscountAmount(discountAmount.id)"
+            @dragstart="startDrag($event, null, discountAmount.id, 'copy')"
+          />
 
-        .my-6.md_pl-6.md_mb-6.md_mt-1.h-max
-            p Sconti
-            p.text-sm.text-grey-100.mb-4 Aggiungi nuovi sconti e trascinali nell'ora che desideri.
-
-            .grid.grid-cols-2.gap-2
-                AdminDiscountAmount.rounded(v-for="discountAmount in discountAmountsListOrdered", :key="discountAmount.id", 
-                    :value="discountAmount.value", isTrash, 
-                    @updateOrDelete="deleteDiscountAmount(discountAmount.id)", 
-                    @dragstart="startDrag($event, null, discountAmount.id, 'copy')")
-
-                input(v-model.number="newDiscountAmount", v-number="number", placeholder="40%", type="text", pattern="[0-9]*", maxlength="4"
-                    class="h-8 p-1 text-sm text-center rounded border border-dashed border-grey-200 \
-                    placeholder_text-grey-100 focus_border-solid focus_text-black focus_border-black focus_placeholder_text-grey-100 focus_outline-none",
-                    :class="{ 'input--error': newDiscountAmountError }", @keyup.enter="addDiscountAmount", @input="validateInput")
-
-            .my-6.border-b
-
-            .mb-20.md_mb-0.py-5.px-3.bg-red-50.border.border-dashed.border-red-300.rounded.text-xs.text-center.text-red-300(
-                @drop="onDrop($event)", @dragenter.prevent, @dragover.prevent) Trascina per applicare sconto a tutti gli orari del giorno selezionato
+          <input
+            class="h-8 rounded border border-dashed border-grey-200 p-1 text-center text-sm placeholder_text-grey-100 focus_border-solid focus_border-black focus_text-black focus_outline-none focus_placeholder_text-grey-100"
+            v-model.number="newDiscountAmount"
+            v-number="number"
+            placeholder="40%"
+            type="text"
+            pattern="[0-9]*"
+            maxlength="4"
+            :class="{ 'input--error': newDiscountAmountError }"
+            @keyup.enter="addDiscountAmount"
+            @input="validateInput"
+          />
+        </div>
+        <div class="my-6 border-b"></div>
+        <div
+          class="mb-20 rounded border border-dashed border-red-300 bg-red-50 px-3 py-5 text-center text-xs text-red-300 md_mb-0"
+          @drop="onDrop($event)"
+          @dragenter.prevent
+          @dragover.prevent
+        >
+          Trascina per applicare sconto a tutti gli orari del giorno selezionato
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>

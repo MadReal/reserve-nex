@@ -8,8 +8,7 @@ useHead({ title: "Prenotazioni" });
 import { storeToRefs } from "pinia";
 import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
-const { reservationsList, reservationsAtDateList } =
-  storeToRefs(storeReservations);
+const { reservationsList, reservationsAtDateList } = storeToRefs(storeReservations);
 
 const isFilterAtDate = ref(false);
 
@@ -30,22 +29,16 @@ const noData = computed(() => !reservationsList.value.length);
 
 <template>
   <div class="page__content">
-    <AdminPageTitle title="Prenotazioni">
+    <AdminPageTitle :title="$t('admin.reservations.page_name')">
       <div class="mt-1 flex items-center md_ml-12">
         <SVGIcon class="text-grey-200" svg="filter" />
-        <AdminReservationFilterCalendar
-          @setDateFilterReservation="setDateFilterReservation"
-        />
+        <AdminReservationFilterCalendar @setDateFilterReservation="setDateFilterReservation" />
       </div>
     </AdminPageTitle>
     <AdminNoData v-if="noData" text="Nessuna prenotazione in elenco." />
 
     <ul class="mb-8" v-else>
-      <AdminReservationListItem
-        v-for="item in reservationsListToRender"
-        :key="item.id"
-        :reservation="item"
-      />
+      <AdminReservationListItem v-for="item in reservationsListToRender" :key="item.id" :reservation="item" />
     </ul>
   </div>
 </template>

@@ -14,7 +14,7 @@ const { reservationsList } = storeToRefs(storeReservations);
 
 const storeWorkTimes = useWorkTimesStore();
 const todaysDate = useDateFormatting(Date());
-const selectedTime = ref(null);
+const selectedTime = ref();
 
 function computedReservationsTotalPeople(timeArray: string[]) {
   return computed(() =>
@@ -36,30 +36,54 @@ const reservationsListAtSelectedTime = computed(() =>
 const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length);
 </script>
 
-<template lang="pug">
-.page__content
-    AdminPageTitle(title="Riepilogo Giorno", :date="todaysDate")
-
-    AdminNoData(v-if="noData", text="Aggiungi orari di apertura prima di poter vedere le prenotazioni.", buttonText="Aggiungi Orari", linkPath="edit-time-open")
-    AdminContainerGrid2ColsBorder(v-else)
-        .md_mb-6
-            p.mb-4.mt-1 Pranzo #[span.text-sm.text-grey-200 (totale: {{ lunchReservationsPeopleAmount }})]
-            AdminContainerGrid4Cols
-                AdminBoxReservation(v-for="workTime in storeWorkTimes.lunchWorkTimesList", :key="workTime.id"                    
-                    :workTime="workTime", :todaysDate="todaysDate", @click="selectedTime = workTime.time", :isSelected="selectedTime === workTime.time")
-
-        AdminContainerDivider
-
-        .md_mb-6
-            p.mb-4.mt-1 Cena #[span.text-sm.text-grey-200 (totale: {{ dinnerReservationsPeopleAmount }})]
-            AdminContainerGrid4Cols
-                AdminBoxReservation(v-for="workTime in storeWorkTimes.dinnerWorkTimesList", :key="workTime.id"                    
-                    :workTime="workTime", :todaysDate="todaysDate", @click="selectedTime = workTime.time", :isSelected="selectedTime === workTime.time")
-
-    .mt-8(v-if="lunchReservationsPeopleAmount > 0 || dinnerReservationsPeopleAmount > 0")
-        h3.text-lg.text-grey-300 Prenotazioni
-        p.text-sm.text-grey-100.font-light Qui sotto puoi vedere le prenotazioni effettuate nell'orario selezionato.
-
-        ul.mt-8
-            AdminReservationListItem(v-for="item in reservationsListAtSelectedTime", :key="item.id", :reservation="item")
+<template>
+  <div class="page__content">
+    <AdminPageTitle :title="$t('admin.day_summary.page_name')" :date="todaysDate" />
+    <AdminNoData
+      v-if="noData"
+      text="Aggiungi orari di apertura prima di poter vedere le prenotazioni."
+      buttonText="Aggiungi Orari"
+      linkPath="work-hours"
+    />
+    <AdminContainerGrid2ColsBorder v-else>
+      <div class="md_mb-6">
+        <p class="mb-4 mt-1">
+          Pranzo <span class="text-sm text-grey-200">(totale: {{ lunchReservationsPeopleAmount }})</span>
+        </p>
+        <AdminContainerGrid4Cols>
+          <AdminBoxReservation
+            v-for="workTime in storeWorkTimes.lunchWorkTimesList"
+            :key="workTime.id"
+            :workTime="workTime"
+            :todaysDate="todaysDate"
+            @click="selectedTime = workTime.time"
+            :isSelected="selectedTime === workTime.time"
+          />
+        </AdminContainerGrid4Cols>
+      </div>
+      <AdminContainerDivider></AdminContainerDivider>
+      <div class="md_mb-6">
+        <p class="mb-4 mt-1">
+          Cena <span class="text-sm text-grey-200">(totale: {{ dinnerReservationsPeopleAmount }})</span>
+        </p>
+        <AdminContainerGrid4Cols>
+          <AdminBoxReservation
+            v-for="workTime in storeWorkTimes.dinnerWorkTimesList"
+            :key="workTime.id"
+            :workTime="workTime"
+            :todaysDate="todaysDate"
+            @click="selectedTime = workTime.time"
+            :isSelected="selectedTime === workTime.time"
+          />
+        </AdminContainerGrid4Cols>
+      </div>
+    </AdminContainerGrid2ColsBorder>
+    <div class="mt-8" v-if="lunchReservationsPeopleAmount &gt; 0 || dinnerReservationsPeopleAmount &gt; 0">
+      <h3 class="text-lg text-grey-300">Prenotazioni</h3>
+      <p class="text-sm font-light text-grey-100">Qui sotto puoi vedere le prenotazioni effettuate nell'orario selezionato.</p>
+      <ul class="mt-8">
+        <AdminReservationListItem v-for="item in reservationsListAtSelectedTime" :key="item.id" :reservation="item" />
+      </ul>
+    </div>
+  </div>
 </template>

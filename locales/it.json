@@ -17,14 +17,26 @@
     }
   },
   "admin": {
+    "reservations": {
+      "page_name": "Prenotazioni"
+    },
+    "day_summary": {
+      "page_name": "Riepilogo Giorno"
+    },
+    "work_hours": {
+      "page_name": "Gestione Orari"
+    },
+    "discounts": {
+      "page_name": "Gestione Sconti"
+    },
+    "blocked_days": {
+      "page_name": "Blocco Giorni"
+    },
+    "blocked_times": {
+      "page_name": "Blocco Orari"
+    },
     "sidebar_links": {
-      "reservations": "Prenotazioni",
-      "day_summary": "Riepilogo Giorno",
-      "manage_work_hours": "Gestione Orari",
-      "manage_discounts": "Gestione Sconti",
       "blocks": "Gestione Blocchi",
-      "blocked_days": "Blocco Giorni",
-      "blocked_time": "Blocco Orari",
       "restaurants": "RISTORANTI",
       "add_restaurant": "Aggiungi ristorante"
     }
