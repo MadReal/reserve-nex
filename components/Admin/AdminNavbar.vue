@@ -132,7 +132,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
         @toggleMenu="toggleMenu()"
       >
         <div class="bg-primary-200 py-8 text-white">
-          <p class="mb-3 px-3 text-xs font-medium tracking-widest">RISTORANTI</p>
+          <p class="mb-3 px-3 text-xs font-medium tracking-widest">{{ $t("admin.sidebar_links.restaurants") }}</p>
           <div class="flex items-center justify-between p-4" v-for="restaurant in restaurantsList" :key="restaurant.id">
             <p
               class="cursor-pointer text-sm hover_underline"
@@ -161,7 +161,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
               closeMenu();
             "
           >
-            <p class="text-sm leading-normal">Aggiungi ristorante</p>
+            <p class="text-sm leading-normal">{{ $t("admin.sidebar_links.add_restaurant") }}</p>
             <SVGIcon svg="plus" :size="15" />
           </div>
         </div>

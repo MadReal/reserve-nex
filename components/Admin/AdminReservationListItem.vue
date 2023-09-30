@@ -8,7 +8,7 @@ const { openModal } = useOpenModal();
 </script>
 
 <template>
-  <li class="group flex flex-wrap items-center gap-x-5 gap-y-1 border-b py-3 font-medium hover_bg-slate-50">
+  <li class="group flex flex-wrap items-center gap-x-3 gap-y-1 border-b py-3 font-medium hover_bg-slate-50 md_gap-x-5">
     <div class="basis-60 overflow-hidden">
       <p
         class="cursor-pointer truncate whitespace-nowrap font-semibold tracking-wide text-black underline hover_opacity-80"
