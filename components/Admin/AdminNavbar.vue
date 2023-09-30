@@ -63,7 +63,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
 </script>
 
 <template>
-  <nav class="sticky left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
+  <nav class="fixed left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
     <div class="mx-auto flex h-full items-stretch justify-between px-2 py-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
       <div v-if="showSerch" class="hidden items-center md_flex">
         <div class="relative">

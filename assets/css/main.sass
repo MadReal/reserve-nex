@@ -5,7 +5,7 @@
 @import ./calendar
 
 html, body
-    overflow-x: hidden
+    // overflow-x: hidden
     --scroll-behavior: smooth !important
     scroll-behavior: smooth !important
     font-display: swap
@@ -13,6 +13,9 @@ html, body
 
 .view
     &--admin
+        // @apply h-[1000px] sm_h-full
+        @apply mt-20 sm_mt-auto
+
         .router-link-active, .router-link-active:hover
             @apply bg-primary-100/10 rounded
 

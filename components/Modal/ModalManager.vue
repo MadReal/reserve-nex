@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useModalsStore } from "~/stores/Modals";
 import { vOnClickOutside } from "@vueuse/components";
 
 const storeModals = useModalsStore();
