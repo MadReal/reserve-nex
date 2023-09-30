@@ -44,7 +44,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 
 <template>
   <div
-    class="mb-2 grid grid-cols-[1fr_1fr_2fr_min-content] items-center justify-between rounded-lg border xl_grid-cols-[1fr_1fr_3fr_min-content]"
+    class="mb-2 grid grid-cols-4 items-center justify-between rounded-lg border md_grid-cols-[1fr_1fr_2fr_min-content] xl_grid-cols-[1fr_1fr_3fr_min-content]"
     v-on-click-outside="closeDropdown"
   >
     <AdminSelectTimeRange
@@ -58,7 +58,10 @@ const closeDropdown = () => (isDropdownOpen.value = false);
       @updateBlockedTimeRange="updateTimeSlot"
     />
 
-    <div class="relative flex cursor-pointer items-center gap-1 border-l px-2 py-2 md_px-3" @click="toggleDropdown()">
+    <div
+      class="relative col-span-3 flex cursor-pointer items-center justify-center gap-1 border-r px-2 py-2 md_col-span-1 md_justify-normal md_border-l md_px-3"
+      @click="toggleDropdown()"
+    >
       <p class="leading-normal text-grey-300">{{ useTranslateDayOfWeek(blockTimeTimeRangeOnDayOfWeek.dayOfWeek!) }}</p>
       <SVGIcon class="text-grey-300" svg="arrow-down" :size="15" />
 
@@ -77,7 +80,8 @@ const closeDropdown = () => (isDropdownOpen.value = false);
         </li>
       </ul>
     </div>
-    <div class="flex items-center px-2 py-2 md_px-3">
+
+    <div class="flex items-center justify-center px-2 py-2 md_px-3">
       <SVGIcon
         class="cursor-pointer text-grey-300 hover_text-error-200"
         svg="trash"
