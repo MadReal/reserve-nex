@@ -78,7 +78,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
           </span>
           <div
             class="absolute inset-x-0 top-12 z-10 overflow-y-auto rounded-lg bg-white shadow md_max-h-[20rem]"
-            v-if="search.length &gt; 0 &amp;&amp; isSearchDropdownOpen"
+            v-if="search.length &gt; 0 && isSearchDropdownOpen"
           >
             <div class="flex items-center gap-5 border-b p-4" v-if="showSearchError">
               <p class="pr-1 text-grey-100">Nessun risultato...</p>

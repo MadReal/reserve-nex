@@ -16,6 +16,8 @@
     }
   },
   "admin": {
+    "lunch": "lunch",
+    "dinner": "dinner",
     "reservations": {
       "page_name": "Reservations"
     },
@@ -23,10 +25,18 @@
       "page_name": "Day Summary"
     },
     "work_hours": {
-      "page_name": "Work Hours"
+      "page_name": "Work Hours",
+      "btn_add_work_hour": "add time",
+      "btn_select_work_hour": "select time"
     },
     "discounts": {
-      "page_name": "Discounts"
+      "page_name": "Discounts",
+      "select_day": "Select day",
+      "discount_title": "Discounts",
+      "discount_description": "Add new discounts and drag them to the desired time.",
+      "discount_dropbox": "Drag to apply the discount to all time slots of the selected day",
+      "btn_reset_day": "Reset Day",
+      "btn_reset_all": "Reset All"
     },
     "blocked_days": {
       "page_name": "Blocked Days"

@@ -28,21 +28,43 @@ const removeTime = (timeId: number) => emit("removeTime", timeId);
 const isTimeUsed = (time: WorkTime["time"]): boolean => props.workTimes.some((workTime) => workTime.time === time);
 </script>
 
-<template lang="pug">
-div
-    //- list of all the workTimes
-    .flex.items-center.justify-between.border.rounded-lg.py-2.px-3.mb-2(v-for="time in workTimes", :key="time.id")
-        p.leading-normal.text-grey-300 {{ time.time }}
-        SVGIcon.text-grey-300.cursor-pointer.hover_text-error-200(svg="trash", :size="15", @click="removeTime(time.id)")
-    //- ADD
-    AdminButtonAdd(v-if="!isSelectVisible && isHoursStillAvailableToFill", text="Aggiungi Orario" @click="toggleSelect()")
-    //- SELECT
-    .flex.items-center.justify-between.border.border-primary-100.rounded-lg.py-2.px-3.mb-2.relative.cursor-pointer.hover_bg-slate-50(
-        v-if="isSelectVisible && isHoursStillAvailableToFill", @click="toggleDropdown()", v-on-click-outside="closeDropdown")
-        p.leading-normal.text-primary-100 Seleziona Orario
-        SVGIcon.text-primary-100(svg="arrow-down", :size="15")
-        .absolute.inset-x-0.top-12.max-h-40.bg-white.rounded-lg.shadow-lg.overflow-y-scroll.z-10(v-show="isDropdownOpen")
-            p.py-2.px-3(v-for="time in workTimesAvailable", :key="time", @click="addNewTime(time)",
-                :class="{ 'cursor-not-allowed line-through	bg-gray-50 text-gray-200' : isTimeUsed(time), 'cursor-pointer text-grey-300 hover_bg-gray-100' : !isTimeUsed(time) }") 
-                | {{ time }}
+<template>
+  <div>
+    <div class="mb-2 flex items-center justify-between rounded-lg border px-3 py-2" v-for="time in workTimes" :key="time.id">
+      <p class="leading-normal text-grey-300">{{ time.time }}</p>
+      <SVGIcon class="cursor-pointer text-grey-300 hover_text-error-200" svg="trash" :size="15" @click="removeTime(time.id)" />
+    </div>
+
+    <AdminButtonAdd
+      v-if="!isSelectVisible && isHoursStillAvailableToFill"
+      :text="$t('admin.work_hours.btn_add_work_hour')"
+      @click="toggleSelect()"
+    />
+    <div
+      class="relative mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-primary-100 px-3 py-2 hover_bg-slate-50"
+      v-if="isSelectVisible && isHoursStillAvailableToFill"
+      @click="toggleDropdown()"
+      v-on-click-outside="closeDropdown"
+    >
+      <p class="capitalize leading-normal text-primary-100">{{ $t("admin.work_hours.btn_select_work_hour") }}</p>
+      <SVGIcon class="text-primary-100" svg="arrow-down" :size="15" />
+      <div
+        class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg"
+        v-show="isDropdownOpen"
+      >
+        <p
+          class="px-3 py-2"
+          v-for="time in workTimesAvailable"
+          :key="time"
+          @click="addNewTime(time)"
+          :class="{
+            'cursor-not-allowed bg-gray-50\ttext-gray-200 line-through': isTimeUsed(time),
+            'cursor-pointer text-grey-300 hover_bg-gray-100': !isTimeUsed(time),
+          }"
+        >
+          {{ time }}
+        </p>
+      </div>
+    </div>
+  </div>
 </template>

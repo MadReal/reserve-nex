@@ -11,7 +11,7 @@ const emit = defineEmits(["click"]);
 
 <template>
   <div
-    class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed px-3 py-2 hover_bg-slate-50"
+    class="mb-2 flex cursor-pointer items-center justify-between rounded-lg border border-dashed px-3 py-2 capitalize hover_bg-slate-50"
     :class="{ 'border-primary-100': isColorPrimary, 'border-grey-100': !isColorPrimary }"
     @click="$emit('click')"
   >

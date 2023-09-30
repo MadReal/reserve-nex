@@ -83,7 +83,7 @@ const onDrop = (event: any) => {
     />
     <div class="grid grid-rows-[1fr_1px] md_grid-cols-[4fr_1px_1fr] md_grid-rows-none" v-else>
       <div>
-        <p class="mb-2 mt-1 text-sm text-grey-200">Seleziona giorno:</p>
+        <p class="mb-2 mt-1 text-sm text-grey-200">{{ $t("admin.discounts.select_day") }}:</p>
         <div class="mb-6 flex flex-wrap items-center gap-2 border-b pb-6 md_mb-0">
           <div
             class="cursor-pointer rounded-md border px-2 py-1 text-sm text-black hover_border-grey-200"
@@ -105,7 +105,7 @@ const onDrop = (event: any) => {
 
         <AdminContainerGrid2ColsBorder class="md_pr-6">
           <div class="md_py-6">
-            <p class="mb-4 mt-1">Pranzo</p>
+            <p class="mb-4 mt-1 capitalize">{{ $t("admin.lunch") }}</p>
             <AdminContainerGrid4Cols>
               <AdminBoxDiscount
                 v-for="workTime in lunchWorkTimesList"
@@ -119,7 +119,7 @@ const onDrop = (event: any) => {
           <AdminContainerDivider />
 
           <div class="md_py-6">
-            <p class="mb-4 mt-1">Cena</p>
+            <p class="mb-4 mt-1 capitalize">{{ $t("admin.dinner") }}</p>
             <AdminContainerGrid4Cols>
               <AdminBoxDiscount
                 v-for="workTime in dinnerWorkTimesList"
@@ -141,14 +141,14 @@ const onDrop = (event: any) => {
             }"
             @click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)"
           >
-            Reset giorno
+            {{ $t("admin.discounts.btn_reset_day") }}
           </button>
 
           <button
             class="w-fit cursor-pointer rounded border border-red-400 p-2 text-center text-xs text-red-400 hover_bg-red-300 hover_text-red-700"
             @click="deleteAllDiscountsOnDayOfWeek(10)"
           >
-            Reset Tutto
+            {{ $t("admin.discounts.btn_reset_all") }}
           </button>
         </div>
       </div>
@@ -156,8 +156,8 @@ const onDrop = (event: any) => {
       <AdminContainerDivider class="hidden md_block" />
 
       <div class="my-6 h-max md_mb-6 md_mt-1 md_pl-6">
-        <p>Sconti</p>
-        <p class="mb-4 text-sm text-grey-100">Aggiungi nuovi sconti e trascinali nell'ora che desideri.</p>
+        <p>{{ $t("admin.discounts.discount_title") }}</p>
+        <p class="mb-4 text-sm text-grey-100">{{ $t("admin.discounts.discount_description") }}</p>
         <div class="grid grid-cols-2 gap-2">
           <AdminDiscountAmount
             class="rounded"
@@ -166,7 +166,7 @@ const onDrop = (event: any) => {
             :value="discountAmount.value"
             isTrash
             @updateOrDelete="deleteDiscountAmount(discountAmount.id)"
-            @dragstart="startDrag($event, null, discountAmount.id, 'copy')"
+            @dragstart="startDrag($event, undefined, discountAmount.id, 'copy')"
           />
 
           <input
@@ -189,7 +189,7 @@ const onDrop = (event: any) => {
           @dragenter.prevent
           @dragover.prevent
         >
-          Trascina per applicare sconto a tutti gli orari del giorno selezionato
+          {{ $t("admin.discounts.discount_dropbox") }}
         </div>
       </div>
     </div>

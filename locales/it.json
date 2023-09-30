@@ -17,6 +17,8 @@
     }
   },
   "admin": {
+    "lunch": "pranzo",
+    "dinner": "cena",
     "reservations": {
       "page_name": "Prenotazioni"
     },
@@ -24,10 +26,18 @@
       "page_name": "Riepilogo Giorno"
     },
     "work_hours": {
-      "page_name": "Gestione Orari"
+      "page_name": "Gestione Orari",
+      "btn_add_work_hour": "aggiungi orario",
+      "btn_select_work_hour": "seleziona orario"
     },
     "discounts": {
-      "page_name": "Gestione Sconti"
+      "page_name": "Gestione Sconti",
+      "select_day": "Seleziona giorno",
+      "discount_title": "Sconti",
+      "discount_description": "Aggiungi nuovi sconti e trascinali nell'ora che desideri.",
+      "discount_dropbox": "Trascina per applicare sconto a tutti gli orari del giorno selezionato",
+      "btn_reset_day": "Reset Giorno",
+      "btn_reset_all": "Reset Tutto"
     },
     "blocked_days": {
       "page_name": "Blocco Giorni"
