@@ -37,15 +37,14 @@ const updateBlockedTimeRangeOnDayOfWeek = () => {
 };
 
 // Data Picker dropdown
-const isDropdownOpen = ref(false);
-const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-const closeDropdown = () => (isDropdownOpen.value = false);
+const isDropdownDayOfWeekOpen = ref(false);
+const toggleDropdownDayOfWeek = () => (isDropdownDayOfWeekOpen.value = !isDropdownDayOfWeekOpen.value);
+const closeDropdownDayOfWeek = () => (isDropdownDayOfWeekOpen.value = false);
 </script>
 
 <template>
   <div
     class="mb-2 grid grid-cols-4 items-center justify-between rounded-lg border md_grid-cols-[1fr_1fr_2fr_min-content] xl_grid-cols-[1fr_1fr_3fr_min-content]"
-    v-on-click-outside="closeDropdown"
   >
     <AdminSelectTimeRange
       :isTimeFrom="true"
@@ -59,13 +58,17 @@ const closeDropdown = () => (isDropdownOpen.value = false);
     />
 
     <div
+      v-on-click-outside="closeDropdownDayOfWeek"
       class="relative col-span-3 flex cursor-pointer items-center justify-center gap-1 border-r px-2 py-2 md_col-span-1 md_justify-normal md_border-l md_px-3"
-      @click="toggleDropdown()"
+      @click="toggleDropdownDayOfWeek()"
     >
       <p class="leading-normal text-grey-300">{{ useTranslateDayOfWeek(blockTimeTimeRangeOnDayOfWeek.dayOfWeek!) }}</p>
       <SVGIcon class="text-grey-300" svg="arrow-down" :size="15" />
 
-      <ul class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg" v-show="isDropdownOpen">
+      <ul
+        class="absolute inset-x-0 top-12 z-10 max-h-40 overflow-y-scroll rounded-lg bg-white shadow-lg"
+        v-show="isDropdownDayOfWeekOpen"
+      >
         <li
           class="px-3 py-2 text-sm"
           :class="{

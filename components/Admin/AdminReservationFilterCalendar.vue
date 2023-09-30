@@ -36,7 +36,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
       <SVGIcon svg="close" />
     </div>
 
-    <div v-show="isDropdownCalendarOpen" class="absolute right-0 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_-left-3">
+    <div v-show="isDropdownCalendarOpen" class="absolute -left-3 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_right-0">
       <VueDatePicker
         v-model="selectedDate"
         locale="it"
@@ -46,7 +46,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
         inline
         auto-apply
         @update:model-value="setNewDate()"
-      ></VueDatePicker>
+      />
     </div>
   </div>
 </template>

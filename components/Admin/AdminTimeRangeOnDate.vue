@@ -48,16 +48,15 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
 <template>
   <div
     class="mb-2 grid grid-cols-4 items-center justify-between rounded-lg border md_grid-cols-[1fr_1fr_2fr_min-content] xl_grid-cols-[1fr_1fr_3fr_min-content]"
-    v-on-click-outside="closeDropdownCalendar"
   >
     <AdminSelectTimeRange :isTimeFrom="true" :time="blockTimePeriod.timeStart!" @updateBlockedTimeRange="updateTimeSlot" />
     <AdminSelectTimeRange :isTimeFrom="false" :time="blockTimePeriod.timeEnd!" @updateBlockedTimeRange="updateTimeSlot" />
 
     <div
+      v-on-click-outside="closeDropdownCalendar"
       class="relative col-span-3 flex cursor-pointer items-center justify-center gap-1 border-r px-2 py-2 md_col-span-1 md_justify-normal md_border-l md_px-3"
-      @click="toggleDropdownCalendar()"
     >
-      <p class="leading-normal text-grey-300">{{ useDateFormatting(blockTimePeriod.date!) }}</p>
+      <p class="leading-normal text-grey-300" @click="toggleDropdownCalendar()">{{ useDateFormatting(blockTimePeriod.date!) }}</p>
       <div
         class="absolute -right-16 left-0 top-12 z-10 h-fit rounded-lg bg-white shadow-lg md_left-0 md_right-auto"
         v-show="isDropdownCalendarOpen"
@@ -72,7 +71,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
           :state="true"
           @update:model-value="toggleDropdownCalendar()"
           :disabled-dates="disabledDates"
-        ></VueDatePicker>
+        />
       </div>
     </div>
 
