@@ -1,10 +1,12 @@
 <script setup lang="ts">
+interface Props {
+  showSerch?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), { showSerch: true });
+
 // @ts-ignore
 import debounce from "lodash.debounce";
 import { vOnClickOutside } from "@vueuse/components";
-const { locale, setLocale } = useI18n();
-const localePath = useLocalePath();
-const isIT = computed(() => locale.value === "it");
 
 import { storeToRefs } from "pinia";
 const storeRestaurants = useRestaurantsStore();
@@ -16,11 +18,6 @@ const { switchActiveRestaurant } = useSwitchActiveRestaurant();
 const { openModal } = useOpenModal();
 // component's logic
 const supabaseClient = useSupabaseClient();
-
-interface Props {
-  showSerch?: boolean;
-}
-const props = withDefaults(defineProps<Props>(), { showSerch: true });
 
 let search = ref("");
 let showSearchError = ref(false);
@@ -63,7 +60,7 @@ watch(search, (newSearch) => delayedSearch(newSearch));
 </script>
 
 <template>
-  <nav class="fixed left-0 top-0 z-20 h-12 w-full border-b border-gray-200 bg-white md_relative md_h-16">
+  <nav class="fixed left-0 top-0 z-20 h-14 w-full border-b border-gray-200 bg-white md_relative md_h-16">
     <div class="mx-auto flex h-full items-stretch justify-between px-2 py-4 md_p-2 md_px-4" v-on-click-outside="closeMenu">
       <div v-if="showSerch" class="hidden items-center md_flex">
         <div class="relative">
@@ -167,27 +164,9 @@ watch(search, (newSearch) => delayedSearch(newSearch));
         </div>
       </AdminMenu>
 
-      <div
-        class="ml-auto mr-3 flex h-full min-h-[30px] items-center self-center overflow-hidden rounded-md border border-black/20 text-black md_h-4/6"
-      >
-        <div
-          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
-          :class="{ 'bg-slate-100/80': isIT }"
-          @click.prevent.stop="setLocale('it')"
-        >
-          <p>IT</p>
-        </div>
-        <div class="h-full w-px bg-black/20"></div>
-        <div
-          class="flex h-full cursor-pointer items-center px-2 text-xs hover_text-primary-100"
-          :class="{ 'bg-slate-100/80': !isIT }"
-          @click.prevent.stop="setLocale('en')"
-        >
-          <p>EN</p>
-        </div>
-      </div>
+      <LanguageSwitch />
 
-      <div class="group relative self-center">
+      <div class="group relative ml-3 self-center">
         <div class="flex items-center text-grey-300">
           <SVGIcon class="order-2 ml-2 md_order-1 md_mr-2" svg="user-filled" :size="30" />
           <SVGIcon class="order-3 text-grey-200 md_hidden" svg="arrow-down" :size="20" />

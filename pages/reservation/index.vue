@@ -9,8 +9,8 @@ storeRestaurants.fetchRestaurants();
 <template>
   <div class="page relative z-0 -mt-16">
     <section>
-      <div class="mx-auto mt-6 max-w-screen-xl px-4 py-40 md_mt-24">
-        <h1 class="mb-12 text-center text-4xl font-semibold text-black md_text-5xl">
+      <div class="mx-auto mt-6 max-w-screen-xl px-4 py-20 md_mt-24 md_py-32">
+        <h1 class="mb-12 text-center text-3xl font-semibold text-black md_text-4xl">
           {{ $t("client_reservation.select_restaurant") }}
         </h1>
 

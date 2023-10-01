@@ -18,7 +18,7 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 </script>
 
 <template>
-  <div class="col-span-2 min-w-[100%] border-b first_border-r md_col-span-1 md_border-0" v-on-click-outside="closeDropdown">
+  <div class="col-span-2 border-b first_border-r md_col-span-1 md_border-0" v-on-click-outside="closeDropdown">
     <div
       class="relative flex cursor-pointer items-center justify-center gap-1 px-2 py-2 md_justify-stretch md_px-3"
       @click="toggleDropdown()"

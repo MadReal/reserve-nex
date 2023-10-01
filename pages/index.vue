@@ -46,7 +46,7 @@ function onMouseleave(e: MouseEvent) {
             {{ $t("home.header.description") }}
           </p>
           <NuxtLink
-            class="mr-3 inline-flex justify-center rounded bg-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-white hover_bg-primary-200"
+            class="mb-3 mr-3 inline-flex justify-center rounded bg-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-white hover_bg-primary-200"
             to="/reservation"
             >{{ $t("home.header.btn1") }}
           </NuxtLink>
