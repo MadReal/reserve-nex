@@ -6,9 +6,9 @@ const localePath = useLocalePath();
 const hasScrolled = ref(false); // obtain the reference
 const isRouteHome = computed(() => useRoute().path === "/");
 const isNavTextWhite = computed(() => !hasScrolled.value && routeName.value !== "reservation");
-const isNavTextBlack = computed(() => hasScrolled.value || routeName.value === "reservation");
+const isNavTextBlack = computed(() => hasScrolled.value);
 const isNavBgTransp = computed(() => !hasScrolled.value);
-const hideOnReservationMobile = computed(() => routeName.value === "reservation-restaurantId");
+const hideOnReservationDesktop = computed(() => routeName.value === "reservation-restaurantId");
 
 let isMenuOpen = ref(false);
 const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
@@ -17,8 +17,7 @@ const closeMenu = () => (isMenuOpen.value = false);
 onMounted(() => {
   window.addEventListener("scroll", () => {
     var curr = window.scrollY;
-
-    if (curr >= 80) hasScrolled.value = true;
+    if (curr >= 15) hasScrolled.value = true;
     else hasScrolled.value = false;
   });
 });
@@ -47,12 +46,12 @@ onMounted(() => {
 
     <!-- Nav Items Working on Tablet & Bigger Sceen -->
     <div class="hidden justify-between p-4 text-lg font-semibold md_flex">
-      <nuxt-link :to="localePath('/')" class="navbar-item" :class="{ hidden: hideOnReservationMobile }">Home </nuxt-link>
+      <nuxt-link :to="localePath('/')" class="navbar-item" :class="{ hidden: hideOnReservationDesktop }">Home </nuxt-link>
       <nuxt-link
         :to="{ path: localePath('/'), hash: '#how' }"
         :prefetch="false"
         class="navbar-item"
-        :class="{ hidden: hideOnReservationMobile }"
+        :class="{ hidden: hideOnReservationDesktop }"
       >
         {{ $t("home.navbar.how_it_works") }}
       </nuxt-link>
@@ -60,11 +59,11 @@ onMounted(() => {
         :to="{ path: localePath('/'), hash: '#benefits' }"
         :prefetch="false"
         class="navbar-item"
-        :class="{ hidden: hideOnReservationMobile }"
+        :class="{ hidden: hideOnReservationDesktop }"
       >
         {{ $t("home.navbar.benefits") }}
       </nuxt-link>
-      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin" :class="{ hidden: hideOnReservationMobile }">
+      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin" :class="{ hidden: hideOnReservationDesktop }">
         {{ $t("home.navbar.admin") }}
       </nuxt-link>
 
@@ -76,7 +75,7 @@ onMounted(() => {
       <div
         id="nav-open"
         class="flex items-center gap-3 text-black md_hidden"
-        :class="{ 'text-white': routeName === 'reservation-restaurantId' }"
+        :class="{ 'text-white': routeName === 'reservation-restaurantId' && !hasScrolled }"
         @click="toggleMenu()"
       >
         <LanguageSwitch :hasScrolled="hasScrolled" />

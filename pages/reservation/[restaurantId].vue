@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 const route = useRoute();
+const router = useRouter();
 import "vue-tel-input/vue-tel-input.css";
 
 // *************
@@ -23,6 +24,7 @@ const goToStep = (stepToGo: number) => {
   if (stepToGo !== 3 && activeStep.value !== 3) newReservation.value.time = "";
   // always go to previous stepToGo
   if (stepToGo < activeStep.value) activeStep.value = stepToGo;
+  router.push({ query: { step: activeStep.value } });
 };
 
 // init reservation object
@@ -58,7 +60,7 @@ function setReservationDate(date: Date) {
   storeDiscounts.fetchDiscountsByDayOfWeek(dayOfWeek, restaurantIdParam);
   // advance activeStep
   activeStep.value++;
-  // trackFacebookEvent("InitiateCheckout", { restaurant: activeRestaurant.value.name });
+  router.push({ query: { step: activeStep.value } });
   trackEventReservationStarted(activeRestaurant.value.name);
 }
 
@@ -68,6 +70,7 @@ const setReservationTimeAndDiscountAmount = (time: WorkTime["time"], discountAmo
   newReservation.value.time = time;
   newReservation.value.discountAmount = discountAmount;
   activeStep.value++;
+  router.push({ query: { step: activeStep.value } });
 };
 
 // step 3
@@ -104,7 +107,10 @@ async function addReservation() {
   // @ts-ignore
   newReservation.value = reservation;
   activeStep.value++;
+  router.push({ query: { step: activeStep.value } });
 }
+
+onMounted(async () => window.addEventListener("popstate", () => (activeStep.value > 1 ? activeStep.value-- : "")));
 </script>
 
 <template>

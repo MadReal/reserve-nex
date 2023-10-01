@@ -37,9 +37,7 @@ function onMouseleave(e: MouseEvent) {
 <template>
   <div class="page">
     <section class="relative">
-      <div
-        class="relative z-20 mx-auto flex h-screen max-w-screen-xl items-center justify-center px-4 py-28 md_h-screen md_py-48"
-      >
+      <div class="relative z-20 mx-auto flex max-w-screen-xl items-center justify-center px-4 py-28 md_h-screen md_py-48">
         <div class="relative z-20 md_basis-1/2">
           <h1 class="mb-2 text-4xl font-extrabold text-black drop-shadow-lg md_text-7xl md_leading-[4.8rem]">
             {{ $t("home.header.title") }}
