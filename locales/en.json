@@ -73,8 +73,7 @@
       "title1": "Weekly Closing Day",
       "subtitle1": "Customize the restaurant's weekly closing day. This option allows you to precisely set the day when the restaurant will be closed every week.",
       "title2": "Add Closure Periods or Holidays",
-      "subtitle2": "Click and drag to select closure days. Resize or delete closure blocks. Provide block titles so your customers know the reason for the closure.",
-      "btn_select_another_day": "Select Another Day"
+      "subtitle2": "Click and drag to select closure days. Resize or delete closure blocks. Provide block titles so your customers know the reason for the closure."
     },
     "blocked_times": {
       "page_name": "Blocked Times",

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { vOnClickOutside } from "@vueuse/components";
+const { locale } = useI18n();
+const isIT = computed(() => locale.value === "it");
 
 interface AdminSelectDayOfWeekProps {
   showTrash: boolean;
@@ -16,11 +18,11 @@ const closeDropdown = () => (isDropdownOpen.value = false);
 
 const dayIsAlreadyInBlockedDaysList = (dayInt: number) => props.blockedDaysOfWeekList.some((e) => e.dayOfWeek === dayInt);
 // if there's a blocked day show the day's name || if there are other blockedDaysOfWeek add 'altro', otherwise empty
-const buttonText = computed(() =>
-  props.blockedDay
-    ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!)
-    : `Seleziona ${props.blockedDaysOfWeekList?.length ? "altro" : ""} giorno`,
-);
+const buttonText = computed(() => {
+  const sentenceIT = `Seleziona ${props.blockedDaysOfWeekList?.length ? "altro" : ""} giorno`;
+  const sentenceEN = `Select ${props.blockedDaysOfWeekList?.length ? "another" : ""} day`;
+  return props.blockedDay ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!) : isIT.value ? sentenceIT : sentenceEN;
+});
 const addOrUpdateDay = (dayInt: number) => {
   if (dayIsAlreadyInBlockedDaysList(dayInt)) return;
   emit("addOrUpdateDay", props.blockedDay?.id, dayInt, props.isUpdate);

@@ -73,8 +73,7 @@
       "title1": "Giorno di Chiusura Settimanale",
       "subtitle1": "Personalizza il giorno di chiusura settimanale del ristorante. Questa opzione ti consente di stabilire con precisione il giorno in cui il ristorante resterà chiuso ogni settimana",
       "title2": "Aggiungi Periodi di Chiusura o Vacanze",
-      "subtitle2": "Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura.",
-      "btn_select_another_day": "Seleziona altro giorno"
+      "subtitle2": "Clicca e trascina per selezionare i giorni di chiusura. Ridimensiona o cancella i blocchi di chiusura. Fornisci i blocchi con titoli, in modo che i tuoi clienti conoscano il motivo della chiusura."
     },
     "blocked_times": {
       "page_name": "Blocco Orari",
