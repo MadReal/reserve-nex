@@ -1,6 +1,6 @@
 export default function useTranslateDayOfWeek(dayOfWeek: DayOfWeek): string {
 	const { locale } = useI18n();
-	const isIT = locale.value === 'it';
+	const isIT = locale.value === "it"
 
 	switch (dayOfWeek) {
 		case 1:

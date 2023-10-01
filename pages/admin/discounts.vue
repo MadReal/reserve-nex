@@ -2,12 +2,9 @@
 definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
 useHead({ title: "Gestione Sconti" });
 
+import { storeToRefs } from "pinia";
 import { directive as VNumber } from "@coders-tm/vue-number-format";
 const number = { suffix: "% ", precision: 2, max: 99 };
-
-import { storeToRefs } from "pinia";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
-import { useDiscountsStore } from "~/stores/Discounts";
 
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
@@ -15,17 +12,13 @@ const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
 const storeDiscounts = useDiscountsStore();
 storeDiscounts.fetchDiscountAmounts();
 storeDiscounts.fetchDiscounts();
-const { discountAmountsListOrdered, discountsList } = storeToRefs(storeDiscounts);
+const { discountAmountsListOrdered } = storeToRefs(storeDiscounts);
 
 const noData = computed(() => !storeWorkTimes.lunchWorkTimesList.length && !storeWorkTimes.dinnerWorkTimesList.length);
 
 const selectedDayOfWeek = ref(1);
 let newDiscountAmount = ref();
 const newDiscountAmountError = ref(false);
-
-const discountOnWorkTime = (workTimeId: WorkTime["id"]) => {
-  return discountsList.value.find((item) => item.dayOfWeek === selectedDayOfWeek.value && item.workTime.id === workTimeId);
-};
 
 function validateInput() {
   if (isNaN(newDiscountAmount.value)) newDiscountAmountError.value = true;
@@ -42,22 +35,9 @@ async function addDiscountAmount() {
 }
 async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
   await storeDiscounts.deleteDiscountAmount(discountAmountId);
-  // window.location.reload()
   newDiscountAmountError.value = false;
   newDiscountAmount.value = null;
 }
-const deleteDiscount = (discountId: Discount["id"]) => {
-  storeDiscounts.deleteDiscount(discountId);
-};
-const deleteAllDiscountsOnDayOfWeek = async (selectedDayOfWeek: number) => {
-  const sentence =
-    selectedDayOfWeek === 10
-      ? "Sicuro di voler eliminare tutti gli sconti impostati?"
-      : `Sicuro di voler eliminare gli sconti di ${useTranslateDayOfWeek(selectedDayOfWeek)}?`;
-  if (confirm(sentence)) {
-    await storeDiscounts.deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek);
-  }
-};
 
 const startDrag = (event: any, discountId: Discount["id"], discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
   event.dataTransfer.effectAllowed = effectAllowed;
@@ -131,26 +111,7 @@ const onDrop = (event: any) => {
           </div>
         </AdminContainerGrid2ColsBorder>
 
-        <div class="my-8 inline-flex w-full gap-3 border-t pt-6 md_my-6 md_border-t-0 md_pt-0">
-          <button
-            class="w-fit rounded border border-grey-200 p-2 text-center text-xs text-grey-200"
-            :disabled="selectedDayOfWeek === 10"
-            :class="{
-              'cursor-not-allowed opacity-20': selectedDayOfWeek === 10,
-              'cursor-pointer hover_bg-grey-200 hover_text-white': selectedDayOfWeek !== 10,
-            }"
-            @click="deleteAllDiscountsOnDayOfWeek(selectedDayOfWeek)"
-          >
-            {{ $t("admin.discounts.btn_reset_day") }}
-          </button>
-
-          <button
-            class="w-fit cursor-pointer rounded border border-red-400 p-2 text-center text-xs text-red-400 hover_bg-red-300 hover_text-red-700"
-            @click="deleteAllDiscountsOnDayOfWeek(10)"
-          >
-            {{ $t("admin.discounts.btn_reset_all") }}
-          </button>
-        </div>
+        <AdminDiscountsDelete :selectedDayOfWeek="selectedDayOfWeek" />
       </div>
 
       <AdminContainerDivider class="hidden md_block" />
