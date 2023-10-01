@@ -21,7 +21,8 @@ const dayIsAlreadyInBlockedDaysList = (dayInt: number) => props.blockedDaysOfWee
 const buttonText = computed(() => {
   const sentenceIT = `Seleziona ${props.blockedDaysOfWeekList?.length ? "altro" : ""} giorno`;
   const sentenceEN = `Select ${props.blockedDaysOfWeekList?.length ? "another" : ""} day`;
-  return props.blockedDay ? useTranslateDayOfWeek(props.blockedDay.dayOfWeek!) : isIT.value ? sentenceIT : sentenceEN;
+  if (props.blockedDay?.dayOfWeek) return useTranslateDayOfWeek(props.blockedDay.dayOfWeek);
+  else return isIT.value ? sentenceIT : sentenceEN;
 });
 const addOrUpdateDay = (dayInt: number) => {
   if (dayIsAlreadyInBlockedDaysList(dayInt)) return;
