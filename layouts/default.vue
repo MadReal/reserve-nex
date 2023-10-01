@@ -2,4 +2,5 @@
 .view
 	ClientNavbar
 	<slot />
+	ClientFooter
 </template>
