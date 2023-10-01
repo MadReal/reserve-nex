@@ -38,9 +38,9 @@ onMounted(() => {
         <nuxt-link
           to="/"
           class="transition duration-200 hover_text-primary-100 focus_text-black"
-          :class="{ 'text-black': isRouteHome }"
-          >Ristorante</nuxt-link
-        >
+          :class="{ 'sm_text-black': isRouteHome, 'text-white': isRouteHome && !hasScrolled }"
+          >Ristorante
+        </nuxt-link>
       </div>
     </div>
 
@@ -75,7 +75,10 @@ onMounted(() => {
       <div
         id="nav-open"
         class="flex items-center gap-3 text-black md_hidden"
-        :class="{ 'text-white': routeName === 'reservation-restaurantId' && !hasScrolled }"
+        :class="{
+          'text-black': hasScrolled,
+          'text-white': (isRouteHome || routeName === 'reservation-restaurantId') && !hasScrolled,
+        }"
         @click="toggleMenu()"
       >
         <LanguageSwitch :hasScrolled="hasScrolled" />
