@@ -139,6 +139,15 @@ watch(search, (newSearch) => delayedSearch(newSearch));
               "
             >
               {{ restaurant.name }}
+              <span
+                class="relative -top-1 ml-1 px-[2px] text-[7px]"
+                :class="{
+                  'border-green-400 text-green-400': restaurant.isLive,
+                  'border-gray-300 text-gray-400': !restaurant.isLive,
+                }"
+              >
+                {{ restaurant.isLive ? "LIVE" : "OFF" }}
+              </span>
             </p>
             <SVGIcon
               class="cursor-pointer hover_text-grey-300"
