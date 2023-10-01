@@ -24,7 +24,7 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
 
 <template>
   <div
-    class="relative flex cursor-pointer items-center"
+    class="relative flex w-full cursor-pointer items-center"
     :class="{ 'text-grey-100': !selectedDate, 'rounded-md bg-slate-50 pl-1 text-grey-200': selectedDate }"
     v-on-click-outside="closeDropdownCalendar"
   >
@@ -36,7 +36,10 @@ const closeDropdownCalendar = () => (isDropdownCalendarOpen.value = false);
       <SVGIcon svg="close" />
     </div>
 
-    <div v-show="isDropdownCalendarOpen" class="absolute -left-3 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_right-0">
+    <div
+      v-show="isDropdownCalendarOpen"
+      class="absolute -left-3 right-2 top-8 z-10 h-fit rounded-lg bg-white shadow-lg md_right-0"
+    >
       <VueDatePicker
         v-model="selectedDate"
         locale="it"

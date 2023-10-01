@@ -30,7 +30,7 @@ const noData = computed(() => !reservationsList.value.length);
 <template>
   <div class="page__content">
     <AdminPageTitle :title="$t('admin.reservations.page_name')">
-      <div class="mt-1 flex items-center md_ml-12">
+      <div class="mt-1 flex basis-full items-center md_ml-12 md_basis-40">
         <SVGIcon class="text-grey-200" svg="filter" />
         <AdminReservationFilterCalendar @setDateFilterReservation="setDateFilterReservation" />
       </div>

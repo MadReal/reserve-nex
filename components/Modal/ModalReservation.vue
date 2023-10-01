@@ -104,7 +104,7 @@ const updateReservation = async (reservationId: Reservation["id"], isAccepted: b
               <span class="font-medium">{{ $t("modal.reservation.people_amount") }}:</span> {{ selectedReservation.peopleAmount }}
             </p>
           </li>
-          <li class="mb-2">
+          <li class="mb-2" v-if="selectedReservation.discountAmount">
             <p class="text-red-500">
               <span class="font-medium">{{ $t("modal.reservation.discount") }}:</span> {{ selectedReservation.discountAmount
               }}{{ selectedReservation.discountAmount ? "%" : "" }}
