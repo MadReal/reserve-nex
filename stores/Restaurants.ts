@@ -74,7 +74,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
       const { data, error } = await useFetch<Restaurant>(URL, { method: "post", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, body: restaurant });
       if (data && data.value) {
         restaurantsList.value.push(data.value);
-        activeRestaurantId.value = data.value.id;
+        switchActiveResturant(data.value.id!);
         storeNotifications.openNotification("Ristorante creato.");
       } else if (error) {
         storeNotifications.openNotification("Errore nell'aggiunta del ristorante, riprova più tardi.", false)
@@ -90,8 +90,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
     const RestaurantToRemoveIndex = restaurantsList.value.findIndex(e => e.id === restaurantId,);
     restaurantsList.value.splice(RestaurantToRemoveIndex, 1);
     // set another Active Restaurant // TODO; redirect if there are no more
-    activeRestaurantId.value = restaurantsList.value[0].id;
-
+    if (restaurantsList.value && restaurantsList.value.length) switchActiveResturant(restaurantsList.value[0].id!);
   }
 
   return {
