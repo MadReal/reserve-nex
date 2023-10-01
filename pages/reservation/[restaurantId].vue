@@ -92,9 +92,9 @@ async function addReservation() {
   const reservation = await storeReservations.addReservation(newReservation.value);
 
   // ******** UPDATE DEPENING ON RESTAURANT ********
-  const avgClientValueAmount = 20;
+  const AVG_CLIENT_VALUE_AMOUNT = 20;
   // calculate event value
-  const clientReservationValue = avgClientValueAmount * (newReservation.value?.peopleAmount || 1);
+  const clientReservationValue = AVG_CLIENT_VALUE_AMOUNT * (newReservation.value?.peopleAmount || 1);
   const discountAmountInEUR = newReservation.value.discountAmount
     ? (newReservation.value.discountAmount / 100) * clientReservationValue
     : 0;

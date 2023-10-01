@@ -51,12 +51,23 @@ loadAdminInitData();
           {{ $t("admin.sidebar_links.restaurants") }}
         </p>
         <div class="mx-4 mb-5 mt-2">
-          <div class="flex items-center justify-between py-3 pl-px" v-for="restaurant in restaurantsList" :key="restaurant.id">
+          <div class="flex items-center py-3 pl-px" v-for="restaurant in restaurantsList" :key="restaurant.id">
             <p class="cursor-pointer hover_underline" @click="switchActiveRestaurantMethod(restaurant.id)">
               {{ restaurant.name }}
             </p>
+            <p>
+              <span
+                class="ml-1 px-[2px] text-[7px]"
+                :class="{
+                  'border-green-400 text-green-400': restaurant.isLive,
+                  'border-gray-300 text-gray-400': !restaurant.isLive,
+                }"
+              >
+                {{ restaurant.isLive ? "LIVE" : "OFF" }}
+              </span>
+            </p>
             <SVGIcon
-              class="cursor-pointer text-grey-200 hover_text-grey-300"
+              class="ml-auto cursor-pointer text-grey-200 hover_text-grey-300"
               svg="edit"
               :size="15"
               @click="openModalMethod('restaurant', restaurant.id)"
