@@ -19,8 +19,33 @@
       "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
     },
     "section2": {
-      "title": "Vantaggi",
-      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+      "title": "Benefits",
+      "description": "Managing your reservations has never been easier! With our management system, you can handle multiple restaurants, add unlimited discounts independently, and benefit from the traceability of bookings made on the website through the Meta pixel and Google Analytics tag."
+    },
+    "benefit1": {
+      "title": "Manage your restaurant reservations",
+      "subtitle": "Simplicity and efficiency",
+      "description": "With our restaurant reservation management system, you have complete control. Accept and decline reservations, customize your opening hours, and input your restaurant's closure days or hours. Easily and efficiently track reservations for each day."
+    },
+    "benefit2": {
+      "title": "More restaurants, without limits and independently",
+      "subtitle": "",
+      "description": "Manage multiple restaurants simultaneously and without restrictions. Easily add essential information such as the restaurant name and address, and decide when to publish them online."
+    },
+    "benefit3": {
+      "title": "Attract customers with enticing discounts",
+      "subtitle": "",
+      "description": "Attract customers with irresistible discounts. Create a variety of offers and associate them with different times and days of the week."
+    },
+    "benefit4": {
+      "title": "Optimize your investments",
+      "subtitle": "Monitor your results through the data tracked on the website.",
+      "description": "Installing Meta's Pixel and Google Analytics tag allows you to closely monitor visitor activity on your website. Improve online performance and reduce the costs of your advertising campaigns using tracking tags."
+    },
+    "benefit5": {
+      "title": "Full and autonomous website",
+      "subtitle": "",
+      "description": "Bring your website to life without relying on third-party services. With the booking management system included in the price, you'll have a comprehensive, modern, and efficient website without additional costs."
     }
   },
   "client_reservation": {

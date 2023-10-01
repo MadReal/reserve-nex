@@ -20,7 +20,32 @@
     },
     "section2": {
       "title": "Vantaggi",
-      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+      "description": "Gestire le tue prenotazioni non è mai stato così facile! Con il nostro gestionale, potrai gestire più ristoranti, aggiungere sconti senza limiti in modo autonomo e beneficiare della tracciabilità delle prenotazioni effettuate sul sito attraverso il pixel di Meta e il tag di Google Analytics."
+    },
+    "benefit1": {
+      "title": "Gestisci le prenotazioni del tuo ristorante",
+      "subtitle": "Semplicità ed efficienza.",
+      "description": "Con il nostro sistema di gestione delle prenotazioni, sei al controllo totale. Accetta e rifiuta prenotazioni, personalizza gli orari di apertura e inserisci i giorni o gli orari di chiusura del tuo ristorante. Tieni traccia delle prenotazioni per ogni singolo giorno in modo semplice ed efficiente."
+    },
+    "benefit2": {
+      "title": "Più ristoranti, senza limiti e in totale autonomia",
+      "subtitle": "",
+      "description": "Gestisci contemporaneamente e senza restrizioni un numero illimitato di ristoranti. Aggiungi facilmente le informazioni essenziali, come il nome e l'indirizzo del ristorante, e decidi quando pubblicarli online."
+    },
+    "benefit3": {
+      "title": "Attrai clienti con sconti accattivanti",
+      "subtitle": "",
+      "description": "Attira clienti con sconti irresistibili. Crea una varietà di offerte e associale a diversi orari e giorni della settimana."
+    },
+    "benefit4": {
+      "title": "Ottimizza i tuoi investimenti",
+      "subtitle": "Monitora i tuoi risultati grazie ai dati tracciati nel sito",
+      "description": "L'installazione del Pixel di Meta e del tag di Google Analytics consente di monitorare attentamente l'attività dei visitatori sul tuo sito web. Migliora le performance online e riduci i costi delle tue campagne pubblicitarie utilizzando tag di tracciamento."
+    },
+    "benefit5": {
+      "title": "Sito Web Completo e Indipendente",
+      "subtitle": "",
+      "description": "Dai vita al tuo sito web, senza dover dipendere da servizi di terze parti. Con il gestionale di prenotazione incluso nel prezzo, avrai un sito completo, moderno ed efficiente senza costi aggiuntivi."
     }
   },
   "client_reservation": {
