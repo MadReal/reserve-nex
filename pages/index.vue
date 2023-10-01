@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // definePageMeta({ layout: false, })
 useHead({ title: "Ristorante" });
+const { locale } = useI18n();
+const isIT = computed(() => locale.value === "it");
 
 const img1 = ref<string>();
 const img2 = ref<string>();
@@ -125,8 +127,17 @@ function onMouseleave(e: MouseEvent) {
       </div>
 
       <div class="mx-auto my-20 flex max-w-screen-lg gap-12">
-        <div class="basis-3/6">
-          <NuxtImg class="presentation-img" loading="lazy" placeholder src="/images/admin-dashboard1.webp" width="500px" />
+        <div class="relative basis-3/6">
+          <div class="absolute -right-5 -top-5 flex h-20 w-20 items-center justify-center rounded-full bg-amber-300 text-white">
+            <SVGIcon svg="calendar" :size="36" />
+          </div>
+          <NuxtImg
+            class="presentation-img"
+            loading="lazy"
+            placeholder
+            :src="`/images/admin-reservations_${isIT ? 'it' : 'en'}.jpg`"
+            width="500px"
+          />
         </div>
         <div class="mt-14 basis-3/6">
           <h2 class="mb-2 text-2xl font-semibold text-black">Gestisci le prenotazioni del tuo ristorante</h2>
@@ -149,14 +160,32 @@ function onMouseleave(e: MouseEvent) {
             reprehenderit ut. Ad irure nisi magna ad consequat labore.
           </p>
         </div>
-        <div class="basis-3/6">
-          <NuxtImg class="presentation-img" loading="lazy" placeholder src="/images/admin-dashboard1.webp" width="500px" />
+        <div class="relative basis-3/6">
+          <div class="absolute -left-5 -top-5 flex h-20 w-20 items-center justify-center rounded-full bg-lime-400 text-white">
+            <SVGIcon svg="plus" :size="36" />
+          </div>
+          <NuxtImg
+            class="presentation-img"
+            loading="lazy"
+            placeholder
+            :src="`/images/admin-add-restaurant_${isIT ? 'it' : 'en'}.jpg`"
+            width="500px"
+          />
         </div>
       </div>
 
       <div class="mx-auto my-24 flex max-w-screen-lg gap-12">
-        <div class="basis-3/6">
-          <NuxtImg class="presentation-img" loading="lazy" placeholder src="/images/admin-dashboard3.webp" width="500px" />
+        <div class="relative basis-3/6">
+          <div class="absolute -right-5 -top-5 flex h-20 w-20 items-center justify-center rounded-full bg-sky-400 text-white">
+            <SVGIcon svg="discount" :size="36" />
+          </div>
+          <NuxtImg
+            class="presentation-img"
+            loading="lazy"
+            placeholder
+            :src="`/images/admin-discount_${isIT ? 'it' : 'en'}.jpg`"
+            width="500px"
+          />
         </div>
         <div class="mt-14 basis-3/6">
           <h2 class="text-2xl font-semibold text-black">Attrai i clienti con sconti accativanti</h2>
@@ -181,8 +210,11 @@ function onMouseleave(e: MouseEvent) {
             informate basate su dati concreti per migliorare le performance online.
           </p>
         </div>
-        <div class="basis-3/6">
-          <NuxtImg class="presentation-img" loading="lazy" placeholder src="/images/online-campaign-tracking.jpg" width="500px" />
+        <div class="relative basis-3/6">
+          <div class="absolute -left-5 -top-5 flex h-20 w-20 items-center justify-center rounded-full bg-rose-400 text-white">
+            <SVGIcon svg="charts" :size="36" />
+          </div>
+          <NuxtImg class="presentation-img" loading="lazy" placeholder src="/images/meta-google-analytics.jpg" width="500px" />
         </div>
       </div>
     </section>
