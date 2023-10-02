@@ -10,7 +10,7 @@
     },
     "header": {
       "title": "Gestionale di Prenotazione",
-      "description": "Semplificare la gestione delle prenotazioni e aumenta la clientela dei tuoi ristoranti.",
+      "description": "Semplifica la gestione delle prenotazioni e aumenta la clientela dei tuoi ristoranti.",
       "btn1": "Prova Prenotazione",
       "btn2": "Vedi Gestionale"
     },
@@ -32,11 +32,6 @@
       "subtitle": "Senza limiti e completa autonomia",
       "description": "Gestisci contemporaneamente e senza restrizioni un numero illimitato di ristoranti. Aggiungi facilmente le informazioni essenziali, come il nome e l'indirizzo del ristorante, e decidi quando pubblicarli online."
     },
-    "_benefit3": {
-      "title": "Attrai clienti con sconti accattivanti",
-      "subtitle": "",
-      "description": "Attira clienti con sconti irresistibili. Crea una varietà di offerte e associale a orari e giorni specifici della settimana per massimizzare la tua clientela."
-    },
     "benefit3": {
       "title": "Attrai clienti con sconti accattivanti",
       "subtitle": "Sorprendi i tuoi clienti con offerte accattivanti",
@@ -49,7 +44,7 @@
     },
     "benefit5": {
       "title": "Sito Web Completo e Indipendente",
-      "subtitle": "Senza costi nascosti",
+      "subtitle": "Senza costi aggiuntivi",
       "description": "Dai vita al tuo sito web, senza dover dipendere da servizi di terze parti. Con il gestionale di prenotazione incluso nel prezzo, avrai un sito completo, moderno ed efficiente senza costi aggiuntivi."
     }
   },
