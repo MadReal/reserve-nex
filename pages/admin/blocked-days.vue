@@ -5,6 +5,8 @@ definePageMeta({
 });
 useHead({ title: "Blocco Giorni" });
 
+import _default_swearWords from "@/data/swear-words.json";
+
 const { locale } = useI18n();
 const isIT = computed(() => locale.value === "it");
 
@@ -45,39 +47,12 @@ const handleDateSelect = async (selectInfo: any) => {
   const sentence = isIT.value ? "Inserisci un titolo per questo evento" : "Add a title for this event";
   let title = prompt(sentence, isIT.value ? "Chiuso" : "Closed");
   // Define an array of swear words to check against
-  const swearWords = [
-    "fanculo",
-    "troia",
-    "puttana",
-    "dio cane",
-    "diocane",
-    "porco dio",
-    "merda",
-    "fuck",
-    "shit",
-    "whore",
-    "bitch",
-    "cunt",
-    "bastardo",
-    "testa di cazzo",
-    "stronzo",
-    "zoccola",
-    "maledetto",
-    "cazzo",
-    "bastard",
-    "dickhead",
-    "asshole",
-    "slut",
-    "damn",
-    "bloody",
-    "son of a bitch",
-  ];
 
   if (title) {
     // Convert the user's input to lowercase to make the check case-insensitive
     const lowercasedTitle = title.toLowerCase();
     // Check if the user's input contains any swear words
-    if (swearWords.some((word) => lowercasedTitle.includes(word))) {
+    if (_default_swearWords.some((word) => lowercasedTitle.includes(word))) {
       // Display an alert message if a swear word is found
       const sentence = isIT.value
         ? "Per favore, evita di utilizzare linguaggio offensivo."
