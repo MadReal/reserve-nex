@@ -6,10 +6,9 @@ definePageMeta({
 useHead({ title: "Blocco Giorni" });
 
 const { locale } = useI18n();
-const isIT = locale.value === "it";
+const isIT = computed(() => locale.value === "it");
 
 import { storeToRefs } from "pinia";
-import { useBlocksStore } from "~/stores/Blocks";
 const storeBlocks = useBlocksStore();
 
 const { blockedDaysOfWeekList, blockedDatesListFullCalendar } = storeToRefs(storeBlocks);
@@ -29,7 +28,8 @@ import itLocale from "@fullcalendar/core/locales/it";
 
 const handleEventClick = async (clickInfo: any) => {
   const blockId: Block["id"] = parseInt(clickInfo.event.id);
-  if (confirm(`Sicuro di voler eliminare l'evento '${clickInfo.event.title}'?`)) {
+  const sentence = isIT.value ? "Sicuro di voler eliminare l'evento" : "Are you sure you want to delete the event";
+  if (confirm(`${sentence} '${clickInfo.event.title}'?`)) {
     await storeBlocks.removeBlock(blockId);
     // clickInfo.event.remove();
   }
@@ -42,7 +42,8 @@ const handleDateSelect = async (selectInfo: any) => {
   if (selectedDate < currentDate) return;
   // ****************************** END ******************************
 
-  let title = prompt("Inserisci un titolo per questo evento", "Chiuso");
+  const sentence = isIT.value ? "Inserisci un titolo per questo evento" : "Add a title for this event";
+  let title = prompt(sentence, isIT.value ? "Chiuso" : "Closed");
   // Define an array of swear words to check against
   const swearWords = [
     "fanculo",
@@ -57,6 +58,19 @@ const handleDateSelect = async (selectInfo: any) => {
     "whore",
     "bitch",
     "cunt",
+    "bastardo",
+    "testa di cazzo",
+    "stronzo",
+    "zoccola",
+    "maledetto",
+    "cazzo",
+    "bastard",
+    "dickhead",
+    "asshole",
+    "slut",
+    "damn",
+    "bloody",
+    "son of a bitch",
   ];
 
   if (title) {
@@ -65,7 +79,10 @@ const handleDateSelect = async (selectInfo: any) => {
     // Check if the user's input contains any swear words
     if (swearWords.some((word) => lowercasedTitle.includes(word))) {
       // Display an alert message if a swear word is found
-      return alert("Per favore, evita di utilizzare linguaggio offensivo.");
+      const sentence = isIT.value
+        ? "Per favore, evita di utilizzare linguaggio offensivo."
+        : "Please refrain from using offensive language.";
+      return alert(sentence);
     }
 
     await storeBlocks.addBlockedDate(selectInfo.startStr, selectInfo.endStr, title);
@@ -81,7 +98,7 @@ const handleDragAndResize = (info: any) => {
 
 const calendarOptions = ref({
   plugins: [dayGridPlugin, interactionPlugin],
-  locale: isIT ? itLocale : "",
+  locale: isIT.value ? itLocale : "",
   headerToolbar: { left: "prev", center: "title", right: "next" },
   initialView: "dayGridMonth",
   editable: true,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useModalsStore } from "~/stores/Modals";
-import { useRestaurantsStore } from "~/stores/Restaurants";
+const { locale } = useI18n();
+const isIT = computed(() => locale.value === "it");
 
 const storeModals = useModalsStore();
 const storeRestaurants = useRestaurantsStore();
@@ -47,7 +47,8 @@ const addOrUpdateRestaurant = async () => {
   }
 };
 const removeRestaurant = async () => {
-  if (confirm("Sicuro di voler eliminare il ristorante?")) {
+  const sentence = isIT.value ? "Sicuro di voler eliminare il ristorante?" : "Are you sure you want to delete the restaurant?";
+  if (confirm(sentence)) {
     await storeRestaurants.removeRestaurant(selectedRestaurant.value.id);
     modalError.value = "";
     storeModals.closeModal();

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useModalsStore } from "~/stores/Modals";
-import { useReservationsStore } from "~/stores/Reservations";
+
+const { locale } = useI18n();
+const isIT = computed(() => locale.value === "it");
 
 const storeModals = useModalsStore();
 const storeReservations = useReservationsStore();
@@ -18,7 +19,10 @@ const instagramName = ref(
 );
 
 const updateReservation = async (reservationId: Reservation["id"], isAccepted: boolean) => {
-  if (confirm("Sicuro di voler rifiutare la prenotazione? \nSe procedi, il cliente verrà informato della cancellazione.")) {
+  const sentence = isIT.value
+    ? "Sicuro di voler rifiutare la prenotazione? \nSe procedi, il cliente verrà informato della cancellazione."
+    : "Are you sure you want to reject the reservation? \nIf you proceed, the customer will be notified of the cancellation.";
+  if (confirm(sentence)) {
     await storeReservations.updateReservation(reservationId, isAccepted);
     storeModals.closeModal();
   }
