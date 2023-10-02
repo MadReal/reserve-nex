@@ -82,7 +82,8 @@ const { activeRestaurant } = storeToRefs(storeRestaurants);
         placeholder="Email*"
         autocomplete="email"
         required
-      /><label class="text-xs" for="person-phone">{{ $t("client_reservation.input_phone") }}</label>
+      />
+      <label class="text-xs" for="person-phone">{{ $t("client_reservation.input_phone") }}</label>
       <VueTelInput
         class="mb-2 h-10 w-full rounded-md border bg-transparent px-2 py-1 pl-0 text-xs text-black focus_border-grey-300 focus_outline-none"
         :class="{

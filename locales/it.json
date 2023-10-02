@@ -15,8 +15,13 @@
       "btn2": "Vedi Gestionale"
     },
     "section1": {
-      "title": "Come funziona il sito",
-      "description": "Il nostro sistema semplifica la gestione delle prenotazioni per i ristoranti. I clienti possono prenotare facilmente online, mentre tu gestisci tutto in modo efficiente da un unico pannello di controllo."
+      "title": "Come funziona",
+      "description": "Per utilizzare il nostro gestionale, basta contattarci. Creeremo il tuo sito web personalizzato con il gestionale di prenotazione incluso. Inizia configurando i tuoi ristoranti, aggiungendo giorni, orari di apertura e creando codici sconto per giorni specifici. È facile e personalizzato per te.",
+      "step1": "Contattaci",
+      "step2": "Creazione del Sito Web",
+      "step3": "Configura i tuoi Ristoranti",
+      "step4": "Ricevi le Prenotazioni",
+      "btn_start_now": "Inizia Ora"
     },
     "section2": {
       "title": "Vantaggi",
@@ -46,6 +51,12 @@
       "title": "Sito Web Completo e Indipendente",
       "subtitle": "Senza costi aggiuntivi",
       "description": "Dai vita al tuo sito web, senza dover dipendere da servizi di terze parti. Con il gestionale di prenotazione incluso nel prezzo, avrai un sito completo, moderno ed efficiente senza costi aggiuntivi."
+    },
+    "contact": {
+      "title": "Contattaci",
+      "input_name": "nome",
+      "input_message": "messaggio",
+      "btn_submit": "Invia"
     }
   },
   "client_reservation": {

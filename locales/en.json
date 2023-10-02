@@ -15,8 +15,13 @@
       "btn2": "See Dashboard"
     },
     "section1": {
-      "title": "How the Site Works",
-      "description": "Our system simplifies reservation management for restaurants. Customers can easily book online, while you efficiently manage everything from a single control panel."
+      "title": "How it Works",
+      "description": "To use our management system, simply contact us. We'll create your customized website with the reservation management system included. Start configuring your restaurants by adding opening hours, days of operation, and creating discount codes for specific days. It's easy and tailored to your needs.",
+      "step1": "Get in Touch",
+      "step2": "Website Creation",
+      "step3": "Configure Your Restaurants",
+      "step4": "Receive Reservations",
+      "btn_start_now": "Start Now"
     },
     "section2": {
       "title": "Benefits",
@@ -46,6 +51,12 @@
       "title": "Complete and Independent Website",
       "subtitle": "No additional costs",
       "description": "Bring your website to life without relying on third-party services. With the booking management system included in the price, you'll have a comprehensive, modern, and efficient website without additional costs."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "input_name": "name",
+      "input_message": "message",
+      "btn_submit": "Send"
     }
   },
   "client_reservation": {
