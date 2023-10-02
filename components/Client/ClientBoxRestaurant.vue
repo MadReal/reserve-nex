@@ -1,6 +1,7 @@
 <script setup lang="ts">
 interface Props {
   restaurant: Restaurant;
+  index: number;
 }
 const props = defineProps<Props>();
 </script>
@@ -12,7 +13,7 @@ const props = defineProps<Props>();
   >
     <NuxtImg
       class="absolute inset-0 z-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover_scale-105 group-hover_opacity-30"
-      :src="`/images/plate1.webp`"
+      :src="`/images/website-restaurant-preview${index + 1}.jpg`"
     />
     <div class="relative z-10 text-center">
       <p class="text-2xl font-bold tracking-wider text-white">{{ restaurant.name }}</p>

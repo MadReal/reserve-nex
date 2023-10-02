@@ -15,7 +15,12 @@ storeRestaurants.fetchRestaurants();
         </h1>
 
         <div class="grid gap-4 md_grid-cols-2">
-          <ClientBoxRestaurant v-for="restaurant in restaurantsListFilterIsLive" :key="restaurant.id" :restaurant="restaurant" />
+          <ClientBoxRestaurant
+            v-for="(restaurant, index) in restaurantsListFilterIsLive"
+            :key="restaurant.id"
+            :restaurant="restaurant"
+            :index="index"
+          />
         </div>
       </div>
     </section>
