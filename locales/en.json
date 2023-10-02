@@ -9,33 +9,33 @@
       "admin": "See Dashboard"
     },
     "header": {
-      "title": "Reservation Manager",
-      "description": "qualcosa in inglese che è poi da scrivere bene fabio",
+      "title": "Reservation Management",
+      "description": "Simplify reservation management and boost your restaurant's clientele.",
       "btn1": "Test Reservation",
       "btn2": "See Dashboard"
     },
     "section1": {
-      "title": "How does it work?",
-      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+      "title": "How the Site Works",
+      "description": "Our system simplifies reservation management for restaurants. Customers can easily book online, while you efficiently manage everything from a single control panel."
     },
     "section2": {
       "title": "Benefits",
       "description": "Managing your reservations has never been easier! With our management system, you can handle multiple restaurants, add unlimited discounts independently, and benefit from the traceability of bookings made on the website through the Meta pixel and Google Analytics tag."
     },
     "benefit1": {
-      "title": "Manage your restaurant reservations",
-      "subtitle": "Simplicity and efficiency",
+      "title": "Total Control on Reservations",
+      "subtitle": "Maximum simplicity and efficiency",
       "description": "With our restaurant reservation management system, you have complete control. Accept and decline reservations, customize your opening hours, and input your restaurant's closure days or hours. Easily and efficiently track reservations for each day."
     },
     "benefit2": {
-      "title": "More restaurants, without limits and independently",
-      "subtitle": "",
+      "title": "Multi-Restaurant Management",
+      "subtitle": "No limits and complete autonomy",
       "description": "Manage multiple restaurants simultaneously and without restrictions. Easily add essential information such as the restaurant name and address, and decide when to publish them online."
     },
     "benefit3": {
       "title": "Attract customers with enticing discounts",
-      "subtitle": "",
-      "description": "Attract customers with irresistible discounts. Create a variety of offers and associate them with different times and days of the week."
+      "subtitle": "Surprise your customers with enticing offers",
+      "description": "Unleash your creativity by creating customized offers and linking them to specific times and days of the week to maximize your customer flow."
     },
     "benefit4": {
       "title": "Optimize your investments",
@@ -43,8 +43,8 @@
       "description": "Installing Meta's Pixel and Google Analytics tag allows you to closely monitor visitor activity on your website. Improve online performance and reduce the costs of your advertising campaigns using tracking tags."
     },
     "benefit5": {
-      "title": "Full and autonomous website",
-      "subtitle": "",
+      "title": "Complete and Independent Website",
+      "subtitle": "No hidden costs",
       "description": "Bring your website to life without relying on third-party services. With the booking management system included in the price, you'll have a comprehensive, modern, and efficient website without additional costs."
     }
   },

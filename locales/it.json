@@ -10,32 +10,37 @@
     },
     "header": {
       "title": "Gestionale di Prenotazione",
-      "description": "L'unione tra i migliori prodotti gastronomici del Mediterraneo e l'arte del sushi giapponese",
+      "description": "Semplificare la gestione delle prenotazioni e aumenta la clientela dei tuoi ristoranti.",
       "btn1": "Prova Prenotazione",
       "btn2": "Vedi Gestionale"
     },
     "section1": {
       "title": "Come funziona il sito",
-      "description": "Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur. Labore in magna adipisicing duis anim sunt ullamco nostrud."
+      "description": "Il nostro sistema semplifica la gestione delle prenotazioni per i ristoranti. I clienti possono prenotare facilmente online, mentre tu gestisci tutto in modo efficiente da un unico pannello di controllo."
     },
     "section2": {
       "title": "Vantaggi",
       "description": "Gestire le tue prenotazioni non è mai stato così facile! Con il nostro gestionale, potrai gestire più ristoranti, aggiungere sconti senza limiti in modo autonomo e beneficiare della tracciabilità delle prenotazioni effettuate sul sito attraverso il pixel di Meta e il tag di Google Analytics."
     },
     "benefit1": {
-      "title": "Gestisci le prenotazioni del tuo ristorante",
-      "subtitle": "Semplicità ed efficienza.",
+      "title": "Controllo Totale delle Prenotazioni",
+      "subtitle": "Massima semplicità ed efficienza",
       "description": "Con il nostro sistema di gestione delle prenotazioni, sei al controllo totale. Accetta e rifiuta prenotazioni, personalizza gli orari di apertura e inserisci i giorni o gli orari di chiusura del tuo ristorante. Tieni traccia delle prenotazioni per ogni singolo giorno in modo semplice ed efficiente."
     },
     "benefit2": {
-      "title": "Più ristoranti, senza limiti e in totale autonomia",
-      "subtitle": "",
+      "title": "Gestione Multi-Ristorante",
+      "subtitle": "Senza limiti e completa autonomia",
       "description": "Gestisci contemporaneamente e senza restrizioni un numero illimitato di ristoranti. Aggiungi facilmente le informazioni essenziali, come il nome e l'indirizzo del ristorante, e decidi quando pubblicarli online."
+    },
+    "_benefit3": {
+      "title": "Attrai clienti con sconti accattivanti",
+      "subtitle": "",
+      "description": "Attira clienti con sconti irresistibili. Crea una varietà di offerte e associale a orari e giorni specifici della settimana per massimizzare la tua clientela."
     },
     "benefit3": {
       "title": "Attrai clienti con sconti accattivanti",
-      "subtitle": "",
-      "description": "Attira clienti con sconti irresistibili. Crea una varietà di offerte e associale a diversi orari e giorni della settimana."
+      "subtitle": "Sorprendi i tuoi clienti con offerte accattivanti",
+      "description": "Dai libero sfogo alla tua creatività creando offerte personalizzate e collegandole a orari e giorni specifici della settimana, per massimizzare il tuo afflusso di clienti."
     },
     "benefit4": {
       "title": "Ottimizza i tuoi investimenti",
@@ -44,7 +49,7 @@
     },
     "benefit5": {
       "title": "Sito Web Completo e Indipendente",
-      "subtitle": "",
+      "subtitle": "Senza costi nascosti",
       "description": "Dai vita al tuo sito web, senza dover dipendere da servizi di terze parti. Con il gestionale di prenotazione incluso nel prezzo, avrai un sito completo, moderno ed efficiente senza costi aggiuntivi."
     }
   },

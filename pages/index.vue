@@ -11,11 +11,8 @@ const isIT = computed(() => locale.value === "it");
 
     <section class="bg-slate-200 px-4 py-20" id="how">
       <div class="mx-auto max-w-screen-md text-center">
-        <h2 class="text-3xl font-semibold text-black sm_text-4xl">Come funziona il sito</h2>
-        <p class="mt-3 text-grey-200">
-          Commodo ea voluptate est laborum nisi nisi deserunt. Nulla commodo ipsum adipisicing consectetur dolore consectetur.
-          Labore in magna adipisicing duis anim sunt ullamco nostrud.
-        </p>
+        <h2 class="text-3xl font-semibold text-black sm_text-4xl">{{ $t("home.section1.title") }}</h2>
+        <p class="mt-3 text-grey-200">{{ $t("home.section1.description") }}</p>
 
         <div class="mx-auto mt-8 h-52 md_h-[315px] md_w-[560px]">
           <iframe
@@ -53,7 +50,7 @@ const isIT = computed(() => locale.value === "it");
         </div>
         <div class="md_mt-14 md_basis-3/6">
           <h3 class="text-2xl font-semibold text-black">{{ $t("home.benefit1.title") }}</h3>
-          <!-- <p class="text-md text-primary-200">{{ $t("home.benefit1.subtitle") }}</p> -->
+          <p class="text-md text-primary-200">{{ $t("home.benefit1.subtitle") }}</p>
           <p class="mt-2 font-light text-grey-200">{{ $t("home.benefit1.description") }}</p>
         </div>
       </div>
@@ -61,7 +58,7 @@ const isIT = computed(() => locale.value === "it");
       <div class="mx-auto my-24 flex max-w-screen-lg flex-col gap-4 md_flex-row md_gap-12">
         <div class="md_mt-14 md_basis-3/6">
           <h3 class="text-2xl font-semibold text-black">{{ $t("home.benefit2.title") }}</h3>
-          <!-- <p class="text-md text-primary-200">{{ $t("home.benefit2.subtitle") }}</p> -->
+          <p class="text-md text-primary-200">{{ $t("home.benefit2.subtitle") }}</p>
           <p class="mt-2 font-light text-grey-200">{{ $t("home.benefit2.description") }}</p>
         </div>
         <div class="relative order-1 mt-4 scale-90 sm_scale-100 md_order-none md_mt-auto md_basis-3/6">
@@ -93,7 +90,7 @@ const isIT = computed(() => locale.value === "it");
         </div>
         <div class="md_mt-14 md_basis-3/6">
           <h3 class="text-2xl font-semibold text-black">{{ $t("home.benefit3.title") }}</h3>
-          <!-- <p class="text-md text-primary-200">{{ $t("home.benefit3.subtitle") }}</p> -->
+          <p class="text-md text-primary-200">{{ $t("home.benefit3.subtitle") }}</p>
           <p class="mt-2 font-light text-grey-200">{{ $t("home.benefit3.description") }}</p>
         </div>
       </div>

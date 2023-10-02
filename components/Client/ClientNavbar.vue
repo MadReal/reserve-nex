@@ -39,7 +39,7 @@ onMounted(() => {
           to="/"
           class="transition duration-200 hover_text-primary-100 focus_text-black"
           :class="{ 'sm_text-black': isRouteHome, 'text-white': isRouteHome && !hasScrolled }"
-          >Ristorante
+          >ReserveNex
         </nuxt-link>
       </div>
     </div>
