@@ -64,7 +64,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
         restaurantsList.value[restuarantToUpdateIndex] = data.value;
         storeNotifications.openNotification("Modifiche apportate.");
       } else if (error) {
-        storeNotifications.openNotification("Errore nella modifica del ristorante, riprova più tardi.", false)
+        storeNotifications.openNotification('', false)
         throw error.value;
       }
     } else {
@@ -77,7 +77,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
         switchActiveResturant(data.value.id!);
         storeNotifications.openNotification("Ristorante creato.");
       } else if (error) {
-        storeNotifications.openNotification("Errore nell'aggiunta del ristorante, riprova più tardi.", false)
+        storeNotifications.openNotification('', false)
         throw error.value;
       }
     }
@@ -85,7 +85,7 @@ export const useRestaurantsStore = defineStore("RestaurantsStore", () => {
 
   async function removeRestaurant(restaurantId: Restaurant["id"]) {
     const { status } = await useFetch(`${URL}/${restaurantId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' } });
-    if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
+    if (status.value === 'error') return storeNotifications.openNotification('', false)
 
     const RestaurantToRemoveIndex = restaurantsList.value.findIndex(e => e.id === restaurantId,);
     restaurantsList.value.splice(RestaurantToRemoveIndex, 1);

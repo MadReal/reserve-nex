@@ -102,7 +102,7 @@ export const useReservationsStore = defineStore("ReservationsStore", () => {
       const reservationToUpdateIndex = reservationsList.value.findIndex((e) => e.id === reservationId);
       reservationsList.value[reservationToUpdateIndex].accepted = accepted;
     } else if (error) {
-      storeNotifications.openNotification("Errore nella modifica della prenotazione, riprova più tardi.", false)
+      storeNotifications.openNotification('', false)
       throw error.value;
     }
   }

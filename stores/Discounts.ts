@@ -52,7 +52,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		});
 		if (data && data.value) discountAmountsList.value.push(data.value);
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'aggiunta sconto, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -65,7 +65,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 		});
 		if (data && data.value) discountsList.value.push(data.value);
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'aggiunta sconto, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -105,14 +105,14 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 			discountsList.value[discountToUpdateIndex] = data.value;
 		}
 		else if (error) {
-			storeNotifications.openNotification("Errore nella modifica sconto, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
 
 	async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
 		const { status } = await useFetch(`${URL_discountAmount}/${discountAmountId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' } });
-		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
+		if (status.value === 'error') return storeNotifications.openNotification('', false)
 
 		// Find the index of the discountAmount to remove in discountAmountsList and remove it
 		const discountAmountToRemoveIndex = discountAmountsList.value.findIndex((e) => e.id === discountAmountId);
@@ -128,7 +128,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function deleteDiscount(discountId: Discount["id"]) {
 		const { status } = await useFetch(`${URL_discount}/${discountId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' } });
-		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
+		if (status.value === 'error') return storeNotifications.openNotification('', false)
 
 		// Find the index of the discount to remove in discountsList and remove it
 		const discountToRemoveIndex = discountsList.value.findIndex((e) => e.id === discountId);
@@ -137,7 +137,7 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 
 	async function deleteAllDiscountsOnDayOfWeek(dayOfWeek: Discount["dayOfWeek"]) {
 		const { status } = await useFetch(`${URL_discountDayOfWeek}?dayOfWeek=${dayOfWeek}&restaurantId=${activeRestaurantId.value}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' } });
-		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
+		if (status.value === 'error') return storeNotifications.openNotification('', false)
 
 		// remove locally, if ALL remove everything
 		if (dayOfWeek === 10) discountsList.value = [];

@@ -67,7 +67,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			// return data.value
 		}
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'aggiunta del blocco, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -87,7 +87,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			}
 		}
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'eseguire questa azione, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -116,7 +116,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				blockedDaysOfWeekList.value[blockedDayOfWeekToUpdateIndex].dayOfWeek = newDayOfWeek;
 			}
 			else if (error) {
-				storeNotifications.openNotification("Errore nell'eseguire questa azione, riprova più tardi.", false)
+				storeNotifications.openNotification('', false)
 				throw error.value
 			}
 		} else {
@@ -132,7 +132,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 				blockedDaysOfWeekList.value = sortblockedDaysOfWeek(blockedDaysOfWeekList.value);
 			}
 			else if (error) {
-				storeNotifications.openNotification("Errore nell'aggiunta del blocco, riprova più tardi.", false)
+				storeNotifications.openNotification('', false)
 				throw error.value
 			}
 		}
@@ -158,7 +158,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 		const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DATE, { method: "post", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, body: blockedTimeOnDay, });
 		if (data.value) blockedTimeRangeOnDateList.value.push(data.value);
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'aggiunta del blocco, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -173,7 +173,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			blockedTimeRangeOnDateList.value[blockTimePeriodToUpdateIndex] = newBlockTimePeriod;
 		}
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'eseguire questa azione, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
@@ -199,7 +199,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			const { data, error } = await useFetch<Block>(URL_BLOCKED_TIME_RANGE_ON_DAY_OF_WEEK, { method: "post", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, body: block, });
 			if (data.value) blockedTimeRangeOnDayOfWeekList.value.push(data.value);
 			else if (error) {
-				storeNotifications.openNotification("Errore nell'aggiunta del blocco, riprova più tardi.", false)
+				storeNotifications.openNotification('', false)
 				throw error.value
 			}
 		} else return
@@ -215,7 +215,7 @@ export const useBlocksStore = defineStore("BlocksStore", () => {
 			blockedTimeRangeOnDayOfWeekList.value[blockToUpdateIndex] = newBlock;
 		}
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'eseguire questa azione, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}

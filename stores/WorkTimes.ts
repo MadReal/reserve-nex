@@ -44,14 +44,14 @@ export const useWorkTimesStore = defineStore("WorkTimesStore", () => {
 		});
 		if (data && data.value) workTimesList.value.push(data.value);
 		else if (error) {
-			storeNotifications.openNotification("Errore nell'aggiunta dell'orario, riprova più tardi.", false)
+			storeNotifications.openNotification('', false)
 			throw error.value
 		}
 	}
 
 	async function removeWorkTime(timeId: WorkTime["id"]) {
 		const { status } = await useFetch(`${URL}/${timeId}`, { method: "delete", headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' }, });
-		if (status.value === 'error') return storeNotifications.openNotification("Errore nell'eliminazione, riprova più tardi.", false)
+		if (status.value === 'error') return storeNotifications.openNotification('', false)
 
 		const workTimeIndex = workTimesList.value.findIndex((e) => e.id === timeId);
 		workTimesList.value.splice(workTimeIndex, 1);
