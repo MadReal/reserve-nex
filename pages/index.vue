@@ -4,20 +4,18 @@ useHead({ title: "Ristorante" });
 const { locale } = useI18n();
 const localePath = useLocalePath();
 const isIT = computed(() => locale.value === "it");
-
-const form = ref({ email: "", name: "", message: "" });
 </script>
 
 <template>
   <div class="page -mt-14 sm_mt-0">
     <ClientHeader />
 
-    <section class="bg-slate-200 px-4 pb-16 pt-20" id="how">
+    <section class="bg-slate-200 px-4 py-20" id="how">
       <div class="mx-auto max-w-screen-md text-center">
         <h2 class="text-3xl font-semibold text-black sm_text-4xl">{{ $t("home.section1.title") }}</h2>
         <p class="mt-3 text-grey-200">{{ $t("home.section1.description") }}</p>
 
-        <div class="mb-10 mt-6 grid grid-cols-2 gap-4 sm_grid-cols-4">
+        <div class="my-14 grid grid-cols-2 gap-x-3 gap-y-8 sm_grid-cols-4">
           <ClientLandingPageStep step="1" :text="$t('home.section1.step1')" />
           <ClientLandingPageStep step="2" :text="$t('home.section1.step2')" />
           <ClientLandingPageStep step="3" :text="$t('home.section1.step3')" />
@@ -33,18 +31,6 @@ const form = ref({ email: "", name: "", message: "" });
             {{ $t("home.section1.btn_start_now") }}
           </nuxt-link>
         </div>
-        <!-- <div class="mx-auto mt-8 h-52 md_h-[315px] md_w-[560px]">
-          <iframe
-            class="mx-auto"
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/nJTsbZojero?si=GVI_Sulfv93ZyEHx"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-            allowfullscreen
-          />
-        </div> -->
       </div>
     </section>
 
@@ -144,60 +130,7 @@ const form = ref({ email: "", name: "", message: "" });
       </div>
     </section>
 
-    <section class="bg-slate-200 px-4 pb-16 pt-20" id="contact">
-      <div class="mx-auto max-w-screen-sm">
-        <h4 class="mb-4 text-center text-2xl font-semibold text-black">{{ $t("home.contact.title") }}</h4>
-        <form action="https://formspree.io/f/xgejpzoy" method="POST">
-          <div class="flex gap-x-4">
-            <div class="grow">
-              <label class="text-xs" for="name">Name</label>
-              <input
-                class="mb-2 w-full rounded-md border border-grey-100 bg-transparent p-3 text-sm text-black focus_border-grey-300 focus_outline-none"
-                v-model="form.name"
-                name="person-name"
-                id="person-name"
-                type="name"
-                placeholder="Name*"
-                autocomplete="name"
-                required
-              />
-            </div>
-            <div class="grow">
-              <label class="text-xs" for="email">Email</label>
-              <input
-                class="mb-2 w-full rounded-md border border-grey-100 bg-transparent p-3 text-sm text-black focus_border-grey-300 focus_outline-none"
-                v-model="form.email"
-                name="person-email"
-                id="person-email"
-                type="email"
-                placeholder="Email*"
-                autocomplete="email"
-                required
-              />
-            </div>
-          </div>
-          <label class="text-xs" for="message">Message</label>
-          <textarea
-            rows="4"
-            class="mb-2 w-full rounded-md border border-grey-100 bg-transparent p-3 text-sm text-black focus_border-grey-300 focus_outline-none"
-            v-model="form.message"
-            name="message"
-            id="message"
-            type="text"
-            placeholder="Message*"
-            required
-          />
-          <div class="flex">
-            <button
-              type="submit"
-              class="ml-auto rounded bg-primary-100 px-5 py-3 text-center text-base font-medium uppercase text-white hover_bg-primary-200"
-            >
-              {{ $t("home.contact.btn_submit") }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
+    <ClientContactForm />
   </div>
 </template>
 

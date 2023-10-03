@@ -6,6 +6,7 @@
     "navbar": {
       "how_it_works": "Come Funziona",
       "benefits": "Vantaggi",
+      "contact": "Contattaci",
       "admin": "Vedi Gestionale"
     },
     "header": {
@@ -54,9 +55,15 @@
     },
     "contact": {
       "title": "Contattaci",
+      "subtitle": "Compila il nostro modulo di contatto per qualsiasi domanda, richiesta o feedback. Siamo qui per assisterti.",
       "input_name": "nome",
+      "input_name_placeholder": "il tuo nome",
+      "input_email_placeholder": "la tua email",
       "input_message": "messaggio",
-      "btn_submit": "Invia"
+      "input_message_placeholder": "scrivi il messaggio",
+      "btn_submit": "Invia",
+      "form_success_message": "La tua richiesta è stata inviata con successo!",
+      "form_error_message": "Ops! Si è verificato un problema nell'invio"
     }
   },
   "client_reservation": {

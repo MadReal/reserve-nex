@@ -90,7 +90,7 @@ function onMouseleave(e: MouseEvent) {
     ></div>
 
     <div class="absolute inset-0 h-full w-full bg-[url('/images/jonathan-borba.webp')] bg-cover object-cover sm_hidden">
-      <div class="flex h-full w-full items-center justify-center bg-black/40 backdrop-brightness-50"></div>
+      <div class="flex h-full w-full items-center justify-center bg-black/50"></div>
     </div>
   </section>
 </template>

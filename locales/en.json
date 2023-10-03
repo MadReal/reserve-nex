@@ -6,6 +6,7 @@
     "navbar": {
       "how_it_works": "How It Works",
       "benefits": "Benefits",
+      "contact": "Contact Us",
       "admin": "See Dashboard"
     },
     "header": {
@@ -54,9 +55,15 @@
     },
     "contact": {
       "title": "Contact Us",
+      "subtitle": "Fill out our contact form for any questions, inquiries, or feedback. We're here to assist you.",
       "input_name": "name",
+      "input_name_placeholder": "Your name",
+      "input_email_placeholder": "Your email",
       "input_message": "message",
-      "btn_submit": "Send"
+      "input_message_placeholder": "enter your message",
+      "btn_submit": "Send",
+      "form_success_message": "Thanks for your submission!",
+      "form_error_message": "Oops! There was a problem submitting your form"
     }
   },
   "client_reservation": {

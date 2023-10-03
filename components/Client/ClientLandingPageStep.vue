@@ -13,6 +13,6 @@ const props = defineProps<Props>();
     >
       <p class="text-xl">{{ step }}</p>
     </div>
-    <p class="mt-2 text-sm font-medium text-grey-300">{{ text }}</p>
+    <p class="mt-2 text-[0.8rem] font-medium text-grey-300">{{ text }}</p>
   </div>
 </template>

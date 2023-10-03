@@ -35,37 +35,45 @@ onMounted(() => {
   >
     <div class="p-4">
       <div class="text-xl font-semibold">
-        <nuxt-link
+        <NuxtLink
           to="/"
           class="transition duration-200 hover_text-primary-100 focus_text-black"
           :class="{ 'sm_text-black': isRouteHome, 'text-white': isRouteHome && !hasScrolled }"
           >ReserveNex
-        </nuxt-link>
+        </NuxtLink>
       </div>
     </div>
 
     <!-- Nav Items Working on Tablet & Bigger Sceen -->
-    <div class="hidden justify-between p-4 text-lg font-semibold md_flex">
-      <nuxt-link :to="localePath('/')" class="navbar-item" :class="{ hidden: hideOnReservationDesktop }">Home </nuxt-link>
-      <nuxt-link
+    <div class="text-md hidden justify-between p-4 font-semibold md_flex">
+      <NuxtLink :to="localePath('/')" class="navbar-item" :class="{ hidden: hideOnReservationDesktop }">Home </NuxtLink>
+      <NuxtLink
         :to="{ path: localePath('/'), hash: '#how' }"
         :prefetch="false"
         class="navbar-item"
         :class="{ hidden: hideOnReservationDesktop }"
       >
         {{ $t("home.navbar.how_it_works") }}
-      </nuxt-link>
-      <nuxt-link
+      </NuxtLink>
+      <NuxtLink
         :to="{ path: localePath('/'), hash: '#benefits' }"
         :prefetch="false"
         class="navbar-item"
         :class="{ hidden: hideOnReservationDesktop }"
       >
         {{ $t("home.navbar.benefits") }}
-      </nuxt-link>
-      <nuxt-link :to="localePath('/admin')" class="navbar-item-admin" :class="{ hidden: hideOnReservationDesktop }">
+      </NuxtLink>
+      <NuxtLink
+        :to="{ path: localePath('/'), hash: '#contact' }"
+        :prefetch="false"
+        class="navbar-item"
+        :class="{ hidden: hideOnReservationDesktop }"
+      >
+        {{ $t("home.navbar.contact") }}
+      </NuxtLink>
+      <NuxtLink :to="localePath('/admin')" class="navbar-item-admin" :class="{ hidden: hideOnReservationDesktop }">
         {{ $t("home.navbar.admin") }}
-      </nuxt-link>
+      </NuxtLink>
 
       <LanguageSwitch :hasScrolled="hasScrolled" />
     </div>
@@ -103,11 +111,39 @@ onMounted(() => {
       <div class="absolute inset-x-0 top-14 z-10 border-b bg-white" v-show="isMenuOpen">
         <div class="text-black">
           <ul class="mb-8 mt-1">
-            <li class="py-3" @click="toggleMenu()"><nuxt-link :to="localePath('/')" class="navbar-item">Home</nuxt-link></li>
-            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Come funziona</a></li>
-            <li class="py-3" @click="toggleMenu()"><a class="navbar-item">Vantaggi </a></li>
-            <li class="py-3" @click="toggleMenu()">
-              <nuxt-link to="/admin" class="navbar-item-admin">Vedi Gestionale</nuxt-link>
+            <li class="px-2 py-3" @click="toggleMenu()"><NuxtLink :to="localePath('/')" class="navbar-item">Home</NuxtLink></li>
+            <li class="px-2 py-3" @click="toggleMenu()">
+              <NuxtLink
+                :to="{ path: localePath('/'), hash: '#how' }"
+                :prefetch="false"
+                class="navbar-item"
+                :class="{ hidden: hideOnReservationDesktop }"
+              >
+                {{ $t("home.navbar.how_it_works") }}
+              </NuxtLink>
+            </li>
+            <li class="px-2 py-3" @click="toggleMenu()">
+              <NuxtLink
+                :to="{ path: localePath('/'), hash: '#benefits' }"
+                :prefetch="false"
+                class="navbar-item"
+                :class="{ hidden: hideOnReservationDesktop }"
+              >
+                {{ $t("home.navbar.benefits") }}
+              </NuxtLink>
+            </li>
+            <li class="px-2 py-3" @click="toggleMenu()">
+              <NuxtLink
+                :to="{ path: localePath('/'), hash: '#contact' }"
+                :prefetch="false"
+                class="navbar-item"
+                :class="{ hidden: hideOnReservationDesktop }"
+              >
+                {{ $t("home.navbar.contact") }}
+              </NuxtLink>
+            </li>
+            <li class="px-2 py-3" @click="toggleMenu()">
+              <NuxtLink to="/admin" class="navbar-item-admin">{{ $t("home.navbar.admin") }}</NuxtLink>
             </li>
           </ul>
         </div>
@@ -118,7 +154,7 @@ onMounted(() => {
 
 <style lang="sass" scoped>
 .navbar-default
-    @apply mx-4 border-b-2 transition duration-200 hover_border-b-2 cursor-pointer
+    @apply mx-3 border-b-2 transition duration-200 hover_border-b-2 cursor-pointer
 .navbar-item
     @apply navbar-default border-transparent hover_border-primary-200
 .navbar-item-admin
