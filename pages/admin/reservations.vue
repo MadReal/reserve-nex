@@ -1,12 +1,13 @@
 <script setup lang="ts">
+const i18n = useI18n();
+import { storeToRefs } from "pinia";
+
 definePageMeta({
   middleware: ["empty-restaurants-list", "auth"],
   layout: "admin-default",
 });
-useHead({ title: "Prenotazioni" });
+useHead({ title: i18n.t("admin.reservations.page_name") });
 
-import { storeToRefs } from "pinia";
-import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
 const { reservationsList, reservationsAtDateList } = storeToRefs(storeReservations);
 

@@ -6,10 +6,15 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   app: {
     head: {
-      title: "Ristorante",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1.0, user-scalable=no",
-      htmlAttrs: { lang: "it" }
+      htmlAttrs: { lang: "it" },
+      meta: [
+        { charset: "utf-8" },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: "/og-image.jpg" },
+        { hid: "t-type", name: "twitter:card", content: "summary_large_image" },
+      ],
     },
   },
   routeRules: {

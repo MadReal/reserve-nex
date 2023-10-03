@@ -1,9 +1,11 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
-useHead({ title: "Gestione Sconti" });
-
 import { storeToRefs } from "pinia";
 import { directive as VNumber } from "@coders-tm/vue-number-format";
+const i18n = useI18n();
+
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
+useHead({ title: i18n.t("admin.discounts.page_name") });
+
 const number = { suffix: "% ", precision: 2, max: 99 };
 
 const storeWorkTimes = useWorkTimesStore();

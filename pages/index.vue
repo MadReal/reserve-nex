@@ -1,9 +1,10 @@
 <script setup lang="ts">
-// definePageMeta({ layout: false, })
-useHead({ title: "Ristorante" });
-const { locale } = useI18n();
+const i18n = useI18n();
 const localePath = useLocalePath();
-const isIT = computed(() => locale.value === "it");
+// definePageMeta({ layout: false, })
+useHead({ title: i18n.t("home.page_name") });
+
+const isIT = computed(() => i18n.locale.value === "it");
 </script>
 
 <template>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import _default_swearWords from "@/data/swear-words.json";
+const i18n = useI18n();
+
 definePageMeta({
   middleware: ["auth", "empty-restaurants-list"],
   layout: "admin-default",
 });
-useHead({ title: "Blocco Giorni" });
+useHead({ title: i18n.t("admin.blocked_days.page_name") });
 
-import _default_swearWords from "@/data/swear-words.json";
+const isIT = computed(() => i18n.locale.value === "it");
 
-const { locale } = useI18n();
-const isIT = computed(() => locale.value === "it");
-
-import { storeToRefs } from "pinia";
 const storeBlocks = useBlocksStore();
 
 const { blockedDaysOfWeekList, blockedDatesListFullCalendar } = storeToRefs(storeBlocks);

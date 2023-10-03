@@ -3,6 +3,7 @@
   "dinner": "Dinner",
   "total": "total",
   "home": {
+    "page_name": "Reservation Management",
     "navbar": {
       "how_it_works": "How It Works",
       "benefits": "Benefits",
@@ -55,7 +56,7 @@
     },
     "contact": {
       "title": "Contact Us",
-      "subtitle": "Fill out our contact form for any questions, inquiries, or feedback. We're here to assist you.",
+      "subtitle": "Fill out the form to initiate collaboration on your website, ask questions, or make requests. We're here to help you bring your vision to life.",
       "input_name": "name",
       "input_name_placeholder": "Your name",
       "input_email_placeholder": "Your email",
@@ -67,7 +68,8 @@
     }
   },
   "client_reservation": {
-    "select_restaurant": "Select Restaurant",
+    "restaurants_select_page_name": "Select Restaurant",
+    "main_page_name": "Reservation",
     "days_closed": "Closed Day",
     "booking_at": "You are booking for",
     "discount": "Discount",

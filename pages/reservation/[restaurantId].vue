@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+const i18n = useI18n();
+useHead({ title: i18n.t("client_reservation.main_page_name") });
+
 const route = useRoute();
 const router = useRouter();
 import "vue-tel-input/vue-tel-input.css";

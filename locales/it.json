@@ -3,6 +3,7 @@
   "dinner": "Cena",
   "total": "totale",
   "home": {
+    "page_name": "Gestionale di Prenotazione",
     "navbar": {
       "how_it_works": "Come Funziona",
       "benefits": "Vantaggi",
@@ -55,7 +56,7 @@
     },
     "contact": {
       "title": "Contattaci",
-      "subtitle": "Compila il nostro modulo di contatto per qualsiasi domanda, richiesta o feedback. Siamo qui per assisterti.",
+      "subtitle": "Compila il modulo per avviare la collaborazione sul tuo sito web, porre domande o fare richieste. Siamo qui per aiutarti a realizzare la tua visione.",
       "input_name": "nome",
       "input_name_placeholder": "il tuo nome",
       "input_email_placeholder": "la tua email",
@@ -67,7 +68,8 @@
     }
   },
   "client_reservation": {
-    "select_restaurant": "Seleziona il Ristorante",
+    "restaurants_select_page_name": "Seleziona il Ristorante",
+    "main_page_name": "Prenotazione",
     "days_closed": "Giorno di chiusura",
     "booking_at": "Stai prenotando per",
     "discount": "Sconto",

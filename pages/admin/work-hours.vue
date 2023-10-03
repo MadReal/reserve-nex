@@ -1,9 +1,9 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
-useHead({ title: "Gestione Orari" });
-
+const i18n = useI18n();
 import { storeToRefs } from "pinia";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
+
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
+useHead({ title: i18n.t("admin.work_hours.page_name") });
 
 const storeWorkTimes = useWorkTimesStore();
 const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);

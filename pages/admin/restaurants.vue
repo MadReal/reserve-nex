@@ -1,9 +1,10 @@
 <script setup lang="ts">
+const i18n = useI18n();
+
 definePageMeta({ middleware: ["auth"], layout: "admin-no-sidebar" });
-useHead({ title: "Ristoranti" });
+useHead({ title: i18n.t("admin.restaurants.page_name") });
 
 import { storeToRefs } from "pinia";
-import { useRestaurantsStore } from "@/stores/Restaurants";
 
 const storeRestaurants = useRestaurantsStore();
 const { restaurantsList } = storeToRefs(storeRestaurants);

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
-useHead({ title: "Blocco Orari" });
-
+const i18n = useI18n();
 import { storeToRefs } from "pinia";
-import { useBlocksStore } from "~/stores/Blocks";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
+
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
+useHead({ title: i18n.t("admin.blocked_times.page_name") });
 
 const storeBlocks = useBlocksStore();
 const storeWorkTimes = useWorkTimesStore();

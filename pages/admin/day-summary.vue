@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+const i18n = useI18n();
+
 definePageMeta({
   middleware: ["auth", "empty-restaurants-list"],
   layout: "admin-default",
 });
-useHead({ title: "Riepilogo Giorno" });
+useHead({ title: i18n.t("admin.day_summary.page_name") });
 
 import { lunch, dinner } from "~/data/work-times-available.json";
-import { storeToRefs } from "pinia";
-import { useWorkTimesStore } from "~/stores/WorkTimes";
-import { useReservationsStore } from "@/stores/Reservations";
 const storeReservations = useReservationsStore();
 const { reservationsList } = storeToRefs(storeReservations);
 
