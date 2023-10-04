@@ -61,3 +61,28 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# .env file
+
+# Supabase config
+
+SUPABASE_URL=""
+SUPABASE_KEY=""
+SUPABASE_JWT_SECRET=""
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+# Connect to Supabase with PgBouncer.
+
+DATABASE_URL=""
+
+# Direct connection to the database. Used for migrations.
+
+DIRECT_URL=""
+
+# EMAILS - RESEND
+
+RESEND_API_KEY=""
+ADMIN_EMAIL="email <email@email.com>"
