@@ -112,11 +112,12 @@ const onDrop = (event: any) => {
           </div>
         </AdminContainerGrid2ColsBorder>
 
-        <AdminDiscountsDelete :selectedDayOfWeek="selectedDayOfWeek" />
+        <AdminDiscountsDeleteBtns :selectedDayOfWeek="selectedDayOfWeek" />
       </div>
 
       <AdminContainerDivider class="hidden md_block" />
 
+      <!-- Sidebar to add discount amounts -->
       <div class="my-6 h-max md_mb-6 md_mt-1 md_pl-6">
         <p>{{ $t("admin.discounts.discount_title") }}</p>
         <p class="mb-4 text-sm text-grey-100">{{ $t("admin.discounts.discount_description") }}</p>
@@ -145,6 +146,8 @@ const onDrop = (event: any) => {
           />
         </div>
         <div class="my-6 border-b"></div>
+
+        <!-- drop area to set discount amount for all work hours of select day -->
         <div
           class="mb-20 rounded border border-dashed border-red-300 bg-red-50 px-3 py-5 text-center text-xs text-red-300 md_mb-0"
           @drop="onDrop($event)"
