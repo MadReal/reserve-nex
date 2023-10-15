@@ -71,11 +71,11 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     </div>
     <div class="absolute inset-0" @drop="onDrop($event, workTime.id)" @dragenter.prevent @dragover.prevent></div>
     <AdminDiscountAmount
-      v-if="selectedDayOfWeek !== 10"
+      v-if="selectedDayOfWeek !== 10 && discountAmountOnWorkTime"
       :value="discountAmountOnWorkTimeValue"
       @drop="onDrop($event, workTime.id)"
       @updateOrDelete="deleteDiscount(discountOnWorkTime?.id)"
-      @dragstart="startDrag($event, discountAmountOnWorkTime?.id, 'copy')"
+      @dragstart="startDrag($event, discountAmountOnWorkTime.id, 'copy')"
       @dragleave="leaveDrag()"
       @dragend="endDrag($event, discountOnWorkTime?.id)"
     />
