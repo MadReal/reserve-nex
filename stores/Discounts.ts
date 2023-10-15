@@ -95,8 +95,6 @@ export const useDiscountsStore = defineStore("DiscountsStore", () => {
 	}
 
 	async function updateDiscount(discountId: Discount["id"], workTimeId: WorkTime["id"], discountAmountId?: DiscountAmount["id"]) {
-		console.log(discountId);
-
 		const { data, error } = await useFetch<Discount>(`${URL_discount}/${discountId}`, {
 			method: "patch",
 			headers: { Authorization: authToken.value ? `Bearer ${authToken.value}` : '' },

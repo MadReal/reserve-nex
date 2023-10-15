@@ -62,7 +62,9 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
       </div>
       <p>{{ workTime.time }}</p>
     </div>
+    <!-- drop area -->
     <div class="absolute inset-0" @drop="onDrop($event, workTime.id)" @dragenter.prevent @dragover.prevent></div>
+    <!-- discount amount red box to displaying the amount -->
     <AdminDiscountAmount
       v-if="selectedDayOfWeek !== 10 && discountAmountOnWorkTime"
       :value="discountAmountOnWorkTimeValue"
