@@ -41,10 +41,9 @@ async function deleteDiscountAmount(discountAmountId: DiscountAmount["id"]) {
   newDiscountAmount.value = null;
 }
 
-const startDrag = (event: any, discountId: Discount["id"], discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
+const startDrag = (event: any, discountAmountId: DiscountAmount["id"], effectAllowed: string) => {
   event.dataTransfer.effectAllowed = effectAllowed;
   event.dataTransfer.dropEffect = effectAllowed;
-  event.dataTransfer.setData("discountId", discountId);
   event.dataTransfer.setData("discountAmountId", discountAmountId);
 };
 const onDrop = (event: any) => {
@@ -129,7 +128,7 @@ const onDrop = (event: any) => {
             :value="discountAmount.value"
             isTrash
             @updateOrDelete="deleteDiscountAmount(discountAmount.id)"
-            @dragstart="startDrag($event, undefined, discountAmount.id, 'copy')"
+            @dragstart="startDrag($event, discountAmount.id, 'copy')"
           />
 
           <input

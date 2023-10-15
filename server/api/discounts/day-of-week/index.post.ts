@@ -46,8 +46,7 @@ export default defineEventHandler(async (event) => {
 			await prisma.discount.deleteMany({ where: { dayOfWeek, restaurantId } });
 			const workTimes: WorkTime[] = await prisma.workTime.findMany({ where: { restaurantId } });
 			await Promise.all(workTimes.map(async (workTime) => {
-				const data = [1, 2, 3, 4, 5, 6, 7].map((number) => ({ discountAmountId, workTimeId: workTime.id, dayOfWeek, restaurantId }));
-				await prisma.discount.createMany({ data });
+				await prisma.discount.createMany({ data: { discountAmountId, workTimeId: workTime.id, dayOfWeek, restaurantId } });
 			}))
 		}
 
