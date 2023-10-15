@@ -33,24 +33,17 @@ const leaveDrag = () => (dragHasLelt.value = true);
 const endDrag = (event: any, discountId: Discount["id"]) => (dragHasLelt.value ? deleteDiscount(discountId) : null);
 const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
   dragHasLelt.value = false;
-  const effectAllowed = event.dataTransfer.effectAllowed;
-  const discountId = parseInt(event.dataTransfer.getData("discountId"));
   const discountAmountId = parseInt(event.dataTransfer.getData("discountAmountId"));
 
   const discountToCheck = discountOnWorkTime.value;
-
-  if (effectAllowed === "copy") {
-    // if it's dragged on ALL DAYS - 1 TIME
-    if (props.selectedDayOfWeek === 10) storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId);
-    // if it's dragged on 1 DAY - 1 TIME
-    else {
-      // if you're adding a Discount on WorkTime
-      if (!discountId && !discountToCheck) storeDiscounts.addDiscount(props.selectedDayOfWeek, workTimeId, discountAmountId);
-      // if you're trying to replace a discountAmount in a workTime with Discount already set
-      if (!discountId && discountToCheck) storeDiscounts.updateDiscount(discountToCheck?.id, workTimeId, discountAmountId);
-    }
-  } else if (effectAllowed === "move") {
-    storeDiscounts.updateDiscount(discountId, workTimeId, discountAmountId);
+  // if it's dragged on ALL DAYS - 1 TIME
+  if (props.selectedDayOfWeek === 10) storeDiscounts.addManyDiscounts(props.selectedDayOfWeek, discountAmountId, workTimeId);
+  // if it's dragged on 1 DAY - 1 TIME
+  else {
+    // if you're adding a Discount on WorkTime
+    if (!discountToCheck) storeDiscounts.addDiscount(props.selectedDayOfWeek, workTimeId, discountAmountId);
+    // if you're trying to replace a discountAmount in a workTime with Discount already set
+    if (discountToCheck) storeDiscounts.updateDiscount(discountToCheck?.id, workTimeId, discountAmountId);
   }
 };
 </script>
@@ -73,7 +66,6 @@ const onDrop = (event: any, workTimeId: WorkTime["id"]) => {
     <AdminDiscountAmount
       v-if="selectedDayOfWeek !== 10 && discountAmountOnWorkTime"
       :value="discountAmountOnWorkTimeValue"
-      @drop="onDrop($event, workTime.id)"
       @updateOrDelete="deleteDiscount(discountOnWorkTime?.id)"
       @dragstart="startDrag($event, discountAmountOnWorkTime.id, 'copy')"
       @dragleave="leaveDrag()"
