@@ -54,7 +54,7 @@ function onMouseleave(e: MouseEvent) {
         </NuxtLink>
       </div>
 
-      <div class="relative hidden h-full md_block md_basis-1/2" @mousemove="onMousemove" @mouseleave="onMouseleave">
+      <div class="relative hidden h-[500px] md_block md_basis-1/2" @mousemove="onMousemove" @mouseleave="onMouseleave">
         <NuxtImg
           :style="{ transform: img1 }"
           loading="lazy"

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { path } = useRoute();
-console.log(path);
 
 useHead({
   titleTemplate: (pageTitle) => {
