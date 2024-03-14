@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "db:generation": "prisma generate"
+    "db:generate": "prisma generate"
   },
   "devDependencies": {
     "@nuxt/devtools": "1.0.8",
