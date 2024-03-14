@@ -76,7 +76,7 @@ SUPABASE_JWT_SECRET=""
 
 # Connect to Supabase with PgBouncer.
 
-POSTGRES_URL=""
+POSTGRES_URL="" - TODO: add to end of varibale in supabase '&pgbouncer=true'
 
 # Direct connection to the database. Used for migrations.
 
