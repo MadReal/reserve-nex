@@ -76,11 +76,11 @@ SUPABASE_JWT_SECRET=""
 
 # Connect to Supabase with PgBouncer.
 
-DATABASE_URL=""
+POSTGRES_URL=""
 
 # Direct connection to the database. Used for migrations.
 
-DIRECT_URL=""
+POSTGRES_URL_NON_POOLING=""
 
 # EMAILS - RESEND
 
