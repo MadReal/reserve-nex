@@ -52,7 +52,7 @@ export default defineNuxtConfig({
     defaultLocale: "it",
   },
   postcss: { plugins: { tailwindcss: {}, autoprefixer: {} } },
-  supabase: { redirect: false },
+  supabase: { redirect: false, key: process.env.SUPABASE_ANON_KEY },
   vite: {
     plugins: [svgLoader()],
     vue: { script: { defineModel: true, propsDestructure: true } },
