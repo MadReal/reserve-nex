@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# ReserveNex
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Reservation Management for restaurants.
 
 ## Setup
 
@@ -60,29 +60,43 @@ pnpm run preview
 yarn preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Deployment
 
-# .env file
+Add additional notes about how to deploy this on a live system.
 
-# Supabase config
+### Connecting to Supabase and Prisma
 
-SUPABASE_URL=""
-SUPABASE_KEY=""
-SUPABASE_JWT_SECRET=""
+1. Create a project in [Vercel](https://vercel.com/) by linking it to the GitHub repository of this project.
+2. Integrate the project with [Supabase](https://supabase.io/), which will automatically generate the necessary environment variables. Ensure you have the following variables:
 
-# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+   - `SUPABASE_JWT_SECRET`
+   - `RESEND_API_KEY`
+   - `ADMIN_EMAIL`
 
-# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+3. Utilize Prisma to interact with your database. Run the following command to generate Prisma client and create your database schema:
 
-# Connect to Supabase with PgBouncer.
+   ```bash
+   prisma generate
+   ```
 
-POSTGRES_URL="" - TODO: add to end of varibale in supabase '&pgbouncer=true'
+### Email Functionality
 
-# Direct connection to the database. Used for migrations.
+To send emails from the website:
 
-POSTGRES_URL_NON_POOLING=""
+1. Create an account on [Resend](https://resend.com/) to obtain API keys.
+2. Add the API keys obtained from Resend to your environment variables.
 
-# EMAILS - RESEND
+### Deployment Commands
 
-RESEND_API_KEY=""
-ADMIN_EMAIL="email <email@email.com>"
+To ensure your database is set up and your website is built properly on Vercel, use the following deployment command:
+
+```bash
+prisma generate && nuxt build
+```
+
+## Built With
+
+- [Nuxt.js](https://nuxtjs.org/) - The web framework used
+- [Supabase](https://supabase.io/) - Database
+- [Resend](https://resend.com/) - Email service
+- [Prisma](https://www.prisma.io/) - Database toolkit
