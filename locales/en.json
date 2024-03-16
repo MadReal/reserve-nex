@@ -162,6 +162,11 @@
       "btn_cancel": "cancel reservation"
     }
   },
+  "notification": {
+    "success": {
+      "discounts_applied": "Discounts Applied"
+    }
+  },
   "404": {
     "title": "Oops!",
     "subtitle": "Non troviamo la pagina che stai cercando."
