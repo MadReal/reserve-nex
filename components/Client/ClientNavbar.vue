@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { vOnClickOutside } from "@vueuse/components";
-const routeName = computed(() => useRoute().name);
-const localePath = useLocalePath();
+import { vOnClickOutside } from "@vueuse/components"
+const routeName = computed(() => useRoute().name)
+const localePath = useLocalePath()
 
-const hasScrolled = ref(false); // obtain the reference
-const isRouteHome = computed(() => useRoute().path === "/");
-const isNavTextWhite = computed(() => !hasScrolled.value && routeName.value !== "reservation");
-const isNavTextBlack = computed(() => hasScrolled.value);
-const isNavBgTransp = computed(() => !hasScrolled.value);
-const hideOnReservationDesktop = computed(() => routeName.value === "reservation-restaurantId");
+const hasScrolled = ref(false) // obtain the reference
+const isRouteHome = computed(() => useRoute().path === "/")
+const isNavTextWhite = computed(() => !hasScrolled.value && routeName.value !== "reservation")
+const isNavTextBlack = computed(() => hasScrolled.value)
+const isNavBgTransp = computed(() => !hasScrolled.value)
+const hideOnReservationDesktop = computed(() => routeName.value === "reservation-restaurantId")
 
-let isMenuOpen = ref(false);
-const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
-const closeMenu = () => (isMenuOpen.value = false);
+let isMenuOpen = ref(false)
+const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value)
+const closeMenu = () => (isMenuOpen.value = false)
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
-    var curr = window.scrollY;
-    if (curr >= 15) hasScrolled.value = true;
-    else hasScrolled.value = false;
-  });
-});
+    var curr = window.scrollY
+    if (curr >= 15) hasScrolled.value = true
+    else hasScrolled.value = false
+  })
+})
 </script>
 
 <template>
@@ -39,7 +39,8 @@ onMounted(() => {
           to="/"
           class="transition duration-200 hover_text-primary-100 focus_text-black"
           :class="{ 'sm_text-black': isRouteHome, 'text-white': isRouteHome && !hasScrolled }"
-          >ReserveNex
+        >
+          ReserveNex
         </NuxtLink>
       </div>
     </div>

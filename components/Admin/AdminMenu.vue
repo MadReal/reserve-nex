@@ -3,7 +3,7 @@
     .mb-8
         p.hidden.px-4.mb-3.text-xs.tracking-widest.text-grey-200.md_px-3.md_block.uppercase MENU
 
-        NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/reservations" class="", @click="$emit('toggleMenu')")
+        NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/reservations", @click="$emit('toggleMenu')")
             SVGIcon.text-grey-100.mr-2.group-hover_text-grey-200(svg="check", :size="20")
             p.text-sm.text-grey-200.tracking-wide {{ $t("admin.reservations.page_name") }}
         NuxtLink.router-link.flex.items-center.p-4.cursor-pointer.group(to="/admin/day-summary", @click="$emit('toggleMenu')")

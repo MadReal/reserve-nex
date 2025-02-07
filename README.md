@@ -100,3 +100,22 @@ prisma generate && nuxt build
 - [Supabase](https://supabase.io/) - Database
 - [Resend](https://resend.com/) - Email service
 - [Prisma](https://www.prisma.io/) - Database toolkit
+
+# ENV
+
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_JWT_SECRET=
+
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings - Connect to Supabase with PgBouncer.
+
+POSTGRES_URL=
+
+# Direct connection to the database. Used for migrations.
+
+POSTGRES_URL_NON_POOLING=
+
+# EMAILS https://resend.com/
+
+RESEND_API_KEY=
+ADMIN_EMAIL="PixelVision <email@email.com>"

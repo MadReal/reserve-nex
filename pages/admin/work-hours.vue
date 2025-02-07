@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const i18n = useI18n();
-import { storeToRefs } from "pinia";
+const i18n = useI18n()
+import { storeToRefs } from "pinia"
 
-definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" });
-useHead({ title: i18n.t("admin.work_hours.page_name") });
+definePageMeta({ middleware: ["auth", "empty-restaurants-list"], layout: "admin-default" })
+useHead({ title: i18n.t("admin.work_hours.page_name") })
 
-const storeWorkTimes = useWorkTimesStore();
-const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes);
+const storeWorkTimes = useWorkTimesStore()
+const { lunchWorkTimesList, dinnerWorkTimesList } = storeToRefs(storeWorkTimes)
 </script>
 
 <template>
